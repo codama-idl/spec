@@ -1,0 +1,7 @@
+{
+    "$comment": "Generated artifact. Phase 0 placeholder. The public JSON Schema lands in Phase 5.",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/codama-idl/spec/raw/main/codama.schema.json",
+    "title": "Codama IDL",
+    "type": "object"
+}

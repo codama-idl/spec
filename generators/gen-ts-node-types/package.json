@@ -1,0 +1,32 @@
+{
+    "name": "@codama-internal/gen-ts-node-types",
+    "version": "0.0.0",
+    "private": true,
+    "description": "Generates the @codama/node-types package source from the encoded spec",
+    "type": "module",
+    "scripts": {
+        "generate": "pnpm generate:v1",
+        "generate:v1": "pnpm --filter @codama/spec build && tsx src/v1.ts",
+        "lint": "eslint . && prettier --check .",
+        "lint:fix": "eslint --fix . && prettier --write .",
+        "test": "vitest run",
+        "test:types": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@codama-internal/fragment": "workspace:*",
+        "@codama/spec": "workspace:*",
+        "prettier": "^3.8.3"
+    },
+    "devDependencies": {
+        "@types/node": "^25",
+        "tsx": "^4.21.0",
+        "typescript": "^6.0.3",
+        "vitest": "^4.1.5"
+    },
+    "codama": {
+        "generator": true,
+        "outputs": [
+            "js/node-types/src/generated"
+        ]
+    }
+}

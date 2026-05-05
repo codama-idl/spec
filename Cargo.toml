@@ -1,0 +1,11 @@
+[workspace]
+resolver = "2"
+members = [
+  "rust/codama-nodes",
+  "rust/codama-nodes-derive",
+]
+
+[workspace.package]
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/codama-idl/spec"

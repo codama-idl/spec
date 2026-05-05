@@ -1,0 +1,52 @@
+{
+    "name": "@codama/node-types",
+    "version": "1.6.0",
+    "description": "Generated TypeScript interfaces for the Codama node specification",
+    "exports": {
+        "types": "./dist/types/index.d.ts",
+        "browser": {
+            "import": "./dist/index.browser.mjs",
+            "require": "./dist/index.browser.cjs"
+        },
+        "node": {
+            "import": "./dist/index.node.mjs",
+            "require": "./dist/index.node.cjs"
+        }
+    },
+    "main": "./dist/index.node.cjs",
+    "module": "./dist/index.node.mjs",
+    "types": "./dist/types/index.d.ts",
+    "type": "commonjs",
+    "files": [
+        "./dist/types",
+        "./dist/index.*"
+    ],
+    "sideEffects": false,
+    "keywords": [
+        "codama",
+        "solana",
+        "node-types",
+        "specifications"
+    ],
+    "scripts": {
+        "build": "rimraf dist && tsup && tsc -p ./tsconfig.declarations.json",
+        "dev": "vitest",
+        "lint": "eslint . && prettier --check .",
+        "lint:fix": "eslint --fix . && prettier --write .",
+        "test": "pnpm test:types && pnpm test:unit",
+        "test:types": "tsc --noEmit",
+        "test:unit": "vitest run"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/codama-idl/spec"
+    },
+    "bugs": {
+        "url": "http://github.com/codama-idl/spec/issues"
+    },
+    "codama": {
+        "spec": "1.6.0",
+        "generated": true
+    }
+}

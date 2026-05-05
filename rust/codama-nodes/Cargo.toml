@@ -1,0 +1,19 @@
+[package]
+name = "codama-nodes"
+description = "Generated structs and helpers for the Codama node specification"
+version = "0.9.2"
+repository = { workspace = true }
+edition = { workspace = true }
+license = { workspace = true }
+
+[package.metadata.codama]
+spec = "1.6.0"
+generated = true
+
+[dependencies]
+codama-nodes-derive = { version = "0.9.2", path = "../codama-nodes-derive" }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[dev-dependencies]
+pretty_assertions = "1.4.1"

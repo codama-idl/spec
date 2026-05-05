@@ -1,0 +1,14 @@
+{
+    "name": "@codama-internal/gen-json-schema",
+    "version": "0.0.0",
+    "private": true,
+    "description": "Generates the public codama.schema.json from the encoded spec",
+    "type": "module",
+    "scripts": {
+        "generate": "tsx src/index.ts"
+    },
+    "codama": {
+        "generator": true,
+        "outputs": ["codama.schema.json"]
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "name": "@codama-internal/gen-docs",
+    "version": "0.0.0",
+    "private": true,
+    "description": "Generates per-node markdown documentation from the encoded spec",
+    "type": "module",
+    "scripts": {
+        "generate": "tsx src/index.ts"
+    },
+    "codama": {
+        "generator": true,
+        "outputs": ["docs"]
+    }
+}

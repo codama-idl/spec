@@ -1,0 +1,3068 @@
+{
+    "version": "1.6.0",
+    "enumerations": [
+        {
+            "name": "BytesEncoding",
+            "variants": [
+                {
+                    "name": "base16",
+                    "docs": "Hexadecimal encoding (two characters per byte)."
+                },
+                {
+                    "name": "base58",
+                    "docs": "Base58 encoding, the standard for Solana addresses."
+                },
+                {
+                    "name": "base64",
+                    "docs": "Base64 encoding (RFC 4648)."
+                },
+                {
+                    "name": "utf8",
+                    "docs": "UTF-8 text encoding."
+                }
+            ],
+            "docs": "How a string of bytes is encoded for transport."
+        },
+        {
+            "name": "DefaultValueStrategy",
+            "variants": [
+                {
+                    "name": "omitted",
+                    "docs": "The attribute is not exposed as a parameter in the generated API; the default value is always used."
+                },
+                {
+                    "name": "optional",
+                    "docs": "The attribute is exposed as an optional parameter; callers may override the default value."
+                }
+            ],
+            "docs": "How an attribute that carries a default value is exposed in generated APIs."
+        },
+        {
+            "name": "Endianness",
+            "variants": [
+                {
+                    "name": "be",
+                    "docs": "Big-endian: the most significant byte is written first."
+                },
+                {
+                    "name": "le",
+                    "docs": "Little-endian: the least significant byte is written first."
+                }
+            ],
+            "docs": "The byte order of a numeric serialization."
+        },
+        {
+            "name": "InstructionLifecycle",
+            "variants": [
+                {
+                    "name": "archived",
+                    "docs": "No longer included in client SDKs. Retained in the IDL for historical reference only."
+                },
+                {
+                    "name": "deprecated",
+                    "docs": "Still callable but discouraged. Clients should migrate to a replacement instruction."
+                },
+                {
+                    "name": "draft",
+                    "docs": "Work-in-progress. The instruction may change before it stabilises."
+                },
+                {
+                    "name": "live",
+                    "docs": "Stable and supported for production use."
+                }
+            ],
+            "docs": "The lifecycle stage of an instruction."
+        },
+        {
+            "name": "NumberFormat",
+            "variants": [
+                {
+                    "name": "f32",
+                    "docs": "IEEE-754 32-bit floating point."
+                },
+                {
+                    "name": "f64",
+                    "docs": "IEEE-754 64-bit floating point."
+                },
+                {
+                    "name": "i8",
+                    "docs": "Signed 8-bit integer."
+                },
+                {
+                    "name": "i16",
+                    "docs": "Signed 16-bit integer."
+                },
+                {
+                    "name": "i32",
+                    "docs": "Signed 32-bit integer."
+                },
+                {
+                    "name": "i64",
+                    "docs": "Signed 64-bit integer."
+                },
+                {
+                    "name": "i128",
+                    "docs": "Signed 128-bit integer."
+                },
+                {
+                    "name": "shortU16",
+                    "docs": "Solana compact-u16 encoding: a variable-length unsigned integer occupying 1 to 3 bytes."
+                },
+                {
+                    "name": "u8",
+                    "docs": "Unsigned 8-bit integer."
+                },
+                {
+                    "name": "u16",
+                    "docs": "Unsigned 16-bit integer."
+                },
+                {
+                    "name": "u32",
+                    "docs": "Unsigned 32-bit integer."
+                },
+                {
+                    "name": "u64",
+                    "docs": "Unsigned 64-bit integer."
+                },
+                {
+                    "name": "u128",
+                    "docs": "Unsigned 128-bit integer."
+                }
+            ],
+            "docs": "The wire format of a numeric serialization."
+        },
+        {
+            "name": "OptionalAccountStrategy",
+            "variants": [
+                {
+                    "name": "omitted",
+                    "docs": "The account slot is left out of the instruction entirely. Subsequent accounts shift up."
+                },
+                {
+                    "name": "programId",
+                    "docs": "The account slot is filled with the program ID as a placeholder, preserving positional indices."
+                }
+            ],
+            "docs": "How an absent optional account is represented when serialising an instruction."
+        },
+        {
+            "name": "PostOffsetStrategy",
+            "variants": [
+                {
+                    "name": "absolute",
+                    "docs": "Move the cursor to the absolute byte position given by the offset."
+                },
+                {
+                    "name": "padded",
+                    "docs": "Pad with zero bytes from the current cursor up to the offset bytes ahead."
+                },
+                {
+                    "name": "preOffset",
+                    "docs": "Restore the cursor to where it was before the wrapped type ran (cancelling its pre-offset)."
+                },
+                {
+                    "name": "relative",
+                    "docs": "Advance the cursor by the offset bytes relative to its current position."
+                }
+            ],
+            "docs": "How a post-offset modifier interprets its offset value after serialising the wrapped type."
+        },
+        {
+            "name": "PreOffsetStrategy",
+            "variants": [
+                {
+                    "name": "absolute",
+                    "docs": "Move the cursor to the absolute byte position given by the offset."
+                },
+                {
+                    "name": "padded",
+                    "docs": "Pad with zero bytes from the current cursor up to the offset bytes ahead."
+                },
+                {
+                    "name": "relative",
+                    "docs": "Advance the cursor by the offset bytes relative to its current position."
+                }
+            ],
+            "docs": "How a pre-offset modifier interprets its offset value before serialising the wrapped type."
+        },
+        {
+            "name": "ProgramOrigin",
+            "variants": [
+                {
+                    "name": "anchor",
+                    "docs": "The program was originally described by an Anchor IDL."
+                },
+                {
+                    "name": "shank",
+                    "docs": "The program was originally described by a Shank IDL."
+                }
+            ],
+            "docs": "The toolchain that originally generated a program description."
+        }
+    ],
+    "nodes": [
+        {
+            "kind": "amountTypeNode",
+            "docs": "Wraps a number type to provide additional context such as decimal places and a unit. Useful for amounts representing financial values.",
+            "attributes": [
+                {
+                    "name": "decimals",
+                    "type": {
+                        "kind": "integer",
+                        "width": "u32"
+                    },
+                    "docs": "The number of decimal places the wrapped integer carries. For example, an integer value of 12345 with 2 decimal places represents 123.45."
+                },
+                {
+                    "name": "unit",
+                    "type": {
+                        "kind": "string"
+                    },
+                    "optional": true,
+                    "docs": "The unit of the amount — e.g. \"USD\" or \"%\"."
+                },
+                {
+                    "name": "number",
+                    "type": {
+                        "kind": "nestedTypeNode",
+                        "name": "numberTypeNode"
+                    },
+                    "docs": "The number type the amount wraps."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "arrayTypeNode",
+            "docs": "A homogeneous list of items. The item type is defined by `item`; the length is determined by the `count` strategy.",
+            "attributes": [
+                {
+                    "name": "item",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The type of each item in the array."
+                },
+                {
+                    "name": "count",
+                    "type": {
+                        "kind": "union",
+                        "name": "CountNode"
+                    },
+                    "docs": "The strategy used to determine the number of items."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "booleanTypeNode",
+            "docs": "A boolean serialised as a numeric value. The wrapped number type determines the byte width.",
+            "attributes": [
+                {
+                    "name": "size",
+                    "type": {
+                        "kind": "nestedTypeNode",
+                        "name": "numberTypeNode"
+                    },
+                    "docs": "The numeric type used to serialise the boolean."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "bytesTypeNode",
+            "docs": "A raw sequence of bytes. Typically used inside a fixed-size, size-prefixed, or sentinel-terminated wrapper.",
+            "attributes": [],
+            "examples": []
+        },
+        {
+            "kind": "dateTimeTypeNode",
+            "docs": "A timestamp encoded as a number, typically seconds since the Unix epoch. The wrapped number type determines the byte width.",
+            "attributes": [
+                {
+                    "name": "number",
+                    "type": {
+                        "kind": "nestedTypeNode",
+                        "name": "numberTypeNode"
+                    },
+                    "docs": "The numeric type used to serialise the timestamp."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "enumEmptyVariantTypeNode",
+            "docs": "A unit-style variant of an enum that carries no payload.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the variant."
+                },
+                {
+                    "name": "discriminator",
+                    "type": {
+                        "kind": "integer",
+                        "width": "u32"
+                    },
+                    "optional": true,
+                    "docs": "Explicit discriminator value. When omitted, the discriminator is inferred from the variant position."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "enumStructVariantTypeNode",
+            "docs": "A variant of an enum that carries a struct payload (named fields).",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the variant."
+                },
+                {
+                    "name": "discriminator",
+                    "type": {
+                        "kind": "integer",
+                        "width": "u32"
+                    },
+                    "optional": true,
+                    "docs": "Explicit discriminator value. When omitted, the discriminator is inferred from the variant position."
+                },
+                {
+                    "name": "struct",
+                    "type": {
+                        "kind": "nestedTypeNode",
+                        "name": "structTypeNode"
+                    },
+                    "docs": "The struct of named fields carried by the variant."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "enumTupleVariantTypeNode",
+            "docs": "A variant of an enum that carries a tuple payload (positional fields).",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the variant."
+                },
+                {
+                    "name": "discriminator",
+                    "type": {
+                        "kind": "integer",
+                        "width": "u32"
+                    },
+                    "optional": true,
+                    "docs": "Explicit discriminator value. When omitted, the discriminator is inferred from the variant position."
+                },
+                {
+                    "name": "tuple",
+                    "type": {
+                        "kind": "nestedTypeNode",
+                        "name": "tupleTypeNode"
+                    },
+                    "docs": "The tuple of positional fields carried by the variant."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "enumTypeNode",
+            "docs": "A tagged union: a numeric discriminator followed by one of several variant payloads.",
+            "attributes": [
+                {
+                    "name": "variants",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "union",
+                            "name": "EnumVariantTypeNode"
+                        }
+                    },
+                    "docs": "The variants of the enum, in declaration order."
+                },
+                {
+                    "name": "size",
+                    "type": {
+                        "kind": "nestedTypeNode",
+                        "name": "numberTypeNode"
+                    },
+                    "docs": "The numeric type used to serialise the discriminator."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "fixedSizeTypeNode",
+            "docs": "Wraps another type and asserts a fixed total byte size. Padding or truncation is applied as needed.",
+            "attributes": [
+                {
+                    "name": "size",
+                    "type": {
+                        "kind": "integer",
+                        "width": "u64"
+                    },
+                    "docs": "The total byte size the wrapped type must occupy."
+                },
+                {
+                    "name": "type",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The wrapped type whose serialisation is constrained."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "hiddenPrefixTypeNode",
+            "docs": "Prefixes another type with a list of constant values that are written and read but not surfaced as fields to consumers.",
+            "attributes": [
+                {
+                    "name": "type",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The wrapped type whose serialisation is preceded by the hidden prefix."
+                },
+                {
+                    "name": "prefix",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "constantValueNode"
+                        }
+                    },
+                    "docs": "The constant values written before the wrapped type, in order."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "hiddenSuffixTypeNode",
+            "docs": "Suffixes another type with a list of constant values that are written and read but not surfaced as fields to consumers.",
+            "attributes": [
+                {
+                    "name": "type",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The wrapped type whose serialisation is followed by the hidden suffix."
+                },
+                {
+                    "name": "suffix",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "constantValueNode"
+                        }
+                    },
+                    "docs": "The constant values written after the wrapped type, in order."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "mapTypeNode",
+            "docs": "A keyed map. The key and value types are described by their respective type nodes; the entry count is determined by a count strategy.",
+            "attributes": [
+                {
+                    "name": "key",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The type of each entry key."
+                },
+                {
+                    "name": "value",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The type of each entry value."
+                },
+                {
+                    "name": "count",
+                    "type": {
+                        "kind": "union",
+                        "name": "CountNode"
+                    },
+                    "docs": "The strategy used to determine the number of entries."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "numberTypeNode",
+            "docs": "A numeric type with a fixed wire format and byte order.",
+            "attributes": [
+                {
+                    "name": "format",
+                    "type": {
+                        "kind": "enumeration",
+                        "name": "NumberFormat"
+                    },
+                    "docs": "The wire format used to serialise the number."
+                },
+                {
+                    "name": "endian",
+                    "type": {
+                        "kind": "enumeration",
+                        "name": "Endianness"
+                    },
+                    "docs": "The byte order used to serialise the number."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "optionTypeNode",
+            "docs": "A value that may be present or absent (Some/None), with an explicit numeric prefix indicating presence.",
+            "attributes": [
+                {
+                    "name": "fixed",
+                    "type": {
+                        "kind": "boolean"
+                    },
+                    "optional": true,
+                    "docs": "When `true`, the absent variant still occupies the byte size of the present variant (zero-padded). Defaults to `false`."
+                },
+                {
+                    "name": "item",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The type carried by the option when present."
+                },
+                {
+                    "name": "prefix",
+                    "type": {
+                        "kind": "nestedTypeNode",
+                        "name": "numberTypeNode"
+                    },
+                    "docs": "The numeric type used as the presence flag."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "postOffsetTypeNode",
+            "docs": "After serialising the wrapped type, advance the cursor by `offset` bytes interpreted via the chosen strategy.",
+            "attributes": [
+                {
+                    "name": "offset",
+                    "type": {
+                        "kind": "integer",
+                        "width": "i64"
+                    },
+                    "docs": "The signed byte offset to apply after the wrapped type runs."
+                },
+                {
+                    "name": "strategy",
+                    "type": {
+                        "kind": "enumeration",
+                        "name": "PostOffsetStrategy"
+                    },
+                    "docs": "How the `offset` value is interpreted."
+                },
+                {
+                    "name": "type",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The wrapped type whose serialisation is followed by the offset."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "preOffsetTypeNode",
+            "docs": "Before serialising the wrapped type, advance the cursor by `offset` bytes interpreted via the chosen strategy.",
+            "attributes": [
+                {
+                    "name": "offset",
+                    "type": {
+                        "kind": "integer",
+                        "width": "i64"
+                    },
+                    "docs": "The signed byte offset to apply before the wrapped type runs."
+                },
+                {
+                    "name": "strategy",
+                    "type": {
+                        "kind": "enumeration",
+                        "name": "PreOffsetStrategy"
+                    },
+                    "docs": "How the `offset` value is interpreted."
+                },
+                {
+                    "name": "type",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The wrapped type whose serialisation is preceded by the offset."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "publicKeyTypeNode",
+            "docs": "A 32-byte Solana public key.",
+            "attributes": [],
+            "examples": []
+        },
+        {
+            "kind": "remainderOptionTypeNode",
+            "docs": "A value that may be present or absent. Presence is signalled by whether any bytes remain to be read, with no explicit prefix.",
+            "attributes": [
+                {
+                    "name": "item",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The type carried by the option when present."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "sentinelTypeNode",
+            "docs": "Wraps another type and delimits it with a constant sentinel value written immediately after the wrapped type.",
+            "attributes": [
+                {
+                    "name": "type",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The wrapped type whose extent is delimited by the sentinel."
+                },
+                {
+                    "name": "sentinel",
+                    "type": {
+                        "kind": "node",
+                        "name": "constantValueNode"
+                    },
+                    "docs": "The constant value written immediately after the wrapped type to mark its end."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "setTypeNode",
+            "docs": "A unique-valued collection. The item type is defined by `item`; the size is determined by the `count` strategy.",
+            "attributes": [
+                {
+                    "name": "item",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The type of each item in the set."
+                },
+                {
+                    "name": "count",
+                    "type": {
+                        "kind": "union",
+                        "name": "CountNode"
+                    },
+                    "docs": "The strategy used to determine the number of items."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "sizePrefixTypeNode",
+            "docs": "Wraps another type with a numeric prefix indicating the byte length of the wrapped type.",
+            "attributes": [
+                {
+                    "name": "type",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The wrapped type whose serialisation is preceded by its size."
+                },
+                {
+                    "name": "prefix",
+                    "type": {
+                        "kind": "nestedTypeNode",
+                        "name": "numberTypeNode"
+                    },
+                    "docs": "The numeric type used as the size prefix."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "solAmountTypeNode",
+            "docs": "A SOL amount expressed in lamports under the wrapped numeric type.",
+            "attributes": [
+                {
+                    "name": "number",
+                    "type": {
+                        "kind": "nestedTypeNode",
+                        "name": "numberTypeNode"
+                    },
+                    "docs": "The numeric type used to serialise the lamport amount."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "stringTypeNode",
+            "docs": "A string value. The encoding describes how its bytes are written; the byte length is determined by an enclosing wrapper such as `sizePrefixTypeNode` or `fixedSizeTypeNode`.",
+            "attributes": [
+                {
+                    "name": "encoding",
+                    "type": {
+                        "kind": "enumeration",
+                        "name": "BytesEncoding"
+                    },
+                    "docs": "The byte encoding used to serialise the string."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "structFieldTypeNode",
+            "docs": "A named field within a struct type.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the field."
+                },
+                {
+                    "name": "defaultValueStrategy",
+                    "type": {
+                        "kind": "enumeration",
+                        "name": "DefaultValueStrategy"
+                    },
+                    "optional": true,
+                    "docs": "How a configured default value is exposed in generated APIs. Required when `defaultValue` is set."
+                },
+                {
+                    "name": "docs",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "string"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Markdown documentation for the field."
+                },
+                {
+                    "name": "type",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The type of the field."
+                },
+                {
+                    "name": "defaultValue",
+                    "type": {
+                        "kind": "union",
+                        "name": "ValueNode"
+                    },
+                    "optional": true,
+                    "docs": "A default value used when the field is omitted by callers."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "structTypeNode",
+            "docs": "A composite type made of an ordered list of named fields. Fields are encoded and decoded in declaration order.",
+            "attributes": [
+                {
+                    "name": "fields",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "structFieldTypeNode"
+                        }
+                    },
+                    "docs": "The fields of the struct, in declaration order."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "tupleTypeNode",
+            "docs": "A heterogeneous fixed-length sequence in which each positional slot has its own type.",
+            "attributes": [
+                {
+                    "name": "items",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "union",
+                            "name": "TypeNode"
+                        }
+                    },
+                    "docs": "The type of each positional slot, in order."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "zeroableOptionTypeNode",
+            "docs": "An optional value whose absence is signalled by a designated zero value rather than a presence flag.",
+            "attributes": [
+                {
+                    "name": "item",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The type carried by the option when present."
+                },
+                {
+                    "name": "zeroValue",
+                    "type": {
+                        "kind": "node",
+                        "name": "constantValueNode"
+                    },
+                    "optional": true,
+                    "docs": "The constant value that signals absence. When omitted, the all-zero byte pattern of the item type is used."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "arrayValueNode",
+            "docs": "A concrete array value: a list of value nodes.",
+            "attributes": [
+                {
+                    "name": "items",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "union",
+                            "name": "ValueNode"
+                        }
+                    },
+                    "docs": "The items of the array, in order."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "booleanValueNode",
+            "docs": "A concrete boolean value.",
+            "attributes": [
+                {
+                    "name": "boolean",
+                    "type": {
+                        "kind": "boolean"
+                    },
+                    "docs": "The boolean value."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "bytesValueNode",
+            "docs": "A concrete bytes value, encoded as text in the chosen encoding.",
+            "attributes": [
+                {
+                    "name": "data",
+                    "type": {
+                        "kind": "string"
+                    },
+                    "docs": "The bytes encoded as a text string per the `encoding` attribute."
+                },
+                {
+                    "name": "encoding",
+                    "type": {
+                        "kind": "enumeration",
+                        "name": "BytesEncoding"
+                    },
+                    "docs": "The encoding used to represent the bytes as text."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "constantValueNode",
+            "docs": "A typed constant: a type node paired with a concrete value node.",
+            "attributes": [
+                {
+                    "name": "type",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The type of the constant."
+                },
+                {
+                    "name": "value",
+                    "type": {
+                        "kind": "union",
+                        "name": "ValueNode"
+                    },
+                    "docs": "The concrete value of the constant."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "enumValueNode",
+            "docs": "A concrete value of a defined enum: a variant identifier plus an optional payload.",
+            "attributes": [
+                {
+                    "name": "variant",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the selected variant."
+                },
+                {
+                    "name": "enum",
+                    "type": {
+                        "kind": "node",
+                        "name": "definedTypeLinkNode"
+                    },
+                    "docs": "A link to the defined enum type the value belongs to."
+                },
+                {
+                    "name": "value",
+                    "type": {
+                        "kind": "union",
+                        "name": "EnumValuePayload"
+                    },
+                    "optional": true,
+                    "docs": "The variant payload — a struct value for struct variants or a tuple value for tuple variants. Omitted for unit variants."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "mapEntryValueNode",
+            "docs": "A single (key, value) pair inside a `mapValueNode`.",
+            "attributes": [
+                {
+                    "name": "key",
+                    "type": {
+                        "kind": "union",
+                        "name": "ValueNode"
+                    },
+                    "docs": "The entry key."
+                },
+                {
+                    "name": "value",
+                    "type": {
+                        "kind": "union",
+                        "name": "ValueNode"
+                    },
+                    "docs": "The entry value."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "mapValueNode",
+            "docs": "A concrete map value: a list of (key, value) entries.",
+            "attributes": [
+                {
+                    "name": "entries",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "mapEntryValueNode"
+                        }
+                    },
+                    "docs": "The entries of the map, in order."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "noneValueNode",
+            "docs": "The \"absent\" value for an optional type.",
+            "attributes": [],
+            "examples": []
+        },
+        {
+            "kind": "numberValueNode",
+            "docs": "A concrete numeric value. Stored as a 64-bit float; consumers narrow to a specific integer or float width based on the surrounding type context.",
+            "attributes": [
+                {
+                    "name": "number",
+                    "type": {
+                        "kind": "float",
+                        "width": "f64"
+                    },
+                    "docs": "The numeric value."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "publicKeyValueNode",
+            "docs": "A concrete public key, with an optional symbolic identifier for the address.",
+            "attributes": [
+                {
+                    "name": "publicKey",
+                    "type": {
+                        "kind": "string"
+                    },
+                    "docs": "The base58-encoded public key."
+                },
+                {
+                    "name": "identifier",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "optional": true,
+                    "docs": "A symbolic name for the address, useful in generated client code."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "setValueNode",
+            "docs": "A concrete set value: a list of unique value nodes.",
+            "attributes": [
+                {
+                    "name": "items",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "union",
+                            "name": "ValueNode"
+                        }
+                    },
+                    "docs": "The items of the set."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "someValueNode",
+            "docs": "The \"present\" value for an optional type, wrapping a concrete value node.",
+            "attributes": [
+                {
+                    "name": "value",
+                    "type": {
+                        "kind": "union",
+                        "name": "ValueNode"
+                    },
+                    "docs": "The wrapped value."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "stringValueNode",
+            "docs": "A concrete string value.",
+            "attributes": [
+                {
+                    "name": "string",
+                    "type": {
+                        "kind": "string"
+                    },
+                    "docs": "The string value."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "structFieldValueNode",
+            "docs": "A named field of a `structValueNode`.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the field."
+                },
+                {
+                    "name": "value",
+                    "type": {
+                        "kind": "union",
+                        "name": "ValueNode"
+                    },
+                    "docs": "The concrete value of the field."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "structValueNode",
+            "docs": "A concrete struct value: a list of named field values.",
+            "attributes": [
+                {
+                    "name": "fields",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "structFieldValueNode"
+                        }
+                    },
+                    "docs": "The named fields of the struct value."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "tupleValueNode",
+            "docs": "A concrete tuple value: a fixed-length sequence of positional value nodes.",
+            "attributes": [
+                {
+                    "name": "items",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "union",
+                            "name": "ValueNode"
+                        }
+                    },
+                    "docs": "The positional items of the tuple, in order."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "accountLinkNode",
+            "docs": "A reference to an account defined elsewhere — possibly in a different program.",
+            "attributes": [
+                {
+                    "name": "program",
+                    "type": {
+                        "kind": "node",
+                        "name": "programLinkNode"
+                    },
+                    "optional": true,
+                    "docs": "The program the referenced account belongs to. When omitted, the surrounding program is assumed."
+                },
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the referenced account."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "definedTypeLinkNode",
+            "docs": "A reference to a defined type — possibly in a different program.",
+            "attributes": [
+                {
+                    "name": "program",
+                    "type": {
+                        "kind": "node",
+                        "name": "programLinkNode"
+                    },
+                    "optional": true,
+                    "docs": "The program the referenced type is defined in. When omitted, the surrounding program is assumed."
+                },
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the referenced defined type."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "instructionAccountLinkNode",
+            "docs": "A reference to an account of another instruction.",
+            "attributes": [
+                {
+                    "name": "instruction",
+                    "type": {
+                        "kind": "node",
+                        "name": "instructionLinkNode"
+                    },
+                    "optional": true,
+                    "docs": "The instruction the referenced account belongs to. When omitted, the surrounding instruction is assumed."
+                },
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the referenced instruction account."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "instructionArgumentLinkNode",
+            "docs": "A reference to an argument of another instruction.",
+            "attributes": [
+                {
+                    "name": "instruction",
+                    "type": {
+                        "kind": "node",
+                        "name": "instructionLinkNode"
+                    },
+                    "optional": true,
+                    "docs": "The instruction the referenced argument belongs to. When omitted, the surrounding instruction is assumed."
+                },
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the referenced instruction argument."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "instructionLinkNode",
+            "docs": "A reference to an instruction defined elsewhere — possibly in a different program.",
+            "attributes": [
+                {
+                    "name": "program",
+                    "type": {
+                        "kind": "node",
+                        "name": "programLinkNode"
+                    },
+                    "optional": true,
+                    "docs": "The program the referenced instruction belongs to. When omitted, the surrounding program is assumed."
+                },
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the referenced instruction."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "pdaLinkNode",
+            "docs": "A reference to a PDA defined elsewhere — possibly in a different program.",
+            "attributes": [
+                {
+                    "name": "program",
+                    "type": {
+                        "kind": "node",
+                        "name": "programLinkNode"
+                    },
+                    "optional": true,
+                    "docs": "The program the referenced PDA belongs to. When omitted, the surrounding program is assumed."
+                },
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the referenced PDA."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "programLinkNode",
+            "docs": "A reference to a program by name.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the referenced program."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "constantPdaSeedNode",
+            "docs": "A PDA seed with a constant value (e.g. a UTF-8 string or a fixed byte sequence).",
+            "attributes": [
+                {
+                    "name": "type",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The type of the seed value."
+                },
+                {
+                    "name": "value",
+                    "type": {
+                        "kind": "union",
+                        "name": "ConstantPdaSeedValue"
+                    },
+                    "docs": "The constant value to use as the seed — either a literal value or the program ID placeholder."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "variablePdaSeedNode",
+            "docs": "A PDA seed whose value is provided at derivation time, identified by name.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the seed variable."
+                },
+                {
+                    "name": "docs",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "string"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Markdown documentation for the seed variable."
+                },
+                {
+                    "name": "type",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The expected type of the seed value."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "fixedCountNode",
+            "docs": "A count strategy that fixes the number of items at a constant value.",
+            "attributes": [
+                {
+                    "name": "value",
+                    "type": {
+                        "kind": "integer",
+                        "width": "u64"
+                    },
+                    "docs": "The fixed number of items."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "prefixedCountNode",
+            "docs": "A count strategy where the number of items is read from a numeric prefix.",
+            "attributes": [
+                {
+                    "name": "prefix",
+                    "type": {
+                        "kind": "nestedTypeNode",
+                        "name": "numberTypeNode"
+                    },
+                    "docs": "The numeric type used as the count prefix."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "remainderCountNode",
+            "docs": "A count strategy where items are read until the buffer is exhausted.",
+            "attributes": [],
+            "examples": []
+        },
+        {
+            "kind": "constantDiscriminatorNode",
+            "docs": "Identifies a node by a constant value at a known byte offset (e.g. a magic header).",
+            "attributes": [
+                {
+                    "name": "offset",
+                    "type": {
+                        "kind": "integer",
+                        "width": "u64"
+                    },
+                    "docs": "The byte offset at which the constant begins."
+                },
+                {
+                    "name": "constant",
+                    "type": {
+                        "kind": "node",
+                        "name": "constantValueNode"
+                    },
+                    "docs": "The constant value expected at the offset."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "fieldDiscriminatorNode",
+            "docs": "Identifies a node by the value of a named field at a known byte offset.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the discriminating field."
+                },
+                {
+                    "name": "offset",
+                    "type": {
+                        "kind": "integer",
+                        "width": "u64"
+                    },
+                    "docs": "The byte offset of the field."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "sizeDiscriminatorNode",
+            "docs": "Identifies a node by its expected total byte size.",
+            "attributes": [
+                {
+                    "name": "size",
+                    "type": {
+                        "kind": "integer",
+                        "width": "u64"
+                    },
+                    "docs": "The expected byte size."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "accountBumpValueNode",
+            "docs": "Refers to the bump seed of a named PDA-derived account in the surrounding instruction.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the account whose bump seed is referenced."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "accountValueNode",
+            "docs": "Refers to a named account in the surrounding instruction.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the referenced account."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "argumentValueNode",
+            "docs": "Refers to a named argument of the surrounding instruction.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the referenced argument."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "conditionalValueNode",
+            "docs": "A branching contextual value. The condition resolves to a value at instruction time; that result selects between `ifTrue` and `ifFalse`.",
+            "attributes": [
+                {
+                    "name": "condition",
+                    "type": {
+                        "kind": "union",
+                        "name": "ConditionalValueCondition"
+                    },
+                    "docs": "The value whose evaluation drives the branch."
+                },
+                {
+                    "name": "value",
+                    "type": {
+                        "kind": "union",
+                        "name": "ValueNode"
+                    },
+                    "optional": true,
+                    "docs": "When present, the condition result is compared for equality against this value; otherwise the result is treated as a boolean."
+                },
+                {
+                    "name": "ifTrue",
+                    "type": {
+                        "kind": "union",
+                        "name": "InstructionInputValueNode"
+                    },
+                    "optional": true,
+                    "docs": "The value used when the condition resolves truthy (or matches `value`)."
+                },
+                {
+                    "name": "ifFalse",
+                    "type": {
+                        "kind": "union",
+                        "name": "InstructionInputValueNode"
+                    },
+                    "optional": true,
+                    "docs": "The value used when the condition resolves falsy (or does not match `value`)."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "identityValueNode",
+            "docs": "Refers to the wallet identity providing the instruction context.",
+            "attributes": [],
+            "examples": []
+        },
+        {
+            "kind": "payerValueNode",
+            "docs": "Refers to the wallet paying for the surrounding transaction.",
+            "attributes": [],
+            "examples": []
+        },
+        {
+            "kind": "pdaSeedValueNode",
+            "docs": "Pairs a PDA seed name with the value to substitute when deriving the PDA.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the seed being filled in."
+                },
+                {
+                    "name": "value",
+                    "type": {
+                        "kind": "union",
+                        "name": "PdaSeedValueValue"
+                    },
+                    "docs": "The value to substitute for the seed."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "pdaValueNode",
+            "docs": "Resolves to a PDA derived from a list of seed values.",
+            "attributes": [
+                {
+                    "name": "pda",
+                    "type": {
+                        "kind": "union",
+                        "name": "PdaValuePda"
+                    },
+                    "docs": "The PDA being derived — either a link to a defined PDA or an inline `pdaNode`."
+                },
+                {
+                    "name": "seeds",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "pdaSeedValueNode"
+                        }
+                    },
+                    "docs": "The seed values used to derive the PDA, paired with their seed names."
+                },
+                {
+                    "name": "programId",
+                    "type": {
+                        "kind": "union",
+                        "name": "PdaValueProgramId"
+                    },
+                    "optional": true,
+                    "docs": "The program ID used to derive the PDA. When omitted, the PDA’s declared program is used."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "programIdValueNode",
+            "docs": "Refers to the program ID of the surrounding instruction.",
+            "attributes": [],
+            "examples": []
+        },
+        {
+            "kind": "resolverValueNode",
+            "docs": "A custom resolver: a named function provided by the consumer that produces a value, optionally depending on other accounts and arguments.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the resolver function."
+                },
+                {
+                    "name": "docs",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "string"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Markdown documentation for the resolver."
+                },
+                {
+                    "name": "dependsOn",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "union",
+                            "name": "ResolverDependency"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "The accounts and arguments the resolver depends on. Used by clients to ensure the dependencies are resolved first."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "accountNode",
+            "docs": "An on-chain account: its name, data structure, optional fixed size, optional PDA, and optional discriminators.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the account."
+                },
+                {
+                    "name": "size",
+                    "type": {
+                        "kind": "integer",
+                        "width": "u64"
+                    },
+                    "optional": true,
+                    "docs": "The size of the account in bytes, when the data length is fixed."
+                },
+                {
+                    "name": "docs",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "string"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Markdown documentation for the account."
+                },
+                {
+                    "name": "data",
+                    "type": {
+                        "kind": "nestedTypeNode",
+                        "name": "structTypeNode"
+                    },
+                    "docs": "The struct describing the account data."
+                },
+                {
+                    "name": "pda",
+                    "type": {
+                        "kind": "node",
+                        "name": "pdaLinkNode"
+                    },
+                    "optional": true,
+                    "docs": "A link to the PDA the account is derived from, if applicable."
+                },
+                {
+                    "name": "discriminators",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "union",
+                            "name": "DiscriminatorNode"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Discriminators that distinguish this account from others in the program. When multiple are listed, they are combined with a logical AND."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "constantNode",
+            "docs": "A named constant exposed by the program: a typed value associated with a name.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the constant."
+                },
+                {
+                    "name": "docs",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "string"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Markdown documentation for the constant."
+                },
+                {
+                    "name": "type",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The type of the constant."
+                },
+                {
+                    "name": "value",
+                    "type": {
+                        "kind": "union",
+                        "name": "ValueNode"
+                    },
+                    "docs": "The concrete value of the constant."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "definedTypeNode",
+            "docs": "A reusable named type that can be referenced by `definedTypeLinkNode` from elsewhere in the IDL.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the defined type."
+                },
+                {
+                    "name": "docs",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "string"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Markdown documentation for the type."
+                },
+                {
+                    "name": "type",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The type definition."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "errorNode",
+            "docs": "A program error — a numeric code paired with a name and human-readable message.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the error."
+                },
+                {
+                    "name": "code",
+                    "type": {
+                        "kind": "integer",
+                        "width": "u32"
+                    },
+                    "docs": "The numeric error code returned by the program."
+                },
+                {
+                    "name": "message",
+                    "type": {
+                        "kind": "string"
+                    },
+                    "docs": "A human-readable description of the error."
+                },
+                {
+                    "name": "docs",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "string"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Markdown documentation for the error."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "eventNode",
+            "docs": "A program event: its data shape and optional discriminators used to identify it on the wire.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the event."
+                },
+                {
+                    "name": "docs",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "string"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Markdown documentation for the event."
+                },
+                {
+                    "name": "data",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The type describing the event payload."
+                },
+                {
+                    "name": "discriminators",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "union",
+                            "name": "DiscriminatorNode"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Discriminators that distinguish this event from others. When multiple are listed, they are combined with a logical AND."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "instructionAccountNode",
+            "docs": "An account participating in an instruction, with its name, signing/writability flags, and an optional default value.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the account."
+                },
+                {
+                    "name": "isWritable",
+                    "type": {
+                        "kind": "boolean"
+                    },
+                    "docs": "Whether the instruction may write to the account."
+                },
+                {
+                    "name": "isSigner",
+                    "type": {
+                        "kind": "literalUnion",
+                        "values": [
+                            true,
+                            false,
+                            "either"
+                        ]
+                    },
+                    "docs": "Whether the account must sign the transaction. The literal `\"either\"` indicates a slot that may or may not sign depending on context."
+                },
+                {
+                    "name": "isOptional",
+                    "type": {
+                        "kind": "boolean"
+                    },
+                    "optional": true,
+                    "docs": "Whether the account slot may be omitted by callers."
+                },
+                {
+                    "name": "docs",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "string"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Markdown documentation for the account slot."
+                },
+                {
+                    "name": "defaultValue",
+                    "type": {
+                        "kind": "union",
+                        "name": "InstructionInputValueNode"
+                    },
+                    "optional": true,
+                    "docs": "A default value used to fill the slot when the caller does not provide one."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "instructionArgumentNode",
+            "docs": "A named argument of an instruction, with its type and an optional default value.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the argument."
+                },
+                {
+                    "name": "defaultValueStrategy",
+                    "type": {
+                        "kind": "enumeration",
+                        "name": "DefaultValueStrategy"
+                    },
+                    "optional": true,
+                    "docs": "How a configured default value is exposed in generated APIs. Required when `defaultValue` is set."
+                },
+                {
+                    "name": "docs",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "string"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Markdown documentation for the argument."
+                },
+                {
+                    "name": "type",
+                    "type": {
+                        "kind": "union",
+                        "name": "TypeNode"
+                    },
+                    "docs": "The type of the argument."
+                },
+                {
+                    "name": "defaultValue",
+                    "type": {
+                        "kind": "union",
+                        "name": "InstructionInputValueNode"
+                    },
+                    "optional": true,
+                    "docs": "A default value used when the argument is omitted by callers."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "instructionByteDeltaNode",
+            "docs": "A byte-size delta applied when computing rent or buffer size — typically used by instructions that resize accounts.",
+            "attributes": [
+                {
+                    "name": "withHeader",
+                    "type": {
+                        "kind": "boolean"
+                    },
+                    "docs": "Whether the delta includes the account header overhead."
+                },
+                {
+                    "name": "subtract",
+                    "type": {
+                        "kind": "boolean"
+                    },
+                    "optional": true,
+                    "docs": "When `true`, the delta is subtracted from the running size instead of added. Defaults to `false`."
+                },
+                {
+                    "name": "value",
+                    "type": {
+                        "kind": "union",
+                        "name": "InstructionByteDeltaValue"
+                    },
+                    "docs": "The source of the delta value — a literal number, a referenced account or argument, or a resolver."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "instructionNode",
+            "docs": "A program instruction: its accounts, arguments, byte-delta hints, discriminators, optional status, and optional sub-instructions.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the instruction."
+                },
+                {
+                    "name": "docs",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "string"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Markdown documentation for the instruction."
+                },
+                {
+                    "name": "optionalAccountStrategy",
+                    "type": {
+                        "kind": "enumeration",
+                        "name": "OptionalAccountStrategy"
+                    },
+                    "optional": true,
+                    "docs": "How absent optional accounts are represented when serialising the instruction."
+                },
+                {
+                    "name": "accounts",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "instructionAccountNode"
+                        }
+                    },
+                    "docs": "The accounts the instruction operates on, in order."
+                },
+                {
+                    "name": "arguments",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "instructionArgumentNode"
+                        }
+                    },
+                    "docs": "The serialised arguments of the instruction, in order."
+                },
+                {
+                    "name": "extraArguments",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "instructionArgumentNode"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Additional arguments exposed in the generated client API but not serialised on the wire."
+                },
+                {
+                    "name": "remainingAccounts",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "instructionRemainingAccountsNode"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Variable-length tails of accounts appended after the named account slots."
+                },
+                {
+                    "name": "byteDeltas",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "instructionByteDeltaNode"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Byte-size adjustments applied when computing rent or buffer size — for instructions that resize accounts."
+                },
+                {
+                    "name": "discriminators",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "union",
+                            "name": "DiscriminatorNode"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Discriminators that distinguish this instruction from others. When multiple are listed, they are combined with a logical AND."
+                },
+                {
+                    "name": "status",
+                    "type": {
+                        "kind": "node",
+                        "name": "instructionStatusNode"
+                    },
+                    "optional": true,
+                    "docs": "The lifecycle status of the instruction."
+                },
+                {
+                    "name": "subInstructions",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "instructionNode"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Inner instructions invoked through CPI as part of executing this instruction."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "instructionRemainingAccountsNode",
+            "docs": "A \"remaining accounts\" slot in an instruction — a variable-length tail of accounts derived from a value.",
+            "attributes": [
+                {
+                    "name": "isOptional",
+                    "type": {
+                        "kind": "boolean"
+                    },
+                    "optional": true,
+                    "docs": "Whether the remaining-accounts tail may be empty."
+                },
+                {
+                    "name": "isSigner",
+                    "type": {
+                        "kind": "literalUnion",
+                        "values": [
+                            true,
+                            false,
+                            "either"
+                        ]
+                    },
+                    "optional": true,
+                    "docs": "Whether each remaining account must sign the transaction. The literal `\"either\"` indicates a slot that may or may not sign depending on context."
+                },
+                {
+                    "name": "isWritable",
+                    "type": {
+                        "kind": "boolean"
+                    },
+                    "optional": true,
+                    "docs": "Whether the instruction may write to each remaining account."
+                },
+                {
+                    "name": "docs",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "string"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Markdown documentation for the remaining-accounts slot."
+                },
+                {
+                    "name": "value",
+                    "type": {
+                        "kind": "union",
+                        "name": "InstructionRemainingAccountsValue"
+                    },
+                    "docs": "The source of the remaining-accounts list — a referenced argument or a resolver."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "instructionStatusNode",
+            "docs": "The lifecycle stage of an instruction (draft, live, deprecated, archived) with an optional accompanying message.",
+            "attributes": [
+                {
+                    "name": "lifecycle",
+                    "type": {
+                        "kind": "enumeration",
+                        "name": "InstructionLifecycle"
+                    },
+                    "docs": "The lifecycle stage."
+                },
+                {
+                    "name": "message",
+                    "type": {
+                        "kind": "string"
+                    },
+                    "optional": true,
+                    "docs": "Free-form prose accompanying the status — e.g. a deprecation notice with migration guidance."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "pdaNode",
+            "docs": "A program-derived address: its name, optional program ID override, and the seeds used to derive it.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the PDA."
+                },
+                {
+                    "name": "docs",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "string"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Markdown documentation for the PDA."
+                },
+                {
+                    "name": "programId",
+                    "type": {
+                        "kind": "string"
+                    },
+                    "optional": true,
+                    "docs": "The base58-encoded program ID used to derive the PDA. When omitted, the surrounding program is assumed."
+                },
+                {
+                    "name": "seeds",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "union",
+                            "name": "PdaSeedNode"
+                        }
+                    },
+                    "docs": "The seeds used to derive the PDA, in order."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "programNode",
+            "docs": "A Solana program: its identity, version, accounts, instructions, defined types, PDAs, events, errors, and constants.",
+            "attributes": [
+                {
+                    "name": "name",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "identifier"
+                    },
+                    "docs": "The name of the program."
+                },
+                {
+                    "name": "publicKey",
+                    "type": {
+                        "kind": "string"
+                    },
+                    "docs": "The base58-encoded program ID."
+                },
+                {
+                    "name": "version",
+                    "type": {
+                        "kind": "string",
+                        "constraint": "version"
+                    },
+                    "docs": "The version of the program, in semver form."
+                },
+                {
+                    "name": "origin",
+                    "type": {
+                        "kind": "enumeration",
+                        "name": "ProgramOrigin"
+                    },
+                    "optional": true,
+                    "docs": "The toolchain that originally generated the program description, if known."
+                },
+                {
+                    "name": "docs",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "string"
+                        }
+                    },
+                    "optional": true,
+                    "docs": "Markdown documentation for the program."
+                },
+                {
+                    "name": "accounts",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "accountNode"
+                        }
+                    },
+                    "docs": "The accounts owned by the program."
+                },
+                {
+                    "name": "instructions",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "instructionNode"
+                        }
+                    },
+                    "docs": "The instructions exposed by the program."
+                },
+                {
+                    "name": "definedTypes",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "definedTypeNode"
+                        }
+                    },
+                    "docs": "The reusable types defined by the program."
+                },
+                {
+                    "name": "pdas",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "pdaNode"
+                        }
+                    },
+                    "docs": "The PDAs derived by the program."
+                },
+                {
+                    "name": "events",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "eventNode"
+                        }
+                    },
+                    "docs": "The events emitted by the program."
+                },
+                {
+                    "name": "errors",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "errorNode"
+                        }
+                    },
+                    "docs": "The errors returned by the program."
+                },
+                {
+                    "name": "constants",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "constantNode"
+                        }
+                    },
+                    "docs": "The constants exposed by the program."
+                }
+            ],
+            "examples": []
+        },
+        {
+            "kind": "rootNode",
+            "docs": "The root of a Codama IDL document. Pairs a primary program with any number of additional programs and tags the document with the spec version.",
+            "attributes": [
+                {
+                    "name": "standard",
+                    "type": {
+                        "kind": "literal",
+                        "value": "codama"
+                    },
+                    "docs": "A literal marker identifying the document as a Codama IDL."
+                },
+                {
+                    "name": "version",
+                    "type": {
+                        "kind": "codamaVersion"
+                    },
+                    "docs": "The Codama spec version this document conforms to."
+                },
+                {
+                    "name": "program",
+                    "type": {
+                        "kind": "node",
+                        "name": "programNode"
+                    },
+                    "docs": "The primary program described by the document."
+                },
+                {
+                    "name": "additionalPrograms",
+                    "type": {
+                        "kind": "array",
+                        "of": {
+                            "kind": "node",
+                            "name": "programNode"
+                        }
+                    },
+                    "docs": "Additional programs referenced by the primary program."
+                }
+            ],
+            "examples": []
+        }
+    ],
+    "unions": [
+        {
+            "name": "StandaloneTypeNode",
+            "members": [
+                {
+                    "kind": "node",
+                    "name": "amountTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "arrayTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "booleanTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "bytesTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "dateTimeTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "enumTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "fixedSizeTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "hiddenPrefixTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "hiddenSuffixTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "mapTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "numberTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "optionTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "postOffsetTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "preOffsetTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "publicKeyTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "remainderOptionTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "sentinelTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "setTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "sizePrefixTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "solAmountTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "stringTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "structTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "tupleTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "zeroableOptionTypeNode"
+                }
+            ],
+            "docs": "Every type node that can be used as a top-level type."
+        },
+        {
+            "name": "EnumVariantTypeNode",
+            "members": [
+                {
+                    "kind": "node",
+                    "name": "enumEmptyVariantTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "enumStructVariantTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "enumTupleVariantTypeNode"
+                }
+            ],
+            "docs": "The variant flavours of an `enumTypeNode`."
+        },
+        {
+            "name": "TypeNode",
+            "members": [
+                {
+                    "kind": "union",
+                    "name": "StandaloneTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "definedTypeLinkNode"
+                }
+            ],
+            "docs": "The composable form: any standalone type, or a reference to a defined type via `definedTypeLinkNode`."
+        },
+        {
+            "name": "RegisteredTypeNode",
+            "members": [
+                {
+                    "kind": "union",
+                    "name": "StandaloneTypeNode"
+                },
+                {
+                    "kind": "union",
+                    "name": "EnumVariantTypeNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "structFieldTypeNode"
+                }
+            ],
+            "docs": "Every node tagged as a type-shaped node, including variants and struct fields."
+        },
+        {
+            "name": "StandaloneValueNode",
+            "members": [
+                {
+                    "kind": "node",
+                    "name": "arrayValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "booleanValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "bytesValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "constantValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "enumValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "mapValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "noneValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "numberValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "publicKeyValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "setValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "someValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "stringValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "structValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "tupleValueNode"
+                }
+            ],
+            "docs": "Every value node that can be used as a top-level value."
+        },
+        {
+            "name": "ValueNode",
+            "members": [
+                {
+                    "kind": "union",
+                    "name": "StandaloneValueNode"
+                }
+            ],
+            "docs": "The composable form: any standalone value node."
+        },
+        {
+            "name": "RegisteredValueNode",
+            "members": [
+                {
+                    "kind": "union",
+                    "name": "StandaloneValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "mapEntryValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "structFieldValueNode"
+                }
+            ],
+            "docs": "Every node tagged as a value-shaped node, including container variants."
+        },
+        {
+            "name": "EnumValuePayload",
+            "members": [
+                {
+                    "kind": "node",
+                    "name": "structValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "tupleValueNode"
+                }
+            ],
+            "docs": "The payload kinds an `enumValueNode` may carry — struct fields or positional tuple slots."
+        },
+        {
+            "name": "RegisteredLinkNode",
+            "members": [
+                {
+                    "kind": "node",
+                    "name": "accountLinkNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "definedTypeLinkNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "instructionAccountLinkNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "instructionArgumentLinkNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "instructionLinkNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "pdaLinkNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "programLinkNode"
+                }
+            ],
+            "docs": "Every node tagged as a link to another part of the IDL."
+        },
+        {
+            "name": "LinkNode",
+            "members": [
+                {
+                    "kind": "union",
+                    "name": "RegisteredLinkNode"
+                }
+            ],
+            "docs": "The composable form: any registered link node."
+        },
+        {
+            "name": "RegisteredPdaSeedNode",
+            "members": [
+                {
+                    "kind": "node",
+                    "name": "constantPdaSeedNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "variablePdaSeedNode"
+                }
+            ],
+            "docs": "Every node tagged as a PDA seed."
+        },
+        {
+            "name": "PdaSeedNode",
+            "members": [
+                {
+                    "kind": "union",
+                    "name": "RegisteredPdaSeedNode"
+                }
+            ],
+            "docs": "The composable form: any registered PDA seed node."
+        },
+        {
+            "name": "ConstantPdaSeedValue",
+            "members": [
+                {
+                    "kind": "node",
+                    "name": "programIdValueNode"
+                },
+                {
+                    "kind": "union",
+                    "name": "ValueNode"
+                }
+            ],
+            "docs": "The value forms a `constantPdaSeedNode` may carry — either a literal value or the program ID placeholder."
+        },
+        {
+            "name": "RegisteredCountNode",
+            "members": [
+                {
+                    "kind": "node",
+                    "name": "fixedCountNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "prefixedCountNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "remainderCountNode"
+                }
+            ],
+            "docs": "Every node tagged as a count strategy."
+        },
+        {
+            "name": "CountNode",
+            "members": [
+                {
+                    "kind": "union",
+                    "name": "RegisteredCountNode"
+                }
+            ],
+            "docs": "The composable form: any registered count node."
+        },
+        {
+            "name": "RegisteredDiscriminatorNode",
+            "members": [
+                {
+                    "kind": "node",
+                    "name": "constantDiscriminatorNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "fieldDiscriminatorNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "sizeDiscriminatorNode"
+                }
+            ],
+            "docs": "Every node tagged as a discriminator strategy."
+        },
+        {
+            "name": "DiscriminatorNode",
+            "members": [
+                {
+                    "kind": "union",
+                    "name": "RegisteredDiscriminatorNode"
+                }
+            ],
+            "docs": "The composable form: any registered discriminator node."
+        },
+        {
+            "name": "StandaloneContextualValueNode",
+            "members": [
+                {
+                    "kind": "node",
+                    "name": "accountBumpValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "accountValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "argumentValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "conditionalValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "identityValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "payerValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "pdaValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "programIdValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "resolverValueNode"
+                }
+            ],
+            "docs": "Every contextual-value node usable as a top-level value."
+        },
+        {
+            "name": "ContextualValueNode",
+            "members": [
+                {
+                    "kind": "union",
+                    "name": "StandaloneContextualValueNode"
+                }
+            ],
+            "docs": "The composable form: any standalone contextual-value node."
+        },
+        {
+            "name": "RegisteredContextualValueNode",
+            "members": [
+                {
+                    "kind": "union",
+                    "name": "StandaloneContextualValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "pdaSeedValueNode"
+                }
+            ],
+            "docs": "Every node tagged as a contextual-value node, including helper variants."
+        },
+        {
+            "name": "InstructionInputValueNode",
+            "members": [
+                {
+                    "kind": "union",
+                    "name": "ContextualValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "programLinkNode"
+                },
+                {
+                    "kind": "union",
+                    "name": "ValueNode"
+                }
+            ],
+            "docs": "Anything that can be used as the input value for an instruction account or argument default — a value, contextual reference, or program link."
+        },
+        {
+            "name": "ConditionalValueCondition",
+            "members": [
+                {
+                    "kind": "node",
+                    "name": "accountValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "argumentValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "resolverValueNode"
+                }
+            ],
+            "docs": "The condition forms accepted by a `conditionalValueNode`."
+        },
+        {
+            "name": "ResolverDependency",
+            "members": [
+                {
+                    "kind": "node",
+                    "name": "accountValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "argumentValueNode"
+                }
+            ],
+            "docs": "The dependency forms accepted by a `resolverValueNode`."
+        },
+        {
+            "name": "PdaSeedValueValue",
+            "members": [
+                {
+                    "kind": "node",
+                    "name": "accountValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "argumentValueNode"
+                },
+                {
+                    "kind": "union",
+                    "name": "ValueNode"
+                }
+            ],
+            "docs": "The value forms accepted by a `pdaSeedValueNode`."
+        },
+        {
+            "name": "PdaValuePda",
+            "members": [
+                {
+                    "kind": "node",
+                    "name": "pdaLinkNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "pdaNode"
+                }
+            ],
+            "docs": "A `pdaValueNode` may reference a PDA either by link or inline."
+        },
+        {
+            "name": "PdaValueProgramId",
+            "members": [
+                {
+                    "kind": "node",
+                    "name": "accountValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "argumentValueNode"
+                }
+            ],
+            "docs": "The program-id forms accepted by a `pdaValueNode`."
+        },
+        {
+            "name": "InstructionByteDeltaValue",
+            "members": [
+                {
+                    "kind": "node",
+                    "name": "accountLinkNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "argumentValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "numberValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "resolverValueNode"
+                }
+            ],
+            "docs": "The value forms accepted by an `instructionByteDeltaNode`."
+        },
+        {
+            "name": "InstructionRemainingAccountsValue",
+            "members": [
+                {
+                    "kind": "node",
+                    "name": "argumentValueNode"
+                },
+                {
+                    "kind": "node",
+                    "name": "resolverValueNode"
+                }
+            ],
+            "docs": "The value forms accepted by an `instructionRemainingAccountsNode`."
+        }
+    ],
+    "nestedTypeNodeWrappers": [
+        "fixedSizeTypeNode",
+        "sizePrefixTypeNode",
+        "preOffsetTypeNode",
+        "postOffsetTypeNode",
+        "sentinelTypeNode",
+        "hiddenPrefixTypeNode",
+        "hiddenSuffixTypeNode"
+    ]
+}
