@@ -1,6 +1,6 @@
 {
     "name": "@codama-internal/gen-ts-node-types",
-    "version": "0.0.1-rc.0",
+    "version": "0.0.1-rc.1",
     "private": true,
     "description": "Generates the @codama/node-types package source from the encoded spec",
     "type": "module",
