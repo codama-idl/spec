@@ -28,7 +28,7 @@
     "packageManager": "pnpm@10.33.3",
     "prettier": "@solana/prettier-config-solana",
     "pnpm": {
-        "onlyBuiltDependencies": [
+        "ignoredBuiltDependencies": [
             "esbuild",
             "unrs-resolver"
         ]
