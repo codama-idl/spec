@@ -9,6 +9,10 @@ export default defineConfig([
             '**/node_modules/**',
             '**/.turbo/**',
             '**/tsup.config.ts',
+            // Transient files tsup writes next to its config while bundling
+            // it. They appear and disappear during a build and must not be
+            // linted, otherwise lint racing with build fails with ENOENT.
+            '**/tsup.config.bundled_*.mjs',
             '**/vitest.config.mts',
             'tsup.config.base.ts',
             'vitest.config.base.mts',
