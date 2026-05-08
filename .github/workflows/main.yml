@@ -112,5 +112,7 @@ jobs:
           commit: 'release: version packages'
           title: 'release: version packages'
         env:
+          # No NPM_TOKEN: this repo uses npm trusted publishing (OIDC).
+          # `id-token: write` above lets pnpm exchange a GitHub OIDC token
+          # for a short-lived publish token at `pnpm publish` time.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
