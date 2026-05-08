@@ -11,7 +11,11 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
-  NODE_VERSION: 20
+  # Node 24 is required for npm trusted publishing (OIDC) in the release job;
+  # see https://docs.npmjs.com/trusted-publishers (npm CLI ≥11.5.1, Node ≥22.14.0).
+  # The js and rust jobs don't care about the Node version so we keep them all
+  # aligned for simplicity.
+  NODE_VERSION: 24
   PNPM_VERSION: 10.33.3
 
 jobs:
@@ -92,11 +96,18 @@ jobs:
         with:
           version: ${{ env.PNPM_VERSION }}
 
+      # Note: no `registry-url` here. Setting it makes setup-node write
+      # `_authToken=${NODE_AUTH_TOKEN}` into a temp .npmrc and point pnpm at
+      # it. Without an NPM_TOKEN secret (we don't have one — we use OIDC) the
+      # placeholder `XXXXX-XXXXX-XXXXX-XXXXX` lands in that .npmrc and pnpm
+      # tries to authenticate with it, shadowing the OIDC token exchange.
+      # Omitting `registry-url` leaves pnpm to read the registry from its own
+      # config (defaulting to https://registry.npmjs.org) and lets its
+      # built-in OIDC code path provide auth.
       - uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
-          registry-url: 'https://registry.npmjs.org'
 
       - run: pnpm install --frozen-lockfile
 
