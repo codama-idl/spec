@@ -13,6 +13,7 @@
     "@codama/spec": "1.6.0-rc.0"
   },
   "changesets": [
+    "spotty-cases-smash",
     "verify-trusted-publishing"
   ]
 }
