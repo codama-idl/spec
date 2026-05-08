@@ -44,6 +44,14 @@ export function getBuildConfig(options: BuildOptions): TsupConfig {
         },
         platform: platform === 'node' ? 'node' : 'browser',
         sourcemap: true,
+        // Multi-entry ESM builds (e.g. `index` + `v1`) trigger tsup's code
+        // splitting by default, which lifts shared modules into hashed
+        // `chunk-*.mjs` files. Those chunks are not in `package.json#files`,
+        // so the published tarball ships entrypoints that re-export from
+        // missing modules and ESM consumers fail to resolve them at import
+        // time. Disable splitting so each entry inlines its dependencies
+        // and the published `dist/` is self-contained.
+        splitting: false,
         treeshake: true,
     };
 }
