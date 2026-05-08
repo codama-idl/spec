@@ -12,5 +12,7 @@
     "@codama/nodes": "1.6.0",
     "@codama/spec": "1.6.0-rc.0"
   },
-  "changesets": []
+  "changesets": [
+    "verify-trusted-publishing"
+  ]
 }
