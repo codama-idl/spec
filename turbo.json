@@ -13,10 +13,12 @@
         },
         "test:types": {},
         "lint": {
+            "dependsOn": ["^build"],
             "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/eslint.config.*"],
             "outputs": []
         },
         "lint:fix": {
+            "dependsOn": ["^build"],
             "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/eslint.config.*"],
             "outputs": ["*"]
         }

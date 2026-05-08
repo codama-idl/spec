@@ -1,4 +1,4 @@
-name: CI
+name: Main
 
 on:
   pull_request:
@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: main-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   NODE_VERSION: 20
@@ -73,3 +73,44 @@ jobs:
       - run: cargo build --workspace --all-targets
 
       - run: cargo test --workspace
+
+  release:
+    name: Open Version Packages PR / publish to npm
+    runs-on: ubuntu-latest
+    needs: [js, rust]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: pnpm install --frozen-lockfile
+
+      # Build before publishing so the dist artifacts are present in the
+      # workspace when `changeset publish` runs.
+      - run: pnpm build
+
+      - name: Open Version Packages PR or publish
+        uses: changesets/action@v1
+        with:
+          version: pnpm changeset version
+          publish: pnpm changeset publish
+          commit: 'release: version packages'
+          title: 'release: version packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
