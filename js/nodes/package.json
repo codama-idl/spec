@@ -1,6 +1,7 @@
 {
     "name": "@codama/nodes",
     "version": "1.6.0",
+    "private": true,
     "description": "Generated factories and helpers for the Codama node specification",
     "exports": {
         "types": "./dist/types/index.d.ts",

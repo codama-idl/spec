@@ -22,7 +22,7 @@ export default defineConfig([
         extends: [solanaConfig],
     },
     {
-        files: ['scripts/**', 'generators/**', 'spec/**'],
+        files: ['generators/**', 'spec/**'],
         rules: {
             'sort-keys-fix/sort-keys-fix': 'off',
             'typescript-sort-keys/interface': 'off',

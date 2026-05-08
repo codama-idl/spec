@@ -17,23 +17,23 @@ Higher-level Codama tooling — visitors, validators, renderers, the CLI — liv
 ```
 spec/                # @codama/spec — meta-model API + encoded spec + spec-v1.json producer
 js/
-  node-types/        # @codama/node-types — generated TypeScript interfaces
-  nodes/             # @codama/nodes — generated factories + hand-written helpers
+  node-types/        # @codama/node-types — generated TypeScript interfaces (workspace-only; not published from this repo)
+  nodes/             # @codama/nodes — generated factories + hand-written helpers (workspace-only; not published from this repo)
 rust/
   codama-nodes/      # generated structs + hand-written traits
   codama-nodes-derive/  # the #[node] proc-macro
 generators/          # internal codegen scripts (not published)
 docs/                # generated per-node markdown documentation
-scripts/release/     # custom polyglot release tooling
-.changeset/          # release intent files (changesets-inspired, polyglot)
+.changeset/          # release intent files (managed by @changesets/cli)
 spec-v1.json         # canonical Codama v1 spec artifact (generated, committed)
 codama.schema.json   # public JSON Schema (generated, committed)
-COMPATIBILITY.md     # package ↔ spec version matrix (generated, committed)
 ```
 
 ## Versioning
 
-Packages and crates evolve on independent semver. Each implementation declares the spec version it implements via manifest metadata:
+`@codama/spec` is the only npm package this repo currently publishes. The Rust crates (`codama-nodes`, `codama-nodes-derive`) are released manually via `cargo publish` for now and will move to the [codama-idl/codama-rs](https://github.com/codama-idl/codama-rs) repo over time. The placeholder `@codama/node-types` and `@codama/nodes` packages live in the workspace as scaffolding while the JS reference implementations migrate to [codama-idl/codama](https://github.com/codama-idl/codama).
+
+Each downstream implementation declares the spec version it implements via manifest metadata:
 
 ```jsonc
 // js/nodes/package.json
@@ -48,11 +48,17 @@ Packages and crates evolve on independent semver. Each implementation declares t
 spec = "^1.6.0"
 ```
 
-The current compatibility matrix is generated into [`COMPATIBILITY.md`](./COMPATIBILITY.md).
-
 ## Releasing
 
-Cross-ecosystem releases are coordinated through a small custom tool in [`scripts/release/`](./scripts/release/), driven by changesets-inspired intent files in [`.changeset/`](./.changeset/). See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for the contributor workflow.
+`@codama/spec` is released through [changesets](https://github.com/changesets/changesets):
+
+1. Run `pnpm changeset` on your branch to record a bump and a user-facing summary.
+2. Commit the generated `.changeset/*.md` alongside your changes.
+3. On merge to `main`, the [`Release` workflow](./.github/workflows/release.yml) either opens a "Version Packages" PR (when changesets are pending) or publishes `@codama/spec` to npm (when versions have been bumped).
+
+The repo is currently in **release-candidate mode** under the `rc` tag (see `.changeset/pre.json`). Every `pnpm changeset version` produces a `1.6.0-rc.N` version. To cut the stable release, run `pnpm changeset pre exit`, then `pnpm changeset version` and merge the resulting "Version Packages" PR.
+
+The Rust crates are released manually via `cargo publish` until they relocate. See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for the contributor workflow.
 
 ## License
 

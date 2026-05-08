@@ -4,7 +4,6 @@
 # Generated artifacts (do not show diffs by default in some platforms).
 spec-v1.json linguist-generated=true
 codama.schema.json linguist-generated=true
-COMPATIBILITY.md linguist-generated=true
 docs/** linguist-generated=true
 js/node-types/src/generated/** linguist-generated=true
 js/nodes/src/generated/** linguist-generated=true

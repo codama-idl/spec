@@ -1,6 +1,7 @@
 {
     "name": "@codama/node-types",
     "version": "1.6.0",
+    "private": true,
     "description": "Generated TypeScript interfaces for the Codama node specification",
     "exports": {
         "types": "./dist/types/index.d.ts",
