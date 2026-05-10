@@ -22,8 +22,11 @@ async function main(): Promise<void> {
     const spec = getSpec();
     const json = JSON.stringify(spec, null, 4) + '\n';
     await writeFile(out, json, 'utf8');
+    const nodeCount = spec.categories.reduce((acc, c) => acc + c.nodes.length, 0);
+    const unionCount = spec.categories.reduce((acc, c) => acc + c.unions.length, 0);
+    const enumCount = spec.categories.reduce((acc, c) => acc + c.enumerations.length, 0);
     process.stdout.write(
-        `wrote ${path.relative(repoRoot, out)} (${spec.nodes.length} nodes, ${spec.unions.length} unions, ${spec.enumerations.length} enumerations)\n`,
+        `wrote ${path.relative(repoRoot, out)} (${nodeCount} nodes, ${unionCount} unions, ${enumCount} enumerations)\n`,
     );
 }
 

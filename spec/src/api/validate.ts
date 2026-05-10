@@ -2,42 +2,61 @@
  * Self-consistency validation for an assembled spec.
  *
  * Returns an array of human-readable error strings. An empty array means
- * the spec is internally coherent — every reference resolves, no duplicate
- * names, naming conventions hold.
+ * the spec is internally coherent — every reference resolves, no
+ * duplicate names, naming conventions hold.
  */
 
-import type { Spec, TypeExpr } from './types';
+import type { EnumerationSpec, NestedUnionSpec, NodeSpec, Spec, TypeExpr, UnionSpec } from './types';
 
-type RegistryKind = 'enumeration' | 'node' | 'union';
+type RegistryKind = 'enumeration' | 'nestedUnion' | 'node' | 'union';
 
 export function validate(spec: Spec): string[] {
     const errors: string[] = [];
 
-    const nodeKinds = new Set(spec.nodes.map(n => n.kind));
-    const unionNames = new Set(spec.unions.map(u => u.name));
-    const enumerationNames = new Set(spec.enumerations.map(e => e.name));
-    const wrappers = new Set(spec.nestedTypeNodeWrappers);
+    const allNodes: NodeSpec[] = [];
+    const allUnions: UnionSpec[] = [];
+    const allEnumerations: EnumerationSpec[] = [];
+    const allNestedUnions: NestedUnionSpec[] = [];
+    for (const c of spec.categories) {
+        allNodes.push(...c.nodes);
+        allUnions.push(...c.unions);
+        allEnumerations.push(...c.enumerations);
+        allNestedUnions.push(...c.nestedUnions);
+    }
 
-    // Single-pass name-collision check. Detects both within-kind duplicates
-    // ("two nodes called `accountNode`") and cross-kind collisions ("there's
-    // a node and a union both called `TypeNode`") in one report per
-    // offending name.
+    const nodeKinds = new Set(allNodes.map(n => n.kind));
+    const unionNames = new Set(allUnions.map(u => u.name));
+    const enumerationNames = new Set(allEnumerations.map(e => e.name));
+    const nestedUnionNames = new Set(allNestedUnions.map(nu => nu.name));
+
+    // Single-pass name-collision check across nodes, unions, enumerations,
+    // and nested unions. One error per offending name.
     const registrations = new Map<string, RegistryKind[]>();
     const record = (name: string, kind: RegistryKind): void => {
         const list = registrations.get(name);
         if (list) list.push(kind);
         else registrations.set(name, [kind]);
     };
-    for (const n of spec.nodes) record(n.kind, 'node');
-    for (const u of spec.unions) record(u.name, 'union');
-    for (const e of spec.enumerations) record(e.name, 'enumeration');
+    for (const n of allNodes) record(n.kind, 'node');
+    for (const u of allUnions) record(u.name, 'union');
+    for (const e of allEnumerations) record(e.name, 'enumeration');
+    for (const nu of allNestedUnions) record(nu.name, 'nestedUnion');
 
     for (const [name, kinds] of registrations) {
         if (kinds.length > 1) errors.push(formatCollisionError(name, kinds));
     }
 
+    // Duplicate category names.
+    const seenCategories = new Set<string>();
+    for (const c of spec.categories) {
+        if (seenCategories.has(c.name)) {
+            errors.push(`Category "${c.name}" is declared more than once.`);
+        }
+        seenCategories.add(c.name);
+    }
+
     // Per-node validation.
-    for (const n of spec.nodes) {
+    for (const n of allNodes) {
         if (!/^[a-z][A-Za-z0-9]*Node$/.test(n.kind)) {
             errors.push(`Node kind "${n.kind}" does not match the camelCase ...Node naming convention.`);
         }
@@ -48,13 +67,13 @@ export function validate(spec: Spec): string[] {
             }
             seenAttrs.add(a.name);
             walkTypeExpr(a.type, expr =>
-                checkRef(expr, n.kind, a.name, errors, nodeKinds, unionNames, enumerationNames),
+                checkRef(expr, n.kind, a.name, errors, nodeKinds, unionNames, enumerationNames, nestedUnionNames),
             );
         }
     }
 
     // Union member resolution.
-    for (const u of spec.unions) {
+    for (const u of allUnions) {
         if (u.members.length === 0) {
             errors.push(`Union "${u.name}" has no members.`);
         }
@@ -74,10 +93,15 @@ export function validate(spec: Spec): string[] {
         }
     }
 
-    // nestedTypeNode wrapper sanity.
-    for (const wrapper of wrappers) {
-        if (!nodeKinds.has(wrapper)) {
-            errors.push(`Nested-type-node wrapper "${wrapper}" is not a defined node.`);
+    // Nested-union wrapper sanity.
+    for (const nu of allNestedUnions) {
+        if (nu.wrappers.length === 0) {
+            errors.push(`Nested union "${nu.name}" has no wrappers.`);
+        }
+        for (const w of nu.wrappers) {
+            if (!nodeKinds.has(w)) {
+                errors.push(`Nested union "${nu.name}" wrapper "${w}" is not a defined node.`);
+            }
         }
     }
 
@@ -91,7 +115,7 @@ function formatCollisionError(name: string, kinds: RegistryKind[]): string {
         .sort((a, b) => a[0].localeCompare(b[0]))
         .map(([k, n]) => `${n} ${k}${n > 1 ? 's' : ''}`)
         .join(', ');
-    return `Name "${name}" is registered ${kinds.length} times (${breakdown}); names must be unique across nodes, unions, and enumerations.`;
+    return `Name "${name}" is registered ${kinds.length} times (${breakdown}); names must be unique across nodes, unions, enumerations, and nested unions.`;
 }
 
 function walkTypeExpr(expr: TypeExpr, visit: (expr: TypeExpr) => void): void {
@@ -111,6 +135,7 @@ function checkRef(
     nodeKinds: Set<string>,
     unionNames: Set<string>,
     enumerationNames: Set<string>,
+    nestedUnionNames: Set<string>,
 ): void {
     const where = `Node "${nodeKind}", attribute "${attrName}":`;
     switch (expr.kind) {
@@ -129,9 +154,12 @@ function checkRef(
                 errors.push(`${where} references undefined enumeration "${expr.name}".`);
             }
             break;
-        case 'nestedTypeNode':
+        case 'nestedUnion':
             if (!nodeKinds.has(expr.name)) {
-                errors.push(`${where} nestedTypeNode references undefined node "${expr.name}".`);
+                errors.push(`${where} nestedUnion references undefined node "${expr.name}".`);
+            }
+            if (!nestedUnionNames.has(expr.alias)) {
+                errors.push(`${where} nestedUnion references undefined alias "${expr.alias}".`);
             }
             break;
         default:
@@ -140,18 +168,17 @@ function checkRef(
 }
 
 /**
- * Child-detection helper used by codegen, docs, and visitor-table
- * generators.
+ * Discriminator helper used by codegen, docs, and visitor-table generators.
  *
  * A "child" attribute is one whose value contains another node. Specifically,
- * any attribute whose type tree includes a `node`, `nestedTypeNode`, or
+ * any attribute whose type tree includes a `node`, `nestedUnion`, or
  * `union` is treated as a child. Optionality (the `optional` flag on the
  * attribute itself) is orthogonal to this classification.
  */
 export function isChildAttribute(type: TypeExpr): boolean {
     switch (type.kind) {
         case 'node':
-        case 'nestedTypeNode':
+        case 'nestedUnion':
         case 'union':
             return true;
         case 'array':

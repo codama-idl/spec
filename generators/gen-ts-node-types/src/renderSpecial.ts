@@ -2,19 +2,20 @@
  * Renderers for the handful of TS files that aren't a 1:1 mapping of a
  * single spec entity:
  *
- *   - `NestedTypeNode<T>` — recursive generic alias derived from the
- *     spec's `nestedTypeNodeWrappers` list.
+ *   - One `NestedUnion<T>` recursive alias per `NestedUnionSpec`.
  *   - `Node` master union + `NodeKind` + `GetNodeFromKind`.
  *   - `shared/brands.ts` — branded string types (CamelCaseString, etc.).
  *   - `shared/version.ts` — `Version` template-literal type and
  *     `CodamaVersion` literal type pinned to the spec version.
+ *   - `shared/docs.ts` — `Docs` array alias.
  */
 
-import type { Spec } from '@codama/spec';
+import type { NestedUnionSpec, Spec, TypeExpr } from '@codama/spec';
 import { type Fragment, fragment, mergeFragments, use } from '@codama-internal/fragment';
 
 import { type Layout, type Location, relativeImportPath } from './layout';
 import { pascalCase } from './naming';
+import { renderTypeExpr } from './renderTypeExpr';
 
 const BRANDS: readonly { readonly name: string; readonly slug: string }[] = [
     { name: 'CamelCaseString', slug: 'camelCase' },
@@ -72,36 +73,39 @@ export function renderDocsFile(): Fragment {
 }
 
 /**
- * The recursive `NestedTypeNode<T>` alias. Wrapper kinds come from the
- * spec's `nestedTypeNodeWrappers` field — they're the type nodes whose
- * shape is `{ type: ... }` and which can wrap another type recursively.
+ * One `NestedUnion<T>` recursive alias file, derived from a
+ * `NestedUnionSpec`. The base type expression is rendered against the
+ * current file via `renderTypeExpr`; each wrapper kind contributes one
+ * arm of the union.
  */
-export function renderNestedTypeNodeFile(spec: Spec, layout: Layout, currentLocation: Location): Fragment {
-    const wrappers = [...spec.nestedTypeNodeWrappers].sort();
+export function renderNestedUnionFile(nu: NestedUnionSpec, layout: Layout, currentLocation: Location): Fragment {
+    const sortedWrappers = [...nu.wrappers].sort();
 
-    const typeNodeTarget = layout.unionNameToLocation.get('TypeNode');
-    if (!typeNodeTarget) throw new Error('renderNestedTypeNodeFile: spec is missing the TypeNode union');
-    const typeNodeRef = use('type TypeNode', relativeImportPath(currentLocation, typeNodeTarget));
+    const baseFragment = renderTypeExpr(nu.base, { currentLocation, layout });
 
-    const wrapperRefs = wrappers.map(kind => {
+    const wrapperRefs = sortedWrappers.map(kind => {
         const target = layout.nodeKindToLocation.get(kind);
-        if (!target) throw new Error(`renderNestedTypeNodeFile: unknown wrapper "${kind}"`);
+        if (!target) throw new Error(`renderNestedUnionFile: unknown wrapper "${kind}"`);
         const interfaceName = pascalCase(kind);
         const path = relativeImportPath(currentLocation, target);
         return use(`type ${interfaceName}`, path);
     });
 
-    const allRefs: Fragment[] = [typeNodeRef, ...wrapperRefs];
+    const allRefs: Fragment[] = [baseFragment, ...wrapperRefs];
     return mergeFragments(allRefs, () => {
         const lines: string[] = [];
-        lines.push('/**');
-        lines.push(' * A type, possibly wrapped in zero-or-more size, offset, sentinel, or hidden');
-        lines.push(' * prefix/suffix modifiers. The wrapping is recursive: each modifier wraps');
-        lines.push(' * another `NestedTypeNode<T>` until the inner `T` is reached.');
-        lines.push(' */');
-        lines.push(`export type NestedTypeNode<TType extends ${typeNodeRef.content}> =`);
+        if (nu.docs && nu.docs.length > 0) {
+            if (nu.docs.length === 1) {
+                lines.push(`/** ${nu.docs[0]} */`);
+            } else {
+                lines.push('/**');
+                for (const d of nu.docs) lines.push(` * ${d}`);
+                lines.push(' */');
+            }
+        }
+        lines.push(`export type ${nu.name}<TType extends ${baseFragment.content}> =`);
         for (const w of wrapperRefs) {
-            lines.push(`    | ${w.content}<NestedTypeNode<TType>>`);
+            lines.push(`    | ${w.content}<${nu.name}<TType>>`);
         }
         lines.push('    | TType;');
         lines.push('');
@@ -118,7 +122,10 @@ export function renderNestedTypeNodeFile(spec: Spec, layout: Layout, currentLoca
  * a member of one of those (the uncategorised top-level nodes).
  */
 export function renderNodeMasterFile(spec: Spec, layout: Layout, currentLocation: Location): Fragment {
-    const categoryUnions = [
+    const allUnions = spec.categories.flatMap(c => c.unions);
+    const allNodes = spec.categories.flatMap(c => c.nodes);
+
+    const categoryUnionNames = [
         'RegisteredContextualValueNode',
         'RegisteredCountNode',
         'RegisteredDiscriminatorNode',
@@ -131,16 +138,16 @@ export function renderNodeMasterFile(spec: Spec, layout: Layout, currentLocation
     const registeredKinds = new Set<string>();
     const memberRefs: Fragment[] = [];
 
-    for (const unionName of categoryUnions) {
-        const union = spec.unions.find(u => u.name === unionName);
+    for (const unionName of categoryUnionNames) {
+        const union = allUnions.find(u => u.name === unionName);
         if (!union) continue;
-        collectKindsFromUnion(spec, union.name, registeredKinds);
+        collectKindsFromUnion(allUnions, union.name, registeredKinds);
         const target = layout.unionNameToLocation.get(union.name);
         if (!target) throw new Error(`renderNodeMasterFile: missing location for union "${union.name}"`);
         memberRefs.push(use(`type ${unionName}`, relativeImportPath(currentLocation, target)));
     }
 
-    for (const node of spec.nodes) {
+    for (const node of allNodes) {
         if (registeredKinds.has(node.kind)) continue;
         const target = layout.nodeKindToLocation.get(node.kind);
         if (!target) throw new Error(`renderNodeMasterFile: missing location for node "${node.kind}"`);
@@ -163,14 +170,21 @@ export function renderNodeMasterFile(spec: Spec, layout: Layout, currentLocation
     });
 }
 
-function collectKindsFromUnion(spec: Spec, unionName: string, out: Set<string>): void {
+function collectKindsFromUnion(
+    allUnions: readonly {
+        readonly name: string;
+        readonly members: readonly { kind: 'node' | 'union'; name: string }[];
+    }[],
+    unionName: string,
+    out: Set<string>,
+): void {
     const visited = new Set<string>();
     const stack: string[] = [unionName];
     while (stack.length > 0) {
         const name = stack.pop()!;
         if (visited.has(name)) continue;
         visited.add(name);
-        const union = spec.unions.find(u => u.name === name);
+        const union = allUnions.find(u => u.name === name);
         if (!union) continue;
         for (const m of union.members) {
             if (m.kind === 'node') out.add(m.name);
@@ -178,3 +192,7 @@ function collectKindsFromUnion(spec: Spec, unionName: string, out: Set<string>):
         }
     }
 }
+
+// Re-export TypeExpr for downstream tooling that may want to construct
+// a `nestedUnion(...)` reference programmatically.
+export type { TypeExpr };

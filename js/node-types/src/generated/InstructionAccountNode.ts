@@ -13,7 +13,10 @@ export interface InstructionAccountNode<
     readonly name: CamelCaseString;
     /** Whether the instruction may write to the account. */
     readonly isWritable: boolean;
-    /** Whether the account must sign the transaction. The literal `"either"` indicates a slot that may or may not sign depending on context. */
+    /**
+     * Whether the account must sign the transaction.
+     * The literal `"either"` indicates a slot that may or may not sign depending on context.
+     */
     readonly isSigner: boolean | 'either';
     /** Whether the account slot may be omitted by callers. */
     readonly isOptional?: boolean;

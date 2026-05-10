@@ -18,10 +18,10 @@ describe('attribute and optionalAttribute', () => {
     });
 
     it('attaches docs when provided', () => {
-        expect(attribute('x', string(), { docs: 'hello' })).toEqual({
+        expect(attribute('x', string(), { docs: ['hello'] })).toEqual({
             name: 'x',
             type: { kind: 'string' },
-            docs: 'hello',
+            docs: ['hello'],
         });
     });
 
@@ -38,11 +38,11 @@ describe('attribute and optionalAttribute', () => {
     });
 
     it('optionalAttribute is sugar for `optional: true`', () => {
-        expect(optionalAttribute('x', string(), { docs: 'hi' })).toEqual({
+        expect(optionalAttribute('x', string(), { docs: ['hi'] })).toEqual({
             name: 'x',
             type: { kind: 'string' },
             optional: true,
-            docs: 'hi',
+            docs: ['hi'],
         });
     });
 });
@@ -63,10 +63,10 @@ describe('defineNode', () => {
 
     it('attaches optional node-level docs', () => {
         const n = defineNode('docNode', {
-            docs: 'A documented node.',
+            docs: ['A documented node.'],
             attributes: [attribute('v', string())],
         });
-        expect(n.docs).toBe('A documented node.');
+        expect(n.docs).toEqual(['A documented node.']);
     });
 
     it('omits node docs when absent', () => {

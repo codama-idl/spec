@@ -14,9 +14,11 @@
 
 import type {
     AttributeSpec,
+    CategorySpec,
     EnumerationSpec,
     EnumerationVariantSpec,
     LiteralValue,
+    NestedUnionSpec,
     NodeSpec,
     Spec,
     TypeExpr,
@@ -70,8 +72,8 @@ export function union(name: string): TypeExpr {
     return { kind: 'union', name };
 }
 
-export function nestedTypeNode(name: string): TypeExpr {
-    return { kind: 'nestedTypeNode', name };
+export function nestedUnion(alias: string, name: string): TypeExpr {
+    return { kind: 'nestedUnion', alias, name };
 }
 
 export function array(of: TypeExpr): TypeExpr {
@@ -96,7 +98,7 @@ export const i32 = (): TypeExpr => integer('i32');
 // Authoring helpers (local copies — see file header for rationale).
 
 export interface AttributeOptions {
-    readonly docs?: string;
+    readonly docs?: readonly string[];
     readonly optional?: boolean;
 }
 
@@ -118,7 +120,7 @@ export function optionalAttribute(
 }
 
 export interface VariantOptions {
-    readonly docs?: string;
+    readonly docs?: readonly string[];
 }
 
 export function variant(name: string, options: VariantOptions = {}): EnumerationVariantSpec {
@@ -129,7 +131,7 @@ export function variant(name: string, options: VariantOptions = {}): Enumeration
 }
 
 export interface DefineEnumerationOptions {
-    readonly docs?: string;
+    readonly docs?: readonly string[];
     readonly variants: readonly EnumerationVariantSpec[];
 }
 
@@ -142,7 +144,7 @@ export function defineEnumeration(name: string, options: DefineEnumerationOption
 }
 
 export interface DefineNodeOptions {
-    readonly docs?: string;
+    readonly docs?: readonly string[];
     readonly attributes: readonly AttributeSpec[];
     readonly examples?: readonly unknown[];
 }
@@ -159,7 +161,7 @@ export function defineNode(kind: string, options: DefineNodeOptions): NodeSpec {
 export type UnionMemberInput = TypeExpr | string;
 
 export interface DefineUnionOptions {
-    readonly docs?: string;
+    readonly docs?: readonly string[];
     readonly members: readonly UnionMemberInput[];
 }
 
@@ -177,38 +179,76 @@ export function defineUnion(name: string, options: DefineUnionOptions): UnionSpe
     };
 }
 
+export interface DefineNestedUnionOptions {
+    readonly docs?: readonly string[];
+    readonly base: TypeExpr;
+    readonly wrappers: readonly string[];
+}
+
+export function defineNestedUnion(name: string, options: DefineNestedUnionOptions): NestedUnionSpec {
+    return {
+        name,
+        ...(options.docs !== undefined ? { docs: options.docs } : {}),
+        base: options.base,
+        wrappers: [...options.wrappers],
+    };
+}
+
+export interface DefineCategoryOptions {
+    readonly docs?: readonly string[];
+    readonly nodes?: readonly NodeSpec[];
+    readonly unions?: readonly UnionSpec[];
+    readonly enumerations?: readonly EnumerationSpec[];
+    readonly nestedUnions?: readonly NestedUnionSpec[];
+}
+
+export function defineCategory(name: string, options: DefineCategoryOptions = {}): CategorySpec {
+    return {
+        name,
+        ...(options.docs !== undefined ? { docs: options.docs } : {}),
+        nodes: [...(options.nodes ?? [])],
+        unions: [...(options.unions ?? [])],
+        enumerations: [...(options.enumerations ?? [])],
+        nestedUnions: [...(options.nestedUnions ?? [])],
+    };
+}
+
 // Pre-built fixtures.
 
 /**
  * A minimal but self-consistent spec: one type node, one union, one
- * enumeration. Useful for the simple-case rendering tests.
+ * enumeration, all filed under a single `topLevel` category. Useful for
+ * simple-case rendering tests.
  */
 export function microSpec(): Spec {
     const myEnum = defineEnumeration('Endianness', {
-        docs: 'A test enumeration.',
-        variants: [variant('be', { docs: 'Big-endian.' }), variant('le', { docs: 'Little-endian.' })],
+        docs: ['A test enumeration.'],
+        variants: [variant('be', { docs: ['Big-endian.'] }), variant('le', { docs: ['Little-endian.'] })],
     });
     const innerNode = defineNode('innerTypeNode', {
-        docs: 'A simple inner node.',
-        attributes: [attribute('flag', boolean(), { docs: 'A flag.' })],
+        docs: ['A simple inner node.'],
+        attributes: [attribute('flag', boolean(), { docs: ['A flag.'] })],
     });
     const innerUnion = defineUnion('TypeNode', {
         members: ['innerTypeNode'],
     });
     const wrappingNode = defineNode('wrappingTypeNode', {
-        docs: 'A node referencing the union and the enumeration.',
+        docs: ['A node referencing the union and the enumeration.'],
         attributes: [
-            attribute('payload', union('TypeNode'), { docs: 'A wrapped payload.' }),
-            attribute('endian', enumeration('Endianness'), { docs: 'A byte order.' }),
-            optionalAttribute('count', u32(), { docs: 'Optional count.' }),
+            attribute('payload', union('TypeNode'), { docs: ['A wrapped payload.'] }),
+            attribute('endian', enumeration('Endianness'), { docs: ['A byte order.'] }),
+            optionalAttribute('count', u32(), { docs: ['Optional count.'] }),
         ],
     });
     return {
         version: '1.0.0',
-        enumerations: [myEnum],
-        nodes: [innerNode, wrappingNode],
-        unions: [innerUnion],
-        nestedTypeNodeWrappers: [],
+        categories: [
+            defineCategory('topLevel', {
+                enumerations: [myEnum],
+                nodes: [innerNode, wrappingNode],
+                unions: [innerUnion],
+            }),
+        ],
     };
 }
 
@@ -218,17 +258,14 @@ export function microSpec(): Spec {
  */
 export function selfReferentialSpec(): Spec {
     const recursive = defineNode('recursiveTypeNode', {
-        docs: 'A node referencing itself.',
+        docs: ['A node referencing itself.'],
         attributes: [
-            attribute('name', stringIdentifier(), { docs: 'The name.' }),
-            optionalAttribute('children', array(node('recursiveTypeNode')), { docs: 'Child nodes.' }),
+            attribute('name', stringIdentifier(), { docs: ['The name.'] }),
+            optionalAttribute('children', array(node('recursiveTypeNode')), { docs: ['Child nodes.'] }),
         ],
     });
     return {
         version: '1.0.0',
-        enumerations: [],
-        nodes: [recursive],
-        unions: [],
-        nestedTypeNodeWrappers: [],
+        categories: [defineCategory('topLevel', { nodes: [recursive] })],
     };
 }

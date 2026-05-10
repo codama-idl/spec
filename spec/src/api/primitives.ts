@@ -109,12 +109,16 @@ export function union(name: string): TypeExpr {
 }
 
 /**
- * Reference to a named node, with implicit `NestedTypeNode<…>` wrapping.
- * The list of recognised wrapper nodes is supplied per spec major version;
- * see `v1/nestedTypeNodeWrappers.ts`.
+ * Reference to a named node, wrapped by a named recursive `NestedUnion`
+ * alias. `alias` selects which `NestedUnion` declared via
+ * `defineNestedUnion` the wrapping uses (e.g. `'NestedTypeNode'`); `name`
+ * is the inner node kind.
+ *
+ * Renderers emit `<alias><<innerInterface>>` and an import for the alias
+ * file.
  */
-export function nestedTypeNode(name: string): TypeExpr {
-    return Object.freeze({ kind: 'nestedTypeNode' as const, name });
+export function nestedUnion(alias: string, name: string): TypeExpr {
+    return Object.freeze({ kind: 'nestedUnion' as const, alias, name });
 }
 
 // Re-exports for type ergonomics.

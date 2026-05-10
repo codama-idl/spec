@@ -2,7 +2,10 @@ import type { CamelCaseString } from '../shared/brands';
 import type { Docs } from '../shared/docs';
 import type { ResolverDependency } from './ResolverDependency';
 
-/** A custom resolver: a named function provided by the consumer that produces a value, optionally depending on other accounts and arguments. */
+/**
+ * A custom resolver: a named function provided by the consumer that produces a value.
+ * May optionally depend on other accounts and arguments resolved at instruction-build time.
+ */
 export interface ResolverValueNode<
     TDependsOn extends Array<ResolverDependency> | undefined = Array<ResolverDependency> | undefined,
 > {

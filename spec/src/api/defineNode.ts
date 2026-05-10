@@ -17,8 +17,8 @@
 import type { AttributeSpec, NodeSpec } from './types';
 
 export interface DefineNodeOptions {
-    /** Free-form prose description for codegen / docs. */
-    readonly docs?: string;
+    /** Free-form prose paragraphs describing this node. */
+    readonly docs?: readonly string[];
     /**
      * Attributes of the node, in declaration order. Construct each entry
      * via `attribute(...)` or `optionalAttribute(...)`.
@@ -31,7 +31,7 @@ export interface DefineNodeOptions {
 export function defineNode(kind: string, options: DefineNodeOptions): NodeSpec {
     return Object.freeze({
         kind,
-        ...(options.docs !== undefined ? { docs: options.docs } : {}),
+        ...(options.docs !== undefined ? { docs: Object.freeze([...options.docs]) } : {}),
         attributes: Object.freeze([...options.attributes]),
         examples: Object.freeze([...(options.examples ?? [])]),
     });

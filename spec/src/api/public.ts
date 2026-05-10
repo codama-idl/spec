@@ -9,11 +9,13 @@
 
 export type {
     AttributeSpec,
+    CategorySpec,
     EnumerationSpec,
     EnumerationVariantSpec,
     FloatWidth,
     IntegerWidth,
     LiteralValue,
+    NestedUnionSpec,
     NodeSpec,
     Spec,
     StringConstraint,

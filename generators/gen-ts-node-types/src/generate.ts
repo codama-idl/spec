@@ -26,7 +26,7 @@ import { renderNode } from './renderNode';
 import {
     renderBrandsFile,
     renderDocsFile,
-    renderNestedTypeNodeFile,
+    renderNestedUnionFile,
     renderNodeMasterFile,
     renderVersionFile,
 } from './renderSpecial';
@@ -106,10 +106,12 @@ export function validateGenerateOptions(spec: Spec, options: GenerateOptions): v
     // Build a quick lookup `${nodeKind}:${attributeName}` → exists.
     const validKeys = new Set<string>();
     const validNodeKinds = new Set<string>();
-    for (const node of spec.nodes) {
-        validNodeKinds.add(node.kind);
-        for (const attr of node.attributes) {
-            validKeys.add(`${node.kind}:${attr.name}`);
+    for (const category of spec.categories) {
+        for (const node of category.nodes) {
+            validNodeKinds.add(node.kind);
+            for (const attr of node.attributes) {
+                validKeys.add(`${node.kind}:${attr.name}`);
+            }
         }
     }
 
@@ -163,40 +165,43 @@ export function renderAllFiles(spec: Spec, options: GenerateOptions, layout: Lay
         narrowableDataAttributes: options.narrowableDataAttributes,
     };
 
-    // Per-node interface files.
-    for (const node of spec.nodes) {
-        const location = layout.nodeKindToLocation.get(node.kind);
-        if (!location) throw new Error(`renderAllFiles: missing location for node "${node.kind}"`);
-        const body = renderNode(node, { layout, currentLocation: location, ...renderNodeOptions });
-        out.set(location, renderPage(body));
-    }
+    for (const category of spec.categories) {
+        // Per-node interface files.
+        for (const node of category.nodes) {
+            const location = layout.nodeKindToLocation.get(node.kind);
+            if (!location) throw new Error(`renderAllFiles: missing location for node "${node.kind}"`);
+            const body = renderNode(node, { layout, currentLocation: location, ...renderNodeOptions });
+            out.set(location, renderPage(body));
+        }
 
-    // Per-union files.
-    for (const union of spec.unions) {
-        const location = layout.unionNameToLocation.get(union.name);
-        if (!location) throw new Error(`renderAllFiles: missing location for union "${union.name}"`);
-        const body = renderUnion(union, { layout, currentLocation: location });
-        out.set(location, renderPage(body));
-    }
+        // Per-union files.
+        for (const union of category.unions) {
+            const location = layout.unionNameToLocation.get(union.name);
+            if (!location) throw new Error(`renderAllFiles: missing location for union "${union.name}"`);
+            const body = renderUnion(union, { layout, currentLocation: location });
+            out.set(location, renderPage(body));
+        }
 
-    // Per-enumeration files.
-    for (const enumeration of spec.enumerations) {
-        const location = layout.enumerationNameToLocation.get(enumeration.name);
-        if (!location) throw new Error(`renderAllFiles: missing location for enumeration "${enumeration.name}"`);
-        out.set(location, renderPage(renderEnumeration(enumeration)));
+        // Per-enumeration files.
+        for (const enumeration of category.enumerations) {
+            const location = layout.enumerationNameToLocation.get(enumeration.name);
+            if (!location) throw new Error(`renderAllFiles: missing location for enumeration "${enumeration.name}"`);
+            out.set(location, renderPage(renderEnumeration(enumeration)));
+        }
+
+        // Per-nested-union alias files.
+        for (const nu of category.nestedUnions) {
+            const location = layout.nestedUnionNameToLocation.get(nu.name);
+            if (!location) throw new Error(`renderAllFiles: missing location for nested union "${nu.name}"`);
+            const body = renderNestedUnionFile(nu, layout, location);
+            out.set(location, renderPage(body));
+        }
     }
 
     // Shared files: brands, docs, and version.
     out.set(layout.sharedLocations.camelCaseString, renderPage(renderBrandsFile()));
     out.set(layout.sharedLocations.docs, renderPage(renderDocsFile()));
     out.set(layout.sharedLocations.version, renderPage(renderVersionFile(spec.version)));
-
-    // Special: NestedTypeNode<T> recursive alias.
-    {
-        const location = layout.sharedLocations.nestedTypeNode;
-        const body = renderNestedTypeNodeFile(spec, layout, location);
-        out.set(location, renderPage(body));
-    }
 
     // Special: master Node.ts.
     {

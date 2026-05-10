@@ -37,21 +37,21 @@ const STANDALONE_TYPE_NODE_KINDS = [
 ] as const;
 
 export const standaloneTypeNodeUnion = defineUnion('StandaloneTypeNode', {
-    docs: 'Every type node that can be used as a top-level type.',
+    docs: ['Every type node that can be used as a top-level type.'],
     members: [...STANDALONE_TYPE_NODE_KINDS],
 });
 
 export const enumVariantTypeNodeUnion = defineUnion('EnumVariantTypeNode', {
-    docs: 'The variant flavours of an `enumTypeNode`.',
+    docs: ['The variant flavours of an `enumTypeNode`.'],
     members: ['enumEmptyVariantTypeNode', 'enumStructVariantTypeNode', 'enumTupleVariantTypeNode'],
 });
 
 export const typeNodeUnion = defineUnion('TypeNode', {
-    docs: 'The composable form: any standalone type, or a reference to a defined type via `definedTypeLinkNode`.',
+    docs: ['The composable form: any standalone type, or a reference to a defined type via `definedTypeLinkNode`.'],
     members: [union('StandaloneTypeNode'), 'definedTypeLinkNode'],
 });
 
 export const registeredTypeNodeUnion = defineUnion('RegisteredTypeNode', {
-    docs: 'Every node tagged as a type-shaped node, including variants and struct fields.',
+    docs: ['Every node tagged as a type-shaped node, including variants and struct fields.'],
     members: [union('StandaloneTypeNode'), union('EnumVariantTypeNode'), 'structFieldTypeNode'],
 });

@@ -1,6 +1,10 @@
 import type { BytesEncoding } from '../shared/bytesEncoding';
 
-/** A string value. The encoding describes how its bytes are written; the byte length is determined by an enclosing wrapper such as `sizePrefixTypeNode` or `fixedSizeTypeNode`. */
+/**
+ * A string value.
+ * The encoding describes how its bytes are written.
+ * The byte length is determined by an enclosing wrapper such as `sizePrefixTypeNode` or `fixedSizeTypeNode`.
+ */
 export interface StringTypeNode<TEncoding extends BytesEncoding = BytesEncoding> {
     readonly kind: 'stringTypeNode';
 

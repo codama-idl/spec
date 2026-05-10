@@ -13,16 +13,18 @@ const baseLayout = buildLayout(spec);
 // narrowable-data-attribute path (which targets `numberTypeNode:format`)
 // without needing to plumb the full v1 spec through these unit tests.
 const layout: Layout = {
-    ...baseLayout,
     enumerationNameToLocation: new Map([
         ...baseLayout.enumerationNameToLocation.entries(),
         ['NumberFormat', 'shared/numberFormat'],
     ]),
+    nestedUnionNameToLocation: baseLayout.nestedUnionNameToLocation,
     nodeKindToLocation: new Map([
         ...baseLayout.nodeKindToLocation.entries(),
         ['numberTypeNode', 'typeNodes/NumberTypeNode'],
         ['recursiveTypeNode', 'recursiveTypeNode'],
     ]),
+    sharedLocations: baseLayout.sharedLocations,
+    unionNameToLocation: baseLayout.unionNameToLocation,
 };
 
 const ctx = { layout, currentLocation: 'someTypeNode' };
@@ -45,7 +47,7 @@ describe('renderAttribute — data attributes', () => {
     });
 
     it('emits a JSDoc above the body line when docs are present', () => {
-        const result = renderAttribute('someTypeNode', attribute('flag', boolean(), { docs: 'A flag.' }), ctx);
+        const result = renderAttribute('someTypeNode', attribute('flag', boolean(), { docs: ['A flag.'] }), ctx);
         expect(result.bodyLine.content).toBe('    /** A flag. */\n    readonly flag: boolean;');
     });
 });

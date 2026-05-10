@@ -6,19 +6,20 @@ import { renderUnion } from '../src/renderUnion';
 import { defineUnion, microSpec, union } from './_fixtures';
 
 /**
- * A hand-built layout used by tests that exercise unions whose names are
- * not present in the production `UNION_LOCATIONS` table. Keeps the test
- * surface free of accidental dependencies on the real spec's union list.
+ * A hand-built layout used by tests that exercise unions whose names
+ * aren't in the v1 spec. Keeps the test surface free of accidental
+ * dependencies on the production category data.
  */
 function manualLayout(overrides: Partial<Layout> = {}): Layout {
     return {
         enumerationNameToLocation: new Map(),
+        nestedUnionNameToLocation: new Map(),
         nodeKindToLocation: new Map(),
         sharedLocations: {
             camelCaseString: 'shared/brands',
             codamaVersion: 'shared/version',
+            docs: 'shared/docs',
             kebabCaseString: 'shared/brands',
-            nestedTypeNode: 'typeNodes/NestedTypeNode',
             node: 'Node',
             nodeKind: 'Node',
             pascalCaseString: 'shared/brands',
@@ -43,9 +44,7 @@ describe('renderUnion', () => {
     });
 
     it('preserves nested union references and collects imports', () => {
-        // Synthetic two-node, two-union spec. We bypass `buildLayout` here
-        // because neither `Inner` nor any synthetic union name is part of
-        // the production `UNION_LOCATIONS` table.
+        // Synthetic two-node, two-union spec.
         const outer = defineUnion('Outer', { members: [union('Inner'), 'aNode'] });
         const layout = manualLayout({
             nodeKindToLocation: new Map([
@@ -66,7 +65,7 @@ describe('renderUnion', () => {
     });
 
     it('emits the union-level docs as a JSDoc block when present', () => {
-        const u = defineUnion('U', { docs: 'My union.', members: ['aNode'] });
+        const u = defineUnion('U', { docs: ['My union.'], members: ['aNode'] });
         const layout = manualLayout({
             nodeKindToLocation: new Map([['aNode', 'aNode']]),
             unionNameToLocation: new Map([['U', 'typeNodes/U']]),

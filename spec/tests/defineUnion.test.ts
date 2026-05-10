@@ -41,7 +41,7 @@ describe('defineUnion', () => {
     });
 
     it('attaches optional docs', () => {
-        const u = defineUnion('Doc', { docs: 'A documented union.', members: ['x'] });
-        expect(u.docs).toBe('A documented union.');
+        const u = defineUnion('Doc', { docs: ['A documented union.'], members: ['x'] });
+        expect(u.docs).toEqual(['A documented union.']);
     });
 });

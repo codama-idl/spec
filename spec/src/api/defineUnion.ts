@@ -19,7 +19,7 @@ import type { TypeExpr, UnionMember, UnionSpec } from './types';
 export type UnionMemberInput = TypeExpr | string;
 
 export interface DefineUnionOptions {
-    readonly docs?: string;
+    readonly docs?: readonly string[];
     readonly members: readonly UnionMemberInput[];
 }
 
@@ -28,7 +28,7 @@ export function defineUnion(name: string, options: DefineUnionOptions): UnionSpe
     return Object.freeze({
         name,
         members: Object.freeze(normalised),
-        ...(options.docs !== undefined ? { docs: options.docs } : {}),
+        ...(options.docs !== undefined ? { docs: Object.freeze([...options.docs]) } : {}),
     });
 }
 

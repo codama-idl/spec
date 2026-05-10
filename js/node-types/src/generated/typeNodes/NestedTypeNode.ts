@@ -8,9 +8,8 @@ import type { SizePrefixTypeNode } from './SizePrefixTypeNode';
 import type { TypeNode } from './TypeNode';
 
 /**
- * A type, possibly wrapped in zero-or-more size, offset, sentinel, or hidden
- * prefix/suffix modifiers. The wrapping is recursive: each modifier wraps
- * another `NestedTypeNode<T>` until the inner `T` is reached.
+ * A type, possibly wrapped in zero-or-more size, offset, sentinel, or hidden prefix/suffix modifiers.
+ * The wrapping is recursive: each modifier wraps another `NestedTypeNode<T>` until the inner `T` is reached.
  */
 export type NestedTypeNode<TType extends TypeNode> =
     | FixedSizeTypeNode<NestedTypeNode<TType>>

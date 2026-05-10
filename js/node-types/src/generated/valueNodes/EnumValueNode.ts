@@ -16,6 +16,9 @@ export interface EnumValueNode<
     // Children.
     /** A link to the defined enum type the value belongs to. */
     readonly enum: TEnum;
-    /** The variant payload — a struct value for struct variants or a tuple value for tuple variants. Omitted for unit variants. */
+    /**
+     * The variant payload — a struct value for struct variants or a tuple value for tuple variants.
+     * Omitted for unit variants.
+     */
     readonly value?: TValue;
 }

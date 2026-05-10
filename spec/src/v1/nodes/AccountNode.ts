@@ -4,7 +4,7 @@ import {
     byteSize,
     defineNode,
     docs,
-    nestedTypeNode,
+    nestedUnion,
     node,
     optionalAttribute,
     stringIdentifier,
@@ -12,25 +12,30 @@ import {
 } from '../../api';
 
 export const accountNode = defineNode('accountNode', {
-    docs: 'An on-chain account: its name, data structure, optional fixed size, optional PDA, and optional discriminators.',
+    docs: [
+        'An on-chain account: its name, data structure, optional fixed size, optional PDA, and optional discriminators.',
+    ],
     attributes: [
         attribute('name', stringIdentifier(), {
-            docs: 'The name of the account.',
+            docs: ['The name of the account.'],
         }),
         optionalAttribute('size', byteSize(), {
-            docs: 'The size of the account in bytes, when the data length is fixed.',
+            docs: ['The size of the account in bytes, when the data length is fixed.'],
         }),
         optionalAttribute('docs', docs(), {
-            docs: 'Markdown documentation for the account.',
+            docs: ['Markdown documentation for the account.'],
         }),
-        attribute('data', nestedTypeNode('structTypeNode'), {
-            docs: 'The struct describing the account data.',
+        attribute('data', nestedUnion('NestedTypeNode', 'structTypeNode'), {
+            docs: ['The struct describing the account data.'],
         }),
         optionalAttribute('pda', node('pdaLinkNode'), {
-            docs: 'A link to the PDA the account is derived from, if applicable.',
+            docs: ['A link to the PDA the account is derived from, if applicable.'],
         }),
         optionalAttribute('discriminators', array(union('DiscriminatorNode')), {
-            docs: 'Discriminators that distinguish this account from others in the program. When multiple are listed, they are combined with a logical AND.',
+            docs: [
+                'Discriminators that distinguish this account from others in the program.',
+                'When multiple are listed, they are combined with a logical AND.',
+            ],
         }),
     ],
 });

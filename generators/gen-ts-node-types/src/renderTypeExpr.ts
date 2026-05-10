@@ -46,12 +46,12 @@ export function renderTypeExpr(expr: TypeExpr, ctx: RenderTypeExprContext): Frag
             if (!target) throw new Error(`renderTypeExpr: unknown union "${expr.name}"`);
             return importNamed(ctx, expr.name, target, { typeOnly: true });
         }
-        case 'nestedTypeNode': {
+        case 'nestedUnion': {
             const innerTarget = ctx.layout.nodeKindToLocation.get(expr.name);
-            if (!innerTarget) throw new Error(`renderTypeExpr: unknown nestedTypeNode target "${expr.name}"`);
-            const wrapper = importNamed(ctx, 'NestedTypeNode', ctx.layout.sharedLocations.nestedTypeNode, {
-                typeOnly: true,
-            });
+            if (!innerTarget) throw new Error(`renderTypeExpr: unknown nestedUnion target "${expr.name}"`);
+            const aliasTarget = ctx.layout.nestedUnionNameToLocation.get(expr.alias);
+            if (!aliasTarget) throw new Error(`renderTypeExpr: unknown nestedUnion alias "${expr.alias}"`);
+            const wrapper = importNamed(ctx, expr.alias, aliasTarget, { typeOnly: true });
             const inner = importNamed(ctx, kindToInterfaceName(expr.name), innerTarget, { typeOnly: true });
             return fragment`${wrapper}<${inner}>`;
         }

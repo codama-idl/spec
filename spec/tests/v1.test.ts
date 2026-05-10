@@ -101,12 +101,12 @@ describe('v1 spec — accountNode shape', () => {
         expect(attrNames).toEqual(['name', 'size', 'docs', 'data', 'pda', 'discriminators']);
 
         const data = account.attributes.find(a => a.name === 'data')!;
-        expect(data.type).toEqual({ kind: 'nestedTypeNode', name: 'structTypeNode' });
+        expect(data.type).toEqual({ alias: 'NestedTypeNode', kind: 'nestedUnion', name: 'structTypeNode' });
         expect(data.optional).toBeUndefined();
         expect(isChildAttribute(data.type)).toBe(true);
 
         const name = account.attributes.find(a => a.name === 'name')!;
-        expect(name.type).toEqual({ kind: 'string', constraint: 'identifier' });
+        expect(name.type).toEqual({ constraint: 'identifier', kind: 'string' });
         expect(name.optional).toBeUndefined();
         expect(isChildAttribute(name.type)).toBe(false);
 
@@ -115,10 +115,12 @@ describe('v1 spec — accountNode shape', () => {
         expect(size.type).toEqual({ kind: 'integer', width: 'u64' });
     });
 
-    it('populates per-attribute docs', () => {
+    it('populates per-attribute docs as paragraph arrays', () => {
         const account = getNode('accountNode')!;
         for (const a of account.attributes) {
             expect(a.docs, `attribute "${a.name}" should have docs`).toBeTruthy();
+            expect(Array.isArray(a.docs), `attribute "${a.name}" docs should be an array`).toBe(true);
+            expect((a.docs ?? []).length, `attribute "${a.name}" docs should be non-empty`).toBeGreaterThan(0);
         }
     });
 });
@@ -132,10 +134,12 @@ describe('v1 spec — TypeNode union composition', () => {
 });
 
 describe('v1 spec — enumerations carry per-variant docs', () => {
-    it('every variant of every enumeration has a docs string', () => {
-        for (const e of getSpec().enumerations) {
-            for (const v of e.variants) {
-                expect(v.docs, `enumeration "${e.name}" variant "${v.name}" should have docs`).toBeTruthy();
+    it('every variant of every enumeration has docs', () => {
+        for (const c of getSpec().categories) {
+            for (const e of c.enumerations) {
+                for (const v of e.variants) {
+                    expect(v.docs, `enumeration "${e.name}" variant "${v.name}" should have docs`).toBeTruthy();
+                }
             }
         }
     });
@@ -151,9 +155,13 @@ describe('v1 spec — JSON round-trip', () => {
     it('parses back to a value with the same node kinds', () => {
         const json = JSON.stringify(getSpec());
         const parsed = JSON.parse(json) as ReturnType<typeof getSpec>;
-        const parsedKinds = parsed.nodes.map(n => n.kind).sort();
+        const parsedKinds = parsed.categories
+            .flatMap(c => c.nodes)
+            .map(n => n.kind)
+            .sort();
         const originalKinds = getSpec()
-            .nodes.map(n => n.kind)
+            .categories.flatMap(c => c.nodes)
+            .map(n => n.kind)
             .sort();
         expect(parsedKinds).toEqual(originalKinds);
     });

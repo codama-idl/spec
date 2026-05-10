@@ -13,7 +13,7 @@ import {
     i128,
     literal,
     literalUnion,
-    nestedTypeNode,
+    nestedUnion,
     node,
     string,
     stringIdentifier,
@@ -105,11 +105,15 @@ describe('literalUnion', () => {
 });
 
 describe('named references', () => {
-    it('builds enumeration / node / union / nestedTypeNode references', () => {
+    it('builds enumeration / node / union / nestedUnion references', () => {
         expect(enumeration('Endianness')).toEqual({ kind: 'enumeration', name: 'Endianness' });
         expect(node('accountNode')).toEqual({ kind: 'node', name: 'accountNode' });
         expect(union('TypeNode')).toEqual({ kind: 'union', name: 'TypeNode' });
-        expect(nestedTypeNode('structTypeNode')).toEqual({ kind: 'nestedTypeNode', name: 'structTypeNode' });
+        expect(nestedUnion('NestedTypeNode', 'structTypeNode')).toEqual({
+            kind: 'nestedUnion',
+            alias: 'NestedTypeNode',
+            name: 'structTypeNode',
+        });
     });
 });
 

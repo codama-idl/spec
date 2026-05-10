@@ -26,6 +26,9 @@ export interface AccountNode<
     readonly data: TData;
     /** A link to the PDA the account is derived from, if applicable. */
     readonly pda?: TPda;
-    /** Discriminators that distinguish this account from others in the program. When multiple are listed, they are combined with a logical AND. */
+    /**
+     * Discriminators that distinguish this account from others in the program.
+     * When multiple are listed, they are combined with a logical AND.
+     */
     readonly discriminators?: TDiscriminators;
 }

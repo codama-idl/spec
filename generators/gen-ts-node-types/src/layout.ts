@@ -3,13 +3,12 @@
  * `js/node-types/src/generated/` tree, and how to produce a relative
  * import path between two such locations.
  *
- * The mapping is derived from the spec wherever possible — e.g., a node's
- * category is computed by inspecting which `RegisteredXxxNode` union it
- * belongs to. Hand-curated overrides exist only for unions whose category
- * isn't unambiguously derivable from their members.
+ * The mapping is read directly from the spec — every node, union, and
+ * enumeration is filed under its parent `CategorySpec`. The generator
+ * maps each category name to a TS-monorepo-flavoured subdirectory.
  */
 
-import type { Spec, UnionMember, UnionSpec } from '@codama/spec';
+import type { Spec } from '@codama/spec';
 
 import { pascalCase } from './naming';
 
@@ -21,205 +20,108 @@ import { pascalCase } from './naming';
 export type Location = string;
 
 export interface Layout {
-    /** Where each node interface file lives. */
-    readonly nodeKindToLocation: ReadonlyMap<string, Location>;
-    /** Where each union file lives. */
-    readonly unionNameToLocation: ReadonlyMap<string, Location>;
     /** Where each enumeration file lives. */
     readonly enumerationNameToLocation: ReadonlyMap<string, Location>;
+    /** Where each nested-union alias file lives. */
+    readonly nestedUnionNameToLocation: ReadonlyMap<string, Location>;
+    /** Where each node interface file lives. */
+    readonly nodeKindToLocation: ReadonlyMap<string, Location>;
     /** Locations of fixed shared types. */
     readonly sharedLocations: SharedLocations;
+    /** Where each union file lives. */
+    readonly unionNameToLocation: ReadonlyMap<string, Location>;
 }
 
 export interface SharedLocations {
     readonly camelCaseString: Location;
-    readonly pascalCaseString: Location;
+    readonly codamaVersion: Location;
+    readonly docs: Location;
     readonly kebabCaseString: Location;
+    readonly node: Location;
+    readonly nodeKind: Location;
+    readonly pascalCaseString: Location;
     readonly snakeCaseString: Location;
     readonly titleCaseString: Location;
     readonly version: Location;
-    readonly codamaVersion: Location;
-    readonly docs: Location;
-    readonly nestedTypeNode: Location;
-    readonly node: Location;
-    readonly nodeKind: Location;
 }
 
 /**
- * The closed set of subdirectories the layout may place files into.
- * Defined as a string-literal union (rather than a runtime object) since
- * the values are only ever consumed structurally — at the type level for
- * `CategorySubdir`, and as plain string literals at every call site.
+ * Maps each spec category name to the TS-monorepo subdirectory the
+ * generator emits its content into. The spec uses generic category
+ * names (`'type'`, `'value'`, …); the TS generator translates them to
+ * the conventional `typeNodes/`, `valueNodes/`, … filesystem layout.
  */
-type Subdir =
-    | 'contextualValueNodes'
-    | 'countNodes'
-    | 'discriminatorNodes'
-    | 'linkNodes'
-    | 'pdaSeedNodes'
-    | 'shared'
-    | 'typeNodes'
-    | 'valueNodes';
-
-/**
- * The subset of subdirectories that hold node-category content.
- * Used as the value type of `UNION_LOCATIONS` and the result of
- * `categorySubdirOf`.
- */
-type CategorySubdir = Exclude<Subdir, 'shared'>;
-
-/**
- * Maps category-registered union name to the subdirectory whose nodes it
- * groups. Used to derive node placement from spec data.
- */
-const CATEGORY_REGISTRY_UNION: Record<CategorySubdir, string> = {
-    typeNodes: 'RegisteredTypeNode',
-    valueNodes: 'RegisteredValueNode',
-    linkNodes: 'RegisteredLinkNode',
-    pdaSeedNodes: 'RegisteredPdaSeedNode',
-    countNodes: 'RegisteredCountNode',
-    discriminatorNodes: 'RegisteredDiscriminatorNode',
-    contextualValueNodes: 'RegisteredContextualValueNode',
+const CATEGORY_TO_DIRECTORY: Record<string, string> = {
+    contextualValue: 'contextualValueNodes',
+    count: 'countNodes',
+    discriminator: 'discriminatorNodes',
+    link: 'linkNodes',
+    pdaSeed: 'pdaSeedNodes',
+    shared: 'shared',
+    topLevel: '',
+    type: 'typeNodes',
+    value: 'valueNodes',
 };
 
-/**
- * Hand-curated assignment of each declared union to its subdirectory.
- * Most can be derived from members — but some helper unions span multiple
- * categories (e.g., `InstructionByteDeltaValue` mixes link nodes and value
- * nodes), so an explicit table avoids guessing.
- *
- * Top-level (no subdirectory) is signalled by an empty string.
- */
-const UNION_LOCATIONS: Record<string, CategorySubdir | ''> = {
-    // Type-node category
-    StandaloneTypeNode: 'typeNodes',
-    EnumVariantTypeNode: 'typeNodes',
-    TypeNode: 'typeNodes',
-    RegisteredTypeNode: 'typeNodes',
-
-    // Value-node category
-    StandaloneValueNode: 'valueNodes',
-    ValueNode: 'valueNodes',
-    RegisteredValueNode: 'valueNodes',
-    EnumValuePayload: 'valueNodes',
-
-    // Link-node category
-    RegisteredLinkNode: 'linkNodes',
-    LinkNode: 'linkNodes',
-
-    // PDA-seed-node category
-    RegisteredPdaSeedNode: 'pdaSeedNodes',
-    PdaSeedNode: 'pdaSeedNodes',
-    ConstantPdaSeedValue: 'pdaSeedNodes',
-
-    // Count-node category
-    RegisteredCountNode: 'countNodes',
-    CountNode: 'countNodes',
-
-    // Discriminator-node category
-    RegisteredDiscriminatorNode: 'discriminatorNodes',
-    DiscriminatorNode: 'discriminatorNodes',
-
-    // Contextual-value-node category
-    StandaloneContextualValueNode: 'contextualValueNodes',
-    ContextualValueNode: 'contextualValueNodes',
-    RegisteredContextualValueNode: 'contextualValueNodes',
-    InstructionInputValueNode: 'contextualValueNodes',
-    ConditionalValueCondition: 'contextualValueNodes',
-    ResolverDependency: 'contextualValueNodes',
-    PdaSeedValueValue: 'contextualValueNodes',
-    PdaValuePda: 'contextualValueNodes',
-    PdaValueProgramId: 'contextualValueNodes',
-
-    // Top-level helper unions
-    InstructionByteDeltaValue: '',
-    InstructionRemainingAccountsValue: '',
-};
+function directoryForCategory(name: string): string {
+    const dir = CATEGORY_TO_DIRECTORY[name];
+    if (dir === undefined) {
+        throw new Error(`gen-ts-node-types: unknown category "${name}". Extend CATEGORY_TO_DIRECTORY.`);
+    }
+    return dir;
+}
 
 export function buildLayout(spec: Spec): Layout {
     const nodeKindToLocation = new Map<string, Location>();
-    for (const node of spec.nodes) {
-        const subdir = categorySubdirOf(spec, node.kind);
-        const fileName = pascalCase(node.kind);
-        nodeKindToLocation.set(node.kind, joinLocation(subdir, fileName));
-    }
-
     const unionNameToLocation = new Map<string, Location>();
-    for (const union of spec.unions) {
-        const subdir = UNION_LOCATIONS[union.name];
-        if (subdir === undefined) {
-            throw new Error(
-                `gen-ts-node-types: union "${union.name}" has no subdirectory mapping. Add an entry to UNION_LOCATIONS.`,
-            );
-        }
-        unionNameToLocation.set(union.name, joinLocation(subdir, union.name));
-    }
-
     const enumerationNameToLocation = new Map<string, Location>();
-    for (const enumeration of spec.enumerations) {
-        const fileName = camelCaseFromPascal(enumeration.name);
-        enumerationNameToLocation.set(enumeration.name, joinLocation('shared', fileName));
+    const nestedUnionNameToLocation = new Map<string, Location>();
+
+    for (const category of spec.categories) {
+        const dir = directoryForCategory(category.name);
+        for (const node of category.nodes) {
+            nodeKindToLocation.set(node.kind, joinLocation(dir, pascalCase(node.kind)));
+        }
+        for (const union of category.unions) {
+            unionNameToLocation.set(union.name, joinLocation(dir, union.name));
+        }
+        for (const enumeration of category.enumerations) {
+            enumerationNameToLocation.set(enumeration.name, joinLocation(dir, camelCaseFromPascal(enumeration.name)));
+        }
+        for (const nu of category.nestedUnions) {
+            nestedUnionNameToLocation.set(nu.name, joinLocation(dir, nu.name));
+        }
     }
 
     const sharedLocations: SharedLocations = {
         camelCaseString: joinLocation('shared', 'brands'),
-        pascalCaseString: joinLocation('shared', 'brands'),
+        codamaVersion: joinLocation('shared', 'version'),
+        docs: joinLocation('shared', 'docs'),
         kebabCaseString: joinLocation('shared', 'brands'),
+        node: joinLocation('', 'Node'),
+        nodeKind: joinLocation('', 'Node'),
+        pascalCaseString: joinLocation('shared', 'brands'),
         snakeCaseString: joinLocation('shared', 'brands'),
         titleCaseString: joinLocation('shared', 'brands'),
         version: joinLocation('shared', 'version'),
-        codamaVersion: joinLocation('shared', 'version'),
-        docs: joinLocation('shared', 'docs'),
-        nestedTypeNode: joinLocation('typeNodes', 'NestedTypeNode'),
-        node: joinLocation('', 'Node'),
-        nodeKind: joinLocation('', 'Node'),
     };
 
     return {
-        nodeKindToLocation,
-        unionNameToLocation,
         enumerationNameToLocation,
+        nestedUnionNameToLocation,
+        nodeKindToLocation,
         sharedLocations,
+        unionNameToLocation,
     };
 }
 
-function joinLocation(subdir: Subdir | '', fileName: string): Location {
+function joinLocation(subdir: string, fileName: string): Location {
     return subdir ? `${subdir}/${fileName}` : fileName;
 }
 
 function camelCaseFromPascal(name: string): string {
     if (name.length === 0) return name;
     return name.charAt(0).toLowerCase() + name.slice(1);
-}
-
-/**
- * Determines which subdirectory a node belongs to by inspecting the
- * spec's `RegisteredXxxNode` unions. Returns an empty string for
- * top-level nodes.
- */
-function categorySubdirOf(spec: Spec, kind: string): CategorySubdir | '' {
-    for (const [subdir, unionName] of Object.entries(CATEGORY_REGISTRY_UNION) as [CategorySubdir, string][]) {
-        const union = spec.unions.find(u => u.name === unionName);
-        if (union && unionContainsKind(spec, union, kind)) return subdir;
-    }
-    return '';
-}
-
-function unionContainsKind(spec: Spec, union: UnionSpec, kind: string): boolean {
-    const visited = new Set<string>();
-    const stack: UnionMember[] = [...union.members];
-    while (stack.length > 0) {
-        const m = stack.pop()!;
-        if (m.kind === 'node') {
-            if (m.name === kind) return true;
-        } else if (m.kind === 'union') {
-            if (visited.has(m.name)) continue;
-            visited.add(m.name);
-            const inner = spec.unions.find(u => u.name === m.name);
-            if (inner) stack.push(...inner.members);
-        }
-    }
-    return false;
 }
 
 /**

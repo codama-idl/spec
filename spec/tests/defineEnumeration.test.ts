@@ -10,7 +10,7 @@ describe('variant', () => {
     });
 
     it('attaches docs when provided', () => {
-        expect(variant('be', { docs: 'Big-endian.' })).toEqual({ name: 'be', docs: 'Big-endian.' });
+        expect(variant('be', { docs: ['Big-endian.'] })).toEqual({ name: 'be', docs: ['Big-endian.'] });
     });
 });
 
@@ -26,8 +26,8 @@ describe('defineEnumeration', () => {
     });
 
     it('attaches optional docs', () => {
-        const e = defineEnumeration('E', { docs: 'docs', variants: [variant('a')] });
-        expect(e.docs).toBe('docs');
+        const e = defineEnumeration('E', { docs: ['docs'], variants: [variant('a')] });
+        expect(e.docs).toEqual(['docs']);
     });
 
     it('rejects an empty variants list', () => {
@@ -42,11 +42,11 @@ describe('defineEnumeration', () => {
 
     it('preserves per-variant docs', () => {
         const e = defineEnumeration('E', {
-            variants: [variant('a', { docs: 'A.' }), variant('b', { docs: 'B.' })],
+            variants: [variant('a', { docs: ['A.'] }), variant('b', { docs: ['B.'] })],
         });
         expect(e.variants).toEqual([
-            { name: 'a', docs: 'A.' },
-            { name: 'b', docs: 'B.' },
+            { name: 'a', docs: ['A.'] },
+            { name: 'b', docs: ['B.'] },
         ]);
     });
 });

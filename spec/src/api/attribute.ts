@@ -8,8 +8,8 @@
 import type { AttributeSpec, TypeExpr } from './types';
 
 export interface AttributeOptions {
-    /** Free-form prose description for codegen / docs. */
-    readonly docs?: string;
+    /** Free-form prose paragraphs describing this attribute. */
+    readonly docs?: readonly string[];
     /** When `true`, the attribute may be absent in encoded values. */
     readonly optional?: boolean;
 }
@@ -23,7 +23,7 @@ export function attribute(name: string, type: TypeExpr, options: AttributeOption
         name,
         type,
         ...(options.optional ? { optional: true as const } : {}),
-        ...(options.docs !== undefined ? { docs: options.docs } : {}),
+        ...(options.docs !== undefined ? { docs: Object.freeze([...options.docs]) } : {}),
     });
 }
 

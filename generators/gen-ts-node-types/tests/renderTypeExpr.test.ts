@@ -6,12 +6,14 @@ import {
     array,
     boolean,
     codamaVersion,
+    defineCategory,
+    defineNestedUnion,
     docs,
     enumeration,
     literal,
     literalUnion,
     microSpec,
-    nestedTypeNode,
+    nestedUnion,
     node,
     string,
     stringIdentifier,
@@ -20,7 +22,29 @@ import {
     union,
 } from './_fixtures';
 
-const spec = microSpec();
+// Augment microSpec with a `NestedTypeNode` nested-union alias filed
+// under `topLevel` so the test can exercise the `nestedUnion` rendering
+// path. Filing it under `topLevel` keeps the file location at the root
+// (`./NestedTypeNode`).
+const baseSpec = microSpec();
+const spec = {
+    ...baseSpec,
+    categories: baseSpec.categories.map(c =>
+        c.name === 'topLevel'
+            ? defineCategory('topLevel', {
+                  enumerations: c.enumerations,
+                  nestedUnions: [
+                      defineNestedUnion('NestedTypeNode', {
+                          base: union('TypeNode'),
+                          wrappers: [],
+                      }),
+                  ],
+                  nodes: c.nodes,
+                  unions: c.unions,
+              })
+            : c,
+    ),
+};
 const layout = buildLayout(spec);
 // `wrappingTypeNode` is top-level in `microSpec` — its file lands at the
 // PascalCase root path `WrappingTypeNode`, matching what `buildLayout`
@@ -88,7 +112,9 @@ describe('renderTypeExpr — references', () => {
     it('renders enumeration references and collects an import', () => {
         const result = renderTypeExpr(enumeration('Endianness'), ctx);
         expect(result.content).toBe('Endianness');
-        expect([...result.imports.keys()]).toEqual(['./shared/endianness']);
+        // Endianness is filed under `topLevel` in microSpec, so the file
+        // lands at the root with a camelCased name.
+        expect([...result.imports.keys()]).toEqual(['./endianness']);
     });
     it('renders node references with PascalCase identifiers', () => {
         const result = renderTypeExpr(node('innerTypeNode'), ctx);
@@ -98,8 +124,8 @@ describe('renderTypeExpr — references', () => {
     it('renders union references', () => {
         const result = renderTypeExpr(union('TypeNode'), ctx);
         expect(result.content).toBe('TypeNode');
-        // TypeNode union lives in typeNodes/, current location is WrappingTypeNode (top-level).
-        expect([...result.imports.keys()]).toEqual(['./typeNodes/TypeNode']);
+        // TypeNode union is filed under `topLevel` in microSpec.
+        expect([...result.imports.keys()]).toEqual(['./TypeNode']);
     });
     it('skips imports when the reference is in the current file', () => {
         const result = renderTypeExpr(node('wrappingTypeNode'), { ...ctx, currentLocation: 'WrappingTypeNode' });
@@ -120,10 +146,10 @@ describe('renderTypeExpr — compounds', () => {
         // literal-union element is emitted without extra parens.
         expect(renderTypeExpr(array(literalUnion(true, 'either')), ctx).content).toBe("Array<true | 'either'>");
     });
-    it('renders nestedTypeNode wrapping with the typeNodes/NestedTypeNode location', () => {
-        const result = renderTypeExpr(nestedTypeNode('innerTypeNode'), ctx);
+    it('renders nestedUnion wrapping with the alias location', () => {
+        const result = renderTypeExpr(nestedUnion('NestedTypeNode', 'innerTypeNode'), ctx);
         expect(result.content).toBe('NestedTypeNode<InnerTypeNode>');
-        expect([...result.imports.keys()].sort()).toEqual(['./InnerTypeNode', './typeNodes/NestedTypeNode']);
+        expect([...result.imports.keys()].sort()).toEqual(['./InnerTypeNode', './NestedTypeNode']);
     });
 });
 

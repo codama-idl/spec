@@ -44,7 +44,10 @@ export interface InstructionNode<
     readonly remainingAccounts?: TRemainingAccounts;
     /** Byte-size adjustments applied when computing rent or buffer size — for instructions that resize accounts. */
     readonly byteDeltas?: TByteDeltas;
-    /** Discriminators that distinguish this instruction from others. When multiple are listed, they are combined with a logical AND. */
+    /**
+     * Discriminators that distinguish this instruction from others.
+     * When multiple are listed, they are combined with a logical AND.
+     */
     readonly discriminators?: TDiscriminators;
     /** The lifecycle status of the instruction. */
     readonly status?: TStatus;

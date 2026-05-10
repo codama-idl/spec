@@ -1,7 +1,10 @@
 import type { ProgramNode } from './ProgramNode';
 import type { CodamaVersion } from './shared/version';
 
-/** The root of a Codama IDL document. Pairs a primary program with any number of additional programs and tags the document with the spec version. */
+/**
+ * The root of a Codama IDL document.
+ * Pairs a primary program with any number of additional programs and tags the document with the spec version.
+ */
 export interface RootNode<
     TProgram extends ProgramNode = ProgramNode,
     TAdditionalPrograms extends Array<ProgramNode> = Array<ProgramNode>,

@@ -1,7 +1,10 @@
 import type { CountNode } from '../countNodes/CountNode';
 import type { TypeNode } from './TypeNode';
 
-/** A keyed map. The key and value types are described by their respective type nodes; the entry count is determined by a count strategy. */
+/**
+ * A keyed map.
+ * The key and value types are described by their respective type nodes; the entry count is determined by a count strategy.
+ */
 export interface MapTypeNode<
     TKey extends TypeNode = TypeNode,
     TValue extends TypeNode = TypeNode,

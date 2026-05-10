@@ -1,13 +1,14 @@
 /**
  * Shared JSDoc rendering for every entity in the generated tree.
  *
- * The format is intentionally minimal: a single-line doc renders as a
- * one-line block (`slash-star-star … star-slash`); a multi-line doc
- * renders as a multi-line block with one starred line per source line.
+ * Input is an array of paragraph strings — the same shape spec
+ * documentation fields take. A single-paragraph doc renders as a
+ * one-line block; a multi-paragraph doc renders as a multi-line block
+ * with one starred line per source paragraph.
  *
- * Both forms accept an optional `indent` prefix so the same helper can
- * cover top-of-file docs (no indent), interface body docs (4-space
- * indent), enumeration variant docs (4-space indent), etc.
+ * Accepts an optional `indent` prefix so the same helper can cover
+ * top-of-file docs (no indent), interface body docs (4-space indent),
+ * enumeration variant docs (4-space indent), etc.
  *
  * The returned fragment always ends in a newline so callers can drop it
  * directly above whatever it documents without further bookkeeping.
@@ -15,8 +16,8 @@
 
 import { type Fragment, fragment } from '@codama-internal/fragment';
 
-export function renderJsDoc(text: string, indent: string = ''): Fragment {
-    const lines = text.split(/\n/).map(line => sanitizeCommentBody(line.trimEnd()));
+export function renderJsDoc(paragraphs: readonly string[], indent: string = ''): Fragment {
+    const lines = paragraphs.map(line => sanitizeCommentBody(line.trimEnd()));
     if (lines.length === 1) {
         return fragment`${indent}/** ${lines[0]} */\n`;
     }

@@ -13,22 +13,22 @@ describe('renderEnumeration', () => {
     });
 
     it('attaches the enumeration-level docs as a JSDoc block when present', () => {
-        const e = defineEnumeration('E', { docs: 'My enum.', variants: [variant('a')] });
-        expect(result_content_starts_with(renderEnumeration(e).content, '/** My enum. */\nexport type E =')).toBe(true);
+        const e = defineEnumeration('E', { docs: ['My enum.'], variants: [variant('a')] });
+        expect(renderEnumeration(e).content.startsWith('/** My enum. */\nexport type E =')).toBe(true);
     });
 
     it('attaches per-variant docs in a single-line JSDoc above each variant', () => {
         const e = defineEnumeration('E', {
-            variants: [variant('a', { docs: 'A.' }), variant('b')],
+            variants: [variant('a', { docs: ['A.'] }), variant('b')],
         });
         const out = renderEnumeration(e).content;
         expect(out).toContain("    /** A. */\n    | 'a'");
         expect(out).toContain("    | 'b'");
     });
 
-    it('uses a multi-line JSDoc when a variant doc spans multiple lines', () => {
+    it('uses a multi-line JSDoc when variant docs span multiple paragraphs', () => {
         const e = defineEnumeration('E', {
-            variants: [variant('a', { docs: 'First line.\nSecond line.' })],
+            variants: [variant('a', { docs: ['First line.', 'Second line.'] })],
         });
         const out = renderEnumeration(e).content;
         expect(out).toContain('    /**\n     * First line.\n     * Second line.\n     */\n');
@@ -51,7 +51,7 @@ describe('renderEnumeration', () => {
 
     it('defangs */ inside variant docs so the comment cannot terminate early', () => {
         const e = defineEnumeration('E', {
-            variants: [variant('a', { docs: 'closes here */ then continues' })],
+            variants: [variant('a', { docs: ['closes here */ then continues'] })],
         });
         const out = renderEnumeration(e).content;
         // The original `*/` must not appear; the defanged form does.
@@ -59,7 +59,3 @@ describe('renderEnumeration', () => {
         expect(out).toContain('here *\\/ then');
     });
 });
-
-function result_content_starts_with(content: string, prefix: string): boolean {
-    return content.startsWith(prefix);
-}

@@ -1,9 +1,11 @@
+import type { NodeSpec, Spec } from '@codama/spec';
 import { describe, expect, it } from 'vitest';
 
 import { buildLayout } from '../src/layout';
 import { renderNode } from '../src/renderNode';
 import {
     attribute,
+    defineCategory,
     defineNode,
     defineUnion,
     microSpec,
@@ -12,11 +14,19 @@ import {
     union,
 } from './_fixtures';
 
+function findNode(spec: Spec, kind: string): NodeSpec {
+    for (const c of spec.categories) {
+        const n = c.nodes.find(n => n.kind === kind);
+        if (n) return n;
+    }
+    throw new Error(`findNode: kind "${kind}" not found`);
+}
+
 describe('renderNode', () => {
     it('emits an interface with kind discriminator, generics, and section markers', () => {
         const spec = microSpec();
         const layout = buildLayout(spec);
-        const wrapping = spec.nodes.find(n => n.kind === 'wrappingTypeNode')!;
+        const wrapping = findNode(spec, 'wrappingTypeNode');
         const result = renderNode(wrapping, { layout, currentLocation: 'wrappingTypeNode' });
         const c = result.content;
         expect(c).toContain('export interface WrappingTypeNode<');
@@ -33,7 +43,7 @@ describe('renderNode', () => {
     it('lifts every child attribute to a generic param', () => {
         const spec = microSpec();
         const layout = buildLayout(spec);
-        const wrapping = spec.nodes.find(n => n.kind === 'wrappingTypeNode')!;
+        const wrapping = findNode(spec, 'wrappingTypeNode');
         const result = renderNode(wrapping, { layout, currentLocation: 'wrappingTypeNode' });
         expect(result.content).toContain('TPayload extends TypeNode = TypeNode');
     });
@@ -41,7 +51,7 @@ describe('renderNode', () => {
     it('emits no Data or Children section when the corresponding group is empty', () => {
         const spec = microSpec();
         const layout = buildLayout(spec);
-        const inner = spec.nodes.find(n => n.kind === 'innerTypeNode')!;
+        const inner = findNode(spec, 'innerTypeNode');
         const result = renderNode(inner, { layout, currentLocation: 'innerTypeNode' });
         expect(result.content).toContain('// Data.');
         expect(result.content).not.toContain('// Children.');
@@ -50,7 +60,7 @@ describe('renderNode', () => {
     it('inserts a SelfXxxNode alias for self-referential nodes', () => {
         const spec = selfReferentialSpec();
         const layout = buildLayout(spec);
-        const recursive = spec.nodes.find(n => n.kind === 'recursiveTypeNode')!;
+        const recursive = findNode(spec, 'recursiveTypeNode');
         const result = renderNode(recursive, { layout, currentLocation: 'recursiveTypeNode' });
         expect(result.content).toContain('type SelfRecursiveTypeNode = RecursiveTypeNode;');
         expect(result.content).toContain('TChildren extends Array<SelfRecursiveTypeNode>');
@@ -59,8 +69,7 @@ describe('renderNode', () => {
     it('emits a JSDoc above the interface declaration when the node has docs', () => {
         const spec = microSpec();
         const layout = buildLayout(spec);
-        // `wrappingTypeNode` carries docs in the fixture.
-        const wrapping = spec.nodes.find(n => n.kind === 'wrappingTypeNode')!;
+        const wrapping = findNode(spec, 'wrappingTypeNode');
         const result = renderNode(wrapping, { layout, currentLocation: 'wrappingTypeNode' });
         expect(result.content).toMatch(
             /\/\*\* A node referencing the union and the enumeration\. \*\/\nexport interface WrappingTypeNode/,
@@ -70,7 +79,7 @@ describe('renderNode', () => {
     it('emits a JSDoc above each attribute that has docs', () => {
         const spec = microSpec();
         const layout = buildLayout(spec);
-        const wrapping = spec.nodes.find(n => n.kind === 'wrappingTypeNode')!;
+        const wrapping = findNode(spec, 'wrappingTypeNode');
         const result = renderNode(wrapping, { layout, currentLocation: 'wrappingTypeNode' });
         // Data attribute.
         expect(result.content).toContain('    /** A byte order. */\n    readonly endian: Endianness;');
@@ -97,18 +106,20 @@ describe('renderNode — generic param ordering', () => {
             ],
         });
         return {
-            enumerations: [],
-            nestedTypeNodeWrappers: [],
-            nodes: [valueNode, typeNode, instructionArgumentNode],
-            unions: [inputUnion, typeUnion],
             version: '1.0.0',
+            categories: [
+                defineCategory('topLevel', {
+                    nodes: [valueNode, typeNode, instructionArgumentNode],
+                    unions: [inputUnion, typeUnion],
+                }),
+            ],
         } as const;
     }
 
     it('emits lifted generics in declaration order when no override is supplied', () => {
         const spec = buildArgumentSpec();
         const layout = buildLayout(spec);
-        const node = spec.nodes.find(n => n.kind === 'instructionArgumentNode')!;
+        const node = findNode(spec, 'instructionArgumentNode');
         const result = renderNode(node, { layout, currentLocation: 'InstructionArgumentNode' });
         const tTypeIdx = result.content.indexOf('TType extends');
         const tDefaultIdx = result.content.indexOf('TDefaultValue extends');
@@ -121,7 +132,7 @@ describe('renderNode — generic param ordering', () => {
     it('reorders lifted generics according to genericParamOrder', () => {
         const spec = buildArgumentSpec();
         const layout = buildLayout(spec);
-        const node = spec.nodes.find(n => n.kind === 'instructionArgumentNode')!;
+        const node = findNode(spec, 'instructionArgumentNode');
         const result = renderNode(node, {
             currentLocation: 'InstructionArgumentNode',
             genericParamOrder: new Map([['instructionArgumentNode', ['defaultValue', 'type']]]),
@@ -147,11 +158,8 @@ describe('renderNode — generic param ordering', () => {
             attributes: [optionalAttribute('defaultValue', union('InstructionInputValueNode'))],
         });
         const spec = {
-            enumerations: [],
-            nestedTypeNodeWrappers: [],
-            nodes: [valueNode, incomplete],
-            unions: [inputUnion],
             version: '1.0.0',
+            categories: [defineCategory('topLevel', { nodes: [valueNode, incomplete], unions: [inputUnion] })],
         } as const;
         const layout = buildLayout(spec);
         expect(() =>
