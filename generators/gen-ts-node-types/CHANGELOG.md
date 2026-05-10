@@ -1,5 +1,12 @@
 # @codama-internal/gen-ts-node-types
 
+## 0.0.1-rc.3
+
+### Patch Changes
+
+- Updated dependencies [70febc6]
+    - @codama/spec@1.6.0-rc.4
+
 ## 0.0.1-rc.2
 
 ### Patch Changes
