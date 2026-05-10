@@ -1,5 +1,6 @@
 import type { CamelCaseString } from '../shared/brands';
 import type { DefaultValueStrategy } from '../shared/defaultValueStrategy';
+import type { Docs } from '../shared/docs';
 import type { ValueNode } from '../valueNodes/ValueNode';
 import type { TypeNode } from './TypeNode';
 
@@ -16,7 +17,7 @@ export interface StructFieldTypeNode<
     /** How a configured default value is exposed in generated APIs. Required when `defaultValue` is set. */
     readonly defaultValueStrategy?: DefaultValueStrategy;
     /** Markdown documentation for the field. */
-    readonly docs?: string[];
+    readonly docs?: Docs;
 
     // Children.
     /** The type of the field. */

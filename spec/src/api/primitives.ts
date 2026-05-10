@@ -7,9 +7,7 @@
 
 import type { FloatWidth, IntegerWidth, LiteralValue, StringConstraint, TypeExpr } from './types';
 
-// ---------------------------------------------------------------------------
-// Strings
-// ---------------------------------------------------------------------------
+// Strings.
 
 /** Plain UTF-8 string. */
 export function string(): TypeExpr {
@@ -39,9 +37,7 @@ export function codamaVersion(): TypeExpr {
     return Object.freeze({ kind: 'codamaVersion' as const });
 }
 
-// ---------------------------------------------------------------------------
-// Integers (explicit bit widths — no machine-dependent usize/isize)
-// ---------------------------------------------------------------------------
+// Integers (explicit bit widths — no machine-dependent usize/isize).
 
 const integer = (width: IntegerWidth): TypeExpr => Object.freeze({ kind: 'integer' as const, width });
 
@@ -56,18 +52,14 @@ export const i32 = (): TypeExpr => integer('i32');
 export const i64 = (): TypeExpr => integer('i64');
 export const i128 = (): TypeExpr => integer('i128');
 
-// ---------------------------------------------------------------------------
-// Floats
-// ---------------------------------------------------------------------------
+// Floats.
 
 const float = (width: FloatWidth): TypeExpr => Object.freeze({ kind: 'float' as const, width });
 
 export const f32 = (): TypeExpr => float('f32');
 export const f64 = (): TypeExpr => float('f64');
 
-// ---------------------------------------------------------------------------
-// Booleans, literals
-// ---------------------------------------------------------------------------
+// Booleans and literals.
 
 export function boolean(): TypeExpr {
     return Object.freeze({ kind: 'boolean' as const });
@@ -99,9 +91,7 @@ export function literalUnion(...values: LiteralValue[]): TypeExpr {
     return Object.freeze({ kind: 'literalUnion' as const, values: Object.freeze([...values]) });
 }
 
-// ---------------------------------------------------------------------------
-// Named references
-// ---------------------------------------------------------------------------
+// Named references.
 
 /** Reference to a named enumeration declared via `defineEnumeration`. */
 export function enumeration(name: string): TypeExpr {

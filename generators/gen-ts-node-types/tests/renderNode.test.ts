@@ -53,7 +53,7 @@ describe('renderNode', () => {
         const recursive = spec.nodes.find(n => n.kind === 'recursiveTypeNode')!;
         const result = renderNode(recursive, { layout, currentLocation: 'recursiveTypeNode' });
         expect(result.content).toContain('type SelfRecursiveTypeNode = RecursiveTypeNode;');
-        expect(result.content).toContain('TChildren extends SelfRecursiveTypeNode[]');
+        expect(result.content).toContain('TChildren extends Array<SelfRecursiveTypeNode>');
     });
 
     it('emits a JSDoc above the interface declaration when the node has docs', () => {

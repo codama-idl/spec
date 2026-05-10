@@ -771,10 +771,7 @@
                 {
                     "name": "docs",
                     "type": {
-                        "kind": "array",
-                        "of": {
-                            "kind": "string"
-                        }
+                        "kind": "docs"
                     },
                     "optional": true,
                     "docs": "Markdown documentation for the field."
@@ -1356,10 +1353,7 @@
                 {
                     "name": "docs",
                     "type": {
-                        "kind": "array",
-                        "of": {
-                            "kind": "string"
-                        }
+                        "kind": "docs"
                     },
                     "optional": true,
                     "docs": "Markdown documentation for the seed variable."
@@ -1650,10 +1644,7 @@
                 {
                     "name": "docs",
                     "type": {
-                        "kind": "array",
-                        "of": {
-                            "kind": "string"
-                        }
+                        "kind": "docs"
                     },
                     "optional": true,
                     "docs": "Markdown documentation for the resolver."
@@ -1697,10 +1688,7 @@
                 {
                     "name": "docs",
                     "type": {
-                        "kind": "array",
-                        "of": {
-                            "kind": "string"
-                        }
+                        "kind": "docs"
                     },
                     "optional": true,
                     "docs": "Markdown documentation for the account."
@@ -1752,10 +1740,7 @@
                 {
                     "name": "docs",
                     "type": {
-                        "kind": "array",
-                        "of": {
-                            "kind": "string"
-                        }
+                        "kind": "docs"
                     },
                     "optional": true,
                     "docs": "Markdown documentation for the constant."
@@ -1794,10 +1779,7 @@
                 {
                     "name": "docs",
                     "type": {
-                        "kind": "array",
-                        "of": {
-                            "kind": "string"
-                        }
+                        "kind": "docs"
                     },
                     "optional": true,
                     "docs": "Markdown documentation for the type."
@@ -1843,10 +1825,7 @@
                 {
                     "name": "docs",
                     "type": {
-                        "kind": "array",
-                        "of": {
-                            "kind": "string"
-                        }
+                        "kind": "docs"
                     },
                     "optional": true,
                     "docs": "Markdown documentation for the error."
@@ -1869,10 +1848,7 @@
                 {
                     "name": "docs",
                     "type": {
-                        "kind": "array",
-                        "of": {
-                            "kind": "string"
-                        }
+                        "kind": "docs"
                     },
                     "optional": true,
                     "docs": "Markdown documentation for the event."
@@ -1942,10 +1918,7 @@
                 {
                     "name": "docs",
                     "type": {
-                        "kind": "array",
-                        "of": {
-                            "kind": "string"
-                        }
+                        "kind": "docs"
                     },
                     "optional": true,
                     "docs": "Markdown documentation for the account slot."
@@ -1986,10 +1959,7 @@
                 {
                     "name": "docs",
                     "type": {
-                        "kind": "array",
-                        "of": {
-                            "kind": "string"
-                        }
+                        "kind": "docs"
                     },
                     "optional": true,
                     "docs": "Markdown documentation for the argument."
@@ -2059,10 +2029,7 @@
                 {
                     "name": "docs",
                     "type": {
-                        "kind": "array",
-                        "of": {
-                            "kind": "string"
-                        }
+                        "kind": "docs"
                     },
                     "optional": true,
                     "docs": "Markdown documentation for the instruction."
@@ -2206,10 +2173,7 @@
                 {
                     "name": "docs",
                     "type": {
-                        "kind": "array",
-                        "of": {
-                            "kind": "string"
-                        }
+                        "kind": "docs"
                     },
                     "optional": true,
                     "docs": "Markdown documentation for the remaining-accounts slot."
@@ -2263,10 +2227,7 @@
                 {
                     "name": "docs",
                     "type": {
-                        "kind": "array",
-                        "of": {
-                            "kind": "string"
-                        }
+                        "kind": "docs"
                     },
                     "optional": true,
                     "docs": "Markdown documentation for the PDA."
@@ -2332,10 +2293,7 @@
                 {
                     "name": "docs",
                     "type": {
-                        "kind": "array",
-                        "of": {
-                            "kind": "string"
-                        }
+                        "kind": "docs"
                     },
                     "optional": true,
                     "docs": "Markdown documentation for the program."

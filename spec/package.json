@@ -14,6 +14,17 @@
                 "require": "./dist/index.node.cjs"
             }
         },
+        "./api": {
+            "types": "./dist/types/api/index.d.ts",
+            "browser": {
+                "import": "./dist/api.browser.mjs",
+                "require": "./dist/api.browser.cjs"
+            },
+            "node": {
+                "import": "./dist/api.node.mjs",
+                "require": "./dist/api.node.cjs"
+            }
+        },
         "./v1": {
             "types": "./dist/types/v1/index.d.ts",
             "browser": {
@@ -33,6 +44,7 @@
     "files": [
         "./dist/types",
         "./dist/index.*",
+        "./dist/api.*",
         "./dist/v1.*"
     ],
     "sideEffects": false,

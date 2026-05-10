@@ -1,4 +1,5 @@
 import type { InstructionRemainingAccountsValue } from './InstructionRemainingAccountsValue';
+import type { Docs } from './shared/docs';
 
 /** A "remaining accounts" slot in an instruction — a variable-length tail of accounts derived from a value. */
 export interface InstructionRemainingAccountsNode<
@@ -10,11 +11,11 @@ export interface InstructionRemainingAccountsNode<
     /** Whether the remaining-accounts tail may be empty. */
     readonly isOptional?: boolean;
     /** Whether each remaining account must sign the transaction. The literal `"either"` indicates a slot that may or may not sign depending on context. */
-    readonly isSigner?: true | false | 'either';
+    readonly isSigner?: boolean | 'either';
     /** Whether the instruction may write to each remaining account. */
     readonly isWritable?: boolean;
     /** Markdown documentation for the remaining-accounts slot. */
-    readonly docs?: string[];
+    readonly docs?: Docs;
 
     // Children.
     /** The source of the remaining-accounts list — a referenced argument or a resolver. */

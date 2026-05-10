@@ -4,7 +4,7 @@ import type { NumberTypeNode } from './NumberTypeNode';
 
 /** A tagged union: a numeric discriminator followed by one of several variant payloads. */
 export interface EnumTypeNode<
-    TVariants extends EnumVariantTypeNode[] = EnumVariantTypeNode[],
+    TVariants extends Array<EnumVariantTypeNode> = Array<EnumVariantTypeNode>,
     TSize extends NestedTypeNode<NumberTypeNode> = NestedTypeNode<NumberTypeNode>,
 > {
     readonly kind: 'enumTypeNode';

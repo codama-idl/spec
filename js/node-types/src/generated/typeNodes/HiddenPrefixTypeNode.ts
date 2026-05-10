@@ -4,7 +4,7 @@ import type { TypeNode } from './TypeNode';
 /** Prefixes another type with a list of constant values that are written and read but not surfaced as fields to consumers. */
 export interface HiddenPrefixTypeNode<
     TType extends TypeNode = TypeNode,
-    TPrefix extends ConstantValueNode[] = ConstantValueNode[],
+    TPrefix extends Array<ConstantValueNode> = Array<ConstantValueNode>,
 > {
     readonly kind: 'hiddenPrefixTypeNode';
 

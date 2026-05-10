@@ -23,7 +23,13 @@ import prettier from 'prettier';
 import { buildLayout, type Layout, type Location } from './layout';
 import { renderEnumeration } from './renderEnumeration';
 import { renderNode } from './renderNode';
-import { renderBrandsFile, renderNestedTypeNodeFile, renderNodeMasterFile, renderVersionFile } from './renderSpecial';
+import {
+    renderBrandsFile,
+    renderDocsFile,
+    renderNestedTypeNodeFile,
+    renderNodeMasterFile,
+    renderVersionFile,
+} from './renderSpecial';
 import { renderUnion } from './renderUnion';
 
 export interface GenerateOptions {
@@ -180,10 +186,9 @@ export function renderAllFiles(spec: Spec, options: GenerateOptions, layout: Lay
         out.set(location, renderPage(renderEnumeration(enumeration)));
     }
 
-    // Shared files: brands and version. (No `Docs` alias — every `array(string())`
-    // attribute renders inline as `string[]` since the alias would be a one-line
-    // re-statement of the same type with no semantic value.)
+    // Shared files: brands, docs, and version.
     out.set(layout.sharedLocations.camelCaseString, renderPage(renderBrandsFile()));
+    out.set(layout.sharedLocations.docs, renderPage(renderDocsFile()));
     out.set(layout.sharedLocations.version, renderPage(renderVersionFile(spec.version)));
 
     // Special: NestedTypeNode<T> recursive alias.

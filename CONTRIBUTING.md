@@ -40,13 +40,13 @@ See the [README](./README.md) for a top-level tour. The short version:
 
 ### What kind of change are you making?
 
-| Change | Where it lives | Examples |
-| --- | --- | --- |
-| **Spec change** | `spec/src/` | New node kind, new optional field, renamed field, new registry. |
-| **Generator change** | `generators/<gen>/src/` | Improving how a generator emits TS/Rust/Markdown from the same spec. |
-| **Hand-written helper change** | `js/nodes/src/` (TS), `rust/codama-nodes/src/` (Rust) | New helper like `isFooNode`, refactor of existing utilities. |
-| **Proc-macro change** | `rust/codama-nodes-derive/src/` | Behaviour of `#[node]` and friends. |
-| **Internal-only change** | `.github/`, root configs, docs | Tooling, CI, contributor docs. |
+| Change                         | Where it lives                                        | Examples                                                             |
+| ------------------------------ | ----------------------------------------------------- | -------------------------------------------------------------------- |
+| **Spec change**                | `spec/src/`                                           | New node kind, new optional field, renamed field, new registry.      |
+| **Generator change**           | `generators/<gen>/src/`                               | Improving how a generator emits TS/Rust/Markdown from the same spec. |
+| **Hand-written helper change** | `js/nodes/src/` (TS), `rust/codama-nodes/src/` (Rust) | New helper like `isFooNode`, refactor of existing utilities.         |
+| **Proc-macro change**          | `rust/codama-nodes-derive/src/`                       | Behaviour of `#[node]` and friends.                                  |
+| **Internal-only change**       | `.github/`, root configs, docs                        | Tooling, CI, contributor docs.                                       |
 
 ### Declaring release intent
 

@@ -1,4 +1,5 @@
 import type { CamelCaseString } from './shared/brands';
+import type { Docs } from './shared/docs';
 
 /** A program error — a numeric code paired with a name and human-readable message. */
 export interface ErrorNode {
@@ -12,5 +13,5 @@ export interface ErrorNode {
     /** A human-readable description of the error. */
     readonly message: string;
     /** Markdown documentation for the error. */
-    readonly docs?: string[];
+    readonly docs?: Docs;
 }

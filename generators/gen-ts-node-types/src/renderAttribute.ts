@@ -102,9 +102,7 @@ export function renderKindLine(kind: string): Fragment {
     return fragment`    readonly kind: '${kind}';`;
 }
 
-// ---------------------------------------------------------------------------
-// Self-reference handling
-// ---------------------------------------------------------------------------
+// Self-reference handling.
 
 function typeExprReferencesKind(expr: TypeExpr, kind: string): boolean {
     switch (expr.kind) {
@@ -137,7 +135,7 @@ function renderTypeExprWithSelfAlias(
             return renderTypeExpr(expr, ctx);
         case 'array': {
             const inner = renderTypeExprWithSelfAlias(expr.of, ctx, selfKind, selfAlias);
-            return fragment`${inner}[]`;
+            return fragment`Array<${inner}>`;
         }
         case 'tuple': {
             // Not currently used for self-refs in any encoded node, but handled

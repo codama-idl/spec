@@ -58,6 +58,20 @@ export function renderVersionFile(specVersion: string): Fragment {
 }
 
 /**
+ * The shared `Docs` alias used by every `docs?` attribute in the spec.
+ * Carries the documentation-array intent through the generated tree
+ * rather than inlining `Array<string>` at every site.
+ */
+export function renderDocsFile(): Fragment {
+    const body = [
+        '/** Markdown documentation for a node — one paragraph per array entry. */',
+        'export type Docs = Array<string>;',
+        '',
+    ].join('\n');
+    return fragment`${body}`;
+}
+
+/**
  * The recursive `NestedTypeNode<T>` alias. Wrapper kinds come from the
  * spec's `nestedTypeNodeWrappers` field — they're the type nodes whose
  * shape is `{ type: ... }` and which can wrap another type recursively.

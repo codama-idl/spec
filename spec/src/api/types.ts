@@ -3,12 +3,10 @@
  *
  * These types are version-agnostic — the same shape describes a Codama v1
  * spec, a v2 spec, etc. Versioned content (concrete nodes, enumerations,
- * unions) lives under `spec/src/v<n>/`.
+ * unions) lives under `spec/src/v<n>/`. The first half of this file
+ * declares the type-expression vocabulary; the second half declares the
+ * spec-content shape (attributes, nodes, unions, enumerations).
  */
-
-// ---------------------------------------------------------------------------
-// Type expressions
-// ---------------------------------------------------------------------------
 
 export type IntegerWidth = 'i8' | 'i16' | 'i32' | 'i64' | 'i128' | 'u8' | 'u16' | 'u32' | 'u64' | 'u128';
 
@@ -30,8 +28,8 @@ export type LiteralValue = boolean | number | string;
  * Constituents are listed alphabetically by `kind` to satisfy the lint
  * rule; logical grouping lives in the doc comments below.
  *
- * Leaf primitives:    boolean, float, integer, literal, literalUnion, string.
- * Named references:   enumeration, nestedTypeNode, node, union.
+ * Leaf primitives:    boolean, docs, float, integer, literal, literalUnion, string.
+ * Named references:   codamaVersion, enumeration, nestedTypeNode, node, union.
  * Compounds:          array, tuple.
  */
 export type TypeExpr =
@@ -43,6 +41,14 @@ export type TypeExpr =
      * languages may emit a constant matching the spec version.
      */
     | { readonly kind: 'codamaVersion' }
+    /**
+     * Documentation for a node — semantically a list of paragraph strings,
+     * but rendered per language at codegen time (e.g. `Array<string>` in
+     * TypeScript, `Vec<String>` in Rust). Carrying the intent as its own
+     * kind preserves "this is documentation" through the encoded spec
+     * rather than collapsing to `array(string())`.
+     */
+    | { readonly kind: 'docs' }
     | { readonly kind: 'enumeration'; readonly name: string }
     | { readonly kind: 'float'; readonly width: FloatWidth }
     | { readonly kind: 'integer'; readonly width: IntegerWidth }
@@ -58,10 +64,6 @@ export type TypeExpr =
     | { readonly kind: 'string'; readonly constraint?: StringConstraint }
     | { readonly kind: 'tuple'; readonly items: readonly TypeExpr[] }
     | { readonly kind: 'union'; readonly name: string };
-
-// ---------------------------------------------------------------------------
-// Spec content
-// ---------------------------------------------------------------------------
 
 /** A named attribute of a node — a single field in its data shape. */
 export interface AttributeSpec {

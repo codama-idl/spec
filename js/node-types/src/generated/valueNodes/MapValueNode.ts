@@ -1,7 +1,7 @@
 import type { MapEntryValueNode } from './MapEntryValueNode';
 
 /** A concrete map value: a list of (key, value) entries. */
-export interface MapValueNode<TEntries extends MapEntryValueNode[] = MapEntryValueNode[]> {
+export interface MapValueNode<TEntries extends Array<MapEntryValueNode> = Array<MapEntryValueNode>> {
     readonly kind: 'mapValueNode';
 
     // Children.

@@ -38,7 +38,7 @@ Each downstream implementation declares the spec version it implements via manif
 ```jsonc
 // js/nodes/package.json
 {
-  "codama": { "spec": "^1.6.0" }
+    "codama": { "spec": "^1.6.0" },
 }
 ```
 

@@ -1,6 +1,7 @@
 import type { DiscriminatorNode } from './discriminatorNodes/DiscriminatorNode';
 import type { PdaLinkNode } from './linkNodes/PdaLinkNode';
 import type { CamelCaseString } from './shared/brands';
+import type { Docs } from './shared/docs';
 import type { NestedTypeNode } from './typeNodes/NestedTypeNode';
 import type { StructTypeNode } from './typeNodes/StructTypeNode';
 
@@ -8,7 +9,7 @@ import type { StructTypeNode } from './typeNodes/StructTypeNode';
 export interface AccountNode<
     TData extends NestedTypeNode<StructTypeNode> = NestedTypeNode<StructTypeNode>,
     TPda extends PdaLinkNode | undefined = PdaLinkNode | undefined,
-    TDiscriminators extends DiscriminatorNode[] | undefined = DiscriminatorNode[] | undefined,
+    TDiscriminators extends Array<DiscriminatorNode> | undefined = Array<DiscriminatorNode> | undefined,
 > {
     readonly kind: 'accountNode';
 
@@ -18,7 +19,7 @@ export interface AccountNode<
     /** The size of the account in bytes, when the data length is fixed. */
     readonly size?: number;
     /** Markdown documentation for the account. */
-    readonly docs?: string[];
+    readonly docs?: Docs;
 
     // Children.
     /** The struct describing the account data. */

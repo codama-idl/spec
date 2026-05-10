@@ -1,7 +1,7 @@
 import type { ValueNode } from './ValueNode';
 
 /** A concrete set value: a list of unique value nodes. */
-export interface SetValueNode<TItems extends ValueNode[] = ValueNode[]> {
+export interface SetValueNode<TItems extends Array<ValueNode> = Array<ValueNode>> {
     readonly kind: 'setValueNode';
 
     // Children.

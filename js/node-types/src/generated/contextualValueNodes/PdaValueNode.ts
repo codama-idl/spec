@@ -4,7 +4,7 @@ import type { PdaValueProgramId } from './PdaValueProgramId';
 
 /** Resolves to a PDA derived from a list of seed values. */
 export interface PdaValueNode<
-    TSeeds extends PdaSeedValueNode[] = PdaSeedValueNode[],
+    TSeeds extends Array<PdaSeedValueNode> = Array<PdaSeedValueNode>,
     TProgramId extends PdaValueProgramId | undefined = PdaValueProgramId | undefined,
     TPda extends PdaValuePda = PdaValuePda,
 > {

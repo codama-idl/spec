@@ -68,7 +68,7 @@ describe('renderAttribute — child attributes', () => {
 
     it('renders an array-of-node child as an array generic', () => {
         const result = renderAttribute('someTypeNode', attribute('items', array(node('innerTypeNode'))), ctx);
-        expect(result.genericParam?.content).toBe('TItems extends InnerTypeNode[] = InnerTypeNode[]');
+        expect(result.genericParam?.content).toBe('TItems extends Array<InnerTypeNode> = Array<InnerTypeNode>');
         expect(result.bodyLine.content).toBe('    readonly items: TItems;');
     });
 
@@ -80,7 +80,7 @@ describe('renderAttribute — child attributes', () => {
             { selfAlias: 'SelfRecursiveTypeNode' },
         );
         expect(result.genericParam?.content).toBe(
-            'TChildren extends SelfRecursiveTypeNode[] | undefined = SelfRecursiveTypeNode[] | undefined',
+            'TChildren extends Array<SelfRecursiveTypeNode> | undefined = Array<SelfRecursiveTypeNode> | undefined',
         );
     });
 });

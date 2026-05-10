@@ -6,6 +6,7 @@ import {
     array,
     boolean,
     codamaVersion,
+    docs,
     enumeration,
     literal,
     literalUnion,
@@ -46,7 +47,16 @@ describe('renderTypeExpr — leaves', () => {
 
 describe('renderTypeExpr — literalUnion', () => {
     it('joins with " | "', () => {
-        expect(renderTypeExpr(literalUnion(true, false, 'either'), ctx).content).toBe("true | false | 'either'");
+        expect(renderTypeExpr(literalUnion(1, 2, 'three'), ctx).content).toBe("1 | 2 | 'three'");
+    });
+    it('collapses `true | false` to `boolean` and appends remaining literals', () => {
+        expect(renderTypeExpr(literalUnion(true, false, 'either'), ctx).content).toBe("boolean | 'either'");
+    });
+    it('collapses `true | false` alone to `boolean`', () => {
+        expect(renderTypeExpr(literalUnion(true, false), ctx).content).toBe('boolean');
+    });
+    it('does not collapse a single boolean literal', () => {
+        expect(renderTypeExpr(literalUnion(true, 'either'), ctx).content).toBe("true | 'either'");
     });
 });
 
@@ -63,6 +73,14 @@ describe('renderTypeExpr — branded strings', () => {
     it('emits CodamaVersion for codamaVersion', () => {
         const result = renderTypeExpr(codamaVersion(), ctx);
         expect(result.content).toBe('CodamaVersion');
+    });
+});
+
+describe('renderTypeExpr — docs', () => {
+    it('emits a Docs reference imported from shared/docs', () => {
+        const result = renderTypeExpr(docs(), ctx);
+        expect(result.content).toBe('Docs');
+        expect([...result.imports.keys()]).toEqual(['./shared/docs']);
     });
 });
 
@@ -91,15 +109,16 @@ describe('renderTypeExpr — references', () => {
 });
 
 describe('renderTypeExpr — compounds', () => {
-    it('renders array(T) as T[]', () => {
-        expect(renderTypeExpr(array(boolean()), ctx).content).toBe('boolean[]');
+    it('renders array(T) as Array<T>', () => {
+        expect(renderTypeExpr(array(boolean()), ctx).content).toBe('Array<boolean>');
     });
     it('handles nested array types', () => {
-        expect(renderTypeExpr(array(array(string())), ctx).content).toBe('string[][]');
+        expect(renderTypeExpr(array(array(string())), ctx).content).toBe('Array<Array<string>>');
     });
-    it('parenthesises an inline literal-union array element', () => {
-        // Without parens this would be `true | false[]`, i.e. `true | (false[])`.
-        expect(renderTypeExpr(array(literalUnion(true, false)), ctx).content).toBe('(true | false)[]');
+    it('does not need extra parens around an inline literal-union array element', () => {
+        // The `Array<…>` wrapping makes precedence unambiguous, so a
+        // literal-union element is emitted without extra parens.
+        expect(renderTypeExpr(array(literalUnion(true, 'either')), ctx).content).toBe("Array<true | 'either'>");
     });
     it('renders nestedTypeNode wrapping with the typeNodes/NestedTypeNode location', () => {
         const result = renderTypeExpr(nestedTypeNode('innerTypeNode'), ctx);

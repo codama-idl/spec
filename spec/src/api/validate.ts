@@ -18,12 +18,10 @@ export function validate(spec: Spec): string[] {
     const enumerationNames = new Set(spec.enumerations.map(e => e.name));
     const wrappers = new Set(spec.nestedTypeNodeWrappers);
 
-    // ---- Single-pass name-collision check -------------------------------
-    //
-    // Detects both within-kind duplicates ("two nodes called `accountNode`")
-    // and cross-kind collisions ("there's a node and a union both called
-    // `TypeNode`") in one report per offending name.
-
+    // Single-pass name-collision check. Detects both within-kind duplicates
+    // ("two nodes called `accountNode`") and cross-kind collisions ("there's
+    // a node and a union both called `TypeNode`") in one report per
+    // offending name.
     const registrations = new Map<string, RegistryKind[]>();
     const record = (name: string, kind: RegistryKind): void => {
         const list = registrations.get(name);
@@ -38,8 +36,7 @@ export function validate(spec: Spec): string[] {
         if (kinds.length > 1) errors.push(formatCollisionError(name, kinds));
     }
 
-    // ---- Per-node validation --------------------------------------------
-
+    // Per-node validation.
     for (const n of spec.nodes) {
         if (!/^[a-z][A-Za-z0-9]*Node$/.test(n.kind)) {
             errors.push(`Node kind "${n.kind}" does not match the camelCase ...Node naming convention.`);
@@ -56,8 +53,7 @@ export function validate(spec: Spec): string[] {
         }
     }
 
-    // ---- Union member resolution ----------------------------------------
-
+    // Union member resolution.
     for (const u of spec.unions) {
         if (u.members.length === 0) {
             errors.push(`Union "${u.name}" has no members.`);
@@ -78,8 +74,7 @@ export function validate(spec: Spec): string[] {
         }
     }
 
-    // ---- nestedTypeNode wrapper sanity ----------------------------------
-
+    // nestedTypeNode wrapper sanity.
     for (const wrapper of wrappers) {
         if (!nodeKinds.has(wrapper)) {
             errors.push(`Nested-type-node wrapper "${wrapper}" is not a defined node.`);
@@ -88,10 +83,6 @@ export function validate(spec: Spec): string[] {
 
     return errors;
 }
-
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
 
 function formatCollisionError(name: string, kinds: RegistryKind[]): string {
     const counts = new Map<RegistryKind, number>();
@@ -148,11 +139,10 @@ function checkRef(
     }
 }
 
-// ---------------------------------------------------------------------------
-// Child-detection (used by codegen / docs / visitor table generators)
-// ---------------------------------------------------------------------------
-
 /**
+ * Child-detection helper used by codegen, docs, and visitor-table
+ * generators.
+ *
  * A "child" attribute is one whose value contains another node. Specifically,
  * any attribute whose type tree includes a `node`, `nestedTypeNode`, or
  * `union` is treated as a child. Optionality (the `optional` flag on the

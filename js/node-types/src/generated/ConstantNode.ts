@@ -1,4 +1,5 @@
 import type { CamelCaseString } from './shared/brands';
+import type { Docs } from './shared/docs';
 import type { TypeNode } from './typeNodes/TypeNode';
 import type { ValueNode } from './valueNodes/ValueNode';
 
@@ -10,7 +11,7 @@ export interface ConstantNode<TType extends TypeNode = TypeNode, TValue extends 
     /** The name of the constant. */
     readonly name: CamelCaseString;
     /** Markdown documentation for the constant. */
-    readonly docs?: string[];
+    readonly docs?: Docs;
 
     // Children.
     /** The type of the constant. */

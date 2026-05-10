@@ -24,9 +24,7 @@ import type {
     UnionSpec,
 } from '@codama/spec';
 
-// ---------------------------------------------------------------------------
-// Type-expression primitives
-// ---------------------------------------------------------------------------
+// Type-expression primitives.
 
 export function string(): TypeExpr {
     return { kind: 'string' };
@@ -42,6 +40,10 @@ export function stringVersion(): TypeExpr {
 
 export function codamaVersion(): TypeExpr {
     return { kind: 'codamaVersion' };
+}
+
+export function docs(): TypeExpr {
+    return { kind: 'docs' };
 }
 
 export function boolean(): TypeExpr {
@@ -91,9 +93,7 @@ export const u32 = (): TypeExpr => integer('u32');
 export const u64 = (): TypeExpr => integer('u64');
 export const i32 = (): TypeExpr => integer('i32');
 
-// ---------------------------------------------------------------------------
-// Authoring helpers (local copies — see file header for rationale)
-// ---------------------------------------------------------------------------
+// Authoring helpers (local copies — see file header for rationale).
 
 export interface AttributeOptions {
     readonly docs?: string;
@@ -177,9 +177,7 @@ export function defineUnion(name: string, options: DefineUnionOptions): UnionSpe
     };
 }
 
-// ---------------------------------------------------------------------------
-// Pre-built fixtures
-// ---------------------------------------------------------------------------
+// Pre-built fixtures.
 
 /**
  * A minimal but self-consistent spec: one type node, one union, one

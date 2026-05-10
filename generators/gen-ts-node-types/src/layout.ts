@@ -39,6 +39,7 @@ export interface SharedLocations {
     readonly titleCaseString: Location;
     readonly version: Location;
     readonly codamaVersion: Location;
+    readonly docs: Location;
     readonly nestedTypeNode: Location;
     readonly node: Location;
     readonly nodeKind: Location;
@@ -168,6 +169,7 @@ export function buildLayout(spec: Spec): Layout {
         titleCaseString: joinLocation('shared', 'brands'),
         version: joinLocation('shared', 'version'),
         codamaVersion: joinLocation('shared', 'version'),
+        docs: joinLocation('shared', 'docs'),
         nestedTypeNode: joinLocation('typeNodes', 'NestedTypeNode'),
         node: joinLocation('', 'Node'),
         nodeKind: joinLocation('', 'Node'),

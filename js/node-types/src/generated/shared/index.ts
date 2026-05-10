@@ -1,6 +1,7 @@
 export * from './brands';
 export * from './bytesEncoding';
 export * from './defaultValueStrategy';
+export * from './docs';
 export * from './endianness';
 export * from './instructionLifecycle';
 export * from './numberFormat';

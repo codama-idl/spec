@@ -6,18 +6,19 @@ import type { EventNode } from './EventNode';
 import type { InstructionNode } from './InstructionNode';
 import type { PdaNode } from './PdaNode';
 import type { CamelCaseString } from './shared/brands';
+import type { Docs } from './shared/docs';
 import type { ProgramOrigin } from './shared/programOrigin';
 import type { Version } from './shared/version';
 
 /** A Solana program: its identity, version, accounts, instructions, defined types, PDAs, events, errors, and constants. */
 export interface ProgramNode<
-    TPdas extends PdaNode[] = PdaNode[],
-    TAccounts extends AccountNode[] = AccountNode[],
-    TInstructions extends InstructionNode[] = InstructionNode[],
-    TDefinedTypes extends DefinedTypeNode[] = DefinedTypeNode[],
-    TErrors extends ErrorNode[] = ErrorNode[],
-    TEvents extends EventNode[] = EventNode[],
-    TConstants extends ConstantNode[] = ConstantNode[],
+    TPdas extends Array<PdaNode> = Array<PdaNode>,
+    TAccounts extends Array<AccountNode> = Array<AccountNode>,
+    TInstructions extends Array<InstructionNode> = Array<InstructionNode>,
+    TDefinedTypes extends Array<DefinedTypeNode> = Array<DefinedTypeNode>,
+    TErrors extends Array<ErrorNode> = Array<ErrorNode>,
+    TEvents extends Array<EventNode> = Array<EventNode>,
+    TConstants extends Array<ConstantNode> = Array<ConstantNode>,
 > {
     readonly kind: 'programNode';
 
@@ -31,7 +32,7 @@ export interface ProgramNode<
     /** The toolchain that originally generated the program description, if known. */
     readonly origin?: ProgramOrigin;
     /** Markdown documentation for the program. */
-    readonly docs?: string[];
+    readonly docs?: Docs;
 
     // Children.
     /** The accounts owned by the program. */

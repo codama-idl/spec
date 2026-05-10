@@ -5,21 +5,22 @@ import type { InstructionByteDeltaNode } from './InstructionByteDeltaNode';
 import type { InstructionRemainingAccountsNode } from './InstructionRemainingAccountsNode';
 import type { InstructionStatusNode } from './InstructionStatusNode';
 import type { CamelCaseString } from './shared/brands';
+import type { Docs } from './shared/docs';
 import type { OptionalAccountStrategy } from './shared/optionalAccountStrategy';
 
 type SelfInstructionNode = InstructionNode;
 
 /** A program instruction: its accounts, arguments, byte-delta hints, discriminators, optional status, and optional sub-instructions. */
 export interface InstructionNode<
-    TAccounts extends InstructionAccountNode[] = InstructionAccountNode[],
-    TArguments extends InstructionArgumentNode[] = InstructionArgumentNode[],
-    TExtraArguments extends InstructionArgumentNode[] | undefined = InstructionArgumentNode[] | undefined,
-    TRemainingAccounts extends InstructionRemainingAccountsNode[] | undefined =
-        | InstructionRemainingAccountsNode[]
+    TAccounts extends Array<InstructionAccountNode> = Array<InstructionAccountNode>,
+    TArguments extends Array<InstructionArgumentNode> = Array<InstructionArgumentNode>,
+    TExtraArguments extends Array<InstructionArgumentNode> | undefined = Array<InstructionArgumentNode> | undefined,
+    TRemainingAccounts extends Array<InstructionRemainingAccountsNode> | undefined =
+        | Array<InstructionRemainingAccountsNode>
         | undefined,
-    TByteDeltas extends InstructionByteDeltaNode[] | undefined = InstructionByteDeltaNode[] | undefined,
-    TDiscriminators extends DiscriminatorNode[] | undefined = DiscriminatorNode[] | undefined,
-    TSubInstructions extends SelfInstructionNode[] | undefined = SelfInstructionNode[] | undefined,
+    TByteDeltas extends Array<InstructionByteDeltaNode> | undefined = Array<InstructionByteDeltaNode> | undefined,
+    TDiscriminators extends Array<DiscriminatorNode> | undefined = Array<DiscriminatorNode> | undefined,
+    TSubInstructions extends Array<SelfInstructionNode> | undefined = Array<SelfInstructionNode> | undefined,
     TStatus extends InstructionStatusNode | undefined = InstructionStatusNode | undefined,
 > {
     readonly kind: 'instructionNode';
@@ -28,7 +29,7 @@ export interface InstructionNode<
     /** The name of the instruction. */
     readonly name: CamelCaseString;
     /** Markdown documentation for the instruction. */
-    readonly docs?: string[];
+    readonly docs?: Docs;
     /** How absent optional accounts are represented when serialising the instruction. */
     readonly optionalAccountStrategy?: OptionalAccountStrategy;
 

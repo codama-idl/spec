@@ -40,7 +40,7 @@ export const instructionInputValueNodeUnion = defineUnion('InstructionInputValue
     members: [union('ContextualValueNode'), 'programLinkNode', union('ValueNode')],
 });
 
-// --- Inline unions used by contextual value nodes -------------------------
+// Inline unions used by contextual value nodes.
 
 export const conditionalValueConditionUnion = defineUnion('ConditionalValueCondition', {
     docs: 'The condition forms accepted by a `conditionalValueNode`.',

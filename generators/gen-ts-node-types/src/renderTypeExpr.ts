@@ -26,9 +26,11 @@ export function renderTypeExpr(expr: TypeExpr, ctx: RenderTypeExprContext): Frag
         case 'literal':
             return fragment`${literalToTs(expr.value)}`;
         case 'literalUnion':
-            return fragment`${expr.values.map(literalToTs).join(' | ')}`;
+            return fragment`${renderLiteralUnion(expr.values)}`;
         case 'codamaVersion':
             return importNamed(ctx, 'CodamaVersion', ctx.layout.sharedLocations.codamaVersion, { typeOnly: true });
+        case 'docs':
+            return importNamed(ctx, 'Docs', ctx.layout.sharedLocations.docs, { typeOnly: true });
         case 'enumeration': {
             const target = ctx.layout.enumerationNameToLocation.get(expr.name);
             if (!target) throw new Error(`renderTypeExpr: unknown enumeration "${expr.name}"`);
@@ -54,15 +56,12 @@ export function renderTypeExpr(expr: TypeExpr, ctx: RenderTypeExprContext): Frag
             return fragment`${wrapper}<${inner}>`;
         }
         case 'array': {
+            // Emit the long form `Array<T>` rather than `T[]`: it's
+            // unambiguous regardless of `T`'s shape, so an inline-union
+            // element like `array(literalUnion(true, false))` doesn't
+            // need extra parens to preserve precedence.
             const inner = renderTypeExpr(expr.of, ctx);
-            // `T[]` binds tighter than `|`, so an inline union element like
-            // `array(literalUnion(true, false))` would render as
-            // `true | false[]` (i.e. `true | (false[])`) without parentheses.
-            // Wrap any inline-union element in parens to preserve precedence.
-            if (needsArrayElementParens(expr.of)) {
-                return fragment`(${inner})[]`;
-            }
-            return fragment`${inner}[]`;
+            return fragment`Array<${inner}>`;
         }
         case 'tuple': {
             if (expr.items.length === 0) return fragment`[]`;
@@ -70,6 +69,25 @@ export function renderTypeExpr(expr: TypeExpr, ctx: RenderTypeExprContext): Frag
             return mergeFragments(items, parts => `[${parts.join(', ')}]`);
         }
     }
+}
+
+/**
+ * Render a `literalUnion`'s values as a `|`-separated TS expression.
+ *
+ * When both `true` and `false` are present, collapse them to `boolean`
+ * (placed at the start) and append the remaining literals after. This is
+ * a TS-only readability normalisation; the encoded spec keeps the explicit
+ * `true | false` representation so other codegen targets (e.g. Rust) can
+ * still emit a 3-variant enum if they prefer.
+ */
+function renderLiteralUnion(values: readonly (boolean | number | string)[]): string {
+    const hasTrue = values.includes(true);
+    const hasFalse = values.includes(false);
+    if (hasTrue && hasFalse) {
+        const rest = values.filter(v => v !== true && v !== false).map(literalToTs);
+        return ['boolean', ...rest].join(' | ');
+    }
+    return values.map(literalToTs).join(' | ');
 }
 
 function renderStringExpr(expr: Extract<TypeExpr, { kind: 'string' }>, ctx: RenderTypeExprContext): Fragment {
@@ -105,15 +123,6 @@ function importNamed(
 function literalToTs(value: boolean | number | string): string {
     if (typeof value === 'string') return tsStringLiteral(value);
     return String(value);
-}
-
-/**
- * The set of `TypeExpr` kinds that render as multiple top-level alternatives
- * separated by ` | ` and therefore need parentheses when used as the
- * element type of an array.
- */
-function needsArrayElementParens(expr: TypeExpr): boolean {
-    return expr.kind === 'literalUnion';
 }
 
 /**

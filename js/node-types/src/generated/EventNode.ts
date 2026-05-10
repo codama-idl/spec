@@ -1,11 +1,12 @@
 import type { DiscriminatorNode } from './discriminatorNodes/DiscriminatorNode';
 import type { CamelCaseString } from './shared/brands';
+import type { Docs } from './shared/docs';
 import type { TypeNode } from './typeNodes/TypeNode';
 
 /** A program event: its data shape and optional discriminators used to identify it on the wire. */
 export interface EventNode<
     TData extends TypeNode = TypeNode,
-    TDiscriminators extends DiscriminatorNode[] | undefined = DiscriminatorNode[] | undefined,
+    TDiscriminators extends Array<DiscriminatorNode> | undefined = Array<DiscriminatorNode> | undefined,
 > {
     readonly kind: 'eventNode';
 
@@ -13,7 +14,7 @@ export interface EventNode<
     /** The name of the event. */
     readonly name: CamelCaseString;
     /** Markdown documentation for the event. */
-    readonly docs?: string[];
+    readonly docs?: Docs;
 
     // Children.
     /** The type describing the event payload. */

@@ -1,6 +1,7 @@
 import type { InstructionInputValueNode } from './contextualValueNodes/InstructionInputValueNode';
 import type { CamelCaseString } from './shared/brands';
 import type { DefaultValueStrategy } from './shared/defaultValueStrategy';
+import type { Docs } from './shared/docs';
 import type { TypeNode } from './typeNodes/TypeNode';
 
 /** A named argument of an instruction, with its type and an optional default value. */
@@ -16,7 +17,7 @@ export interface InstructionArgumentNode<
     /** How a configured default value is exposed in generated APIs. Required when `defaultValue` is set. */
     readonly defaultValueStrategy?: DefaultValueStrategy;
     /** Markdown documentation for the argument. */
-    readonly docs?: string[];
+    readonly docs?: Docs;
 
     // Children.
     /** The type of the argument. */
