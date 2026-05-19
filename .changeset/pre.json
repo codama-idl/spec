@@ -2,8 +2,6 @@
     "mode": "pre",
     "tag": "rc",
     "initialVersions": {
-        "@codama-internal/gen-docs": "0.0.0",
-        "@codama-internal/gen-json-schema": "0.0.0",
         "@codama/spec": "1.6.0-rc.0"
     },
     "changesets": ["happy-parents-know", "hip-snakes-sin", "spotty-cases-smash", "verify-trusted-publishing"]

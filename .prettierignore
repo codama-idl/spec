@@ -1,11 +1,7 @@
 dist
 node_modules
-.turbo
-**/dist
-**/node_modules
-**/.turbo
 pnpm-lock.yaml
-spec-v1.json
-codama.schema.json
+v1/spec.json
+v1/schema.json
+v1/docs
 CHANGELOG.md
-**/CHANGELOG.md

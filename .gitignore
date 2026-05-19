@@ -9,7 +9,6 @@ node_modules
 **/dist/
 
 # Caches
-.turbo
 .cache
 
 # Misc

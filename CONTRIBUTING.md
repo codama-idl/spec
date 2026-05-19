@@ -9,7 +9,7 @@ You'll need:
 - Node.js 20+ (`.nvmrc` pins the major version).
 - pnpm 10+ (`packageManager` in `package.json` pins the exact version).
 
-Install deps and verify the workspace builds:
+Install deps and verify the package builds:
 
 ```sh
 pnpm install
@@ -21,20 +21,21 @@ pnpm test
 
 See the [README](./README.md) for a top-level tour. The short version:
 
-- `spec/` — meta-model API + encoded spec + producer of `spec-v1.json`.
-- `generators/` — internal codegen placeholders. Two stubs live here today (`gen-docs`, `gen-json-schema`), both awaiting implementation; reference implementations of node types, node factories, visitors, and renderers have moved to [codama-idl/codama](https://github.com/codama-idl/codama).
+- `src/` — package source (the `@codama/spec` public surface, including the meta-model API and the latest-major spec data).
+- `tests/` — package tests.
+- `generators/` — internal codegen orchestrator and per-target generators. Not exported from the package; produces the `v<n>/` artifacts.
+- `v1/` — generated artifacts mirroring the `@codama/spec/v1` surface (`spec.json`, `schema.json`, `docs/`). Treat as machine output; edit the spec or the generators, not these files.
 - `.changeset/` — release intent files managed by [`@changesets/cli`](https://github.com/changesets/changesets).
-- `docs/` — generated per-node markdown.
 
 ## Making changes
 
 ### What kind of change are you making?
 
-| Change                   | Where it lives                 | Examples                                                                        |
-| ------------------------ | ------------------------------ | ------------------------------------------------------------------------------- |
-| **Spec change**          | `spec/src/`                    | New node kind, new optional field, renamed field, new registry.                 |
-| **Generator change**     | `generators/<gen>/src/`        | Implementing or evolving how a placeholder generator emits its target artifact. |
-| **Internal-only change** | `.github/`, root configs, docs | Tooling, CI, contributor docs.                                                  |
+| Change                   | Where it lives                 | Examples                                                            |
+| ------------------------ | ------------------------------ | ------------------------------------------------------------------- |
+| **Spec change**          | `src/`                         | New node kind, new optional field, renamed field, new registry.     |
+| **Generator change**     | `generators/<name>/`           | Implementing or evolving how a generator emits its target artifact. |
+| **Internal-only change** | `.github/`, root configs, docs | Tooling, CI, contributor docs.                                      |
 
 ### Declaring release intent
 
@@ -69,16 +70,15 @@ them by taking the highest declared bump level.
 
 ## Testing
 
-Per-package tests run with `pnpm test`. Spec fixtures live in `spec/tests/`
-and run automatically in CI.
+Run `pnpm test` to execute the type checks and unit tests. Spec fixtures live in
+`tests/` and run automatically in CI.
 
 Spec-touching PRs should:
 
-1. Include the spec change in `spec/src/`.
-2. Run `pnpm --filter @codama/spec generate` to refresh `spec-v1.json` and
-   commit the result. CI verifies the artifact stays in lockstep with the
-   TypeScript source.
-3. Add or update fixtures in `spec/tests/` covering the new shape.
+1. Include the spec change in `src/`.
+2. Run `pnpm generate` to refresh the `v<n>/` artifacts and commit the result.
+   CI verifies the artifacts stay in lockstep with the TypeScript source.
+3. Add or update fixtures in `tests/` covering the new shape.
 
 ### Optional value serialisation
 
@@ -106,9 +106,8 @@ derived from the changeset files.
 - TypeScript and JavaScript are formatted with Prettier
   (`@solana/prettier-config-solana`) and linted with ESLint
   (`@solana/eslint-config-solana`). `pnpm lint` and `pnpm lint:fix` run both.
-- Generated files (`spec-v1.json`, `codama.schema.json`, `docs/**`) are
-  committed but treated as machine output — edit the spec or the generators,
-  not the generated files.
+- Generated files under `v1/` are committed but treated as machine output —
+  edit the spec or the generators, not the generated files.
 
 ## Reporting issues
 

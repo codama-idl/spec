@@ -38,9 +38,9 @@ jobs:
       - name: Verify generated artifacts are up to date
         run: |
           pnpm generate
-          if ! git diff --quiet -- spec-v1.json; then
+          if ! git diff --quiet -- v1; then
             echo '::error::Generated artifacts are stale. Re-run `pnpm generate` and commit the result.'
-            git --no-pager diff -- spec-v1.json
+            git --no-pager diff -- v1
             exit 1
           fi
 
