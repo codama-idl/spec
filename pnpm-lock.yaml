@@ -45,61 +45,9 @@ importers:
         specifier: ^4.1.5
         version: 4.1.5(@types/node@25.6.0)(vite@8.0.10(@types/node@25.6.0)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4))
 
-  generators/_shared/fragment:
-    devDependencies:
-      '@types/node':
-        specifier: ^25
-        version: 25.6.0
-      tsx:
-        specifier: ^4.21.0
-        version: 4.21.0
-      typescript:
-        specifier: ^6.0.3
-        version: 6.0.3
-      vitest:
-        specifier: ^4.1.5
-        version: 4.1.5(@types/node@25.6.0)(vite@8.0.10(@types/node@25.6.0)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4))
-
   generators/gen-docs: {}
 
   generators/gen-json-schema: {}
-
-  generators/gen-rs-nodes: {}
-
-  generators/gen-ts-node-types:
-    dependencies:
-      '@codama-internal/fragment':
-        specifier: workspace:*
-        version: link:../_shared/fragment
-      '@codama/spec':
-        specifier: workspace:*
-        version: link:../../spec
-      prettier:
-        specifier: ^3.8.3
-        version: 3.8.3
-    devDependencies:
-      '@types/node':
-        specifier: ^25
-        version: 25.6.0
-      tsx:
-        specifier: ^4.21.0
-        version: 4.21.0
-      typescript:
-        specifier: ^6.0.3
-        version: 6.0.3
-      vitest:
-        specifier: ^4.1.5
-        version: 4.1.5(@types/node@25.6.0)(vite@8.0.10(@types/node@25.6.0)(esbuild@0.27.7)(tsx@4.21.0)(yaml@2.8.4))
-
-  generators/gen-ts-nodes: {}
-
-  js/node-types: {}
-
-  js/nodes:
-    dependencies:
-      '@codama/node-types':
-        specifier: workspace:*
-        version: link:../node-types
 
   spec:
     devDependencies:

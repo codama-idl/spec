@@ -1,5 +1,3 @@
 packages:
   - 'spec'
-  - 'js/*'
   - 'generators/*'
-  - 'generators/_shared/*'

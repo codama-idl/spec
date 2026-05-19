@@ -9,6 +9,8 @@
     },
     "codama": {
         "generator": true,
-        "outputs": ["docs"]
+        "outputs": [
+            "docs"
+        ]
     }
 }

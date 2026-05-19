@@ -6,7 +6,7 @@
         "lint": "turbo run lint --log-order grouped",
         "lint:fix": "turbo run lint:fix --log-order grouped && pnpm prettier --ignore-unknown --write './*'",
         "test": "turbo run test --log-order grouped",
-        "generate": "pnpm --filter @codama/spec build && pnpm --filter @codama/spec generate && pnpm --filter @codama-internal/gen-ts-node-types generate"
+        "generate": "pnpm --filter @codama/spec build && pnpm --filter @codama/spec generate"
     },
     "devDependencies": {
         "@changesets/cli": "^2.31.0",

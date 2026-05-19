@@ -1,21 +1,10 @@
 {
-  "mode": "pre",
-  "tag": "rc",
-  "initialVersions": {
-    "@codama-internal/fragment": "0.0.0",
-    "@codama-internal/gen-docs": "0.0.0",
-    "@codama-internal/gen-json-schema": "0.0.0",
-    "@codama-internal/gen-rs-nodes": "0.0.0",
-    "@codama-internal/gen-ts-node-types": "0.0.0",
-    "@codama-internal/gen-ts-nodes": "0.0.0",
-    "@codama/node-types": "1.6.0",
-    "@codama/nodes": "1.6.0",
-    "@codama/spec": "1.6.0-rc.0"
-  },
-  "changesets": [
-    "happy-parents-know",
-    "hip-snakes-sin",
-    "spotty-cases-smash",
-    "verify-trusted-publishing"
-  ]
+    "mode": "pre",
+    "tag": "rc",
+    "initialVersions": {
+        "@codama-internal/gen-docs": "0.0.0",
+        "@codama-internal/gen-json-schema": "0.0.0",
+        "@codama/spec": "1.6.0-rc.0"
+    },
+    "changesets": ["happy-parents-know", "hip-snakes-sin", "spotty-cases-smash", "verify-trusted-publishing"]
 }

@@ -1,14 +1,11 @@
 dist
-target
 node_modules
 .turbo
 **/dist
-**/target
 **/node_modules
 **/.turbo
 pnpm-lock.yaml
-Cargo.lock
-spec.json
+spec-v1.json
 codama.schema.json
 CHANGELOG.md
 **/CHANGELOG.md

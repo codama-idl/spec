@@ -5,10 +5,6 @@
 spec-v1.json linguist-generated=true
 codama.schema.json linguist-generated=true
 docs/** linguist-generated=true
-js/node-types/src/generated/** linguist-generated=true
-js/nodes/src/generated/** linguist-generated=true
-rust/codama-nodes/src/generated/** linguist-generated=true
 
 # Lockfiles
 pnpm-lock.yaml linguist-generated=true
-Cargo.lock linguist-generated=true

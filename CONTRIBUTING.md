@@ -8,9 +8,8 @@ You'll need:
 
 - Node.js 20+ (`.nvmrc` pins the major version).
 - pnpm 10+ (`packageManager` in `package.json` pins the exact version).
-- Rust as declared in `rust-toolchain.toml` (rustup will pick this up automatically).
 
-Install JS deps and verify the workspace builds:
+Install deps and verify the workspace builds:
 
 ```sh
 pnpm install
@@ -18,21 +17,12 @@ pnpm build
 pnpm test
 ```
 
-Build the Rust workspace:
-
-```sh
-cargo build --workspace
-cargo test --workspace
-```
-
 ## Repository layout
 
 See the [README](./README.md) for a top-level tour. The short version:
 
 - `spec/` — meta-model API + encoded spec + producer of `spec-v1.json`.
-- `js/` — workspace-only TypeScript scaffolding (`@codama/node-types`, `@codama/nodes`); not published from this repo while the JS reference implementations migrate to [codama-idl/codama](https://github.com/codama-idl/codama).
-- `rust/` — Rust crates (`codama-nodes`, `codama-nodes-derive`); released manually via `cargo publish` for now.
-- `generators/` — internal codegen scripts.
+- `generators/` — internal codegen placeholders. Two stubs live here today (`gen-docs`, `gen-json-schema`), both awaiting implementation; reference implementations of node types, node factories, visitors, and renderers have moved to [codama-idl/codama](https://github.com/codama-idl/codama).
 - `.changeset/` — release intent files managed by [`@changesets/cli`](https://github.com/changesets/changesets).
 - `docs/` — generated per-node markdown.
 
@@ -40,13 +30,11 @@ See the [README](./README.md) for a top-level tour. The short version:
 
 ### What kind of change are you making?
 
-| Change                         | Where it lives                                        | Examples                                                             |
-| ------------------------------ | ----------------------------------------------------- | -------------------------------------------------------------------- |
-| **Spec change**                | `spec/src/`                                           | New node kind, new optional field, renamed field, new registry.      |
-| **Generator change**           | `generators/<gen>/src/`                               | Improving how a generator emits TS/Rust/Markdown from the same spec. |
-| **Hand-written helper change** | `js/nodes/src/` (TS), `rust/codama-nodes/src/` (Rust) | New helper like `isFooNode`, refactor of existing utilities.         |
-| **Proc-macro change**          | `rust/codama-nodes-derive/src/`                       | Behaviour of `#[node]` and friends.                                  |
-| **Internal-only change**       | `.github/`, root configs, docs                        | Tooling, CI, contributor docs.                                       |
+| Change                   | Where it lives                 | Examples                                                                        |
+| ------------------------ | ------------------------------ | ------------------------------------------------------------------------------- |
+| **Spec change**          | `spec/src/`                    | New node kind, new optional field, renamed field, new registry.                 |
+| **Generator change**     | `generators/<gen>/src/`        | Implementing or evolving how a placeholder generator emits its target artifact. |
+| **Internal-only change** | `.github/`, root configs, docs | Tooling, CI, contributor docs.                                                  |
 
 ### Declaring release intent
 
@@ -69,11 +57,10 @@ The repo is currently in **release-candidate mode** under the `rc` tag (see
 
 Use semver intent:
 
-- **`major`** — breaking change to the public surface (spec, package API,
-  proc-macro behaviour). Includes anything that breaks consumers' compilation
-  or runtime expectations.
+- **`major`** — breaking change to the public surface (spec, package API).
+  Includes anything that breaks consumers' compilation or runtime expectations.
 - **`minor`** — backwards-compatible additions: new node kinds, new optional
-  fields, new helper exports, new traits with default impls.
+  fields, new helper exports.
 - **`patch`** — bug fixes, internal refactors, performance improvements,
   documentation-only changes that ship to users.
 
@@ -82,8 +69,7 @@ them by taking the highest declared bump level.
 
 ## Testing
 
-Per-package tests run with `pnpm test` (TS) and `cargo test` (Rust). The
-fixture-based cross-language consistency tests live in `spec/tests/fixtures/`
+Per-package tests run with `pnpm test`. Spec fixtures live in `spec/tests/`
 and run automatically in CI.
 
 Spec-touching PRs should:
@@ -92,8 +78,7 @@ Spec-touching PRs should:
 2. Run `pnpm --filter @codama/spec generate` to refresh `spec-v1.json` and
    commit the result. CI verifies the artifact stays in lockstep with the
    TypeScript source.
-3. Run any other generators whose outputs change and commit the result.
-4. Add or update fixtures in `spec/tests/fixtures/` covering the new shape.
+3. Add or update fixtures in `spec/tests/` covering the new shape.
 
 ### Optional value serialisation
 
@@ -107,32 +92,29 @@ Codegen targets must respect this when emitting reader and writer code.
 Releases are automated for `@codama/spec`:
 
 1. Merging your PR (with a changeset) into `main` triggers the
-   [`Release` workflow](./.github/workflows/release.yml).
-2. The workflow either opens a "Version Packages" PR (when changesets are
+   [`Main` workflow](./.github/workflows/main.yml).
+2. The workflow either opens a "Release package" PR (when changesets are
    pending) or publishes any unreleased versions to npm.
-3. Reviewing and merging the Version Packages PR triggers the workflow again,
+3. Reviewing and merging the Release package PR triggers the workflow again,
    which runs `pnpm changeset publish` to ship the package.
 
 You don't need to bump versions or edit `CHANGELOG.md` manually — both are
 derived from the changeset files.
-
-Rust crates are released manually via `cargo publish` until they relocate to
-[codama-idl/codama-rs](https://github.com/codama-idl/codama-rs).
 
 ## Code style
 
 - TypeScript and JavaScript are formatted with Prettier
   (`@solana/prettier-config-solana`) and linted with ESLint
   (`@solana/eslint-config-solana`). `pnpm lint` and `pnpm lint:fix` run both.
-- Rust is formatted with `cargo fmt` and linted with `cargo clippy`.
-- Generated files (`spec-v1.json`, `codama.schema.json`,
-  `js/node-types/src/generated/**`, etc.) are committed but treated as
-  machine output — edit the spec or the generators, not the generated files.
+- Generated files (`spec-v1.json`, `codama.schema.json`, `docs/**`) are
+  committed but treated as machine output — edit the spec or the generators,
+  not the generated files.
 
 ## Reporting issues
 
 File issues at <https://github.com/codama-idl/spec/issues>. For changes to
-visitors, validators, renderers, or the CLI, the right home is one of:
+node types, node factories, visitors, validators, renderers, or the CLI, the
+right home is one of:
 
 - TypeScript tooling: <https://github.com/codama-idl/codama>
 - Rust tooling: <https://github.com/codama-idl/codama-rs>

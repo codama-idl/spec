@@ -9,6 +9,8 @@
     },
     "codama": {
         "generator": true,
-        "outputs": ["codama.schema.json"]
+        "outputs": [
+            "codama.schema.json"
+        ]
     }
 }
