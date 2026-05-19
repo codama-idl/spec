@@ -2,6 +2,32 @@
     "name": "@codama/spec",
     "version": "1.6.0-rc.4",
     "description": "The canonical Codama node specification and meta-model",
+    "keywords": [
+        "codama",
+        "solana",
+        "spec",
+        "specifications",
+        "standard"
+    ],
+    "bugs": {
+        "url": "http://github.com/codama-idl/spec/issues"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/codama-idl/spec"
+    },
+    "files": [
+        "./dist/types",
+        "./dist/index.*",
+        "./dist/api.*",
+        "./dist/v1.*"
+    ],
+    "type": "commonjs",
+    "sideEffects": false,
+    "main": "./dist/index.node.cjs",
+    "module": "./dist/index.node.mjs",
+    "types": "./dist/types/index.d.ts",
     "exports": {
         ".": {
             "types": "./dist/types/index.d.ts",
@@ -37,49 +63,23 @@
             }
         }
     },
-    "main": "./dist/index.node.cjs",
-    "module": "./dist/index.node.mjs",
-    "types": "./dist/types/index.d.ts",
-    "type": "commonjs",
-    "files": [
-        "./dist/types",
-        "./dist/index.*",
-        "./dist/api.*",
-        "./dist/v1.*"
-    ],
-    "sideEffects": false,
-    "keywords": [
-        "codama",
-        "solana",
-        "spec",
-        "standard",
-        "specifications"
-    ],
     "scripts": {
         "build": "rimraf dist && tsup && tsc -p ./tsconfig.declarations.json",
         "dev": "vitest",
         "generate": "pnpm build && tsx generators/index.ts",
-        "lint": "eslint . && prettier --check .",
-        "lint:fix": "eslint --fix . && prettier --write .",
+        "lint": "oxlint && oxfmt --check .",
+        "lint:fix": "oxlint --fix && oxfmt .",
         "test": "pnpm test:types && pnpm test:unit",
         "test:types": "tsc --noEmit",
         "test:unit": "vitest run"
     },
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/codama-idl/spec"
-    },
-    "bugs": {
-        "url": "http://github.com/codama-idl/spec/issues"
-    },
     "devDependencies": {
         "@changesets/cli": "^2.31.0",
-        "@solana/eslint-config-solana": "^5.0.0",
-        "@solana/prettier-config-solana": "0.0.6",
+        "@solana-config/oxc": "^0.1.1",
         "@types/node": "^25",
-        "eslint": "^9.39.4",
-        "prettier": "^3.8.3",
+        "oxfmt": "^0.51.0",
+        "oxlint": "^1.66.0",
+        "oxlint-tsgolint": "^0.23.0",
         "rimraf": "^6.1.3",
         "tsup": "^8.5.1",
         "tsx": "^4.21.0",
@@ -87,10 +87,9 @@
         "vitest": "^4.1.5"
     },
     "engines": {
-        "node": ">=22.0"
+        "node": ">=22.12.0"
     },
     "packageManager": "pnpm@10.33.3",
-    "prettier": "@solana/prettier-config-solana",
     "pnpm": {
         "ignoredBuiltDependencies": [
             "esbuild",

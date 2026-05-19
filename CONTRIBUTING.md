@@ -103,9 +103,11 @@ derived from the changeset files.
 
 ## Code style
 
-- TypeScript and JavaScript are formatted with Prettier
-  (`@solana/prettier-config-solana`) and linted with ESLint
-  (`@solana/eslint-config-solana`). `pnpm lint` and `pnpm lint:fix` run both.
+- TypeScript and JavaScript are linted with [Oxlint](https://oxc.rs/docs/guide/usage/linter)
+  and formatted with [Oxfmt](https://oxc.rs/docs/guide/usage/formatter), using
+  [`@solana-config/oxc`](https://www.npmjs.com/package/@solana-config/oxc) as
+  the shared base. `pnpm lint` runs both (with type-aware rules enabled);
+  `pnpm lint:fix` applies their autofixes.
 - Generated files under `v1/` are committed but treated as machine output —
   edit the spec or the generators, not the generated files.
 
