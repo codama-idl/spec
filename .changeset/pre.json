@@ -1,8 +1,14 @@
 {
-    "mode": "pre",
-    "tag": "rc",
-    "initialVersions": {
-        "@codama/spec": "1.6.0-rc.0"
-    },
-    "changesets": ["happy-parents-know", "hip-snakes-sin", "spotty-cases-smash", "verify-trusted-publishing"]
+  "mode": "pre",
+  "tag": "rc",
+  "initialVersions": {
+    "@codama/spec": "1.6.0-rc.0"
+  },
+  "changesets": [
+    "happy-parents-know",
+    "hip-snakes-sin",
+    "keen-zebras-melt",
+    "spotty-cases-smash",
+    "verify-trusted-publishing"
+  ]
 }
