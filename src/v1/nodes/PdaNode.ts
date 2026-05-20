@@ -14,7 +14,7 @@ export const pdaNode = defineNode('pdaNode', {
                 'The base58-encoded program ID used to derive the PDA. When omitted, the surrounding program is assumed.',
             ],
         }),
-        optionalAttribute('seeds', array(union('pdaSeedNode')), {
+        attribute('seeds', array(union('pdaSeedNode')), {
             docs: ['The seeds used to derive the PDA, in order.'],
         }),
     ],

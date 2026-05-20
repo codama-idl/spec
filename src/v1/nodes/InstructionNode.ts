@@ -24,10 +24,10 @@ export const instructionNode = defineNode('instructionNode', {
         optionalAttribute('optionalAccountStrategy', enumeration('optionalAccountStrategy'), {
             docs: ['How absent optional accounts are represented when serialising the instruction.'],
         }),
-        optionalAttribute('accounts', array(node('instructionAccountNode')), {
+        attribute('accounts', array(node('instructionAccountNode')), {
             docs: ['The accounts the instruction operates on, in order.'],
         }),
-        optionalAttribute('arguments', array(node('instructionArgumentNode')), {
+        attribute('arguments', array(node('instructionArgumentNode')), {
             docs: ['The serialised arguments of the instruction, in order.'],
         }),
         optionalAttribute('extraArguments', array(node('instructionArgumentNode')), {

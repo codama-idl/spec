@@ -31,25 +31,25 @@ export const programNode = defineNode('programNode', {
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the program.'],
         }),
-        optionalAttribute('accounts', array(node('accountNode')), {
+        attribute('accounts', array(node('accountNode')), {
             docs: ['The accounts owned by the program.'],
         }),
-        optionalAttribute('instructions', array(node('instructionNode')), {
+        attribute('instructions', array(node('instructionNode')), {
             docs: ['The instructions exposed by the program.'],
         }),
-        optionalAttribute('definedTypes', array(node('definedTypeNode')), {
+        attribute('definedTypes', array(node('definedTypeNode')), {
             docs: ['The reusable types defined by the program.'],
         }),
-        optionalAttribute('pdas', array(node('pdaNode')), {
+        attribute('pdas', array(node('pdaNode')), {
             docs: ['The PDAs derived by the program.'],
         }),
-        optionalAttribute('events', array(node('eventNode')), {
+        attribute('events', array(node('eventNode')), {
             docs: ['The events emitted by the program.'],
         }),
-        optionalAttribute('errors', array(node('errorNode')), {
+        attribute('errors', array(node('errorNode')), {
             docs: ['The errors returned by the program.'],
         }),
-        optionalAttribute('constants', array(node('constantNode')), {
+        attribute('constants', array(node('constantNode')), {
             docs: ['The constants exposed by the program.'],
         }),
     ],

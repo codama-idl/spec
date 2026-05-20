@@ -140,12 +140,16 @@ describe('v1 spec — programNode shape', () => {
         expect(publicKey.type).toEqual({ kind: 'address' });
     });
 
-    it('treats every vec-of-children attribute as optional', () => {
+    it('keeps every vec-of-children attribute required in v1', () => {
+        // v1 keeps these arrays required so existing codegen targets (JS,
+        // Rust) don't have to special-case the "empty array vs. absent"
+        // distinction. The optional encoding may return in a future spec
+        // major.
         const program = getNode('programNode')!;
         for (const name of ['accounts', 'instructions', 'definedTypes', 'pdas', 'events', 'errors', 'constants']) {
             const a = program.attributes.find(attr => attr.name === name);
             expect(a, `attribute "${name}" should be defined`).toBeDefined();
-            expect(a!.optional, `attribute "${name}" should be optional`).toBe(true);
+            expect(a!.optional, `attribute "${name}" should not be optional`).toBeUndefined();
         }
     });
 });

@@ -2313,7 +2313,6 @@
                                     "name": "pdaSeedValueNode"
                                 }
                             },
-                            "optional": true,
                             "docs": [
                                 "The seed values used to derive the PDA, paired with their seed names."
                             ]
@@ -3361,7 +3360,6 @@
                                     "name": "instructionAccountNode"
                                 }
                             },
-                            "optional": true,
                             "docs": [
                                 "The accounts the instruction operates on, in order."
                             ]
@@ -3375,7 +3373,6 @@
                                     "name": "instructionArgumentNode"
                                 }
                             },
-                            "optional": true,
                             "docs": [
                                 "The serialised arguments of the instruction, in order."
                             ]
@@ -3604,7 +3601,6 @@
                                     "name": "pdaSeedNode"
                                 }
                             },
-                            "optional": true,
                             "docs": [
                                 "The seeds used to derive the PDA, in order."
                             ]
@@ -3677,7 +3673,6 @@
                                     "name": "accountNode"
                                 }
                             },
-                            "optional": true,
                             "docs": [
                                 "The accounts owned by the program."
                             ]
@@ -3691,7 +3686,6 @@
                                     "name": "instructionNode"
                                 }
                             },
-                            "optional": true,
                             "docs": [
                                 "The instructions exposed by the program."
                             ]
@@ -3705,7 +3699,6 @@
                                     "name": "definedTypeNode"
                                 }
                             },
-                            "optional": true,
                             "docs": [
                                 "The reusable types defined by the program."
                             ]
@@ -3719,7 +3712,6 @@
                                     "name": "pdaNode"
                                 }
                             },
-                            "optional": true,
                             "docs": [
                                 "The PDAs derived by the program."
                             ]
@@ -3733,7 +3725,6 @@
                                     "name": "eventNode"
                                 }
                             },
-                            "optional": true,
                             "docs": [
                                 "The events emitted by the program."
                             ]
@@ -3747,7 +3738,6 @@
                                     "name": "errorNode"
                                 }
                             },
-                            "optional": true,
                             "docs": [
                                 "The errors returned by the program."
                             ]
@@ -3761,7 +3751,6 @@
                                     "name": "constantNode"
                                 }
                             },
-                            "optional": true,
                             "docs": [
                                 "The constants exposed by the program."
                             ]
@@ -3814,7 +3803,6 @@
                                     "name": "programNode"
                                 }
                             },
-                            "optional": true,
                             "docs": [
                                 "Additional programs referenced by the primary program."
                             ]

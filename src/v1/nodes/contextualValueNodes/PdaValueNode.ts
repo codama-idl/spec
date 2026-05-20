@@ -6,7 +6,7 @@ export const pdaValueNode = defineNode('pdaValueNode', {
         attribute('pda', union('pdaValuePda'), {
             docs: ['The PDA being derived — either a link to a defined PDA or an inline `pdaNode`.'],
         }),
-        optionalAttribute('seeds', array(node('pdaSeedValueNode')), {
+        attribute('seeds', array(node('pdaSeedValueNode')), {
             docs: ['The seed values used to derive the PDA, paired with their seed names.'],
         }),
         optionalAttribute('programId', union('pdaValueProgramId'), {
