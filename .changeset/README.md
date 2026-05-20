@@ -14,4 +14,4 @@ We're currently in **pre-release mode** under the `rc` tag. While `.changeset/pr
 2. Run `pnpm changeset` to record the bump level (`patch` / `minor` / `major`) and a user-facing summary. This writes a markdown file under `.changeset/`.
 3. Commit the changeset file alongside your other changes.
 4. Open a PR. CI surfaces the pending bump in its summary.
-5. On merge to `main`, the release workflow either opens a "Version Packages" PR (which bumps versions and updates `CHANGELOG.md`), or — if no changesets are pending — publishes any unreleased versions to npm.
+5. On merge to `main`, the release workflow either opens a "Release package" PR (which bumps versions and updates `CHANGELOG.md`), or — if no changesets are pending — publishes any unreleased versions to npm.

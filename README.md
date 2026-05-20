@@ -2,7 +2,7 @@
 
 The canonical Codama node specification.
 
-## What is this?
+## Overview
 
 Codama is a standard for describing on-chain Solana programs as a graph of typed nodes (accounts, instructions, types, …). This repository contains:
 
@@ -11,6 +11,46 @@ Codama is a standard for describing on-chain Solana programs as a graph of typed
 - **Internal codegen.** Generators under `generators/` produce the public artifacts that mirror each spec major (`v<n>/spec.json`, `v<n>/schema.json`, `v<n>/docs/`). They are not exported from the `@codama/spec` package; they exist as internal tooling for this repo.
 
 Reference implementations (TypeScript node types, node factories, visitors, validators, renderers, the CLI) live in [codama-idl/codama](https://github.com/codama-idl/codama) and consume the published `@codama/spec` package. The Rust reference implementation lives in [codama-idl/codama-rs](https://github.com/codama-idl/codama-rs).
+
+## Install
+
+```sh
+pnpm add @codama/spec
+# or: npm install @codama/spec
+```
+
+## Quickstart
+
+`@codama/spec` exposes three entrypoints:
+
+- `@codama/spec` — the latest stable major's public surface. Re-exports `@codama/spec/v1` today; will track future majors.
+- `@codama/spec/v1` — the v1 spec data, accessors (`getSpec`, `getNode`, `getUnion`, `getEnumeration`), and the version-agnostic types (`NodeSpec`, `UnionSpec`, …).
+- `@codama/spec/api` — the meta-model authoring API (`defineNode`, `attribute`, primitives, compounds, …) for hand-authoring specs and test fixtures.
+
+### Read the spec
+
+```ts
+import { getSpec, getNode, SPEC_VERSION } from '@codama/spec/v1';
+
+const spec = getSpec();
+console.log(spec.version); // → '1.6.0'
+console.log(SPEC_VERSION); // → '1.6.0'
+
+const account = getNode('accountNode');
+console.log(account?.attributes.map(a => a.name));
+// → ['name', 'size', 'docs', 'data', 'pda', 'discriminators']
+```
+
+### Hand-author a node
+
+```ts
+import { attribute, defineNode, string, u32 } from '@codama/spec/api';
+
+const myNode = defineNode('myNode', {
+    docs: ['A custom node, hand-authored.'],
+    attributes: [attribute('name', string()), attribute('size', u32(), { docs: ['Size in bytes.'] })],
+});
+```
 
 ## Repository layout
 

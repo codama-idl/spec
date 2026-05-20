@@ -6,7 +6,7 @@ Thanks for your interest in contributing to the Codama spec.
 
 You'll need:
 
-- Node.js 20+ (`.nvmrc` pins the major version).
+- Node.js 22.12+ (per `engines.node` in `package.json`); the `.nvmrc` pins the development version to Node 24.
 - pnpm 10+ (`packageManager` in `package.json` pins the exact version).
 
 Install deps and verify the package builds:
