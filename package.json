@@ -74,6 +74,7 @@
         "test:unit": "vitest run"
     },
     "devDependencies": {
+        "@changesets/changelog-github": "^0.7.0",
         "@changesets/cli": "^2.31.0",
         "@solana-config/oxc": "^0.1.1",
         "@types/node": "^25",

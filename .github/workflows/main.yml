@@ -76,5 +76,6 @@ jobs:
           publish: pnpm changeset publish
           commit: 'Release package'
           title: 'Release package'
+          createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
