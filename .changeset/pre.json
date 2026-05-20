@@ -5,6 +5,7 @@
     "@codama/spec": "1.6.0-rc.0"
   },
   "changesets": [
+    "bold-spiders-rest",
     "happy-parents-know",
     "hip-snakes-sin",
     "keen-zebras-melt",
