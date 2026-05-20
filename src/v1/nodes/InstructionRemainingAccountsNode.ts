@@ -18,7 +18,7 @@ export const instructionRemainingAccountsNode = defineNode('instructionRemaining
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the remaining-accounts slot.'],
         }),
-        attribute('value', union('InstructionRemainingAccountsValue'), {
+        attribute('value', union('instructionRemainingAccountsValue'), {
             docs: ['The source of the remaining-accounts list — a referenced argument or a resolver.'],
         }),
     ],

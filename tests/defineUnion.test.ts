@@ -4,7 +4,7 @@ import { defineUnion, node, union } from '../src/api';
 
 describe('defineUnion', () => {
     it('treats bare strings as node references', () => {
-        const u = defineUnion('Foo', { members: ['fooNode', 'barNode'] });
+        const u = defineUnion('foo', { members: ['fooNode', 'barNode'] });
         expect(u.members).toEqual([
             { kind: 'node', name: 'fooNode' },
             { kind: 'node', name: 'barNode' },
@@ -12,15 +12,15 @@ describe('defineUnion', () => {
     });
 
     it('preserves nested union references structurally', () => {
-        const u = defineUnion('Composite', { members: [union('Inner'), 'leafNode'] });
+        const u = defineUnion('composite', { members: [union('inner'), 'leafNode'] });
         expect(u.members).toEqual([
-            { kind: 'union', name: 'Inner' },
+            { kind: 'union', name: 'inner' },
             { kind: 'node', name: 'leafNode' },
         ]);
     });
 
     it('accepts node(...) references directly', () => {
-        const u = defineUnion('Mixed', { members: [node('x'), 'y'] });
+        const u = defineUnion('mixed', { members: [node('x'), 'y'] });
         expect(u.members).toEqual([
             { kind: 'node', name: 'x' },
             { kind: 'node', name: 'y' },
@@ -28,20 +28,20 @@ describe('defineUnion', () => {
     });
 
     it('rejects type expressions that are not node or union references', () => {
-        expect(() => defineUnion('Bad', { members: [{ kind: 'string' } as never] })).toThrow(
+        expect(() => defineUnion('bad', { members: [{ kind: 'string' } as never] })).toThrow(
             /must be node kind strings/,
         );
     });
 
     it('freezes the union and each member', () => {
-        const u = defineUnion('Frozen', { members: [union('Inner'), 'leafNode'] });
+        const u = defineUnion('frozen', { members: [union('inner'), 'leafNode'] });
         expect(Object.isFrozen(u)).toBe(true);
         expect(Object.isFrozen(u.members)).toBe(true);
         for (const m of u.members) expect(Object.isFrozen(m)).toBe(true);
     });
 
     it('attaches optional docs', () => {
-        const u = defineUnion('Doc', { docs: ['A documented union.'], members: ['x'] });
+        const u = defineUnion('doc', { docs: ['A documented union.'], members: ['x'] });
         expect(u.docs).toEqual(['A documented union.']);
     });
 });

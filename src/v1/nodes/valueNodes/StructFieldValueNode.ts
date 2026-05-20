@@ -6,7 +6,7 @@ export const structFieldValueNode = defineNode('structFieldValueNode', {
         attribute('name', stringIdentifier(), {
             docs: ['The name of the field.'],
         }),
-        attribute('value', union('ValueNode'), {
+        attribute('value', union('valueNode'), {
             docs: ['The concrete value of the field.'],
         }),
     ],

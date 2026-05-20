@@ -9,7 +9,7 @@ export const definedTypeNode = defineNode('definedTypeNode', {
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the type.'],
         }),
-        attribute('type', union('TypeNode'), {
+        attribute('type', union('typeNode'), {
             docs: ['The type definition.'],
         }),
     ],

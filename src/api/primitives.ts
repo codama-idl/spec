@@ -7,6 +7,17 @@
 
 import type { FloatWidth, IntegerWidth, LiteralValue, StringConstraint, TypeExpr } from './types';
 
+// Addresses.
+
+/**
+ * A Solana address (a base58-encoded ed25519 public key on the wire).
+ * Codegen targets emit a dedicated address type — e.g. `Address` in Rust —
+ * rather than treating it as a generic string.
+ */
+export function address(): TypeExpr {
+    return Object.freeze({ kind: 'address' as const });
+}
+
 // Strings.
 
 /** Plain UTF-8 string. */
@@ -111,7 +122,7 @@ export function union(name: string): TypeExpr {
 /**
  * Reference to a named node, wrapped by a named recursive `NestedUnion`
  * alias. `alias` selects which `NestedUnion` declared via
- * `defineNestedUnion` the wrapping uses (e.g. `'NestedTypeNode'`); `name`
+ * `defineNestedUnion` the wrapping uses (e.g. `'nestedTypeNode'`); `name`
  * is the inner node kind.
  *
  * Renderers emit `<alias><<innerInterface>>` and an import for the alias

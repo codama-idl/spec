@@ -29,11 +29,18 @@ export type LiteralValue = boolean | number | string;
  * Constituents are listed alphabetically by `kind` to satisfy the lint
  * rule; logical grouping lives in the doc comments below.
  *
- * Leaf primitives:    boolean, docs, float, integer, literal, literalUnion, string.
+ * Leaf primitives:    address, boolean, docs, float, integer, literal, literalUnion, string.
  * Named references:   codamaVersion, enumeration, nestedUnion, node, union.
  * Compounds:          array, tuple.
  */
 export type TypeExpr =
+    /**
+     * A Solana address (a base58-encoded ed25519 public key on the wire).
+     * Carrying address-ness as its own kind lets codegen targets emit a
+     * dedicated address type (e.g. `Address` in Rust) rather than collapsing
+     * to a generic string.
+     */
+    | { readonly kind: 'address' }
     | { readonly kind: 'array'; readonly of: TypeExpr }
     | { readonly kind: 'boolean' }
     /**
@@ -62,7 +69,7 @@ export type TypeExpr =
     | { readonly kind: 'literalUnion'; readonly values: readonly LiteralValue[] }
     /**
      * A reference to a node, wrapped by a named `NestedUnion` recursive
-     * alias. `alias` is the alias name (e.g. `'NestedTypeNode'`) declared
+     * alias. `alias` is the alias name (e.g. `'nestedTypeNode'`) declared
      * via `defineNestedUnion`; `name` is the inner node kind being wrapped.
      */
     | { readonly kind: 'nestedUnion'; readonly alias: string; readonly name: string }
@@ -116,7 +123,7 @@ export interface EnumerationSpec {
 }
 
 /**
- * A recursive type alias, e.g. `NestedTypeNode<T>`. Codegen renders one
+ * A recursive type alias, e.g. `nestedTypeNode<T>`. Codegen renders one
  * alternative per wrapper kind, plus the base case:
  *
  * ```ts
@@ -127,7 +134,7 @@ export interface EnumerationSpec {
  * an instance of this alias from an attribute.
  */
 export interface NestedUnionSpec {
-    /** The alias name emitted by codegen (e.g. `'NestedTypeNode'`). */
+    /** The alias name emitted by codegen (e.g. `'nestedTypeNode'`). */
     readonly name: string;
     readonly docs?: readonly string[];
     /**

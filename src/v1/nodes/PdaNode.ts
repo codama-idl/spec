@@ -1,4 +1,4 @@
-import { array, attribute, defineNode, docs, optionalAttribute, string, stringIdentifier, union } from '../../api';
+import { address, array, attribute, defineNode, docs, optionalAttribute, stringIdentifier, union } from '../../api';
 
 export const pdaNode = defineNode('pdaNode', {
     docs: ['A program-derived address: its name, optional program ID override, and the seeds used to derive it.'],
@@ -9,12 +9,12 @@ export const pdaNode = defineNode('pdaNode', {
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the PDA.'],
         }),
-        optionalAttribute('programId', string(), {
+        optionalAttribute('programId', address(), {
             docs: [
                 'The base58-encoded program ID used to derive the PDA. When omitted, the surrounding program is assumed.',
             ],
         }),
-        attribute('seeds', array(union('PdaSeedNode')), {
+        optionalAttribute('seeds', array(union('pdaSeedNode')), {
             docs: ['The seeds used to derive the PDA, in order.'],
         }),
     ],

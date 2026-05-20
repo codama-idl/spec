@@ -6,13 +6,13 @@ export const mapTypeNode = defineNode('mapTypeNode', {
         'The key and value types are described by their respective type nodes; the entry count is determined by a count strategy.',
     ],
     attributes: [
-        attribute('key', union('TypeNode'), {
+        attribute('key', union('typeNode'), {
             docs: ['The type of each entry key.'],
         }),
-        attribute('value', union('TypeNode'), {
+        attribute('value', union('typeNode'), {
             docs: ['The type of each entry value.'],
         }),
-        attribute('count', union('CountNode'), {
+        attribute('count', union('countNode'), {
             docs: ['The strategy used to determine the number of entries.'],
         }),
     ],

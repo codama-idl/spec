@@ -3,7 +3,7 @@ import { attribute, defineNode, node, optionalAttribute, union } from '../../../
 export const zeroableOptionTypeNode = defineNode('zeroableOptionTypeNode', {
     docs: ['An optional value whose absence is signalled by a designated zero value rather than a presence flag.'],
     attributes: [
-        attribute('item', union('TypeNode'), {
+        attribute('item', union('typeNode'), {
             docs: ['The type carried by the option when present.'],
         }),
         optionalAttribute('zeroValue', node('constantValueNode'), {

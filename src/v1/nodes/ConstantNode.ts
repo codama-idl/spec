@@ -9,10 +9,10 @@ export const constantNode = defineNode('constantNode', {
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the constant.'],
         }),
-        attribute('type', union('TypeNode'), {
+        attribute('type', union('typeNode'), {
             docs: ['The type of the constant.'],
         }),
-        attribute('value', union('ValueNode'), {
+        attribute('value', union('valueNode'), {
             docs: ['The concrete value of the constant.'],
         }),
     ],

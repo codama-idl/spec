@@ -9,7 +9,7 @@ export const enumValueNode = defineNode('enumValueNode', {
         attribute('enum', node('definedTypeLinkNode'), {
             docs: ['A link to the defined enum type the value belongs to.'],
         }),
-        optionalAttribute('value', union('EnumValuePayload'), {
+        optionalAttribute('value', union('enumValuePayload'), {
             docs: [
                 'The variant payload — a struct value for struct variants or a tuple value for tuple variants.',
                 'Omitted for unit variants.',

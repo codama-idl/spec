@@ -10,6 +10,14 @@ import type { EnumerationSpec, NestedUnionSpec, NodeSpec, Spec, TypeExpr, UnionS
 
 type RegistryKind = 'enumeration' | 'nestedUnion' | 'node' | 'union';
 
+/**
+ * The canonical camelCase identifier shape used across the spec for
+ * unions, enumerations, and nested-union aliases. Node kinds must also
+ * end in `Node` — see `NODE_KIND_REGEX`.
+ */
+const CAMEL_CASE_REGEX = /^[a-z][A-Za-z0-9]*$/;
+const NODE_KIND_REGEX = /^[a-z][A-Za-z0-9]*Node$/;
+
 export function validate(spec: Spec): string[] {
     const errors: string[] = [];
 
@@ -57,7 +65,7 @@ export function validate(spec: Spec): string[] {
 
     // Per-node validation.
     for (const n of allNodes) {
-        if (!/^[a-z][A-Za-z0-9]*Node$/.test(n.kind)) {
+        if (!NODE_KIND_REGEX.test(n.kind)) {
             errors.push(`Node kind "${n.kind}" does not match the camelCase ...Node naming convention.`);
         }
         const seenAttrs = new Set<string>();
@@ -74,6 +82,9 @@ export function validate(spec: Spec): string[] {
 
     // Union member resolution.
     for (const u of allUnions) {
+        if (!CAMEL_CASE_REGEX.test(u.name)) {
+            errors.push(`Union "${u.name}" does not match the camelCase naming convention.`);
+        }
         if (u.members.length === 0) {
             errors.push(`Union "${u.name}" has no members.`);
         }
@@ -93,8 +104,18 @@ export function validate(spec: Spec): string[] {
         }
     }
 
+    // Enumeration naming.
+    for (const e of allEnumerations) {
+        if (!CAMEL_CASE_REGEX.test(e.name)) {
+            errors.push(`Enumeration "${e.name}" does not match the camelCase naming convention.`);
+        }
+    }
+
     // Nested-union wrapper sanity.
     for (const nu of allNestedUnions) {
+        if (!CAMEL_CASE_REGEX.test(nu.name)) {
+            errors.push(`Nested union "${nu.name}" does not match the camelCase naming convention.`);
+        }
         if (nu.wrappers.length === 0) {
             errors.push(`Nested union "${nu.name}" has no wrappers.`);
         }

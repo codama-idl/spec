@@ -6,7 +6,7 @@ export const pdaSeedValueNode = defineNode('pdaSeedValueNode', {
         attribute('name', stringIdentifier(), {
             docs: ['The name of the seed being filled in.'],
         }),
-        attribute('value', union('PdaSeedValueValue'), {
+        attribute('value', union('pdaSeedValueValue'), {
             docs: ['The value to substitute for the seed.'],
         }),
     ],

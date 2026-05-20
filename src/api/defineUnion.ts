@@ -8,7 +8,7 @@
  *
  * Nested unions are preserved structurally in the encoded spec rather than
  * flattened. This serves two purposes:
- *   - DRY authoring (`union('StandaloneTypeNode')` instead of repeating 23
+ *   - DRY authoring (`union('standaloneTypeNode')` instead of repeating 23
  *     kind names).
  *   - A signal to the Rust codegen to emit `From`/`Into` trait impls between
  *     the parent union and each nested union.

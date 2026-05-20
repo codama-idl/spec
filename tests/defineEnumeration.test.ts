@@ -16,32 +16,32 @@ describe('variant', () => {
 
 describe('defineEnumeration', () => {
     it('produces a frozen EnumerationSpec', () => {
-        const e = defineEnumeration('Endianness', {
+        const e = defineEnumeration('endianness', {
             variants: [variant('be'), variant('le')],
         });
         expect(Object.isFrozen(e)).toBe(true);
         expect(Object.isFrozen(e.variants)).toBe(true);
-        expect(e.name).toBe('Endianness');
+        expect(e.name).toBe('endianness');
         expect(e.variants).toEqual([{ name: 'be' }, { name: 'le' }]);
     });
 
     it('attaches optional docs', () => {
-        const e = defineEnumeration('E', { docs: ['docs'], variants: [variant('a')] });
+        const e = defineEnumeration('e', { docs: ['docs'], variants: [variant('a')] });
         expect(e.docs).toEqual(['docs']);
     });
 
     it('rejects an empty variants list', () => {
-        expect(() => defineEnumeration('Empty', { variants: [] })).toThrow(/must be non-empty/);
+        expect(() => defineEnumeration('empty', { variants: [] })).toThrow(/must be non-empty/);
     });
 
     it('rejects duplicate variant names', () => {
-        expect(() => defineEnumeration('Dup', { variants: [variant('a'), variant('b'), variant('a')] })).toThrow(
+        expect(() => defineEnumeration('dup', { variants: [variant('a'), variant('b'), variant('a')] })).toThrow(
             /duplicate variant "a"/,
         );
     });
 
     it('preserves per-variant docs', () => {
-        const e = defineEnumeration('E', {
+        const e = defineEnumeration('e', {
             variants: [variant('a', { docs: ['A.'] }), variant('b', { docs: ['B.'] })],
         });
         expect(e.variants).toEqual([

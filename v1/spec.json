@@ -39,7 +39,7 @@
                             "name": "number",
                             "type": {
                                 "kind": "nestedUnion",
-                                "alias": "NestedTypeNode",
+                                "alias": "nestedTypeNode",
                                 "name": "numberTypeNode"
                             },
                             "docs": [
@@ -59,7 +59,7 @@
                             "name": "item",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The type of each item in the array."
@@ -69,7 +69,7 @@
                             "name": "count",
                             "type": {
                                 "kind": "union",
-                                "name": "CountNode"
+                                "name": "countNode"
                             },
                             "docs": [
                                 "The strategy used to determine the number of items."
@@ -88,7 +88,7 @@
                             "name": "size",
                             "type": {
                                 "kind": "nestedUnion",
-                                "alias": "NestedTypeNode",
+                                "alias": "nestedTypeNode",
                                 "name": "numberTypeNode"
                             },
                             "docs": [
@@ -116,7 +116,7 @@
                             "name": "number",
                             "type": {
                                 "kind": "nestedUnion",
-                                "alias": "NestedTypeNode",
+                                "alias": "nestedTypeNode",
                                 "name": "numberTypeNode"
                             },
                             "docs": [
@@ -187,7 +187,7 @@
                             "name": "struct",
                             "type": {
                                 "kind": "nestedUnion",
-                                "alias": "NestedTypeNode",
+                                "alias": "nestedTypeNode",
                                 "name": "structTypeNode"
                             },
                             "docs": [
@@ -228,7 +228,7 @@
                             "name": "tuple",
                             "type": {
                                 "kind": "nestedUnion",
-                                "alias": "NestedTypeNode",
+                                "alias": "nestedTypeNode",
                                 "name": "tupleTypeNode"
                             },
                             "docs": [
@@ -250,7 +250,7 @@
                                 "kind": "array",
                                 "of": {
                                     "kind": "union",
-                                    "name": "EnumVariantTypeNode"
+                                    "name": "enumVariantTypeNode"
                                 }
                             },
                             "docs": [
@@ -261,7 +261,7 @@
                             "name": "size",
                             "type": {
                                 "kind": "nestedUnion",
-                                "alias": "NestedTypeNode",
+                                "alias": "nestedTypeNode",
                                 "name": "numberTypeNode"
                             },
                             "docs": [
@@ -291,7 +291,7 @@
                             "name": "type",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The wrapped type whose serialisation is constrained."
@@ -310,7 +310,7 @@
                             "name": "type",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The wrapped type whose serialisation is preceded by the hidden prefix."
@@ -342,7 +342,7 @@
                             "name": "type",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The wrapped type whose serialisation is followed by the hidden suffix."
@@ -375,7 +375,7 @@
                             "name": "key",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The type of each entry key."
@@ -385,7 +385,7 @@
                             "name": "value",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The type of each entry value."
@@ -395,7 +395,7 @@
                             "name": "count",
                             "type": {
                                 "kind": "union",
-                                "name": "CountNode"
+                                "name": "countNode"
                             },
                             "docs": [
                                 "The strategy used to determine the number of entries."
@@ -414,7 +414,7 @@
                             "name": "format",
                             "type": {
                                 "kind": "enumeration",
-                                "name": "NumberFormat"
+                                "name": "numberFormat"
                             },
                             "docs": [
                                 "The wire format used to serialise the number."
@@ -424,7 +424,7 @@
                             "name": "endian",
                             "type": {
                                 "kind": "enumeration",
-                                "name": "Endianness"
+                                "name": "endianness"
                             },
                             "docs": [
                                 "The byte order used to serialise the number."
@@ -453,7 +453,7 @@
                             "name": "item",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The type carried by the option when present."
@@ -463,7 +463,7 @@
                             "name": "prefix",
                             "type": {
                                 "kind": "nestedUnion",
-                                "alias": "NestedTypeNode",
+                                "alias": "nestedTypeNode",
                                 "name": "numberTypeNode"
                             },
                             "docs": [
@@ -493,7 +493,7 @@
                             "name": "strategy",
                             "type": {
                                 "kind": "enumeration",
-                                "name": "PostOffsetStrategy"
+                                "name": "postOffsetStrategy"
                             },
                             "docs": [
                                 "How the `offset` value is interpreted."
@@ -503,7 +503,7 @@
                             "name": "type",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The wrapped type whose serialisation is followed by the offset."
@@ -532,7 +532,7 @@
                             "name": "strategy",
                             "type": {
                                 "kind": "enumeration",
-                                "name": "PreOffsetStrategy"
+                                "name": "preOffsetStrategy"
                             },
                             "docs": [
                                 "How the `offset` value is interpreted."
@@ -542,7 +542,7 @@
                             "name": "type",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The wrapped type whose serialisation is preceded by the offset."
@@ -569,7 +569,7 @@
                             "name": "item",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The type carried by the option when present."
@@ -588,7 +588,7 @@
                             "name": "type",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The wrapped type whose extent is delimited by the sentinel."
@@ -617,7 +617,7 @@
                             "name": "item",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The type of each item in the set."
@@ -627,7 +627,7 @@
                             "name": "count",
                             "type": {
                                 "kind": "union",
-                                "name": "CountNode"
+                                "name": "countNode"
                             },
                             "docs": [
                                 "The strategy used to determine the number of items."
@@ -646,7 +646,7 @@
                             "name": "type",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The wrapped type whose serialisation is preceded by its size."
@@ -656,7 +656,7 @@
                             "name": "prefix",
                             "type": {
                                 "kind": "nestedUnion",
-                                "alias": "NestedTypeNode",
+                                "alias": "nestedTypeNode",
                                 "name": "numberTypeNode"
                             },
                             "docs": [
@@ -676,7 +676,7 @@
                             "name": "number",
                             "type": {
                                 "kind": "nestedUnion",
-                                "alias": "NestedTypeNode",
+                                "alias": "nestedTypeNode",
                                 "name": "numberTypeNode"
                             },
                             "docs": [
@@ -698,7 +698,7 @@
                             "name": "encoding",
                             "type": {
                                 "kind": "enumeration",
-                                "name": "BytesEncoding"
+                                "name": "bytesEncoding"
                             },
                             "docs": [
                                 "The byte encoding used to serialise the string."
@@ -727,7 +727,7 @@
                             "name": "defaultValueStrategy",
                             "type": {
                                 "kind": "enumeration",
-                                "name": "DefaultValueStrategy"
+                                "name": "defaultValueStrategy"
                             },
                             "optional": true,
                             "docs": [
@@ -748,7 +748,7 @@
                             "name": "type",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The type of the field."
@@ -758,7 +758,7 @@
                             "name": "defaultValue",
                             "type": {
                                 "kind": "union",
-                                "name": "ValueNode"
+                                "name": "valueNode"
                             },
                             "optional": true,
                             "docs": [
@@ -802,7 +802,7 @@
                                 "kind": "array",
                                 "of": {
                                     "kind": "union",
-                                    "name": "TypeNode"
+                                    "name": "typeNode"
                                 }
                             },
                             "docs": [
@@ -822,7 +822,7 @@
                             "name": "item",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The type carried by the option when present."
@@ -845,7 +845,7 @@
             ],
             "unions": [
                 {
-                    "name": "StandaloneTypeNode",
+                    "name": "standaloneTypeNode",
                     "members": [
                         {
                             "kind": "node",
@@ -949,7 +949,7 @@
                     ]
                 },
                 {
-                    "name": "EnumVariantTypeNode",
+                    "name": "enumVariantTypeNode",
                     "members": [
                         {
                             "kind": "node",
@@ -969,11 +969,11 @@
                     ]
                 },
                 {
-                    "name": "TypeNode",
+                    "name": "typeNode",
                     "members": [
                         {
                             "kind": "union",
-                            "name": "StandaloneTypeNode"
+                            "name": "standaloneTypeNode"
                         },
                         {
                             "kind": "node",
@@ -985,15 +985,15 @@
                     ]
                 },
                 {
-                    "name": "RegisteredTypeNode",
+                    "name": "registeredTypeNode",
                     "members": [
                         {
                             "kind": "union",
-                            "name": "StandaloneTypeNode"
+                            "name": "standaloneTypeNode"
                         },
                         {
                             "kind": "union",
-                            "name": "EnumVariantTypeNode"
+                            "name": "enumVariantTypeNode"
                         },
                         {
                             "kind": "node",
@@ -1008,14 +1008,14 @@
             "enumerations": [],
             "nestedUnions": [
                 {
-                    "name": "NestedTypeNode",
+                    "name": "nestedTypeNode",
                     "docs": [
                         "A type, possibly wrapped in zero-or-more size, offset, sentinel, or hidden prefix/suffix modifiers.",
-                        "The wrapping is recursive: each modifier wraps another `NestedTypeNode<T>` until the inner `T` is reached."
+                        "The wrapping is recursive: each modifier wraps another `nestedTypeNode<T>` until the inner `T` is reached."
                     ],
                     "base": {
                         "kind": "union",
-                        "name": "TypeNode"
+                        "name": "typeNode"
                     },
                     "wrappers": [
                         "fixedSizeTypeNode",
@@ -1047,7 +1047,7 @@
                                 "kind": "array",
                                 "of": {
                                     "kind": "union",
-                                    "name": "ValueNode"
+                                    "name": "valueNode"
                                 }
                             },
                             "docs": [
@@ -1094,7 +1094,7 @@
                             "name": "encoding",
                             "type": {
                                 "kind": "enumeration",
-                                "name": "BytesEncoding"
+                                "name": "bytesEncoding"
                             },
                             "docs": [
                                 "The encoding used to represent the bytes as text."
@@ -1113,7 +1113,7 @@
                             "name": "type",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The type of the constant."
@@ -1123,7 +1123,7 @@
                             "name": "value",
                             "type": {
                                 "kind": "union",
-                                "name": "ValueNode"
+                                "name": "valueNode"
                             },
                             "docs": [
                                 "The concrete value of the constant."
@@ -1162,7 +1162,7 @@
                             "name": "value",
                             "type": {
                                 "kind": "union",
-                                "name": "EnumValuePayload"
+                                "name": "enumValuePayload"
                             },
                             "optional": true,
                             "docs": [
@@ -1183,7 +1183,7 @@
                             "name": "key",
                             "type": {
                                 "kind": "union",
-                                "name": "ValueNode"
+                                "name": "valueNode"
                             },
                             "docs": [
                                 "The entry key."
@@ -1193,7 +1193,7 @@
                             "name": "value",
                             "type": {
                                 "kind": "union",
-                                "name": "ValueNode"
+                                "name": "valueNode"
                             },
                             "docs": [
                                 "The entry value."
@@ -1261,7 +1261,7 @@
                         {
                             "name": "publicKey",
                             "type": {
-                                "kind": "string"
+                                "kind": "address"
                             },
                             "docs": [
                                 "The base58-encoded public key."
@@ -1293,7 +1293,7 @@
                                 "kind": "array",
                                 "of": {
                                     "kind": "union",
-                                    "name": "ValueNode"
+                                    "name": "valueNode"
                                 }
                             },
                             "docs": [
@@ -1313,7 +1313,7 @@
                             "name": "value",
                             "type": {
                                 "kind": "union",
-                                "name": "ValueNode"
+                                "name": "valueNode"
                             },
                             "docs": [
                                 "The wrapped value."
@@ -1360,7 +1360,7 @@
                             "name": "value",
                             "type": {
                                 "kind": "union",
-                                "name": "ValueNode"
+                                "name": "valueNode"
                             },
                             "docs": [
                                 "The concrete value of the field."
@@ -1403,7 +1403,7 @@
                                 "kind": "array",
                                 "of": {
                                     "kind": "union",
-                                    "name": "ValueNode"
+                                    "name": "valueNode"
                                 }
                             },
                             "docs": [
@@ -1416,7 +1416,7 @@
             ],
             "unions": [
                 {
-                    "name": "StandaloneValueNode",
+                    "name": "standaloneValueNode",
                     "members": [
                         {
                             "kind": "node",
@@ -1480,11 +1480,11 @@
                     ]
                 },
                 {
-                    "name": "ValueNode",
+                    "name": "valueNode",
                     "members": [
                         {
                             "kind": "union",
-                            "name": "StandaloneValueNode"
+                            "name": "standaloneValueNode"
                         }
                     ],
                     "docs": [
@@ -1492,11 +1492,11 @@
                     ]
                 },
                 {
-                    "name": "RegisteredValueNode",
+                    "name": "registeredValueNode",
                     "members": [
                         {
                             "kind": "union",
-                            "name": "StandaloneValueNode"
+                            "name": "standaloneValueNode"
                         },
                         {
                             "kind": "node",
@@ -1512,7 +1512,7 @@
                     ]
                 },
                 {
-                    "name": "EnumValuePayload",
+                    "name": "enumValuePayload",
                     "members": [
                         {
                             "kind": "node",
@@ -1739,7 +1739,7 @@
             ],
             "unions": [
                 {
-                    "name": "RegisteredLinkNode",
+                    "name": "registeredLinkNode",
                     "members": [
                         {
                             "kind": "node",
@@ -1775,11 +1775,11 @@
                     ]
                 },
                 {
-                    "name": "LinkNode",
+                    "name": "linkNode",
                     "members": [
                         {
                             "kind": "union",
-                            "name": "RegisteredLinkNode"
+                            "name": "registeredLinkNode"
                         }
                     ],
                     "docs": [
@@ -1806,7 +1806,7 @@
                             "name": "type",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The type of the seed value."
@@ -1816,7 +1816,7 @@
                             "name": "value",
                             "type": {
                                 "kind": "union",
-                                "name": "ConstantPdaSeedValue"
+                                "name": "constantPdaSeedValue"
                             },
                             "docs": [
                                 "The constant value to use as the seed — either a literal value or the program ID placeholder."
@@ -1855,7 +1855,7 @@
                             "name": "type",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The expected type of the seed value."
@@ -1867,7 +1867,7 @@
             ],
             "unions": [
                 {
-                    "name": "RegisteredPdaSeedNode",
+                    "name": "registeredPdaSeedNode",
                     "members": [
                         {
                             "kind": "node",
@@ -1883,11 +1883,11 @@
                     ]
                 },
                 {
-                    "name": "PdaSeedNode",
+                    "name": "pdaSeedNode",
                     "members": [
                         {
                             "kind": "union",
-                            "name": "RegisteredPdaSeedNode"
+                            "name": "registeredPdaSeedNode"
                         }
                     ],
                     "docs": [
@@ -1895,7 +1895,7 @@
                     ]
                 },
                 {
-                    "name": "ConstantPdaSeedValue",
+                    "name": "constantPdaSeedValue",
                     "members": [
                         {
                             "kind": "node",
@@ -1903,7 +1903,7 @@
                         },
                         {
                             "kind": "union",
-                            "name": "ValueNode"
+                            "name": "valueNode"
                         }
                     ],
                     "docs": [
@@ -1949,7 +1949,7 @@
                             "name": "prefix",
                             "type": {
                                 "kind": "nestedUnion",
-                                "alias": "NestedTypeNode",
+                                "alias": "nestedTypeNode",
                                 "name": "numberTypeNode"
                             },
                             "docs": [
@@ -1970,7 +1970,7 @@
             ],
             "unions": [
                 {
-                    "name": "RegisteredCountNode",
+                    "name": "registeredCountNode",
                     "members": [
                         {
                             "kind": "node",
@@ -1990,11 +1990,11 @@
                     ]
                 },
                 {
-                    "name": "CountNode",
+                    "name": "countNode",
                     "members": [
                         {
                             "kind": "union",
-                            "name": "RegisteredCountNode"
+                            "name": "registeredCountNode"
                         }
                     ],
                     "docs": [
@@ -2091,7 +2091,7 @@
             ],
             "unions": [
                 {
-                    "name": "RegisteredDiscriminatorNode",
+                    "name": "registeredDiscriminatorNode",
                     "members": [
                         {
                             "kind": "node",
@@ -2111,11 +2111,11 @@
                     ]
                 },
                 {
-                    "name": "DiscriminatorNode",
+                    "name": "discriminatorNode",
                     "members": [
                         {
                             "kind": "union",
-                            "name": "RegisteredDiscriminatorNode"
+                            "name": "registeredDiscriminatorNode"
                         }
                     ],
                     "docs": [
@@ -2200,7 +2200,7 @@
                             "name": "condition",
                             "type": {
                                 "kind": "union",
-                                "name": "ConditionalValueCondition"
+                                "name": "conditionalValueCondition"
                             },
                             "docs": [
                                 "The value whose evaluation drives the branch."
@@ -2210,7 +2210,7 @@
                             "name": "value",
                             "type": {
                                 "kind": "union",
-                                "name": "ValueNode"
+                                "name": "valueNode"
                             },
                             "optional": true,
                             "docs": [
@@ -2222,7 +2222,7 @@
                             "name": "ifTrue",
                             "type": {
                                 "kind": "union",
-                                "name": "InstructionInputValueNode"
+                                "name": "instructionInputValueNode"
                             },
                             "optional": true,
                             "docs": [
@@ -2233,7 +2233,7 @@
                             "name": "ifFalse",
                             "type": {
                                 "kind": "union",
-                                "name": "InstructionInputValueNode"
+                                "name": "instructionInputValueNode"
                             },
                             "optional": true,
                             "docs": [
@@ -2279,7 +2279,7 @@
                             "name": "value",
                             "type": {
                                 "kind": "union",
-                                "name": "PdaSeedValueValue"
+                                "name": "pdaSeedValueValue"
                             },
                             "docs": [
                                 "The value to substitute for the seed."
@@ -2298,7 +2298,7 @@
                             "name": "pda",
                             "type": {
                                 "kind": "union",
-                                "name": "PdaValuePda"
+                                "name": "pdaValuePda"
                             },
                             "docs": [
                                 "The PDA being derived — either a link to a defined PDA or an inline `pdaNode`."
@@ -2313,6 +2313,7 @@
                                     "name": "pdaSeedValueNode"
                                 }
                             },
+                            "optional": true,
                             "docs": [
                                 "The seed values used to derive the PDA, paired with their seed names."
                             ]
@@ -2321,7 +2322,7 @@
                             "name": "programId",
                             "type": {
                                 "kind": "union",
-                                "name": "PdaValueProgramId"
+                                "name": "pdaValueProgramId"
                             },
                             "optional": true,
                             "docs": [
@@ -2372,7 +2373,7 @@
                                 "kind": "array",
                                 "of": {
                                     "kind": "union",
-                                    "name": "ResolverDependency"
+                                    "name": "resolverDependency"
                                 }
                             },
                             "optional": true,
@@ -2386,7 +2387,7 @@
             ],
             "unions": [
                 {
-                    "name": "StandaloneContextualValueNode",
+                    "name": "standaloneContextualValueNode",
                     "members": [
                         {
                             "kind": "node",
@@ -2430,11 +2431,11 @@
                     ]
                 },
                 {
-                    "name": "ContextualValueNode",
+                    "name": "contextualValueNode",
                     "members": [
                         {
                             "kind": "union",
-                            "name": "StandaloneContextualValueNode"
+                            "name": "standaloneContextualValueNode"
                         }
                     ],
                     "docs": [
@@ -2442,11 +2443,11 @@
                     ]
                 },
                 {
-                    "name": "RegisteredContextualValueNode",
+                    "name": "registeredContextualValueNode",
                     "members": [
                         {
                             "kind": "union",
-                            "name": "StandaloneContextualValueNode"
+                            "name": "standaloneContextualValueNode"
                         },
                         {
                             "kind": "node",
@@ -2458,11 +2459,11 @@
                     ]
                 },
                 {
-                    "name": "InstructionInputValueNode",
+                    "name": "instructionInputValueNode",
                     "members": [
                         {
                             "kind": "union",
-                            "name": "ContextualValueNode"
+                            "name": "contextualValueNode"
                         },
                         {
                             "kind": "node",
@@ -2470,7 +2471,7 @@
                         },
                         {
                             "kind": "union",
-                            "name": "ValueNode"
+                            "name": "valueNode"
                         }
                     ],
                     "docs": [
@@ -2479,7 +2480,7 @@
                     ]
                 },
                 {
-                    "name": "ConditionalValueCondition",
+                    "name": "conditionalValueCondition",
                     "members": [
                         {
                             "kind": "node",
@@ -2499,7 +2500,7 @@
                     ]
                 },
                 {
-                    "name": "ResolverDependency",
+                    "name": "resolverDependency",
                     "members": [
                         {
                             "kind": "node",
@@ -2515,7 +2516,7 @@
                     ]
                 },
                 {
-                    "name": "PdaSeedValueValue",
+                    "name": "pdaSeedValueValue",
                     "members": [
                         {
                             "kind": "node",
@@ -2527,7 +2528,7 @@
                         },
                         {
                             "kind": "union",
-                            "name": "ValueNode"
+                            "name": "valueNode"
                         }
                     ],
                     "docs": [
@@ -2535,7 +2536,7 @@
                     ]
                 },
                 {
-                    "name": "PdaValuePda",
+                    "name": "pdaValuePda",
                     "members": [
                         {
                             "kind": "node",
@@ -2551,7 +2552,7 @@
                     ]
                 },
                 {
-                    "name": "PdaValueProgramId",
+                    "name": "pdaValueProgramId",
                     "members": [
                         {
                             "kind": "node",
@@ -2579,7 +2580,7 @@
             "unions": [],
             "enumerations": [
                 {
-                    "name": "BytesEncoding",
+                    "name": "bytesEncoding",
                     "variants": [
                         {
                             "name": "base16",
@@ -2611,7 +2612,7 @@
                     ]
                 },
                 {
-                    "name": "DefaultValueStrategy",
+                    "name": "defaultValueStrategy",
                     "variants": [
                         {
                             "name": "omitted",
@@ -2631,7 +2632,7 @@
                     ]
                 },
                 {
-                    "name": "Endianness",
+                    "name": "endianness",
                     "variants": [
                         {
                             "name": "be",
@@ -2651,7 +2652,7 @@
                     ]
                 },
                 {
-                    "name": "InstructionLifecycle",
+                    "name": "instructionLifecycle",
                     "variants": [
                         {
                             "name": "archived",
@@ -2683,7 +2684,7 @@
                     ]
                 },
                 {
-                    "name": "NumberFormat",
+                    "name": "numberFormat",
                     "variants": [
                         {
                             "name": "f32",
@@ -2769,7 +2770,7 @@
                     ]
                 },
                 {
-                    "name": "OptionalAccountStrategy",
+                    "name": "optionalAccountStrategy",
                     "variants": [
                         {
                             "name": "omitted",
@@ -2789,7 +2790,7 @@
                     ]
                 },
                 {
-                    "name": "PostOffsetStrategy",
+                    "name": "postOffsetStrategy",
                     "variants": [
                         {
                             "name": "absolute",
@@ -2821,7 +2822,7 @@
                     ]
                 },
                 {
-                    "name": "PreOffsetStrategy",
+                    "name": "preOffsetStrategy",
                     "variants": [
                         {
                             "name": "absolute",
@@ -2847,7 +2848,7 @@
                     ]
                 },
                 {
-                    "name": "ProgramOrigin",
+                    "name": "programOrigin",
                     "variants": [
                         {
                             "name": "anchor",
@@ -2916,7 +2917,7 @@
                             "name": "data",
                             "type": {
                                 "kind": "nestedUnion",
-                                "alias": "NestedTypeNode",
+                                "alias": "nestedTypeNode",
                                 "name": "structTypeNode"
                             },
                             "docs": [
@@ -2940,7 +2941,7 @@
                                 "kind": "array",
                                 "of": {
                                     "kind": "union",
-                                    "name": "DiscriminatorNode"
+                                    "name": "discriminatorNode"
                                 }
                             },
                             "optional": true,
@@ -2982,7 +2983,7 @@
                             "name": "type",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The type of the constant."
@@ -2992,7 +2993,7 @@
                             "name": "value",
                             "type": {
                                 "kind": "union",
-                                "name": "ValueNode"
+                                "name": "valueNode"
                             },
                             "docs": [
                                 "The concrete value of the constant."
@@ -3031,7 +3032,7 @@
                             "name": "type",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The type definition."
@@ -3118,7 +3119,7 @@
                             "name": "data",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The type describing the event payload."
@@ -3130,7 +3131,7 @@
                                 "kind": "array",
                                 "of": {
                                     "kind": "union",
-                                    "name": "DiscriminatorNode"
+                                    "name": "discriminatorNode"
                                 }
                             },
                             "optional": true,
@@ -3205,7 +3206,7 @@
                             "name": "defaultValue",
                             "type": {
                                 "kind": "union",
-                                "name": "InstructionInputValueNode"
+                                "name": "instructionInputValueNode"
                             },
                             "optional": true,
                             "docs": [
@@ -3235,7 +3236,7 @@
                             "name": "defaultValueStrategy",
                             "type": {
                                 "kind": "enumeration",
-                                "name": "DefaultValueStrategy"
+                                "name": "defaultValueStrategy"
                             },
                             "optional": true,
                             "docs": [
@@ -3256,7 +3257,7 @@
                             "name": "type",
                             "type": {
                                 "kind": "union",
-                                "name": "TypeNode"
+                                "name": "typeNode"
                             },
                             "docs": [
                                 "The type of the argument."
@@ -3266,7 +3267,7 @@
                             "name": "defaultValue",
                             "type": {
                                 "kind": "union",
-                                "name": "InstructionInputValueNode"
+                                "name": "instructionInputValueNode"
                             },
                             "optional": true,
                             "docs": [
@@ -3305,7 +3306,7 @@
                             "name": "value",
                             "type": {
                                 "kind": "union",
-                                "name": "InstructionByteDeltaValue"
+                                "name": "instructionByteDeltaValue"
                             },
                             "docs": [
                                 "The source of the delta value — a literal number, a referenced account or argument, or a resolver."
@@ -3344,7 +3345,7 @@
                             "name": "optionalAccountStrategy",
                             "type": {
                                 "kind": "enumeration",
-                                "name": "OptionalAccountStrategy"
+                                "name": "optionalAccountStrategy"
                             },
                             "optional": true,
                             "docs": [
@@ -3360,6 +3361,7 @@
                                     "name": "instructionAccountNode"
                                 }
                             },
+                            "optional": true,
                             "docs": [
                                 "The accounts the instruction operates on, in order."
                             ]
@@ -3373,6 +3375,7 @@
                                     "name": "instructionArgumentNode"
                                 }
                             },
+                            "optional": true,
                             "docs": [
                                 "The serialised arguments of the instruction, in order."
                             ]
@@ -3425,7 +3428,7 @@
                                 "kind": "array",
                                 "of": {
                                     "kind": "union",
-                                    "name": "DiscriminatorNode"
+                                    "name": "discriminatorNode"
                                 }
                             },
                             "optional": true,
@@ -3518,7 +3521,7 @@
                             "name": "value",
                             "type": {
                                 "kind": "union",
-                                "name": "InstructionRemainingAccountsValue"
+                                "name": "instructionRemainingAccountsValue"
                             },
                             "docs": [
                                 "The source of the remaining-accounts list — a referenced argument or a resolver."
@@ -3537,7 +3540,7 @@
                             "name": "lifecycle",
                             "type": {
                                 "kind": "enumeration",
-                                "name": "InstructionLifecycle"
+                                "name": "instructionLifecycle"
                             },
                             "docs": [
                                 "The lifecycle stage."
@@ -3585,7 +3588,7 @@
                         {
                             "name": "programId",
                             "type": {
-                                "kind": "string"
+                                "kind": "address"
                             },
                             "optional": true,
                             "docs": [
@@ -3598,9 +3601,10 @@
                                 "kind": "array",
                                 "of": {
                                     "kind": "union",
-                                    "name": "PdaSeedNode"
+                                    "name": "pdaSeedNode"
                                 }
                             },
+                            "optional": true,
                             "docs": [
                                 "The seeds used to derive the PDA, in order."
                             ]
@@ -3627,7 +3631,7 @@
                         {
                             "name": "publicKey",
                             "type": {
-                                "kind": "string"
+                                "kind": "address"
                             },
                             "docs": [
                                 "The base58-encoded program ID."
@@ -3647,7 +3651,7 @@
                             "name": "origin",
                             "type": {
                                 "kind": "enumeration",
-                                "name": "ProgramOrigin"
+                                "name": "programOrigin"
                             },
                             "optional": true,
                             "docs": [
@@ -3673,6 +3677,7 @@
                                     "name": "accountNode"
                                 }
                             },
+                            "optional": true,
                             "docs": [
                                 "The accounts owned by the program."
                             ]
@@ -3686,6 +3691,7 @@
                                     "name": "instructionNode"
                                 }
                             },
+                            "optional": true,
                             "docs": [
                                 "The instructions exposed by the program."
                             ]
@@ -3699,6 +3705,7 @@
                                     "name": "definedTypeNode"
                                 }
                             },
+                            "optional": true,
                             "docs": [
                                 "The reusable types defined by the program."
                             ]
@@ -3712,6 +3719,7 @@
                                     "name": "pdaNode"
                                 }
                             },
+                            "optional": true,
                             "docs": [
                                 "The PDAs derived by the program."
                             ]
@@ -3725,6 +3733,7 @@
                                     "name": "eventNode"
                                 }
                             },
+                            "optional": true,
                             "docs": [
                                 "The events emitted by the program."
                             ]
@@ -3738,6 +3747,7 @@
                                     "name": "errorNode"
                                 }
                             },
+                            "optional": true,
                             "docs": [
                                 "The errors returned by the program."
                             ]
@@ -3751,6 +3761,7 @@
                                     "name": "constantNode"
                                 }
                             },
+                            "optional": true,
                             "docs": [
                                 "The constants exposed by the program."
                             ]
@@ -3803,6 +3814,7 @@
                                     "name": "programNode"
                                 }
                             },
+                            "optional": true,
                             "docs": [
                                 "Additional programs referenced by the primary program."
                             ]
@@ -3813,7 +3825,7 @@
             ],
             "unions": [
                 {
-                    "name": "InstructionByteDeltaValue",
+                    "name": "instructionByteDeltaValue",
                     "members": [
                         {
                             "kind": "node",
@@ -3837,7 +3849,7 @@
                     ]
                 },
                 {
-                    "name": "InstructionRemainingAccountsValue",
+                    "name": "instructionRemainingAccountsValue",
                     "members": [
                         {
                             "kind": "node",

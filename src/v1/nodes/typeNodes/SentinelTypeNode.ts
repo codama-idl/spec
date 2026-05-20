@@ -5,7 +5,7 @@ export const sentinelTypeNode = defineNode('sentinelTypeNode', {
         'Wraps another type and delimits it with a constant sentinel value written immediately after the wrapped type.',
     ],
     attributes: [
-        attribute('type', union('TypeNode'), {
+        attribute('type', union('typeNode'), {
             docs: ['The wrapped type whose extent is delimited by the sentinel.'],
         }),
         attribute('sentinel', node('constantValueNode'), {

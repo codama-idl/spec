@@ -5,7 +5,7 @@ export const instructionStatusNode = defineNode('instructionStatusNode', {
         'The lifecycle stage of an instruction (draft, live, deprecated, archived) with an optional accompanying message.',
     ],
     attributes: [
-        attribute('lifecycle', enumeration('InstructionLifecycle'), {
+        attribute('lifecycle', enumeration('instructionLifecycle'), {
             docs: ['The lifecycle stage.'],
         }),
         optionalAttribute('message', string(), {

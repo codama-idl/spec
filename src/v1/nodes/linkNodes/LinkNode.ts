@@ -4,7 +4,7 @@
 
 import { defineUnion, union } from '../../../api';
 
-export const registeredLinkNodeUnion = defineUnion('RegisteredLinkNode', {
+export const registeredLinkNodeUnion = defineUnion('registeredLinkNode', {
     docs: ['Every node tagged as a link to another part of the IDL.'],
     members: [
         'accountLinkNode',
@@ -17,7 +17,7 @@ export const registeredLinkNodeUnion = defineUnion('RegisteredLinkNode', {
     ],
 });
 
-export const linkNodeUnion = defineUnion('LinkNode', {
+export const linkNodeUnion = defineUnion('linkNode', {
     docs: ['The composable form: any registered link node.'],
-    members: [union('RegisteredLinkNode')],
+    members: [union('registeredLinkNode')],
 });

@@ -11,7 +11,7 @@ export const enumTupleVariantTypeNode = defineNode('enumTupleVariantTypeNode', {
                 'Explicit discriminator value. When omitted, the discriminator is inferred from the variant position.',
             ],
         }),
-        attribute('tuple', nestedUnion('NestedTypeNode', 'tupleTypeNode'), {
+        attribute('tuple', nestedUnion('nestedTypeNode', 'tupleTypeNode'), {
             docs: ['The tuple of positional fields carried by the variant.'],
         }),
     ],

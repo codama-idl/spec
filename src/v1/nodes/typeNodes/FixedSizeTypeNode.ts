@@ -6,7 +6,7 @@ export const fixedSizeTypeNode = defineNode('fixedSizeTypeNode', {
         attribute('size', u64(), {
             docs: ['The total byte size the wrapped type must occupy.'],
         }),
-        attribute('type', union('TypeNode'), {
+        attribute('type', union('typeNode'), {
             docs: ['The wrapped type whose serialisation is constrained.'],
         }),
     ],

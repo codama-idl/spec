@@ -8,10 +8,10 @@ export const optionTypeNode = defineNode('optionTypeNode', {
                 'When `true`, the absent variant still occupies the byte size of the present variant (zero-padded). Defaults to `false`.',
             ],
         }),
-        attribute('item', union('TypeNode'), {
+        attribute('item', union('typeNode'), {
             docs: ['The type carried by the option when present.'],
         }),
-        attribute('prefix', nestedUnion('NestedTypeNode', 'numberTypeNode'), {
+        attribute('prefix', nestedUnion('nestedTypeNode', 'numberTypeNode'), {
             docs: ['The numeric type used as the presence flag.'],
         }),
     ],

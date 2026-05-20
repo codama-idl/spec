@@ -1,4 +1,4 @@
-import { array, attribute, codamaVersion, defineNode, literal, node } from '../../api';
+import { array, attribute, codamaVersion, defineNode, literal, node, optionalAttribute } from '../../api';
 
 export const rootNode = defineNode('rootNode', {
     docs: [
@@ -15,7 +15,7 @@ export const rootNode = defineNode('rootNode', {
         attribute('program', node('programNode'), {
             docs: ['The primary program described by the document.'],
         }),
-        attribute('additionalPrograms', array(node('programNode')), {
+        optionalAttribute('additionalPrograms', array(node('programNode')), {
             docs: ['Additional programs referenced by the primary program.'],
         }),
     ],

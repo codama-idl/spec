@@ -8,10 +8,10 @@ export const postOffsetTypeNode = defineNode('postOffsetTypeNode', {
         attribute('offset', i64(), {
             docs: ['The signed byte offset to apply after the wrapped type runs.'],
         }),
-        attribute('strategy', enumeration('PostOffsetStrategy'), {
+        attribute('strategy', enumeration('postOffsetStrategy'), {
             docs: ['How the `offset` value is interpreted.'],
         }),
-        attribute('type', union('TypeNode'), {
+        attribute('type', union('typeNode'), {
             docs: ['The wrapped type whose serialisation is followed by the offset.'],
         }),
     ],

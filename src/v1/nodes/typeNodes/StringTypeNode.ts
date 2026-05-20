@@ -7,7 +7,7 @@ export const stringTypeNode = defineNode('stringTypeNode', {
         'The byte length is determined by an enclosing wrapper such as `sizePrefixTypeNode` or `fixedSizeTypeNode`.',
     ],
     attributes: [
-        attribute('encoding', enumeration('BytesEncoding'), {
+        attribute('encoding', enumeration('bytesEncoding'), {
             docs: ['The byte encoding used to serialise the string.'],
         }),
     ],

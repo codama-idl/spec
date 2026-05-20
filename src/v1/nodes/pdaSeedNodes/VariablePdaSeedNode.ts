@@ -9,7 +9,7 @@ export const variablePdaSeedNode = defineNode('variablePdaSeedNode', {
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the seed variable.'],
         }),
-        attribute('type', union('TypeNode'), {
+        attribute('type', union('typeNode'), {
             docs: ['The expected type of the seed value.'],
         }),
     ],

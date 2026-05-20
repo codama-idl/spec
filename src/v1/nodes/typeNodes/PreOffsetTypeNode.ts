@@ -8,10 +8,10 @@ export const preOffsetTypeNode = defineNode('preOffsetTypeNode', {
         attribute('offset', i64(), {
             docs: ['The signed byte offset to apply before the wrapped type runs.'],
         }),
-        attribute('strategy', enumeration('PreOffsetStrategy'), {
+        attribute('strategy', enumeration('preOffsetStrategy'), {
             docs: ['How the `offset` value is interpreted.'],
         }),
-        attribute('type', union('TypeNode'), {
+        attribute('type', union('typeNode'), {
             docs: ['The wrapped type whose serialisation is preceded by the offset.'],
         }),
     ],

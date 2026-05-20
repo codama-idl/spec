@@ -11,7 +11,7 @@ export const instructionByteDeltaNode = defineNode('instructionByteDeltaNode', {
         optionalAttribute('subtract', boolean(), {
             docs: ['When `true`, the delta is subtracted from the running size instead of added. Defaults to `false`.'],
         }),
-        attribute('value', union('InstructionByteDeltaValue'), {
+        attribute('value', union('instructionByteDeltaValue'), {
             docs: [
                 'The source of the delta value — a literal number, a referenced account or argument, or a resolver.',
             ],

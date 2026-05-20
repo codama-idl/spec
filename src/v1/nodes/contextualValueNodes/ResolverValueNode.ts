@@ -12,7 +12,7 @@ export const resolverValueNode = defineNode('resolverValueNode', {
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the resolver.'],
         }),
-        optionalAttribute('dependsOn', array(union('ResolverDependency')), {
+        optionalAttribute('dependsOn', array(union('resolverDependency')), {
             docs: [
                 'The accounts and arguments the resolver depends on. Used by clients to ensure the dependencies are resolved first.',
             ],

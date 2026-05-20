@@ -1,6 +1,6 @@
 /**
  * `defineNestedUnion(name, options)` — declares a recursive type alias,
- * e.g. `NestedTypeNode<T>`.
+ * e.g. `nestedTypeNode<T>`.
  *
  * Codegen renders one alternative per wrapper kind, plus the base case:
  *

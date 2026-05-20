@@ -5,7 +5,7 @@ export const hiddenSuffixTypeNode = defineNode('hiddenSuffixTypeNode', {
         'Suffixes another type with a list of constant values that are written and read but not surfaced as fields to consumers.',
     ],
     attributes: [
-        attribute('type', union('TypeNode'), {
+        attribute('type', union('typeNode'), {
             docs: ['The wrapped type whose serialisation is followed by the hidden suffix.'],
         }),
         attribute('suffix', array(node('constantValueNode')), {

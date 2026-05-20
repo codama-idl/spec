@@ -9,7 +9,7 @@
 
 import { defineEnumeration, variant } from '../api';
 
-export const endianness = defineEnumeration('Endianness', {
+export const endianness = defineEnumeration('endianness', {
     docs: ['The byte order of a numeric serialization.'],
     variants: [
         variant('be', { docs: ['Big-endian: the most significant byte is written first.'] }),
@@ -17,7 +17,7 @@ export const endianness = defineEnumeration('Endianness', {
     ],
 });
 
-export const numberFormat = defineEnumeration('NumberFormat', {
+export const numberFormat = defineEnumeration('numberFormat', {
     docs: ['The wire format of a numeric serialization.'],
     variants: [
         variant('f32', { docs: ['IEEE-754 32-bit floating point.'] }),
@@ -38,7 +38,7 @@ export const numberFormat = defineEnumeration('NumberFormat', {
     ],
 });
 
-export const bytesEncoding = defineEnumeration('BytesEncoding', {
+export const bytesEncoding = defineEnumeration('bytesEncoding', {
     docs: ['How a string of bytes is encoded for transport.'],
     variants: [
         variant('base16', { docs: ['Hexadecimal encoding (two characters per byte).'] }),
@@ -48,7 +48,7 @@ export const bytesEncoding = defineEnumeration('BytesEncoding', {
     ],
 });
 
-export const instructionLifecycle = defineEnumeration('InstructionLifecycle', {
+export const instructionLifecycle = defineEnumeration('instructionLifecycle', {
     docs: ['The lifecycle stage of an instruction.'],
     variants: [
         variant('archived', {
@@ -64,7 +64,7 @@ export const instructionLifecycle = defineEnumeration('InstructionLifecycle', {
     ],
 });
 
-export const defaultValueStrategy = defineEnumeration('DefaultValueStrategy', {
+export const defaultValueStrategy = defineEnumeration('defaultValueStrategy', {
     docs: ['How an attribute that carries a default value is exposed in generated APIs.'],
     variants: [
         variant('omitted', {
@@ -78,7 +78,7 @@ export const defaultValueStrategy = defineEnumeration('DefaultValueStrategy', {
     ],
 });
 
-export const optionalAccountStrategy = defineEnumeration('OptionalAccountStrategy', {
+export const optionalAccountStrategy = defineEnumeration('optionalAccountStrategy', {
     docs: ['How an absent optional account is represented when serialising an instruction.'],
     variants: [
         variant('omitted', {
@@ -90,7 +90,7 @@ export const optionalAccountStrategy = defineEnumeration('OptionalAccountStrateg
     ],
 });
 
-export const preOffsetStrategy = defineEnumeration('PreOffsetStrategy', {
+export const preOffsetStrategy = defineEnumeration('preOffsetStrategy', {
     docs: ['How a pre-offset modifier interprets its offset value before serialising the wrapped type.'],
     variants: [
         variant('absolute', {
@@ -105,7 +105,7 @@ export const preOffsetStrategy = defineEnumeration('PreOffsetStrategy', {
     ],
 });
 
-export const postOffsetStrategy = defineEnumeration('PostOffsetStrategy', {
+export const postOffsetStrategy = defineEnumeration('postOffsetStrategy', {
     docs: ['How a post-offset modifier interprets its offset value after serialising the wrapped type.'],
     variants: [
         variant('absolute', {
@@ -123,7 +123,7 @@ export const postOffsetStrategy = defineEnumeration('PostOffsetStrategy', {
     ],
 });
 
-export const programOrigin = defineEnumeration('ProgramOrigin', {
+export const programOrigin = defineEnumeration('programOrigin', {
     docs: ['The toolchain that originally generated a program description.'],
     variants: [
         variant('anchor', { docs: ['The program was originally described by an Anchor IDL.'] }),

@@ -6,16 +6,16 @@ export const instructionArgumentNode = defineNode('instructionArgumentNode', {
         attribute('name', stringIdentifier(), {
             docs: ['The name of the argument.'],
         }),
-        optionalAttribute('defaultValueStrategy', enumeration('DefaultValueStrategy'), {
+        optionalAttribute('defaultValueStrategy', enumeration('defaultValueStrategy'), {
             docs: ['How a configured default value is exposed in generated APIs. Required when `defaultValue` is set.'],
         }),
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the argument.'],
         }),
-        attribute('type', union('TypeNode'), {
+        attribute('type', union('typeNode'), {
             docs: ['The type of the argument.'],
         }),
-        optionalAttribute('defaultValue', union('InstructionInputValueNode'), {
+        optionalAttribute('defaultValue', union('instructionInputValueNode'), {
             docs: ['A default value used when the argument is omitted by callers.'],
         }),
     ],

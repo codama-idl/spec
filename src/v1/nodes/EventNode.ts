@@ -9,10 +9,10 @@ export const eventNode = defineNode('eventNode', {
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the event.'],
         }),
-        attribute('data', union('TypeNode'), {
+        attribute('data', union('typeNode'), {
             docs: ['The type describing the event payload.'],
         }),
-        optionalAttribute('discriminators', array(union('DiscriminatorNode')), {
+        optionalAttribute('discriminators', array(union('discriminatorNode')), {
             docs: [
                 'Discriminators that distinguish this event from others. When multiple are listed, they are combined with a logical AND.',
             ],

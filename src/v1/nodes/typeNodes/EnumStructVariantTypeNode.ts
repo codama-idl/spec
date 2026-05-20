@@ -11,7 +11,7 @@ export const enumStructVariantTypeNode = defineNode('enumStructVariantTypeNode',
                 'Explicit discriminator value. When omitted, the discriminator is inferred from the variant position.',
             ],
         }),
-        attribute('struct', nestedUnion('NestedTypeNode', 'structTypeNode'), {
+        attribute('struct', nestedUnion('nestedTypeNode', 'structTypeNode'), {
             docs: ['The struct of named fields carried by the variant.'],
         }),
     ],

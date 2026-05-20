@@ -1,11 +1,11 @@
 /**
  * Named unions for the value-node category.
  *
- *  - `StandaloneValueNode`    every value node usable as a top-level value.
- *  - `ValueNode`              the composable form (alias for `StandaloneValueNode` in v1).
- *  - `RegisteredValueNode`    every value-shaped node, including container variants like
+ *  - `standaloneValueNode`    every value node usable as a top-level value.
+ *  - `valueNode`              the composable form (alias for `standaloneValueNode` in v1).
+ *  - `registeredValueNode`    every value-shaped node, including container variants like
  *                             `mapEntryValueNode` and `structFieldValueNode`.
- *  - `EnumValuePayload`       the inline `StructValueNode | TupleValueNode` union used
+ *  - `enumValuePayload`       the inline `structValueNode | tupleValueNode` union used
  *                             for `enumValueNode.value`.
  */
 
@@ -28,22 +28,22 @@ const STANDALONE_VALUE_NODE_KINDS = [
     'tupleValueNode',
 ] as const;
 
-export const standaloneValueNodeUnion = defineUnion('StandaloneValueNode', {
+export const standaloneValueNodeUnion = defineUnion('standaloneValueNode', {
     docs: ['Every value node that can be used as a top-level value.'],
     members: [...STANDALONE_VALUE_NODE_KINDS],
 });
 
-export const valueNodeUnion = defineUnion('ValueNode', {
+export const valueNodeUnion = defineUnion('valueNode', {
     docs: ['The composable form: any standalone value node.'],
-    members: [union('StandaloneValueNode')],
+    members: [union('standaloneValueNode')],
 });
 
-export const registeredValueNodeUnion = defineUnion('RegisteredValueNode', {
+export const registeredValueNodeUnion = defineUnion('registeredValueNode', {
     docs: ['Every node tagged as a value-shaped node, including container variants.'],
-    members: [union('StandaloneValueNode'), 'mapEntryValueNode', 'structFieldValueNode'],
+    members: [union('standaloneValueNode'), 'mapEntryValueNode', 'structFieldValueNode'],
 });
 
-export const enumValuePayloadUnion = defineUnion('EnumValuePayload', {
+export const enumValuePayloadUnion = defineUnion('enumValuePayload', {
     docs: ['The payload kinds an `enumValueNode` may carry — struct fields or positional tuple slots.'],
     members: ['structValueNode', 'tupleValueNode'],
 });

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+    address,
     boolean,
     codamaVersion,
     enumeration,
@@ -25,6 +26,15 @@ import {
     u128,
     union,
 } from '../src/api';
+
+describe('address primitive', () => {
+    it('returns the address kind', () => {
+        expect(address()).toEqual({ kind: 'address' });
+    });
+    it('freezes the result', () => {
+        expect(Object.isFrozen(address())).toBe(true);
+    });
+});
 
 describe('string primitives', () => {
     it('returns plain string with no constraint', () => {
@@ -106,12 +116,12 @@ describe('literalUnion', () => {
 
 describe('named references', () => {
     it('builds enumeration / node / union / nestedUnion references', () => {
-        expect(enumeration('Endianness')).toEqual({ kind: 'enumeration', name: 'Endianness' });
+        expect(enumeration('endianness')).toEqual({ kind: 'enumeration', name: 'endianness' });
         expect(node('accountNode')).toEqual({ kind: 'node', name: 'accountNode' });
-        expect(union('TypeNode')).toEqual({ kind: 'union', name: 'TypeNode' });
-        expect(nestedUnion('NestedTypeNode', 'structTypeNode')).toEqual({
+        expect(union('typeNode')).toEqual({ kind: 'union', name: 'typeNode' });
+        expect(nestedUnion('nestedTypeNode', 'structTypeNode')).toEqual({
             kind: 'nestedUnion',
-            alias: 'NestedTypeNode',
+            alias: 'nestedTypeNode',
             name: 'structTypeNode',
         });
     });

@@ -32,7 +32,7 @@ export const instructionAccountNode = defineNode('instructionAccountNode', {
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the account slot.'],
         }),
-        optionalAttribute('defaultValue', union('InstructionInputValueNode'), {
+        optionalAttribute('defaultValue', union('instructionInputValueNode'), {
             docs: ['A default value used to fill the slot when the caller does not provide one.'],
         }),
     ],

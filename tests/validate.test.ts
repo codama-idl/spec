@@ -49,31 +49,32 @@ describe('validate — references', () => {
     it('reports a missing union reference', () => {
         const errors = validate(
             baseSpec({
-                nodes: [defineNode('aNode', { attributes: [attribute('v', union('NoSuchUnion'))] })],
+                nodes: [defineNode('aNode', { attributes: [attribute('v', union('noSuchUnion'))] })],
             }),
         );
-        expect(errors.some(e => e.includes('NoSuchUnion'))).toBe(true);
+        expect(errors.some(e => e.includes('noSuchUnion'))).toBe(true);
     });
 
     it('reports a missing enumeration reference', () => {
         const errors = validate(
             baseSpec({
-                nodes: [defineNode('aNode', { attributes: [attribute('v', enumeration('NoSuchEnum'))] })],
+                nodes: [defineNode('aNode', { attributes: [attribute('v', enumeration('noSuchEnum'))] })],
             }),
         );
-        expect(errors.some(e => e.includes('NoSuchEnum'))).toBe(true);
+        expect(errors.some(e => e.includes('noSuchEnum'))).toBe(true);
     });
 
     it('reports a missing nestedUnion node reference', () => {
         const errors = validate(
             baseSpec({
                 nestedUnions: [
-                    defineNestedUnion('Wrap', { base: union('AnyUnion'), wrappers: ['definedWrapperNode'] }),
+                    defineNestedUnion('wrap', { base: union('anyUnion'), wrappers: ['definedWrapperNode'] }),
                 ],
                 nodes: [
                     defineNode('definedWrapperNode', { attributes: [] }),
-                    defineNode('aNode', { attributes: [attribute('v', nestedUnion('Wrap', 'ghostNode'))] }),
+                    defineNode('aNode', { attributes: [attribute('v', nestedUnion('wrap', 'ghostNode'))] }),
                 ],
+                unions: [defineUnion('anyUnion', { members: ['definedWrapperNode'] })],
             }),
         );
         expect(errors.some(e => e.includes('ghostNode'))).toBe(true);
@@ -82,10 +83,10 @@ describe('validate — references', () => {
     it('reports an unknown nestedUnion alias', () => {
         const errors = validate(
             baseSpec({
-                nodes: [defineNode('aNode', { attributes: [attribute('v', nestedUnion('NoSuch', 'aNode'))] })],
+                nodes: [defineNode('aNode', { attributes: [attribute('v', nestedUnion('noSuch', 'aNode'))] })],
             }),
         );
-        expect(errors.some(e => e.includes('NoSuch'))).toBe(true);
+        expect(errors.some(e => e.includes('noSuch'))).toBe(true);
     });
 
     it('walks into compound types when checking refs', () => {
@@ -116,8 +117,8 @@ describe('validate — references', () => {
 
     it('passes a coherent micro-spec', () => {
         const innerNode = defineNode('innerNode', { attributes: [attribute('name', stringIdentifier())] });
-        const u = defineUnion('Inner', { members: ['innerNode'] });
-        const outerNode = defineNode('outerNode', { attributes: [attribute('inner', union('Inner'))] });
+        const u = defineUnion('inner', { members: ['innerNode'] });
+        const outerNode = defineNode('outerNode', { attributes: [attribute('inner', union('inner'))] });
         const errors = validate(baseSpec({ nodes: [innerNode, outerNode], unions: [u] }));
         expect(errors).toEqual([]);
     });
@@ -132,6 +133,30 @@ describe('validate — naming', () => {
     it('rejects node kinds without a Node suffix', () => {
         const errors = validate(baseSpec({ nodes: [defineNode('something', { attributes: [] })] }));
         expect(errors.some(e => e.includes('something'))).toBe(true);
+    });
+
+    it('rejects union names that violate the camelCase convention', () => {
+        const errors = validate(baseSpec({ unions: [defineUnion('PascalCase', { members: ['aNode'] })] }));
+        expect(errors.some(e => e.includes('"PascalCase"') && e.includes('camelCase'))).toBe(true);
+    });
+
+    it('rejects enumeration names that violate the camelCase convention', () => {
+        const errors = validate(
+            baseSpec({ enumerations: [defineEnumeration('PascalCase', { variants: [variant('a')] })] }),
+        );
+        expect(errors.some(e => e.includes('"PascalCase"') && e.includes('camelCase'))).toBe(true);
+    });
+
+    it('rejects nested union names that violate the camelCase convention', () => {
+        const wrapper = defineNode('wrapperNode', { attributes: [] });
+        const errors = validate(
+            baseSpec({
+                nestedUnions: [defineNestedUnion('PascalCase', { base: union('inner'), wrappers: ['wrapperNode'] })],
+                nodes: [wrapper],
+                unions: [defineUnion('inner', { members: ['wrapperNode'] })],
+            }),
+        );
+        expect(errors.some(e => e.includes('"PascalCase"') && e.includes('camelCase'))).toBe(true);
     });
 
     it('detects duplicate attribute names within a node', () => {
@@ -179,20 +204,20 @@ describe('validate — name collisions', () => {
 
 describe('validate — unions', () => {
     it('rejects empty unions', () => {
-        const u = defineUnion('Empty', { members: [] });
+        const u = defineUnion('empty', { members: [] });
         const errors = validate(baseSpec({ unions: [u] }));
-        expect(errors.some(e => e.includes('"Empty"') && e.includes('no members'))).toBe(true);
+        expect(errors.some(e => e.includes('"empty"') && e.includes('no members'))).toBe(true);
     });
 
     it('rejects duplicate union members', () => {
-        const u = defineUnion('U', { members: ['x', 'x'] });
+        const u = defineUnion('u', { members: ['x', 'x'] });
         const errors = validate(
             baseSpec({
                 nodes: [defineNode('xNode', { attributes: [] })],
                 unions: [u],
             }),
         );
-        expect(errors.some(e => e.includes('"U"') && e.includes('more than once'))).toBe(true);
+        expect(errors.some(e => e.includes('"u"') && e.includes('more than once'))).toBe(true);
     });
 });
 
@@ -200,7 +225,7 @@ describe('validate — nestedUnions', () => {
     it('rejects wrapper kinds that are not defined nodes', () => {
         const errors = validate(
             baseSpec({
-                nestedUnions: [defineNestedUnion('Wrap', { base: union('AnyUnion'), wrappers: ['ghostWrapperNode'] })],
+                nestedUnions: [defineNestedUnion('wrap', { base: union('anyUnion'), wrappers: ['ghostWrapperNode'] })],
             }),
         );
         expect(errors.some(e => e.includes('ghostWrapperNode'))).toBe(true);
@@ -210,9 +235,9 @@ describe('validate — nestedUnions', () => {
         const wrapper = defineNode('wrapperNode', { attributes: [] });
         const errors = validate(
             baseSpec({
-                nestedUnions: [defineNestedUnion('Wrap', { base: union('AnyUnion'), wrappers: ['wrapperNode'] })],
+                nestedUnions: [defineNestedUnion('wrap', { base: union('anyUnion'), wrappers: ['wrapperNode'] })],
                 nodes: [wrapper],
-                unions: [defineUnion('AnyUnion', { members: ['wrapperNode'] })],
+                unions: [defineUnion('anyUnion', { members: ['wrapperNode'] })],
             }),
         );
         expect(errors).toEqual([]);
@@ -243,8 +268,8 @@ describe('validate — categories', () => {
 
 describe('validate — enumerations', () => {
     it('accepts a valid enumeration referenced by a node', () => {
-        const enumSpec = defineEnumeration('E', { variants: [variant('a'), variant('b')] });
-        const xNode = defineNode('xNode', { attributes: [attribute('v', enumeration('E'))] });
+        const enumSpec = defineEnumeration('e', { variants: [variant('a'), variant('b')] });
+        const xNode = defineNode('xNode', { attributes: [attribute('v', enumeration('e'))] });
         const errors = validate(baseSpec({ enumerations: [enumSpec], nodes: [xNode] }));
         expect(errors).toEqual([]);
     });
@@ -253,12 +278,12 @@ describe('validate — enumerations', () => {
 describe('isChildAttribute', () => {
     it('classifies refs as children', () => {
         expect(isChildAttribute(node('x'))).toBe(true);
-        expect(isChildAttribute(union('Y'))).toBe(true);
-        expect(isChildAttribute(nestedUnion('Wrap', 'z'))).toBe(true);
+        expect(isChildAttribute(union('y'))).toBe(true);
+        expect(isChildAttribute(nestedUnion('wrap', 'z'))).toBe(true);
     });
 
     it('classifies array-wrapped refs as children', () => {
-        expect(isChildAttribute(array(union('Y')))).toBe(true);
+        expect(isChildAttribute(array(union('y')))).toBe(true);
     });
 
     it('classifies a tuple containing a child as a child', () => {

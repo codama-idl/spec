@@ -21,13 +21,13 @@ export const instructionNode = defineNode('instructionNode', {
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the instruction.'],
         }),
-        optionalAttribute('optionalAccountStrategy', enumeration('OptionalAccountStrategy'), {
+        optionalAttribute('optionalAccountStrategy', enumeration('optionalAccountStrategy'), {
             docs: ['How absent optional accounts are represented when serialising the instruction.'],
         }),
-        attribute('accounts', array(node('instructionAccountNode')), {
+        optionalAttribute('accounts', array(node('instructionAccountNode')), {
             docs: ['The accounts the instruction operates on, in order.'],
         }),
-        attribute('arguments', array(node('instructionArgumentNode')), {
+        optionalAttribute('arguments', array(node('instructionArgumentNode')), {
             docs: ['The serialised arguments of the instruction, in order.'],
         }),
         optionalAttribute('extraArguments', array(node('instructionArgumentNode')), {
@@ -41,7 +41,7 @@ export const instructionNode = defineNode('instructionNode', {
                 'Byte-size adjustments applied when computing rent or buffer size — for instructions that resize accounts.',
             ],
         }),
-        optionalAttribute('discriminators', array(union('DiscriminatorNode')), {
+        optionalAttribute('discriminators', array(union('discriminatorNode')), {
             docs: [
                 'Discriminators that distinguish this instruction from others.',
                 'When multiple are listed, they are combined with a logical AND.',

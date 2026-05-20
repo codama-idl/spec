@@ -1,10 +1,10 @@
 /**
  * Named unions for the type-node category.
  *
- *  - `StandaloneTypeNode`     all type nodes that can stand alone as a type.
- *  - `EnumVariantTypeNode`    the three flavours of enum variant.
- *  - `RegisteredTypeNode`     every type-shaped node, including variants and struct fields.
- *  - `TypeNode`               StandaloneTypeNode + DefinedTypeLinkNode (the composable form).
+ *  - `standaloneTypeNode`     all type nodes that can stand alone as a type.
+ *  - `enumVariantTypeNode`    the three flavours of enum variant.
+ *  - `registeredTypeNode`     every type-shaped node, including variants and struct fields.
+ *  - `typeNode`               standaloneTypeNode + definedTypeLinkNode (the composable form).
  */
 
 import { defineUnion, union } from '../../../api';
@@ -36,22 +36,22 @@ const STANDALONE_TYPE_NODE_KINDS = [
     'zeroableOptionTypeNode',
 ] as const;
 
-export const standaloneTypeNodeUnion = defineUnion('StandaloneTypeNode', {
+export const standaloneTypeNodeUnion = defineUnion('standaloneTypeNode', {
     docs: ['Every type node that can be used as a top-level type.'],
     members: [...STANDALONE_TYPE_NODE_KINDS],
 });
 
-export const enumVariantTypeNodeUnion = defineUnion('EnumVariantTypeNode', {
+export const enumVariantTypeNodeUnion = defineUnion('enumVariantTypeNode', {
     docs: ['The variant flavours of an `enumTypeNode`.'],
     members: ['enumEmptyVariantTypeNode', 'enumStructVariantTypeNode', 'enumTupleVariantTypeNode'],
 });
 
-export const typeNodeUnion = defineUnion('TypeNode', {
+export const typeNodeUnion = defineUnion('typeNode', {
     docs: ['The composable form: any standalone type, or a reference to a defined type via `definedTypeLinkNode`.'],
-    members: [union('StandaloneTypeNode'), 'definedTypeLinkNode'],
+    members: [union('standaloneTypeNode'), 'definedTypeLinkNode'],
 });
 
-export const registeredTypeNodeUnion = defineUnion('RegisteredTypeNode', {
+export const registeredTypeNodeUnion = defineUnion('registeredTypeNode', {
     docs: ['Every node tagged as a type-shaped node, including variants and struct fields.'],
-    members: [union('StandaloneTypeNode'), union('EnumVariantTypeNode'), 'structFieldTypeNode'],
+    members: [union('standaloneTypeNode'), union('enumVariantTypeNode'), 'structFieldTypeNode'],
 });

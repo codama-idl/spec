@@ -15,7 +15,7 @@ export const amountTypeNode = defineNode('amountTypeNode', {
         optionalAttribute('unit', string(), {
             docs: ['The unit of the amount — e.g. "USD" or "%".'],
         }),
-        attribute('number', nestedUnion('NestedTypeNode', 'numberTypeNode'), {
+        attribute('number', nestedUnion('nestedTypeNode', 'numberTypeNode'), {
             docs: ['The number type the amount wraps.'],
         }),
     ],

@@ -62,35 +62,35 @@ describe('v1 spec — coverage smoke checks', () => {
 
     it('declares the principal unions', () => {
         for (const name of [
-            'TypeNode',
-            'StandaloneTypeNode',
-            'RegisteredTypeNode',
-            'EnumVariantTypeNode',
-            'ValueNode',
-            'StandaloneValueNode',
-            'RegisteredValueNode',
-            'LinkNode',
-            'RegisteredLinkNode',
-            'PdaSeedNode',
-            'CountNode',
-            'DiscriminatorNode',
-            'ContextualValueNode',
-            'InstructionInputValueNode',
+            'typeNode',
+            'standaloneTypeNode',
+            'registeredTypeNode',
+            'enumVariantTypeNode',
+            'valueNode',
+            'standaloneValueNode',
+            'registeredValueNode',
+            'linkNode',
+            'registeredLinkNode',
+            'pdaSeedNode',
+            'countNode',
+            'discriminatorNode',
+            'contextualValueNode',
+            'instructionInputValueNode',
         ]) {
             expect(getUnion(name), `expected union "${name}" to be defined`).toBeDefined();
         }
     });
 
     it('declares the principal enumerations', () => {
-        for (const name of ['Endianness', 'NumberFormat', 'BytesEncoding', 'InstructionLifecycle']) {
+        for (const name of ['endianness', 'numberFormat', 'bytesEncoding', 'instructionLifecycle']) {
             expect(getEnumeration(name), `expected enumeration "${name}" to be defined`).toBeDefined();
         }
     });
 
     it('returns undefined for absent lookups', () => {
         expect(getNode('definitelyNotANode')).toBeUndefined();
-        expect(getUnion('NotAUnion')).toBeUndefined();
-        expect(getEnumeration('NotAnEnum')).toBeUndefined();
+        expect(getUnion('notAUnion')).toBeUndefined();
+        expect(getEnumeration('notAnEnum')).toBeUndefined();
     });
 });
 
@@ -101,7 +101,7 @@ describe('v1 spec — accountNode shape', () => {
         expect(attrNames).toEqual(['name', 'size', 'docs', 'data', 'pda', 'discriminators']);
 
         const data = account.attributes.find(a => a.name === 'data')!;
-        expect(data.type).toEqual({ alias: 'NestedTypeNode', kind: 'nestedUnion', name: 'structTypeNode' });
+        expect(data.type).toEqual({ alias: 'nestedTypeNode', kind: 'nestedUnion', name: 'structTypeNode' });
         expect(data.optional).toBeUndefined();
         expect(isChildAttribute(data.type)).toBe(true);
 
@@ -125,11 +125,44 @@ describe('v1 spec — accountNode shape', () => {
     });
 });
 
-describe('v1 spec — TypeNode union composition', () => {
+describe('v1 spec — typeNode union composition', () => {
     it('preserves the nested-union structure', () => {
-        const typeNode = getUnion('TypeNode')!;
-        expect(typeNode.members).toContainEqual({ kind: 'union', name: 'StandaloneTypeNode' });
+        const typeNode = getUnion('typeNode')!;
+        expect(typeNode.members).toContainEqual({ kind: 'union', name: 'standaloneTypeNode' });
         expect(typeNode.members).toContainEqual({ kind: 'node', name: 'definedTypeLinkNode' });
+    });
+});
+
+describe('v1 spec — programNode shape', () => {
+    it('exposes publicKey as an address type', () => {
+        const program = getNode('programNode')!;
+        const publicKey = program.attributes.find(a => a.name === 'publicKey')!;
+        expect(publicKey.type).toEqual({ kind: 'address' });
+    });
+
+    it('treats every vec-of-children attribute as optional', () => {
+        const program = getNode('programNode')!;
+        for (const name of ['accounts', 'instructions', 'definedTypes', 'pdas', 'events', 'errors', 'constants']) {
+            const a = program.attributes.find(attr => attr.name === name);
+            expect(a, `attribute "${name}" should be defined`).toBeDefined();
+            expect(a!.optional, `attribute "${name}" should be optional`).toBe(true);
+        }
+    });
+});
+
+describe('v1 spec — publicKeyValueNode shape', () => {
+    it('exposes publicKey as an address type', () => {
+        const node = getNode('publicKeyValueNode')!;
+        const publicKey = node.attributes.find(a => a.name === 'publicKey')!;
+        expect(publicKey.type).toEqual({ kind: 'address' });
+    });
+});
+
+describe('v1 spec — pdaNode shape', () => {
+    it('exposes programId as an address type', () => {
+        const node = getNode('pdaNode')!;
+        const programId = node.attributes.find(a => a.name === 'programId')!;
+        expect(programId.type).toEqual({ kind: 'address' });
     });
 });
 

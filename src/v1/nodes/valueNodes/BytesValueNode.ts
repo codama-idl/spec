@@ -6,7 +6,7 @@ export const bytesValueNode = defineNode('bytesValueNode', {
         attribute('data', string(), {
             docs: ['The bytes encoded as a text string per the `encoding` attribute.'],
         }),
-        attribute('encoding', enumeration('BytesEncoding'), {
+        attribute('encoding', enumeration('bytesEncoding'), {
             docs: ['The encoding used to represent the bytes as text.'],
         }),
     ],
