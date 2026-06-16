@@ -1,0 +1,8 @@
+{
+  "mode": "pre",
+  "tag": "rc",
+  "initialVersions": {
+    "@codama/spec": "1.6.0"
+  },
+  "changesets": []
+}
