@@ -3,6 +3,7 @@ import { booleanValueNode } from './BooleanValueNode';
 import { bytesValueNode } from './BytesValueNode';
 import { constantValueNode } from './ConstantValueNode';
 import { enumValueNode } from './EnumValueNode';
+import { injectedValueNode } from './InjectedValueNode';
 import { mapEntryValueNode } from './MapEntryValueNode';
 import { mapValueNode } from './MapValueNode';
 import { noneValueNode } from './NoneValueNode';
@@ -14,7 +15,14 @@ import { stringValueNode } from './StringValueNode';
 import { structFieldValueNode } from './StructFieldValueNode';
 import { structValueNode } from './StructValueNode';
 import { tupleValueNode } from './TupleValueNode';
-import { enumValuePayloadUnion, registeredValueNodeUnion, standaloneValueNodeUnion, valueNodeUnion } from './ValueNode';
+import {
+    enumValuePayloadUnion,
+    injectableNumberValueNodeUnion,
+    injectableStringValueNodeUnion,
+    registeredValueNodeUnion,
+    standaloneValueNodeUnion,
+    valueNodeUnion,
+} from './ValueNode';
 
 export const ALL_VALUE_NODES = [
     arrayValueNode,
@@ -22,6 +30,7 @@ export const ALL_VALUE_NODES = [
     bytesValueNode,
     constantValueNode,
     enumValueNode,
+    injectedValueNode,
     mapEntryValueNode,
     mapValueNode,
     noneValueNode,
@@ -40,4 +49,6 @@ export const ALL_VALUE_NODE_UNIONS = [
     valueNodeUnion,
     registeredValueNodeUnion,
     enumValuePayloadUnion,
+    injectableNumberValueNodeUnion,
+    injectableStringValueNodeUnion,
 ] as const;

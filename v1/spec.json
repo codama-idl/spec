@@ -462,6 +462,17 @@
                             "docs": [
                                 "The byte order used to serialise the number."
                             ]
+                        },
+                        {
+                            "name": "display",
+                            "type": {
+                                "kind": "union",
+                                "name": "numberDisplayNode"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Display metadata describing how the number is presented."
+                            ]
                         }
                     ],
                     "examples": []
@@ -735,6 +746,17 @@
                             },
                             "docs": [
                                 "The byte encoding used to serialise the string."
+                            ]
+                        },
+                        {
+                            "name": "display",
+                            "type": {
+                                "kind": "node",
+                                "name": "stringDisplayNode"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Display metadata describing how the string is presented."
                             ]
                         }
                     ],
@@ -1218,6 +1240,39 @@
                     "examples": []
                 },
                 {
+                    "kind": "injectedValueNode",
+                    "docs": [
+                        "A value resolved by key from a surrounding provider.",
+                        "A `providedNode` higher in the resolution tree supplies the actual value; the consumer references only the `key`, so the same type stays portable across instructions that wire the key differently.",
+                        "Resolution is a per-context property: a value with the same key may resolve in one instruction and not another."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "key",
+                            "type": {
+                                "kind": "string",
+                                "constraint": "identifier"
+                            },
+                            "docs": [
+                                "The key looked up against the surrounding provide/inject graph."
+                            ]
+                        },
+                        {
+                            "name": "fallback",
+                            "type": {
+                                "kind": "union",
+                                "name": "valueNode"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "A value used when no provider supplies the key.",
+                                "When absent, the key is required: a provider must supply it for the surrounding context to be valid."
+                            ]
+                        }
+                    ],
+                    "examples": []
+                },
+                {
                     "kind": "mapEntryValueNode",
                     "docs": [
                         "A single (key, value) pair inside a `mapValueNode`."
@@ -1544,6 +1599,10 @@
                         },
                         {
                             "kind": "node",
+                            "name": "injectedValueNode"
+                        },
+                        {
+                            "kind": "node",
                             "name": "mapEntryValueNode"
                         },
                         {
@@ -1569,6 +1628,38 @@
                     ],
                     "docs": [
                         "The payload kinds an `enumValueNode` may carry — struct fields or positional tuple slots."
+                    ]
+                },
+                {
+                    "name": "injectableNumberValueNode",
+                    "members": [
+                        {
+                            "kind": "node",
+                            "name": "numberValueNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "injectedValueNode"
+                        }
+                    ],
+                    "docs": [
+                        "A concrete number value, or a key resolved at presentation time from a surrounding provider."
+                    ]
+                },
+                {
+                    "name": "injectableStringValueNode",
+                    "members": [
+                        {
+                            "kind": "node",
+                            "name": "stringValueNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "injectedValueNode"
+                        }
+                    ],
+                    "docs": [
+                        "A concrete string value, or a key resolved at presentation time from a surrounding provider."
                     ]
                 }
             ],
@@ -2177,6 +2268,86 @@
             ],
             "nodes": [
                 {
+                    "kind": "amountNumberDisplayNode",
+                    "docs": [
+                        "Display metadata that presents a number as a scaled amount with an optional unit.",
+                        "The value is divided by `10 ^ decimals` and rendered alongside `unit` (e.g. `\"USDC\"`, `\"%\"`, `\"bps\"`)."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "decimals",
+                            "type": {
+                                "kind": "union",
+                                "name": "injectableNumberValueNode"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "How many decimal places scale the underlying integer. Resolved as a number value: either a literal `numberValueNode` or a key resolved from a surrounding provider.",
+                                "A value of `1000000` with `decimals` resolving to `6` renders as `1`.",
+                                "When this input cannot resolve, renderers should fall back to presenting the raw value rather than guess the scale."
+                            ]
+                        },
+                        {
+                            "name": "unit",
+                            "type": {
+                                "kind": "union",
+                                "name": "injectableStringValueNode"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "A label appended after the scaled value (e.g. `\"USDC\"`, `\"%\"`, `\"bps\"`). Resolved as a string value: either a literal `stringValueNode` or a key resolved from a surrounding provider.",
+                                "When this input cannot resolve, renderers should present the scaled value without a unit."
+                            ]
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "kind": "dateTimeNumberDisplayNode",
+                    "docs": [
+                        "Display metadata that presents a number as a point in time.",
+                        "The underlying value counts ticks since the Unix epoch; `ticksPerSecond` is the divisor that converts those ticks back to seconds."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "ticksPerSecond",
+                            "type": {
+                                "kind": "integer",
+                                "width": "u64"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "How many ticks make one second. Defaults to `1` (the value is already in seconds).",
+                                "Common choices are `1000` (milliseconds), `1000000` (microseconds), and `1000000000` (nanoseconds)."
+                            ]
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "kind": "durationNumberDisplayNode",
+                    "docs": [
+                        "Display metadata that presents a number as an elapsed duration.",
+                        "The underlying value counts ticks; `ticksPerSecond` is the divisor that converts those ticks back to seconds.",
+                        "Renderers typically format the result as `HH:mm:ss` or a coarser human-readable form."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "ticksPerSecond",
+                            "type": {
+                                "kind": "integer",
+                                "width": "u64"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "How many ticks make one second. Defaults to `1` (the value is already in seconds).",
+                                "Common choices are `1000` (milliseconds), `1000000` (microseconds), and `1000000000` (nanoseconds)."
+                            ]
+                        }
+                    ],
+                    "examples": []
+                },
+                {
                     "kind": "enumVariantDisplayNode",
                     "docs": [
                         "Display metadata for an enum variant: its label and whether to hide its inner payload."
@@ -2271,6 +2442,40 @@
                     "examples": []
                 },
                 {
+                    "kind": "stringDisplayNode",
+                    "docs": [
+                        "Display metadata for a string value.",
+                        "The string's wire encoding is carried by `stringTypeNode.encoding`; this node only addresses presentation."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "sliceStart",
+                            "type": {
+                                "kind": "integer",
+                                "width": "u64"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "The start index of the displayed slice, inclusive. Defaults to the start of the string.",
+                                "Indices apply to the decoded character sequence."
+                            ]
+                        },
+                        {
+                            "name": "sliceEnd",
+                            "type": {
+                                "kind": "integer",
+                                "width": "u64"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "The end index of the displayed slice, exclusive. Defaults to the end of the string.",
+                                "Indices apply to the decoded character sequence."
+                            ]
+                        }
+                    ],
+                    "examples": []
+                },
+                {
                     "kind": "structFieldDisplayNode",
                     "docs": [
                         "Display metadata for a named member: its label, whether it is shown in the fallback list, and whether it is flattened into its parent.",
@@ -2328,8 +2533,40 @@
             ],
             "unions": [
                 {
+                    "name": "numberDisplayNode",
+                    "members": [
+                        {
+                            "kind": "node",
+                            "name": "amountNumberDisplayNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "dateTimeNumberDisplayNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "durationNumberDisplayNode"
+                        }
+                    ],
+                    "docs": [
+                        "The presentation forms a number may take. Raw rendering is expressed by the absence of a display attribute."
+                    ]
+                },
+                {
                     "name": "registeredDisplayNode",
                     "members": [
+                        {
+                            "kind": "node",
+                            "name": "amountNumberDisplayNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "dateTimeNumberDisplayNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "durationNumberDisplayNode"
+                        },
                         {
                             "kind": "node",
                             "name": "enumVariantDisplayNode"
@@ -2341,6 +2578,10 @@
                         {
                             "kind": "node",
                             "name": "instructionDisplayNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "stringDisplayNode"
                         },
                         {
                             "kind": "node",

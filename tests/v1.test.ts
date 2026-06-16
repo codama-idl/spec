@@ -28,6 +28,7 @@ describe('v1 spec — coverage smoke checks', () => {
             'arrayTypeNode',
             'optionTypeNode',
             // value nodes
+            'injectedValueNode',
             'numberValueNode',
             'structValueNode',
             'someValueNode',
@@ -47,9 +48,13 @@ describe('v1 spec — coverage smoke checks', () => {
             'fieldDiscriminatorNode',
             'sizeDiscriminatorNode',
             // display nodes
+            'amountNumberDisplayNode',
+            'dateTimeNumberDisplayNode',
+            'durationNumberDisplayNode',
             'enumVariantDisplayNode',
             'instructionAccountDisplayNode',
             'instructionDisplayNode',
+            'stringDisplayNode',
             'structFieldDisplayNode',
             // contextual value nodes
             'accountValueNode',
@@ -80,7 +85,10 @@ describe('v1 spec — coverage smoke checks', () => {
             'countNode',
             'discriminatorNode',
             'displayNode',
+            'numberDisplayNode',
             'registeredDisplayNode',
+            'injectableNumberValueNode',
+            'injectableStringValueNode',
             'contextualValueNode',
             'instructionInputValueNode',
         ]) {
@@ -245,21 +253,60 @@ describe('v1 spec — display node shapes', () => {
         expect(inner.optional).toBe(true);
         expect(inner.type).toEqual({ kind: 'boolean' });
     });
+
+    it('amountNumberDisplayNode shape', () => {
+        const n = getNode('amountNumberDisplayNode')!;
+        expect(n.attributes.map(a => a.name)).toEqual(['decimals', 'unit']);
+        const decimals = n.attributes.find(a => a.name === 'decimals')!;
+        expect(decimals.optional).toBe(true);
+        expect(decimals.type).toEqual({ kind: 'union', name: 'injectableNumberValueNode' });
+        expect(isChildAttribute(decimals.type)).toBe(true);
+        const unit = n.attributes.find(a => a.name === 'unit')!;
+        expect(unit.optional).toBe(true);
+        expect(unit.type).toEqual({ kind: 'union', name: 'injectableStringValueNode' });
+        expect(isChildAttribute(unit.type)).toBe(true);
+    });
+
+    it('dateTimeNumberDisplayNode shape', () => {
+        const n = getNode('dateTimeNumberDisplayNode')!;
+        expect(n.attributes.map(a => a.name)).toEqual(['ticksPerSecond']);
+        const ticks = n.attributes.find(a => a.name === 'ticksPerSecond')!;
+        expect(ticks.optional).toBe(true);
+        expect(ticks.type).toEqual({ kind: 'integer', width: 'u64' });
+    });
+
+    it('durationNumberDisplayNode shape', () => {
+        const n = getNode('durationNumberDisplayNode')!;
+        expect(n.attributes.map(a => a.name)).toEqual(['ticksPerSecond']);
+        const ticks = n.attributes.find(a => a.name === 'ticksPerSecond')!;
+        expect(ticks.optional).toBe(true);
+        expect(ticks.type).toEqual({ kind: 'integer', width: 'u64' });
+    });
+
+    it('stringDisplayNode shape', () => {
+        const n = getNode('stringDisplayNode')!;
+        expect(n.attributes.map(a => a.name)).toEqual(['sliceStart', 'sliceEnd']);
+        for (const a of n.attributes) {
+            expect(a.optional).toBe(true);
+            expect(a.type).toEqual({ kind: 'integer', width: 'u64' });
+        }
+    });
 });
 
 describe('v1 spec — display attribute on host nodes', () => {
-    const hosts: ReadonlyArray<readonly [string, string]> = [
+    const nodeHosts: ReadonlyArray<readonly [string, string]> = [
         ['instructionNode', 'instructionDisplayNode'],
         ['instructionAccountNode', 'instructionAccountDisplayNode'],
         ['instructionArgumentNode', 'structFieldDisplayNode'],
         ['instructionRemainingAccountsNode', 'instructionAccountDisplayNode'],
         ['structFieldTypeNode', 'structFieldDisplayNode'],
+        ['stringTypeNode', 'stringDisplayNode'],
         ['enumEmptyVariantTypeNode', 'enumVariantDisplayNode'],
         ['enumStructVariantTypeNode', 'enumVariantDisplayNode'],
         ['enumTupleVariantTypeNode', 'enumVariantDisplayNode'],
     ];
 
-    for (const [host, expected] of hosts) {
+    for (const [host, expected] of nodeHosts) {
         it(`${host} carries an optional display attribute referencing ${expected}`, () => {
             const n = getNode(host)!;
             const display = n.attributes.find(a => a.name === 'display');
@@ -269,15 +316,32 @@ describe('v1 spec — display attribute on host nodes', () => {
             expect(isChildAttribute(display!.type)).toBe(true);
         });
     }
+
+    const unionHosts: ReadonlyArray<readonly [string, string]> = [['numberTypeNode', 'numberDisplayNode']];
+
+    for (const [host, expected] of unionHosts) {
+        it(`${host} carries an optional display attribute referencing the ${expected} union`, () => {
+            const n = getNode(host)!;
+            const display = n.attributes.find(a => a.name === 'display');
+            expect(display, `${host} should declare a display attribute`).toBeDefined();
+            expect(display!.optional).toBe(true);
+            expect(display!.type).toEqual({ kind: 'union', name: expected });
+            expect(isChildAttribute(display!.type)).toBe(true);
+        });
+    }
 });
 
 describe('v1 spec — registeredDisplayNode union', () => {
     it('includes every display node', () => {
         const u = getUnion('registeredDisplayNode')!;
         for (const kind of [
+            'amountNumberDisplayNode',
+            'dateTimeNumberDisplayNode',
+            'durationNumberDisplayNode',
             'enumVariantDisplayNode',
             'instructionAccountDisplayNode',
             'instructionDisplayNode',
+            'stringDisplayNode',
             'structFieldDisplayNode',
         ]) {
             expect(u.members).toContainEqual({ kind: 'node', name: kind });
@@ -287,6 +351,60 @@ describe('v1 spec — registeredDisplayNode union', () => {
     it('composes displayNode as a union over registeredDisplayNode', () => {
         const u = getUnion('displayNode')!;
         expect(u.members).toContainEqual({ kind: 'union', name: 'registeredDisplayNode' });
+    });
+});
+
+describe('v1 spec — numberDisplayNode union', () => {
+    it('lists the three number presentation forms', () => {
+        const u = getUnion('numberDisplayNode')!;
+        expect(u.members).toEqual([
+            { kind: 'node', name: 'amountNumberDisplayNode' },
+            { kind: 'node', name: 'dateTimeNumberDisplayNode' },
+            { kind: 'node', name: 'durationNumberDisplayNode' },
+        ]);
+    });
+});
+
+describe('v1 spec — injectedValueNode shape', () => {
+    it('matches the encoded shape exactly', () => {
+        const n = getNode('injectedValueNode')!;
+        expect(n.attributes.map(a => a.name)).toEqual(['key', 'fallback']);
+        const key = n.attributes.find(a => a.name === 'key')!;
+        expect(key.type).toEqual({ constraint: 'identifier', kind: 'string' });
+        expect(key.optional).toBeUndefined();
+        const fallback = n.attributes.find(a => a.name === 'fallback')!;
+        expect(fallback.optional).toBe(true);
+        expect(fallback.type).toEqual({ kind: 'union', name: 'valueNode' });
+        expect(isChildAttribute(fallback.type)).toBe(true);
+    });
+});
+
+describe('v1 spec — injectable value unions', () => {
+    it('injectableNumberValueNode pairs numberValueNode with injectedValueNode', () => {
+        const u = getUnion('injectableNumberValueNode')!;
+        expect(u.members).toEqual([
+            { kind: 'node', name: 'numberValueNode' },
+            { kind: 'node', name: 'injectedValueNode' },
+        ]);
+    });
+
+    it('injectableStringValueNode pairs stringValueNode with injectedValueNode', () => {
+        const u = getUnion('injectableStringValueNode')!;
+        expect(u.members).toEqual([
+            { kind: 'node', name: 'stringValueNode' },
+            { kind: 'node', name: 'injectedValueNode' },
+        ]);
+    });
+
+    it('injectedValueNode is registered as a value-shaped node but not yet a standalone value', () => {
+        // Until provide/inject is wired into the wider value graph, injection appears only inside
+        // purpose unions that opt in (e.g. injectableNumberValueNode). standaloneValueNode stays
+        // untouched so the existing 14 value slots keep accepting concrete values only.
+        expect(getUnion('registeredValueNode')!.members).toContainEqual({ kind: 'node', name: 'injectedValueNode' });
+        expect(getUnion('standaloneValueNode')!.members).not.toContainEqual({
+            kind: 'node',
+            name: 'injectedValueNode',
+        });
     });
 });
 
