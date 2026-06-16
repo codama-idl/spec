@@ -1,4 +1,4 @@
-import { attribute, defineNode, docs, enumeration, optionalAttribute, stringIdentifier, union } from '../../api';
+import { attribute, defineNode, docs, enumeration, node, optionalAttribute, stringIdentifier, union } from '../../api';
 
 export const instructionArgumentNode = defineNode('instructionArgumentNode', {
     docs: ['A named argument of an instruction, with its type and an optional default value.'],
@@ -17,6 +17,9 @@ export const instructionArgumentNode = defineNode('instructionArgumentNode', {
         }),
         optionalAttribute('defaultValue', union('instructionInputValueNode'), {
             docs: ['A default value used when the argument is omitted by callers.'],
+        }),
+        optionalAttribute('display', node('structFieldDisplayNode'), {
+            docs: ['Display metadata describing how the argument is presented.'],
         }),
     ],
 });

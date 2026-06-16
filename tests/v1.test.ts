@@ -46,6 +46,11 @@ describe('v1 spec — coverage smoke checks', () => {
             'constantDiscriminatorNode',
             'fieldDiscriminatorNode',
             'sizeDiscriminatorNode',
+            // display nodes
+            'enumVariantDisplayNode',
+            'instructionAccountDisplayNode',
+            'instructionDisplayNode',
+            'structFieldDisplayNode',
             // contextual value nodes
             'accountValueNode',
             'argumentValueNode',
@@ -74,6 +79,8 @@ describe('v1 spec — coverage smoke checks', () => {
             'pdaSeedNode',
             'countNode',
             'discriminatorNode',
+            'displayNode',
+            'registeredDisplayNode',
             'contextualValueNode',
             'instructionInputValueNode',
         ]) {
@@ -82,7 +89,7 @@ describe('v1 spec — coverage smoke checks', () => {
     });
 
     it('declares the principal enumerations', () => {
-        for (const name of ['endianness', 'numberFormat', 'bytesEncoding', 'instructionLifecycle']) {
+        for (const name of ['endianness', 'numberFormat', 'bytesEncoding', 'instructionLifecycle', 'displaySkip']) {
             expect(getEnumeration(name), `expected enumeration "${name}" to be defined`).toBeDefined();
         }
     });
@@ -179,6 +186,107 @@ describe('v1 spec — enumerations carry per-variant docs', () => {
                 }
             }
         }
+    });
+});
+
+describe('v1 spec — displaySkip enumeration', () => {
+    it('declares the three variants the display layer documents', () => {
+        const e = getEnumeration('displaySkip')!;
+        expect(e.variants.map(v => v.name)).toEqual(['always', 'never', 'whenInjected']);
+        for (const v of e.variants) {
+            expect(v.docs, `variant "${v.name}" should have docs`).toBeTruthy();
+            expect((v.docs ?? []).length, `variant "${v.name}" docs should be non-empty`).toBeGreaterThan(0);
+        }
+    });
+});
+
+describe('v1 spec — display node shapes', () => {
+    it('instructionDisplayNode shape', () => {
+        const n = getNode('instructionDisplayNode')!;
+        expect(n.attributes.map(a => a.name)).toEqual(['intent', 'interpolatedIntent']);
+        for (const a of n.attributes) {
+            expect(a.optional).toBe(true);
+            expect(a.type).toEqual({ kind: 'string' });
+        }
+    });
+
+    it('instructionAccountDisplayNode shape', () => {
+        const n = getNode('instructionAccountDisplayNode')!;
+        expect(n.attributes.map(a => a.name)).toEqual(['label', 'skip']);
+        const label = n.attributes.find(a => a.name === 'label')!;
+        expect(label.optional).toBe(true);
+        expect(label.type).toEqual({ kind: 'string' });
+        const skip = n.attributes.find(a => a.name === 'skip')!;
+        expect(skip.optional).toBe(true);
+        expect(skip.type).toEqual({ kind: 'enumeration', name: 'displaySkip' });
+    });
+
+    it('structFieldDisplayNode shape', () => {
+        const n = getNode('structFieldDisplayNode')!;
+        expect(n.attributes.map(a => a.name)).toEqual(['label', 'skip', 'flatten', 'flattenPrefix']);
+        const label = n.attributes.find(a => a.name === 'label')!;
+        expect(label.optional).toBe(true);
+        expect(label.type).toEqual({ kind: 'string' });
+        const skip = n.attributes.find(a => a.name === 'skip')!;
+        expect(skip.optional).toBe(true);
+        expect(skip.type).toEqual({ kind: 'enumeration', name: 'displaySkip' });
+        const flatten = n.attributes.find(a => a.name === 'flatten')!;
+        expect(flatten.optional).toBe(true);
+        expect(flatten.type).toEqual({ kind: 'boolean' });
+        const flattenPrefix = n.attributes.find(a => a.name === 'flattenPrefix')!;
+        expect(flattenPrefix.optional).toBe(true);
+        expect(flattenPrefix.type).toEqual({ kind: 'string' });
+    });
+
+    it('enumVariantDisplayNode shape', () => {
+        const n = getNode('enumVariantDisplayNode')!;
+        expect(n.attributes.map(a => a.name)).toEqual(['label', 'skipInnerData']);
+        const inner = n.attributes.find(a => a.name === 'skipInnerData')!;
+        expect(inner.optional).toBe(true);
+        expect(inner.type).toEqual({ kind: 'boolean' });
+    });
+});
+
+describe('v1 spec — display attribute on host nodes', () => {
+    const hosts: ReadonlyArray<readonly [string, string]> = [
+        ['instructionNode', 'instructionDisplayNode'],
+        ['instructionAccountNode', 'instructionAccountDisplayNode'],
+        ['instructionArgumentNode', 'structFieldDisplayNode'],
+        ['instructionRemainingAccountsNode', 'instructionAccountDisplayNode'],
+        ['structFieldTypeNode', 'structFieldDisplayNode'],
+        ['enumEmptyVariantTypeNode', 'enumVariantDisplayNode'],
+        ['enumStructVariantTypeNode', 'enumVariantDisplayNode'],
+        ['enumTupleVariantTypeNode', 'enumVariantDisplayNode'],
+    ];
+
+    for (const [host, expected] of hosts) {
+        it(`${host} carries an optional display attribute referencing ${expected}`, () => {
+            const n = getNode(host)!;
+            const display = n.attributes.find(a => a.name === 'display');
+            expect(display, `${host} should declare a display attribute`).toBeDefined();
+            expect(display!.optional).toBe(true);
+            expect(display!.type).toEqual({ kind: 'node', name: expected });
+            expect(isChildAttribute(display!.type)).toBe(true);
+        });
+    }
+});
+
+describe('v1 spec — registeredDisplayNode union', () => {
+    it('includes every display node', () => {
+        const u = getUnion('registeredDisplayNode')!;
+        for (const kind of [
+            'enumVariantDisplayNode',
+            'instructionAccountDisplayNode',
+            'instructionDisplayNode',
+            'structFieldDisplayNode',
+        ]) {
+            expect(u.members).toContainEqual({ kind: 'node', name: kind });
+        }
+    });
+
+    it('composes displayNode as a union over registeredDisplayNode', () => {
+        const u = getUnion('displayNode')!;
+        expect(u.members).toContainEqual({ kind: 'union', name: 'registeredDisplayNode' });
     });
 });
 

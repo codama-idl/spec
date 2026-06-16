@@ -1,4 +1,13 @@
-import { attribute, defineNode, docs, enumeration, optionalAttribute, stringIdentifier, union } from '../../../api';
+import {
+    attribute,
+    defineNode,
+    docs,
+    enumeration,
+    node,
+    optionalAttribute,
+    stringIdentifier,
+    union,
+} from '../../../api';
 
 export const structFieldTypeNode = defineNode('structFieldTypeNode', {
     docs: ['A named field within a struct type.'],
@@ -17,6 +26,9 @@ export const structFieldTypeNode = defineNode('structFieldTypeNode', {
         }),
         optionalAttribute('defaultValue', union('valueNode'), {
             docs: ['A default value used when the field is omitted by callers.'],
+        }),
+        optionalAttribute('display', node('structFieldDisplayNode'), {
+            docs: ['Display metadata describing how the field is presented.'],
         }),
     ],
 });

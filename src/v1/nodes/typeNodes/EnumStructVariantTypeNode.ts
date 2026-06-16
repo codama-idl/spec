@@ -1,4 +1,4 @@
-import { attribute, defineNode, nestedUnion, optionalAttribute, stringIdentifier, u32 } from '../../../api';
+import { attribute, defineNode, nestedUnion, node, optionalAttribute, stringIdentifier, u32 } from '../../../api';
 
 export const enumStructVariantTypeNode = defineNode('enumStructVariantTypeNode', {
     docs: ['A variant of an enum that carries a struct payload (named fields).'],
@@ -13,6 +13,9 @@ export const enumStructVariantTypeNode = defineNode('enumStructVariantTypeNode',
         }),
         attribute('struct', nestedUnion('nestedTypeNode', 'structTypeNode'), {
             docs: ['The struct of named fields carried by the variant.'],
+        }),
+        optionalAttribute('display', node('enumVariantDisplayNode'), {
+            docs: ['Display metadata describing how the variant is presented.'],
         }),
     ],
 });

@@ -4,6 +4,7 @@ import {
     defineNode,
     docs,
     literalUnion,
+    node,
     optionalAttribute,
     stringIdentifier,
     union,
@@ -34,6 +35,9 @@ export const instructionAccountNode = defineNode('instructionAccountNode', {
         }),
         optionalAttribute('defaultValue', union('instructionInputValueNode'), {
             docs: ['A default value used to fill the slot when the caller does not provide one.'],
+        }),
+        optionalAttribute('display', node('instructionAccountDisplayNode'), {
+            docs: ['Display metadata describing how the account is presented.'],
         }),
     ],
 });

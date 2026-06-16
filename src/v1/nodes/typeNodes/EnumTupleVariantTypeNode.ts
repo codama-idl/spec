@@ -1,4 +1,4 @@
-import { attribute, defineNode, nestedUnion, optionalAttribute, stringIdentifier, u32 } from '../../../api';
+import { attribute, defineNode, nestedUnion, node, optionalAttribute, stringIdentifier, u32 } from '../../../api';
 
 export const enumTupleVariantTypeNode = defineNode('enumTupleVariantTypeNode', {
     docs: ['A variant of an enum that carries a tuple payload (positional fields).'],
@@ -13,6 +13,9 @@ export const enumTupleVariantTypeNode = defineNode('enumTupleVariantTypeNode', {
         }),
         attribute('tuple', nestedUnion('nestedTypeNode', 'tupleTypeNode'), {
             docs: ['The tuple of positional fields carried by the variant.'],
+        }),
+        optionalAttribute('display', node('enumVariantDisplayNode'), {
+            docs: ['Display metadata describing how the variant is presented.'],
         }),
     ],
 });

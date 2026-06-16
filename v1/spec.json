@@ -1,5 +1,5 @@
 {
-    "version": "1.6.0",
+    "version": "1.7.0",
     "categories": [
         {
             "name": "type",
@@ -152,6 +152,17 @@
                             "docs": [
                                 "Explicit discriminator value. When omitted, the discriminator is inferred from the variant position."
                             ]
+                        },
+                        {
+                            "name": "display",
+                            "type": {
+                                "kind": "node",
+                                "name": "enumVariantDisplayNode"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Display metadata describing how the variant is presented."
+                            ]
                         }
                     ],
                     "examples": []
@@ -193,6 +204,17 @@
                             "docs": [
                                 "The struct of named fields carried by the variant."
                             ]
+                        },
+                        {
+                            "name": "display",
+                            "type": {
+                                "kind": "node",
+                                "name": "enumVariantDisplayNode"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Display metadata describing how the variant is presented."
+                            ]
                         }
                     ],
                     "examples": []
@@ -233,6 +255,17 @@
                             },
                             "docs": [
                                 "The tuple of positional fields carried by the variant."
+                            ]
+                        },
+                        {
+                            "name": "display",
+                            "type": {
+                                "kind": "node",
+                                "name": "enumVariantDisplayNode"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Display metadata describing how the variant is presented."
                             ]
                         }
                     ],
@@ -763,6 +796,17 @@
                             "optional": true,
                             "docs": [
                                 "A default value used when the field is omitted by callers."
+                            ]
+                        },
+                        {
+                            "name": "display",
+                            "type": {
+                                "kind": "node",
+                                "name": "structFieldDisplayNode"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Display metadata describing how the field is presented."
                             ]
                         }
                     ],
@@ -2127,6 +2171,203 @@
             "nestedUnions": []
         },
         {
+            "name": "display",
+            "docs": [
+                "Display nodes — presentation metadata attached to instructions, accounts, fields, and enum variants."
+            ],
+            "nodes": [
+                {
+                    "kind": "enumVariantDisplayNode",
+                    "docs": [
+                        "Display metadata for an enum variant: its label and whether to hide its inner payload."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "label",
+                            "type": {
+                                "kind": "string"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "An override label shown for the variant (e.g. `\"Buy\"`).",
+                                "When absent, renderers derive a label from the variant `name`."
+                            ]
+                        },
+                        {
+                            "name": "skipInnerData",
+                            "type": {
+                                "kind": "boolean"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "When `true`, the variant's payload is hidden — only the label is rendered.",
+                                "Useful for tuple payloads that have no per-field handle, or when the payload is purely structural."
+                            ]
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "kind": "instructionAccountDisplayNode",
+                    "docs": [
+                        "Display metadata for an instruction account: its label in the fallback list and whether it is shown."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "label",
+                            "type": {
+                                "kind": "string"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "An override label shown in the fallback list (e.g. `\"To\"`).",
+                                "When absent, renderers derive a label from the account `name`."
+                            ]
+                        },
+                        {
+                            "name": "skip",
+                            "type": {
+                                "kind": "enumeration",
+                                "name": "displaySkip"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Whether the account is shown in the fallback list. Defaults to `\"never\"` (always shown)."
+                            ]
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "kind": "instructionDisplayNode",
+                    "docs": [
+                        "Display metadata for an instruction: a short intent label and an interpolated sentence template.",
+                        "Either form may be absent; presentation strategy is left to the renderer."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "intent",
+                            "type": {
+                                "kind": "string"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "A short imperative label describing what the instruction does (e.g. `\"Transfer\"`)."
+                            ]
+                        },
+                        {
+                            "name": "interpolatedIntent",
+                            "type": {
+                                "kind": "string"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "A sentence template that composes the instruction into prose with `${root.path}` placeholders.",
+                                "Roots are `data.` (an instruction argument) and `accounts.` (an instruction account); the path is flat after the root (e.g. `${data.amount}`, `${accounts.destination}`).",
+                                "A placeholder renders through its referent's own presentation; the `skip` rule governs the fallback list only and never the sentence."
+                            ]
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "kind": "structFieldDisplayNode",
+                    "docs": [
+                        "Display metadata for a named member: its label, whether it is shown in the fallback list, and whether it is flattened into its parent.",
+                        "Value presentation is carried by the member's type; this node only addresses naming and composition."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "label",
+                            "type": {
+                                "kind": "string"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "An override label shown for the member (e.g. `\"Amount\"`).",
+                                "When absent, renderers derive a label from the member `name`."
+                            ]
+                        },
+                        {
+                            "name": "skip",
+                            "type": {
+                                "kind": "enumeration",
+                                "name": "displaySkip"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Whether the member is shown in the fallback list. Defaults to `\"never\"` (always shown)."
+                            ]
+                        },
+                        {
+                            "name": "flatten",
+                            "type": {
+                                "kind": "boolean"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "When `true`, the member's type is expected to be a struct and its fields are lifted into the parent's context, dropping the field name as an extra level of nesting.",
+                                "Flattening lives on the field rather than on the struct so the same struct can be flattened in one place and nested in another.",
+                                "Meaningful only when the member's type is structurally a struct; renderers ignore it otherwise."
+                            ]
+                        },
+                        {
+                            "name": "flattenPrefix",
+                            "type": {
+                                "kind": "string"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "A literal prefix prepended to each flattened member's label (e.g. `\"args.\"`).",
+                                "Meaningful only when `flatten` is `true`. Useful to disambiguate when two flattened children might collide."
+                            ]
+                        }
+                    ],
+                    "examples": []
+                }
+            ],
+            "unions": [
+                {
+                    "name": "registeredDisplayNode",
+                    "members": [
+                        {
+                            "kind": "node",
+                            "name": "enumVariantDisplayNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "instructionAccountDisplayNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "instructionDisplayNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "structFieldDisplayNode"
+                        }
+                    ],
+                    "docs": [
+                        "Every node tagged as display metadata."
+                    ]
+                },
+                {
+                    "name": "displayNode",
+                    "members": [
+                        {
+                            "kind": "union",
+                            "name": "registeredDisplayNode"
+                        }
+                    ],
+                    "docs": [
+                        "The composable form: any registered display node."
+                    ]
+                }
+            ],
+            "enumerations": [],
+            "nestedUnions": []
+        },
+        {
             "name": "contextualValue",
             "docs": [
                 "Contextual-value nodes — references resolved at instruction-build time (account values, argument values, …)."
@@ -2628,6 +2869,34 @@
                     ],
                     "docs": [
                         "How an attribute that carries a default value is exposed in generated APIs."
+                    ]
+                },
+                {
+                    "name": "displaySkip",
+                    "variants": [
+                        {
+                            "name": "always",
+                            "docs": [
+                                "The member is never shown in the fallback list. Use for purely structural fields like discriminators."
+                            ]
+                        },
+                        {
+                            "name": "never",
+                            "docs": [
+                                "The member is always shown in the fallback list. This is the default."
+                            ]
+                        },
+                        {
+                            "name": "whenInjected",
+                            "docs": [
+                                "The member is shown only when its value was not already surfaced elsewhere through the provide/inject graph.",
+                                "When the value was pulled via injection, the member is hidden as redundant; when nothing surfaced it, the member appears under its label as a backup."
+                            ]
+                        }
+                    ],
+                    "docs": [
+                        "Whether a member should be hidden from the fallback display list.",
+                        "The interpolated sentence on `instructionDisplayNode` is governed separately — a member may be referenced there regardless of its skip value."
                     ]
                 },
                 {
@@ -3211,6 +3480,17 @@
                             "docs": [
                                 "A default value used to fill the slot when the caller does not provide one."
                             ]
+                        },
+                        {
+                            "name": "display",
+                            "type": {
+                                "kind": "node",
+                                "name": "instructionAccountDisplayNode"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Display metadata describing how the account is presented."
+                            ]
                         }
                     ],
                     "examples": []
@@ -3271,6 +3551,17 @@
                             "optional": true,
                             "docs": [
                                 "A default value used when the argument is omitted by callers."
+                            ]
+                        },
+                        {
+                            "name": "display",
+                            "type": {
+                                "kind": "node",
+                                "name": "structFieldDisplayNode"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Display metadata describing how the argument is presented."
                             ]
                         }
                     ],
@@ -3458,6 +3749,17 @@
                             "docs": [
                                 "Inner instructions invoked through CPI as part of executing this instruction."
                             ]
+                        },
+                        {
+                            "name": "display",
+                            "type": {
+                                "kind": "node",
+                                "name": "instructionDisplayNode"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Display metadata describing how the instruction is presented."
+                            ]
                         }
                     ],
                     "examples": []
@@ -3522,6 +3824,17 @@
                             },
                             "docs": [
                                 "The source of the remaining-accounts list — a referenced argument or a resolver."
+                            ]
+                        },
+                        {
+                            "name": "display",
+                            "type": {
+                                "kind": "node",
+                                "name": "instructionAccountDisplayNode"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Display metadata describing how the remaining-accounts group is presented as a whole."
                             ]
                         }
                     ],
