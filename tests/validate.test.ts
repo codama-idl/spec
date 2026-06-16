@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+    anyNode,
     array,
     attribute,
     type CategorySpec,
@@ -282,8 +283,16 @@ describe('isChildAttribute', () => {
         expect(isChildAttribute(nestedUnion('wrap', 'z'))).toBe(true);
     });
 
+    it('classifies anyNode as a child', () => {
+        expect(isChildAttribute(anyNode())).toBe(true);
+    });
+
     it('classifies array-wrapped refs as children', () => {
         expect(isChildAttribute(array(union('y')))).toBe(true);
+    });
+
+    it('classifies an array of anyNode as a child', () => {
+        expect(isChildAttribute(array(anyNode()))).toBe(true);
     });
 
     it('classifies a tuple containing a child as a child', () => {

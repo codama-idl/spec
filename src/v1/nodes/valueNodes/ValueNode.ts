@@ -1,7 +1,8 @@
 /**
  * Named unions for the value-node category.
  *
- *  - `standaloneValueNode`           every value node usable as a top-level value.
+ *  - `standaloneValueNode`           every value node usable as a top-level value, including
+ *                                    `injectedValueNode` (a value resolved at presentation time).
  *  - `valueNode`                     the composable form (alias for `standaloneValueNode` in v1).
  *  - `registeredValueNode`           every value-shaped node, including container variants like
  *                                    `mapEntryValueNode` and `structFieldValueNode`.
@@ -19,6 +20,7 @@ const STANDALONE_VALUE_NODE_KINDS = [
     'bytesValueNode',
     'constantValueNode',
     'enumValueNode',
+    'injectedValueNode',
     'mapValueNode',
     'noneValueNode',
     'numberValueNode',
@@ -42,7 +44,7 @@ export const valueNodeUnion = defineUnion('valueNode', {
 
 export const registeredValueNodeUnion = defineUnion('registeredValueNode', {
     docs: ['Every node tagged as a value-shaped node, including container variants.'],
-    members: [union('standaloneValueNode'), 'injectedValueNode', 'mapEntryValueNode', 'structFieldValueNode'],
+    members: [union('standaloneValueNode'), 'mapEntryValueNode', 'structFieldValueNode'],
 });
 
 export const enumValuePayloadUnion = defineUnion('enumValuePayload', {

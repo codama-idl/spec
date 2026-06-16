@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import {
     address,
+    anyNode,
     boolean,
     codamaVersion,
     enumeration,
@@ -33,6 +34,15 @@ describe('address primitive', () => {
     });
     it('freezes the result', () => {
         expect(Object.isFrozen(address())).toBe(true);
+    });
+});
+
+describe('anyNode primitive', () => {
+    it('returns the anyNode kind', () => {
+        expect(anyNode()).toEqual({ kind: 'anyNode' });
+    });
+    it('freezes the result', () => {
+        expect(Object.isFrozen(anyNode())).toBe(true);
     });
 });
 

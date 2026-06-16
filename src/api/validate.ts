@@ -198,6 +198,7 @@ function checkRef(
  */
 export function isChildAttribute(type: TypeExpr): boolean {
     switch (type.kind) {
+        case 'anyNode':
         case 'node':
         case 'nestedUnion':
         case 'union':

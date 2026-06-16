@@ -31,6 +31,7 @@ export type LiteralValue = boolean | number | string;
  *
  * Leaf primitives:    address, boolean, docs, float, integer, literal, literalUnion, string.
  * Named references:   codamaVersion, enumeration, nestedUnion, node, union.
+ * Anonymous nodes:    anyNode (any node kind defined by the spec).
  * Compounds:          array, tuple.
  */
 export type TypeExpr =
@@ -41,6 +42,13 @@ export type TypeExpr =
      * to a generic string.
      */
     | { readonly kind: 'address' }
+    /**
+     * A reference to any node kind defined by the spec.
+     * Codegen targets map this to their top-level `Node` registry type,
+     * so a slot typed `anyNode` accepts every concrete node without the
+     * spec having to enumerate them.
+     */
+    | { readonly kind: 'anyNode' }
     | { readonly kind: 'array'; readonly of: TypeExpr }
     | { readonly kind: 'boolean' }
     /**

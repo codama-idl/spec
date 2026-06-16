@@ -18,6 +18,7 @@ import { ALL_LINK_NODE_UNIONS, ALL_LINK_NODES } from './linkNodes';
 import { pdaNode } from './PdaNode';
 import { ALL_PDA_SEED_NODE_UNIONS, ALL_PDA_SEED_NODES } from './pdaSeedNodes';
 import { programNode } from './ProgramNode';
+import { providedNode } from './ProvidedNode';
 import { rootNode } from './RootNode';
 import { ALL_TYPE_NODE_UNIONS, ALL_TYPE_NODES } from './typeNodes';
 import { ALL_VALUE_NODE_UNIONS, ALL_VALUE_NODES } from './valueNodes';
@@ -46,6 +47,7 @@ export const ALL_NODES = [
     instructionStatusNode,
     pdaNode,
     programNode,
+    providedNode,
     rootNode,
 ] as const;
 

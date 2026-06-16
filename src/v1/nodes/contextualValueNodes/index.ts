@@ -1,4 +1,5 @@
 import { accountBumpValueNode } from './AccountBumpValueNode';
+import { accountFieldValueNode } from './AccountFieldValueNode';
 import { accountValueNode } from './AccountValueNode';
 import { argumentValueNode } from './ArgumentValueNode';
 import { conditionalValueNode } from './ConditionalValueNode';
@@ -22,6 +23,7 @@ import { resolverValueNode } from './ResolverValueNode';
 
 export const ALL_CONTEXTUAL_VALUE_NODES = [
     accountBumpValueNode,
+    accountFieldValueNode,
     accountValueNode,
     argumentValueNode,
     conditionalValueNode,

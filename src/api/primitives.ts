@@ -114,6 +114,18 @@ export function node(name: string): TypeExpr {
     return Object.freeze({ kind: 'node' as const, name });
 }
 
+/**
+ * Reference to any node kind defined by the spec.
+ *
+ * Use this for slots that may carry an arbitrary node without
+ * enumerating each kind by hand (the generic provide/inject pipe is
+ * the motivating case). Codegen targets map this to their top-level
+ * `Node` registry type.
+ */
+export function anyNode(): TypeExpr {
+    return Object.freeze({ kind: 'anyNode' as const });
+}
+
 /** Reference to a named union declared via `defineUnion`. */
 export function union(name: string): TypeExpr {
     return Object.freeze({ kind: 'union' as const, name });

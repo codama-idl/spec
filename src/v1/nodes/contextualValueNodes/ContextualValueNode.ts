@@ -10,6 +10,7 @@ import { defineUnion, union } from '../../../api';
 
 const STANDALONE_CONTEXTUAL_VALUE_NODE_KINDS = [
     'accountBumpValueNode',
+    'accountFieldValueNode',
     'accountValueNode',
     'argumentValueNode',
     'conditionalValueNode',
