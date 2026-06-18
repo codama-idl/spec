@@ -4,6 +4,7 @@ import { ALL_CONTEXTUAL_VALUE_NODE_UNIONS, ALL_CONTEXTUAL_VALUE_NODES } from './
 import { ALL_COUNT_NODE_UNIONS, ALL_COUNT_NODES } from './countNodes';
 import { definedTypeNode } from './DefinedTypeNode';
 import { ALL_DISCRIMINATOR_NODE_UNIONS, ALL_DISCRIMINATOR_NODES } from './discriminatorNodes';
+import { ALL_DISPLAY_NODE_UNIONS, ALL_DISPLAY_NODES } from './displayNodes';
 import { errorNode } from './ErrorNode';
 import { eventNode } from './EventNode';
 import { instructionAccountNode } from './InstructionAccountNode';
@@ -28,6 +29,7 @@ export const ALL_NODES = [
     ...ALL_PDA_SEED_NODES,
     ...ALL_COUNT_NODES,
     ...ALL_DISCRIMINATOR_NODES,
+    ...ALL_DISPLAY_NODES,
     ...ALL_CONTEXTUAL_VALUE_NODES,
 
     // Top-level nodes — directly under `nodes/`, no subdirectory.
@@ -54,6 +56,7 @@ export const ALL_UNIONS = [
     ...ALL_PDA_SEED_NODE_UNIONS,
     ...ALL_COUNT_NODE_UNIONS,
     ...ALL_DISCRIMINATOR_NODE_UNIONS,
+    ...ALL_DISPLAY_NODE_UNIONS,
     ...ALL_CONTEXTUAL_VALUE_NODE_UNIONS,
 
     // Inline-helper unions used by instruction-shaped nodes.

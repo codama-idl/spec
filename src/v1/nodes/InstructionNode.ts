@@ -53,5 +53,8 @@ export const instructionNode = defineNode('instructionNode', {
         optionalAttribute('subInstructions', array(node('instructionNode')), {
             docs: ['Inner instructions invoked through CPI as part of executing this instruction.'],
         }),
+        optionalAttribute('display', node('instructionDisplayNode'), {
+            docs: ['Display metadata describing how the instruction is presented.'],
+        }),
     ],
 });

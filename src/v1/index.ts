@@ -18,6 +18,7 @@ import { ALL_CONTEXTUAL_VALUE_NODE_UNIONS, ALL_CONTEXTUAL_VALUE_NODES } from './
 import { ALL_COUNT_NODE_UNIONS, ALL_COUNT_NODES } from './nodes/countNodes';
 import { definedTypeNode } from './nodes/DefinedTypeNode';
 import { ALL_DISCRIMINATOR_NODE_UNIONS, ALL_DISCRIMINATOR_NODES } from './nodes/discriminatorNodes';
+import { ALL_DISPLAY_NODE_UNIONS, ALL_DISPLAY_NODES } from './nodes/displayNodes';
 import { errorNode } from './nodes/ErrorNode';
 import { eventNode } from './nodes/EventNode';
 import { instructionAccountNode } from './nodes/InstructionAccountNode';
@@ -38,7 +39,7 @@ import { ALL_VALUE_NODE_UNIONS, ALL_VALUE_NODES } from './nodes/valueNodes';
 export * from '../api/public';
 
 /** The version string of the v1 spec. */
-export const SPEC_VERSION = '1.6.0';
+export const SPEC_VERSION = '1.7.0';
 
 const TYPE_CATEGORY = defineCategory('type', {
     docs: ['Type nodes — the building blocks of every value shape.'],
@@ -75,6 +76,12 @@ const DISCRIMINATOR_CATEGORY = defineCategory('discriminator', {
     docs: ['Discriminator nodes — strategies for distinguishing one account or instruction from another.'],
     nodes: [...ALL_DISCRIMINATOR_NODES],
     unions: [...ALL_DISCRIMINATOR_NODE_UNIONS],
+});
+
+const DISPLAY_CATEGORY = defineCategory('display', {
+    docs: ['Display nodes — presentation metadata attached to instructions, accounts, fields, and enum variants.'],
+    nodes: [...ALL_DISPLAY_NODES],
+    unions: [...ALL_DISPLAY_NODE_UNIONS],
 });
 
 const CONTEXTUAL_VALUE_CATEGORY = defineCategory('contextualValue', {
@@ -118,6 +125,7 @@ const ALL_CATEGORIES: readonly CategorySpec[] = [
     PDA_SEED_CATEGORY,
     COUNT_CATEGORY,
     DISCRIMINATOR_CATEGORY,
+    DISPLAY_CATEGORY,
     CONTEXTUAL_VALUE_CATEGORY,
     SHARED_CATEGORY,
     TOP_LEVEL_CATEGORY,
