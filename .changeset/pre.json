@@ -4,5 +4,7 @@
   "initialVersions": {
     "@codama/spec": "1.6.0"
   },
-  "changesets": []
+  "changesets": [
+    "breezy-jeans-admire"
+  ]
 }
