@@ -36,6 +36,12 @@ export const instructionAccountNode = defineNode('instructionAccountNode', {
         optionalAttribute('defaultValue', union('instructionInputValueNode'), {
             docs: ['A default value used to fill the slot when the caller does not provide one.'],
         }),
+        optionalAttribute('accountLink', node('accountLinkNode'), {
+            docs: [
+                "A reference to the account's data layout. Required for consumers (e.g. `accountFieldValueNode`) to read fields from the account.",
+                "The link's optional `program` allows cross-program references via the root's `additionalPrograms`.",
+            ],
+        }),
         optionalAttribute('display', node('instructionAccountDisplayNode'), {
             docs: ['Display metadata describing how the account is presented.'],
         }),

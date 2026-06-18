@@ -57,6 +57,7 @@ describe('v1 spec — coverage smoke checks', () => {
             'stringDisplayNode',
             'structFieldDisplayNode',
             // contextual value nodes
+            'accountFieldValueNode',
             'accountValueNode',
             'argumentValueNode',
             'pdaValueNode',
@@ -64,6 +65,7 @@ describe('v1 spec — coverage smoke checks', () => {
             'accountNode',
             'instructionNode',
             'programNode',
+            'providedNode',
             'rootNode',
         ]) {
             expect(getNode(kind), `expected node "${kind}" to be defined`).toBeDefined();
@@ -396,15 +398,70 @@ describe('v1 spec — injectable value unions', () => {
         ]);
     });
 
-    it('injectedValueNode is registered as a value-shaped node but not yet a standalone value', () => {
-        // Until provide/inject is wired into the wider value graph, injection appears only inside
-        // purpose unions that opt in (e.g. injectableNumberValueNode). standaloneValueNode stays
-        // untouched so the existing 14 value slots keep accepting concrete values only.
-        expect(getUnion('registeredValueNode')!.members).toContainEqual({ kind: 'node', name: 'injectedValueNode' });
-        expect(getUnion('standaloneValueNode')!.members).not.toContainEqual({
-            kind: 'node',
-            name: 'injectedValueNode',
-        });
+    it('injectedValueNode is a standalone value (valid in every valueNode slot)', () => {
+        expect(getUnion('standaloneValueNode')!.members).toContainEqual({ kind: 'node', name: 'injectedValueNode' });
+    });
+
+    it('registeredValueNode reaches injectedValueNode transitively via standaloneValueNode', () => {
+        // The bare entry was removed once `injectedValueNode` joined `standaloneValueNode` so the
+        // node is no longer listed twice in the value-category registry.
+        const registered = getUnion('registeredValueNode')!;
+        expect(registered.members).toContainEqual({ kind: 'union', name: 'standaloneValueNode' });
+        expect(registered.members).not.toContainEqual({ kind: 'node', name: 'injectedValueNode' });
+    });
+});
+
+describe('v1 spec — accountFieldValueNode shape', () => {
+    it('matches the encoded shape exactly', () => {
+        const n = getNode('accountFieldValueNode')!;
+        expect(n.attributes.map(a => a.name)).toEqual(['account', 'path']);
+        const account = n.attributes.find(a => a.name === 'account')!;
+        expect(account.type).toEqual({ constraint: 'identifier', kind: 'string' });
+        expect(account.optional).toBeUndefined();
+        const path = n.attributes.find(a => a.name === 'path')!;
+        expect(path.optional).toBe(true);
+        expect(path.type).toEqual({ constraint: 'identifier', kind: 'string' });
+    });
+
+    it('is a member of standaloneContextualValueNode', () => {
+        const u = getUnion('standaloneContextualValueNode')!;
+        expect(u.members).toContainEqual({ kind: 'node', name: 'accountFieldValueNode' });
+    });
+});
+
+describe('v1 spec — providedNode shape', () => {
+    it('matches the encoded shape exactly', () => {
+        const n = getNode('providedNode')!;
+        expect(n.attributes.map(a => a.name)).toEqual(['name', 'node']);
+        const name = n.attributes.find(a => a.name === 'name')!;
+        expect(name.type).toEqual({ constraint: 'identifier', kind: 'string' });
+        expect(name.optional).toBeUndefined();
+        const nodeAttr = n.attributes.find(a => a.name === 'node')!;
+        expect(nodeAttr.type).toEqual({ kind: 'anyNode' });
+        expect(nodeAttr.optional).toBeUndefined();
+        expect(isChildAttribute(nodeAttr.type)).toBe(true);
+    });
+});
+
+describe('v1 spec — instructionNode.provides', () => {
+    it('declares an optional array of providedNode', () => {
+        const n = getNode('instructionNode')!;
+        const provides = n.attributes.find(a => a.name === 'provides')!;
+        expect(provides).toBeDefined();
+        expect(provides.optional).toBe(true);
+        expect(provides.type).toEqual({ kind: 'array', of: { kind: 'node', name: 'providedNode' } });
+        expect(isChildAttribute(provides.type)).toBe(true);
+    });
+});
+
+describe('v1 spec — instructionAccountNode.accountLink', () => {
+    it('declares an optional accountLinkNode reference', () => {
+        const n = getNode('instructionAccountNode')!;
+        const link = n.attributes.find(a => a.name === 'accountLink')!;
+        expect(link).toBeDefined();
+        expect(link.optional).toBe(true);
+        expect(link.type).toEqual({ kind: 'node', name: 'accountLinkNode' });
+        expect(isChildAttribute(link.type)).toBe(true);
     });
 });
 

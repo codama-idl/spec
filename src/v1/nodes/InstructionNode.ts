@@ -53,6 +53,12 @@ export const instructionNode = defineNode('instructionNode', {
         optionalAttribute('subInstructions', array(node('instructionNode')), {
             docs: ['Inner instructions invoked through CPI as part of executing this instruction.'],
         }),
+        optionalAttribute('provides', array(node('providedNode')), {
+            docs: [
+                'Named nodes exposed to consumers in the surrounding scope.',
+                'Each entry pairs with an `injectedValueNode` that references it by key, so reusable types can pull contextual values without naming siblings directly.',
+            ],
+        }),
         optionalAttribute('display', node('instructionDisplayNode'), {
             docs: ['Display metadata describing how the instruction is presented.'],
         }),

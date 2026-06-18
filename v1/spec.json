@@ -1539,6 +1539,10 @@
                         },
                         {
                             "kind": "node",
+                            "name": "injectedValueNode"
+                        },
+                        {
+                            "kind": "node",
                             "name": "mapValueNode"
                         },
                         {
@@ -1596,10 +1600,6 @@
                         {
                             "kind": "union",
                             "name": "standaloneValueNode"
-                        },
-                        {
-                            "kind": "node",
-                            "name": "injectedValueNode"
                         },
                         {
                             "kind": "node",
@@ -2634,6 +2634,39 @@
                     "examples": []
                 },
                 {
+                    "kind": "accountFieldValueNode",
+                    "docs": [
+                        "Refers to a field of a named account's decoded data.",
+                        "The referenced account must carry an `accountLink` so the account's layout is known.",
+                        "Resolving the value requires reading the account state at presentation time."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "account",
+                            "type": {
+                                "kind": "string",
+                                "constraint": "identifier"
+                            },
+                            "docs": [
+                                "The name of the referenced account in the surrounding instruction."
+                            ]
+                        },
+                        {
+                            "name": "path",
+                            "type": {
+                                "kind": "string",
+                                "constraint": "identifier"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "The name of the field within the account's decoded data.",
+                                "When absent, the value is the whole decoded account data."
+                            ]
+                        }
+                    ],
+                    "examples": []
+                },
+                {
                     "kind": "accountValueNode",
                     "docs": [
                         "Refers to a named account in the surrounding instruction."
@@ -2873,6 +2906,10 @@
                         {
                             "kind": "node",
                             "name": "accountBumpValueNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "accountFieldValueNode"
                         },
                         {
                             "kind": "node",
@@ -3723,6 +3760,18 @@
                             ]
                         },
                         {
+                            "name": "accountLink",
+                            "type": {
+                                "kind": "node",
+                                "name": "accountLinkNode"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "A reference to the account's data layout. Required for consumers (e.g. `accountFieldValueNode`) to read fields from the account.",
+                                "The link's optional `program` allows cross-program references via the root's `additionalPrograms`."
+                            ]
+                        },
+                        {
                             "name": "display",
                             "type": {
                                 "kind": "node",
@@ -3989,6 +4038,21 @@
                             "optional": true,
                             "docs": [
                                 "Inner instructions invoked through CPI as part of executing this instruction."
+                            ]
+                        },
+                        {
+                            "name": "provides",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "node",
+                                    "name": "providedNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Named nodes exposed to consumers in the surrounding scope.",
+                                "Each entry pairs with an `injectedValueNode` that references it by key, so reusable types can pull contextual values without naming siblings directly."
                             ]
                         },
                         {
@@ -4307,6 +4371,35 @@
                             },
                             "docs": [
                                 "The constants exposed by the program."
+                            ]
+                        }
+                    ],
+                    "examples": []
+                },
+                {
+                    "kind": "providedNode",
+                    "docs": [
+                        "Exposes a node under a name so consumers in the surrounding scope can resolve it by that key.",
+                        "Sits inside a host's `provides` list and pairs with `injectedValueNode` on the consumer side: an injection with the matching key resolves to this entry's `node`."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "name",
+                            "type": {
+                                "kind": "string",
+                                "constraint": "identifier"
+                            },
+                            "docs": [
+                                "The key under which the node is exposed to consumers."
+                            ]
+                        },
+                        {
+                            "name": "node",
+                            "type": {
+                                "kind": "anyNode"
+                            },
+                            "docs": [
+                                "The exposed node. The provider is a transparent pipe — any node may be supplied; the family check happens at the injection point against the consumer's expected family."
                             ]
                         }
                     ],

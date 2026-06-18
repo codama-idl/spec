@@ -32,6 +32,7 @@ import { ALL_LINK_NODE_UNIONS, ALL_LINK_NODES } from './nodes/linkNodes';
 import { pdaNode } from './nodes/PdaNode';
 import { ALL_PDA_SEED_NODE_UNIONS, ALL_PDA_SEED_NODES } from './nodes/pdaSeedNodes';
 import { programNode } from './nodes/ProgramNode';
+import { providedNode } from './nodes/ProvidedNode';
 import { rootNode } from './nodes/RootNode';
 import { ALL_TYPE_NODE_UNIONS, ALL_TYPE_NODES } from './nodes/typeNodes';
 import { ALL_VALUE_NODE_UNIONS, ALL_VALUE_NODES } from './nodes/valueNodes';
@@ -113,6 +114,7 @@ const TOP_LEVEL_CATEGORY = defineCategory('topLevel', {
         instructionStatusNode,
         pdaNode,
         programNode,
+        providedNode,
         rootNode,
     ],
     unions: [instructionByteDeltaValueUnion, instructionRemainingAccountsValueUnion],
