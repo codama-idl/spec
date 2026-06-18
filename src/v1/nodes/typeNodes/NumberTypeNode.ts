@@ -1,4 +1,4 @@
-import { attribute, defineNode, enumeration } from '../../../api';
+import { attribute, defineNode, enumeration, optionalAttribute, union } from '../../../api';
 
 export const numberTypeNode = defineNode('numberTypeNode', {
     docs: ['A numeric type with a fixed wire format and byte order.'],
@@ -8,6 +8,9 @@ export const numberTypeNode = defineNode('numberTypeNode', {
         }),
         attribute('endian', enumeration('endianness'), {
             docs: ['The byte order used to serialise the number.'],
+        }),
+        optionalAttribute('display', union('numberDisplayNode'), {
+            docs: ['Display metadata describing how the number is presented.'],
         }),
     ],
 });

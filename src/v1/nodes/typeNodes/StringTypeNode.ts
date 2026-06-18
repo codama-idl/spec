@@ -1,4 +1,4 @@
-import { attribute, defineNode, enumeration } from '../../../api';
+import { attribute, defineNode, enumeration, node, optionalAttribute } from '../../../api';
 
 export const stringTypeNode = defineNode('stringTypeNode', {
     docs: [
@@ -9,6 +9,9 @@ export const stringTypeNode = defineNode('stringTypeNode', {
     attributes: [
         attribute('encoding', enumeration('bytesEncoding'), {
             docs: ['The byte encoding used to serialise the string.'],
+        }),
+        optionalAttribute('display', node('stringDisplayNode'), {
+            docs: ['Display metadata describing how the string is presented.'],
         }),
     ],
 });
