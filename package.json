@@ -78,7 +78,7 @@
         "@changesets/cli": "^2.31.0",
         "@solana-config/oxc": "^0.1.1",
         "@types/node": "^25",
-        "oxfmt": "^0.55.0",
+        "oxfmt": "^0.56.0",
         "oxlint": "^1.66.0",
         "oxlint-tsgolint": "^0.23.0",
         "rimraf": "^6.1.3",
