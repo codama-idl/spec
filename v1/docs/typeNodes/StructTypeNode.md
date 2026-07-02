@@ -1,0 +1,17 @@
+# `StructTypeNode`
+
+A composite type made of an ordered list of named fields. Fields are encoded and decoded in declaration order.
+
+## Attributes
+
+### Data
+
+| Attribute | Type               | Description             |
+| --------- | ------------------ | ----------------------- |
+| `kind`    | `"structTypeNode"` | The node discriminator. |
+
+### Children
+
+| Attribute | Type                                                | Description                                     |
+| --------- | --------------------------------------------------- | ----------------------------------------------- |
+| `fields`  | [`StructFieldTypeNode`](./StructFieldTypeNode.md)[] | The fields of the struct, in declaration order. |

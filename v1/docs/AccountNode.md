@@ -1,0 +1,22 @@
+# `AccountNode`
+
+An on-chain account: its name, data structure, optional fixed size, optional PDA, and optional discriminators.
+
+## Attributes
+
+### Data
+
+| Attribute | Type                    | Description                                                      |
+| --------- | ----------------------- | ---------------------------------------------------------------- |
+| `kind`    | `"accountNode"`         | The node discriminator.                                          |
+| `name`    | `CamelCaseString`       | The name of the account.                                         |
+| `size`    | `u64` _(optional)_      | The size of the account in bytes, when the data length is fixed. |
+| `docs`    | `string[]` _(optional)_ | Markdown documentation for the account.                          |
+
+### Children
+
+| Attribute        | Type                                                                                                 | Description                                                              |
+| ---------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `data`           | [`NestedTypeNode`](./typeNodes/NestedTypeNode.md)<[`StructTypeNode`](./typeNodes/StructTypeNode.md)> | The struct describing the account data.                                  |
+| `pda`            | [`PdaLinkNode`](./linkNodes/PdaLinkNode.md) _(optional)_                                             | A link to the PDA the account is derived from, if applicable.            |
+| `discriminators` | [`DiscriminatorNode`](./discriminatorNodes/DiscriminatorNode.md)[] _(optional)_                      | Discriminators that distinguish this account from others in the program. |

@@ -1,0 +1,17 @@
+# `BooleanTypeNode`
+
+A boolean serialised as a numeric value. The wrapped number type determines the byte width.
+
+## Attributes
+
+### Data
+
+| Attribute | Type                | Description             |
+| --------- | ------------------- | ----------------------- |
+| `kind`    | `"booleanTypeNode"` | The node discriminator. |
+
+### Children
+
+| Attribute | Type                                                                             | Description                                     |
+| --------- | -------------------------------------------------------------------------------- | ----------------------------------------------- |
+| `size`    | [`NestedTypeNode`](./NestedTypeNode.md)<[`NumberTypeNode`](./NumberTypeNode.md)> | The numeric type used to serialise the boolean. |

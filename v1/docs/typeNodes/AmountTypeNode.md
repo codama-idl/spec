@@ -1,0 +1,19 @@
+# `AmountTypeNode`
+
+Wraps a number type to provide additional context such as decimal places and a unit. Useful for amounts representing financial values.
+
+## Attributes
+
+### Data
+
+| Attribute  | Type                  | Description                                               |
+| ---------- | --------------------- | --------------------------------------------------------- |
+| `kind`     | `"amountTypeNode"`    | The node discriminator.                                   |
+| `decimals` | `u32`                 | The number of decimal places the wrapped integer carries. |
+| `unit`     | `string` _(optional)_ | The unit of the amount — e.g. "USD" or "%".               |
+
+### Children
+
+| Attribute | Type                                                                             | Description                       |
+| --------- | -------------------------------------------------------------------------------- | --------------------------------- |
+| `number`  | [`NestedTypeNode`](./NestedTypeNode.md)<[`NumberTypeNode`](./NumberTypeNode.md)> | The number type the amount wraps. |

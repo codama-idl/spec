@@ -1,0 +1,19 @@
+# `PostOffsetTypeNode`
+
+After serialising the wrapped type, advance the cursor by `offset` bytes interpreted via the chosen strategy.
+
+## Attributes
+
+### Data
+
+| Attribute | Type                   | Description                                                  |
+| --------- | ---------------------- | ------------------------------------------------------------ |
+| `kind`    | `"postOffsetTypeNode"` | The node discriminator.                                      |
+| `offset`  | `i64`                  | The signed byte offset to apply after the wrapped type runs. |
+
+### Children
+
+| Attribute  | Type                                                         | Description                                                     |
+| ---------- | ------------------------------------------------------------ | --------------------------------------------------------------- |
+| `strategy` | [`PostOffsetStrategy`](../sharedNodes/PostOffsetStrategy.md) | How the `offset` value is interpreted.                          |
+| `type`     | [`TypeNode`](./TypeNode.md)                                  | The wrapped type whose serialisation is followed by the offset. |

@@ -48,7 +48,7 @@ describe('renderType', () => {
         );
     });
     it('renders anyNode as a plain code span, not a link', () => {
-        expect(renderType({ kind: 'anyNode' }, markdown, linkTo)).toBe('`Node`');
+        expect(renderType({ kind: 'anyNode' }, markdown, linkTo)).toBe('`anyNode`');
     });
     it('renders a literalUnion as a joined code span', () => {
         expect(renderType({ kind: 'literalUnion', values: ['a', 'b'] }, markdown, linkTo)).toBe('`"a" | "b"`');

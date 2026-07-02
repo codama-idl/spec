@@ -1,0 +1,17 @@
+# `MapValueNode`
+
+A concrete map value: a list of (key, value) entries.
+
+## Attributes
+
+### Data
+
+| Attribute | Type             | Description             |
+| --------- | ---------------- | ----------------------- |
+| `kind`    | `"mapValueNode"` | The node discriminator. |
+
+### Children
+
+| Attribute | Type                                            | Description                       |
+| --------- | ----------------------------------------------- | --------------------------------- |
+| `entries` | [`MapEntryValueNode`](./MapEntryValueNode.md)[] | The entries of the map, in order. |

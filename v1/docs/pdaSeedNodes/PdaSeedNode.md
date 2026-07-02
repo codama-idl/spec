@@ -1,0 +1,7 @@
+# `PdaSeedNode` (abstract)
+
+The composable form: any registered PDA seed node.
+
+One of the following:
+
+- [`RegisteredPdaSeedNode`](./RegisteredPdaSeedNode.md)

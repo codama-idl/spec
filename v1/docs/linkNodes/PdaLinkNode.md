@@ -1,0 +1,18 @@
+# `PdaLinkNode`
+
+A reference to a PDA defined elsewhere — possibly in a different program.
+
+## Attributes
+
+### Data
+
+| Attribute | Type              | Description                     |
+| --------- | ----------------- | ------------------------------- |
+| `kind`    | `"pdaLinkNode"`   | The node discriminator.         |
+| `name`    | `CamelCaseString` | The name of the referenced PDA. |
+
+### Children
+
+| Attribute | Type                                                   | Description                                                                                  |
+| --------- | ------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| `program` | [`ProgramLinkNode`](./ProgramLinkNode.md) _(optional)_ | The program the referenced PDA belongs to. When omitted, the surrounding program is assumed. |

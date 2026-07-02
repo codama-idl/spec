@@ -19,7 +19,7 @@ export function renderType(t: TypeExpr, markup: MarkupRenderer, linkTo: (r: DocR
                 `${linkedEntity({ kind: 'node', name: t.name }, markup, linkTo)}>`
             );
         case 'anyNode':
-            return markup.code('Node');
+            return markup.code('anyNode');
         case 'array':
             // a bare literalUnion needs parens before [] so 'a | b' reads as ('a' | 'b')[], not 'a' | ('b'[])
             if (t.of.kind === 'literalUnion') {

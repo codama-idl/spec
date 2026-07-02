@@ -1,0 +1,24 @@
+# `InstructionAccountNode`
+
+An account participating in an instruction, with its name, signing/writability flags, and an optional default value.
+
+## Attributes
+
+### Data
+
+| Attribute    | Type                        | Description                                         |
+| ------------ | --------------------------- | --------------------------------------------------- |
+| `kind`       | `"instructionAccountNode"`  | The node discriminator.                             |
+| `name`       | `CamelCaseString`           | The name of the account.                            |
+| `isWritable` | `boolean`                   | Whether the instruction may write to the account.   |
+| `isSigner`   | `true \| false \| "either"` | Whether the account must sign the transaction.      |
+| `isOptional` | `boolean` _(optional)_      | Whether the account slot may be omitted by callers. |
+| `docs`       | `string[]` _(optional)_     | Markdown documentation for the account slot.        |
+
+### Children
+
+| Attribute      | Type                                                                                            | Description                                                                                                                      |
+| -------------- | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `defaultValue` | [`InstructionInputValueNode`](./contextualValueNodes/InstructionInputValueNode.md) _(optional)_ | A default value used to fill the slot when the caller does not provide one.                                                      |
+| `accountLink`  | [`AccountLinkNode`](./linkNodes/AccountLinkNode.md) _(optional)_                                | A reference to the account's data layout. Required for consumers (e.g. `accountFieldValueNode`) to read fields from the account. |
+| `display`      | [`InstructionAccountDisplayNode`](./displayNodes/InstructionAccountDisplayNode.md) _(optional)_ | Display metadata describing how the account is presented.                                                                        |
