@@ -23,6 +23,27 @@ export interface DocPage {
     readonly content: string;
 }
 
+/**
+ * Entities (sections) within a category, in listing order.
+ *
+ * @example
+ * const group: CategoryGroup = {
+ *     kind: 'node',
+ *     items: [{ ref: { kind: 'node', name: 'constantPdaSeedNode' }, docs: ['A constant PDA seed.'] }],
+ * };
+ */
+export interface CategoryGroup {
+    readonly kind: 'node' | 'union' | 'nestedUnion' | 'enumeration';
+    readonly items: readonly CategoryGroupItem[];
+}
+
+/** One entity within a category group - its page ref plus the entity's own doc blurbs. */
+export interface CategoryGroupItem {
+    /** Entity refs only - the structural rootIndex/categoryIndex kinds never appear in a category group. */
+    readonly ref: Extract<DocRef, { readonly kind: CategoryGroup['kind'] }>;
+    readonly docs?: readonly string[];
+}
+
 /** The complete generator output - every rendered page. */
 export interface DocModel {
     readonly pages: readonly DocPage[];
