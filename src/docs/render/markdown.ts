@@ -82,6 +82,22 @@ function renderList(type: 'bulleted' | 'numbered', items: readonly ListItem[], d
         .join(LIST_LINE_SEPARATOR);
 }
 
+/** Renders a (possibly nested) list, indenting each level by 4 spaces per markdown's nested-bullet convention. */
+function renderList(type: 'bulleted' | 'numbered', items: readonly ListItem[], depth: number): string {
+    const indent = LIST_INDENT.repeat(depth);
+    return items
+        .map((item, index) => {
+            const marker = type === 'numbered' ? `${index + 1}.` : '-';
+            // leaf, or a node with no children -> a plain line
+            if (typeof item === 'string' || item.children.length === 0) {
+                const content = typeof item === 'string' ? item : item.content;
+                return `${indent}${marker} ${content}`;
+            }
+            return `${indent}${marker} ${item.content}${LIST_LINE_SEPARATOR}${renderList(type, item.children, depth + 1)}`;
+        })
+        .join(LIST_LINE_SEPARATOR);
+}
+
 /** Backtick fence at least `min` long and longer than any backtick run in content, so content cannot close it early. */
 function backtickFence(content: string, min: number): string {
     const longestRun = Math.max(0, ...(content.match(/`+/g) ?? []).map(run => run.length));

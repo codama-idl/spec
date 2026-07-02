@@ -58,6 +58,14 @@ describe('markdownRenderer', () => {
         expect(markdown.escapeChar('<')).toBe('\\<');
     });
 
+    it('renders a nested list, indenting children by four spaces', () => {
+        expect(markdown.list('bulleted', ['top', { content: 'parent', children: ['a', 'b'] }])).toBe(
+            '- top\n- parent\n    - a\n    - b',
+        );
+        // a node with no children renders as a plain leaf line
+        expect(markdown.list('bulleted', [{ content: 'lonely', children: [] }])).toBe('- lonely');
+    });
+
     it('fences code spans so inner backticks do not close the span early', () => {
         // no backticks: single-backtick fence, unchanged
         expect(markdown.code('u64')).toBe('`u64`');

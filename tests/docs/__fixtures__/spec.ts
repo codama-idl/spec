@@ -1,4 +1,5 @@
 import {
+    address,
     attribute,
     defineCategory,
     defineEnumeration,
@@ -6,6 +7,7 @@ import {
     defineNode,
     defineUnion,
     node,
+    optionalAttribute,
     string,
     union,
     variant,
@@ -18,10 +20,21 @@ const numberTypeNode = defineNode('numberTypeNode', {
 });
 const typeNode = defineUnion('typeNode', { members: [node('numberTypeNode')] });
 const nestedTypeNode = defineNestedUnion('nestedTypeNode', { base: union('typeNode'), wrappers: ['numberTypeNode'] });
-const constantPdaSeedNode = defineNode('constantPdaSeedNode', { attributes: [attribute('value', string())] });
+// A node with both a union child (typeNode) and a node child (constantPdaSeedValue) plus plain data.
+const constantPdaSeedNode = defineNode('constantPdaSeedNode', {
+    attributes: [
+        attribute('value', string()),
+        attribute('type', union('typeNode')),
+        attribute('constant', node('constantPdaSeedValue')),
+    ],
+});
+const constantPdaSeedValue = defineNode('constantPdaSeedValue', { attributes: [attribute('bytes', string())] });
 const pdaSeedNode = defineUnion('pdaSeedNode', { members: [node('constantPdaSeedNode')] });
 const numberFormat = defineEnumeration('numberFormat', { variants: [variant('u8'), variant('u16')] });
-const pdaNode = defineNode('pdaNode', { attributes: [attribute('name', string())] });
+// pdaNode carries an optional attribute to exercise the `_(optional)_` suffix.
+const pdaNode = defineNode('pdaNode', {
+    attributes: [attribute('name', string()), optionalAttribute('programId', address())],
+});
 const programNode = defineNode('programNode', { attributes: [] });
 const helperUnion = defineUnion('helperUnion', { members: [node('pdaNode')] });
 
@@ -30,7 +43,10 @@ export const typeCategory = defineCategory('type', {
     unions: [typeNode],
     nestedUnions: [nestedTypeNode],
 });
-export const pdaSeedCategory = defineCategory('pdaSeed', { nodes: [constantPdaSeedNode], unions: [pdaSeedNode] });
+export const pdaSeedCategory = defineCategory('pdaSeed', {
+    nodes: [constantPdaSeedNode, constantPdaSeedValue],
+    unions: [pdaSeedNode],
+});
 export const sharedCategory = defineCategory('shared', { enumerations: [numberFormat] });
 // nodes are intentionally out of alphabetical order to exercise within-group sorting
 export const topLevelCategory = defineCategory('topLevel', { nodes: [programNode, pdaNode], unions: [helperUnion] });

@@ -64,6 +64,9 @@ export interface NavEntry {
 /** A list item: a leaf line, or a line with a nested sub-list. */
 export type ListItem = string | { readonly content: string; readonly children: readonly ListItem[] };
 
+/** A list item: a leaf line, or a line with a nested sub-list. */
+export type ListItem = string | { readonly content: string; readonly children: readonly ListItem[] };
+
 /** Markup renderer interface for documentation - each method renders one block. */
 export interface MarkupRenderer {
     heading(level: number, content: string): string;
