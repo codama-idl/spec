@@ -1,4 +1,5 @@
 import { defineNode, optionalAttribute, u64 } from '../../../api';
+import { examples } from './StringDisplayNode.examples';
 
 export const stringDisplayNode = defineNode('stringDisplayNode', {
     docs: [
@@ -19,4 +20,5 @@ export const stringDisplayNode = defineNode('stringDisplayNode', {
             ],
         }),
     ],
+    examples,
 });

@@ -1,4 +1,5 @@
 import { array, attribute, defineNode, docs, optionalAttribute, stringIdentifier, union } from '../../../api';
+import { examples } from './ResolverValueNode.examples';
 
 export const resolverValueNode = defineNode('resolverValueNode', {
     docs: [
@@ -18,4 +19,5 @@ export const resolverValueNode = defineNode('resolverValueNode', {
             ],
         }),
     ],
+    examples,
 });

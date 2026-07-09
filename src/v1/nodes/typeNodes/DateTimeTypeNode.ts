@@ -1,4 +1,5 @@
 import { attribute, defineNode, nestedUnion } from '../../../api';
+import { examples } from './DateTimeTypeNode.examples';
 
 export const dateTimeTypeNode = defineNode('dateTimeTypeNode', {
     docs: [
@@ -9,4 +10,5 @@ export const dateTimeTypeNode = defineNode('dateTimeTypeNode', {
             docs: ['The numeric type used to serialise the timestamp.'],
         }),
     ],
+    examples,
 });

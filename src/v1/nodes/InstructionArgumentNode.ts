@@ -1,4 +1,5 @@
 import { attribute, defineNode, docs, enumeration, node, optionalAttribute, stringIdentifier, union } from '../../api';
+import { examples } from './InstructionArgumentNode.examples';
 
 export const instructionArgumentNode = defineNode('instructionArgumentNode', {
     docs: ['A named argument of an instruction, with its type and an optional default value.'],
@@ -22,4 +23,5 @@ export const instructionArgumentNode = defineNode('instructionArgumentNode', {
             docs: ['Display metadata describing how the argument is presented.'],
         }),
     ],
+    examples,
 });

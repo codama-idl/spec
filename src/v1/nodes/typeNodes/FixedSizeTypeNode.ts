@@ -1,4 +1,5 @@
 import { attribute, defineNode, u64, union } from '../../../api';
+import { examples } from './FixedSizeTypeNode.examples';
 
 export const fixedSizeTypeNode = defineNode('fixedSizeTypeNode', {
     docs: ['Wraps another type and asserts a fixed total byte size. Padding or truncation is applied as needed.'],
@@ -10,4 +11,5 @@ export const fixedSizeTypeNode = defineNode('fixedSizeTypeNode', {
             docs: ['The wrapped type whose serialisation is constrained.'],
         }),
     ],
+    examples,
 });

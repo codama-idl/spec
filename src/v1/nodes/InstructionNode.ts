@@ -9,6 +9,7 @@ import {
     stringIdentifier,
     union,
 } from '../../api';
+import { examples } from './InstructionNode.examples';
 
 export const instructionNode = defineNode('instructionNode', {
     docs: [
@@ -66,4 +67,5 @@ export const instructionNode = defineNode('instructionNode', {
             docs: ['Namespaced plugins with custom structured data.'],
         }),
     ],
+    examples,
 });

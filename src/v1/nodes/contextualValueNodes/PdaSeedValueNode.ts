@@ -1,4 +1,5 @@
 import { attribute, defineNode, stringIdentifier, union } from '../../../api';
+import { examples } from './PdaSeedValueNode.examples';
 
 export const pdaSeedValueNode = defineNode('pdaSeedValueNode', {
     docs: ['Pairs a PDA seed name with the value to substitute when deriving the PDA.'],
@@ -10,4 +11,5 @@ export const pdaSeedValueNode = defineNode('pdaSeedValueNode', {
             docs: ['The value to substitute for the seed.'],
         }),
     ],
+    examples,
 });

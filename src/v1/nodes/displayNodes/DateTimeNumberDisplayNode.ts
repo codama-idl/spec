@@ -1,4 +1,5 @@
 import { defineNode, optionalAttribute, u64 } from '../../../api';
+import { examples } from './DateTimeNumberDisplayNode.examples';
 
 export const dateTimeNumberDisplayNode = defineNode('dateTimeNumberDisplayNode', {
     docs: [
@@ -13,4 +14,5 @@ export const dateTimeNumberDisplayNode = defineNode('dateTimeNumberDisplayNode',
             ],
         }),
     ],
+    examples,
 });

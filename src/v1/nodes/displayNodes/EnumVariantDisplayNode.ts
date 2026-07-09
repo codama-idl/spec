@@ -1,4 +1,5 @@
 import { boolean, defineNode, optionalAttribute, string } from '../../../api';
+import { examples } from './EnumVariantDisplayNode.examples';
 
 export const enumVariantDisplayNode = defineNode('enumVariantDisplayNode', {
     docs: ['Display metadata for an enum variant: its label and whether to hide its inner payload.'],
@@ -16,4 +17,5 @@ export const enumVariantDisplayNode = defineNode('enumVariantDisplayNode', {
             ],
         }),
     ],
+    examples,
 });

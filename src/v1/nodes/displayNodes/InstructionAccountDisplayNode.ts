@@ -1,4 +1,5 @@
 import { defineNode, enumeration, optionalAttribute, string } from '../../../api';
+import { examples } from './InstructionAccountDisplayNode.examples';
 
 export const instructionAccountDisplayNode = defineNode('instructionAccountDisplayNode', {
     docs: ['Display metadata for an instruction account: its label in the fallback list and whether it is shown.'],
@@ -13,4 +14,5 @@ export const instructionAccountDisplayNode = defineNode('instructionAccountDispl
             docs: ['Whether the account is shown in the fallback list. Defaults to `"never"` (always shown).'],
         }),
     ],
+    examples,
 });

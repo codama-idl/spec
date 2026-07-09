@@ -1,4 +1,5 @@
 import { defineNode, optionalAttribute, union } from '../../../api';
+import { examples } from './AmountNumberDisplayNode.examples';
 
 export const amountNumberDisplayNode = defineNode('amountNumberDisplayNode', {
     docs: [
@@ -20,4 +21,5 @@ export const amountNumberDisplayNode = defineNode('amountNumberDisplayNode', {
             ],
         }),
     ],
+    examples,
 });

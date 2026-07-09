@@ -1,4 +1,5 @@
 import { attribute, defineNode, stringIdentifier, union } from '../../../api';
+import { examples } from './StructFieldValueNode.examples';
 
 export const structFieldValueNode = defineNode('structFieldValueNode', {
     docs: ['A named field of a `structValueNode`.'],
@@ -10,4 +11,5 @@ export const structFieldValueNode = defineNode('structFieldValueNode', {
             docs: ['The concrete value of the field.'],
         }),
     ],
+    examples,
 });

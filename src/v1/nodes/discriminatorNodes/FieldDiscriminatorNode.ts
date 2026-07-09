@@ -1,4 +1,5 @@
 import { attribute, defineNode, stringIdentifier, u64 } from '../../../api';
+import { examples } from './FieldDiscriminatorNode.examples';
 
 export const fieldDiscriminatorNode = defineNode('fieldDiscriminatorNode', {
     docs: ['Identifies a node by the value of a named field at a known byte offset.'],
@@ -10,4 +11,5 @@ export const fieldDiscriminatorNode = defineNode('fieldDiscriminatorNode', {
             docs: ['The byte offset of the field.'],
         }),
     ],
+    examples,
 });

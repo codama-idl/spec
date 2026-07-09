@@ -10,6 +10,7 @@ import {
     stringIdentifier,
     union,
 } from '../../api';
+import { examples } from './AccountNode.examples';
 
 export const accountNode = defineNode('accountNode', {
     docs: [
@@ -38,4 +39,5 @@ export const accountNode = defineNode('accountNode', {
             ],
         }),
     ],
+    examples,
 });

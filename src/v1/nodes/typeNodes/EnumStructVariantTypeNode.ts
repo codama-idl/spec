@@ -1,4 +1,5 @@
 import { attribute, defineNode, nestedUnion, node, optionalAttribute, stringIdentifier, u32 } from '../../../api';
+import { examples } from './EnumStructVariantTypeNode.examples';
 
 export const enumStructVariantTypeNode = defineNode('enumStructVariantTypeNode', {
     docs: ['A variant of an enum that carries a struct payload (named fields).'],
@@ -18,4 +19,5 @@ export const enumStructVariantTypeNode = defineNode('enumStructVariantTypeNode',
             docs: ['Display metadata describing how the variant is presented.'],
         }),
     ],
+    examples,
 });

@@ -1,4 +1,5 @@
 import { attribute, defineNode, node, optionalAttribute, union } from '../../../api';
+import { examples } from './ZeroableOptionTypeNode.examples';
 
 export const zeroableOptionTypeNode = defineNode('zeroableOptionTypeNode', {
     docs: ['An optional value whose absence is signalled by a designated zero value rather than a presence flag.'],
@@ -12,4 +13,5 @@ export const zeroableOptionTypeNode = defineNode('zeroableOptionTypeNode', {
             ],
         }),
     ],
+    examples,
 });

@@ -112,3 +112,29 @@ describe('generateDocs - root index', () => {
         expect(rootContent()).toContain('- [HelperUnion](./HelperUnion.mdx)');
     });
 });
+
+describe('generateDocs - examples', () => {
+    function content(): string {
+        return nodePage(generateDocs(SPEC), 'numberTypeNode').content;
+    }
+
+    it('renders an Examples section after Attributes, one h3 per case', () => {
+        const c = content();
+        expect(c.indexOf('## Attributes')).toBeLessThan(c.indexOf('## Examples'));
+        expect(c).toContain('### u32 integers');
+        expect(c).toContain("```typescript\nnumberTypeNode('u32');\n```");
+    });
+    it('renders optional prose between the title and the code, matching space-joined docs', () => {
+        const c = content();
+        expect(c.indexOf('### cross-language')).toBeLessThan(c.indexOf('Shown in both languages.'));
+        expect(c.indexOf('Shown in both languages.')).toBeLessThan(c.indexOf("```typescript\nnumberTypeNode('u8');"));
+    });
+    it('stacks one fenced block per language with mapped fence tags', () => {
+        const c = content();
+        expect(c).toContain("```typescript\nnumberTypeNode('u8');\n```");
+        expect(c).toContain('```rust\nnumber_type_node(U8);\n```');
+    });
+    it('omits the whole section for a node carrying no examples', () => {
+        expect(nodePage(generateDocs(SPEC), 'programNode').content).not.toContain('## Examples');
+    });
+});

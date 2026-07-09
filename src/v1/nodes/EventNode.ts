@@ -1,4 +1,5 @@
 import { array, attribute, defineNode, docs, optionalAttribute, stringIdentifier, union } from '../../api';
+import { examples } from './EventNode.examples';
 
 export const eventNode = defineNode('eventNode', {
     docs: ['A program event: its data shape and optional discriminators used to identify it on the wire.'],
@@ -18,4 +19,5 @@ export const eventNode = defineNode('eventNode', {
             ],
         }),
     ],
+    examples,
 });

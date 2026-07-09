@@ -1,4 +1,5 @@
 import { array, attribute, defineNode, node } from '../../../api';
+import { examples } from './MapValueNode.examples';
 
 export const mapValueNode = defineNode('mapValueNode', {
     docs: ['A concrete map value: a list of (key, value) entries.'],
@@ -7,4 +8,5 @@ export const mapValueNode = defineNode('mapValueNode', {
             docs: ['The entries of the map, in order.'],
         }),
     ],
+    examples,
 });

@@ -7,6 +7,7 @@
  * included here — they live in `./index.ts` for internal use only.
  */
 
+export type { CodeBlock, CodeLanguage, DocExample, DocExamples } from './example';
 export type {
     AttributeSpec,
     CategorySpec,

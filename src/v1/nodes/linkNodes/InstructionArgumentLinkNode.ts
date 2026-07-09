@@ -1,4 +1,5 @@
 import { attribute, defineNode, node, optionalAttribute, stringIdentifier } from '../../../api';
+import { examples } from './InstructionArgumentLinkNode.examples';
 
 export const instructionArgumentLinkNode = defineNode('instructionArgumentLinkNode', {
     docs: ['A reference to an argument of another instruction.'],
@@ -12,4 +13,5 @@ export const instructionArgumentLinkNode = defineNode('instructionArgumentLinkNo
             docs: ['The name of the referenced instruction argument.'],
         }),
     ],
+    examples,
 });

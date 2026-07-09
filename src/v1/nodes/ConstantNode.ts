@@ -1,4 +1,5 @@
 import { attribute, defineNode, docs, optionalAttribute, stringIdentifier, union } from '../../api';
+import { examples } from './ConstantNode.examples';
 
 export const constantNode = defineNode('constantNode', {
     docs: ['A named constant exposed by the program: a typed value associated with a name.'],
@@ -16,4 +17,5 @@ export const constantNode = defineNode('constantNode', {
             docs: ['The concrete value of the constant.'],
         }),
     ],
+    examples,
 });

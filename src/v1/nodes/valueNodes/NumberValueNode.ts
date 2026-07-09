@@ -1,4 +1,5 @@
 import { attribute, defineNode, f64 } from '../../../api';
+import { examples } from './NumberValueNode.examples';
 
 export const numberValueNode = defineNode('numberValueNode', {
     docs: [
@@ -10,4 +11,5 @@ export const numberValueNode = defineNode('numberValueNode', {
             docs: ['The numeric value.'],
         }),
     ],
+    examples,
 });

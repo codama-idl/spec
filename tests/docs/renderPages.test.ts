@@ -56,6 +56,46 @@ describe('renderNodePage', () => {
     });
 });
 
+describe('renderNodePage examples', () => {
+    /** A node carrying one example with both a TypeScript and a Rust code block. */
+    const node: NodeSpec = {
+        kind: 'amountTypeNode',
+        attributes: [],
+        examples: [
+            {
+                title: 'a u32 USD amount',
+                code: [
+                    { language: 'typescript', content: ["amountTypeNode(numberTypeNode('u32'), 2, 'USD');"] },
+                    { language: 'rust', content: ['amount_type_node(number_type_node(U32), 2, "USD");'] },
+                ],
+            },
+        ],
+    };
+
+    it('renders every code block the example carries, in every language', () => {
+        const page = renderNodePage(node, makeCtx());
+
+        expect(page.content).toContain('## Examples');
+        expect(page.content).toContain('### a u32 USD amount');
+        expect(page.content).toContain("amountTypeNode(numberTypeNode('u32'), 2, 'USD');");
+        expect(page.content).toContain('amount_type_node(number_type_node(U32), 2, "USD");');
+    });
+
+    it('omits an example that carries no code block, rather than emitting a bare heading', () => {
+        const blockLessNode: NodeSpec = {
+            kind: 'blockLessNode',
+            attributes: [],
+            examples: [{ title: 'no snippet', code: [] }],
+        };
+
+        const page = renderNodePage(blockLessNode, makeCtx());
+
+        // the only example renders nothing -> the whole Examples section is dropped
+        expect(page.content).not.toContain('## Examples');
+        expect(page.content).not.toContain('no snippet');
+    });
+});
+
 describe('renderEnumPage', () => {
     it('renders a Variants list, appending the first-doc blurb only when a variant has docs', () => {
         const enumeration: EnumerationSpec = {

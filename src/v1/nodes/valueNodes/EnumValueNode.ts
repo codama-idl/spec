@@ -1,4 +1,5 @@
 import { attribute, defineNode, node, optionalAttribute, stringIdentifier, union } from '../../../api';
+import { examples } from './EnumValueNode.examples';
 
 export const enumValueNode = defineNode('enumValueNode', {
     docs: ['A concrete value of a defined enum: a variant identifier plus an optional payload.'],
@@ -16,4 +17,5 @@ export const enumValueNode = defineNode('enumValueNode', {
             ],
         }),
     ],
+    examples,
 });

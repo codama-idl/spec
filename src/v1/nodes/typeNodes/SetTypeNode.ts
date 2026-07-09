@@ -1,4 +1,5 @@
 import { attribute, defineNode, union } from '../../../api';
+import { examples } from './SetTypeNode.examples';
 
 export const setTypeNode = defineNode('setTypeNode', {
     docs: [
@@ -12,4 +13,5 @@ export const setTypeNode = defineNode('setTypeNode', {
             docs: ['The strategy used to determine the number of items.'],
         }),
     ],
+    examples,
 });

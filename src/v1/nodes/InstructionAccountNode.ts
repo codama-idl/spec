@@ -9,6 +9,7 @@ import {
     stringIdentifier,
     union,
 } from '../../api';
+import { examples } from './InstructionAccountNode.examples';
 
 export const instructionAccountNode = defineNode('instructionAccountNode', {
     docs: [
@@ -46,4 +47,5 @@ export const instructionAccountNode = defineNode('instructionAccountNode', {
             docs: ['Display metadata describing how the account is presented.'],
         }),
     ],
+    examples,
 });

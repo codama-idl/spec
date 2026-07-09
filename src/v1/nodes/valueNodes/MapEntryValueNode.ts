@@ -1,4 +1,5 @@
 import { attribute, defineNode, union } from '../../../api';
+import { examples } from './MapEntryValueNode.examples';
 
 export const mapEntryValueNode = defineNode('mapEntryValueNode', {
     docs: ['A single (key, value) pair inside a `mapValueNode`.'],
@@ -10,4 +11,5 @@ export const mapEntryValueNode = defineNode('mapEntryValueNode', {
             docs: ['The entry value.'],
         }),
     ],
+    examples,
 });

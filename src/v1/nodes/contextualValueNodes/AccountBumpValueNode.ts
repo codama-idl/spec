@@ -1,4 +1,5 @@
 import { attribute, defineNode, stringIdentifier } from '../../../api';
+import { examples } from './AccountBumpValueNode.examples';
 
 export const accountBumpValueNode = defineNode('accountBumpValueNode', {
     docs: ['Refers to the bump seed of a named PDA-derived account in the surrounding instruction.'],
@@ -7,4 +8,5 @@ export const accountBumpValueNode = defineNode('accountBumpValueNode', {
             docs: ['The name of the account whose bump seed is referenced.'],
         }),
     ],
+    examples,
 });

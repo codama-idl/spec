@@ -1,4 +1,5 @@
 import { attribute, defineNode, union } from '../../../api';
+import { examples } from './ConstantPdaSeedNode.examples';
 
 export const constantPdaSeedNode = defineNode('constantPdaSeedNode', {
     docs: ['A PDA seed with a constant value (e.g. a UTF-8 string or a fixed byte sequence).'],
@@ -10,4 +11,5 @@ export const constantPdaSeedNode = defineNode('constantPdaSeedNode', {
             docs: ['The constant value to use as the seed — either a literal value or the program ID placeholder.'],
         }),
     ],
+    examples,
 });

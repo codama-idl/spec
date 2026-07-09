@@ -1,4 +1,5 @@
 import { attribute, defineNode, node, optionalAttribute, stringIdentifier } from '../../../api';
+import { examples } from './InstructionAccountLinkNode.examples';
 
 export const instructionAccountLinkNode = defineNode('instructionAccountLinkNode', {
     docs: ['A reference to an account of another instruction.'],
@@ -12,4 +13,5 @@ export const instructionAccountLinkNode = defineNode('instructionAccountLinkNode
             docs: ['The name of the referenced instruction account.'],
         }),
     ],
+    examples,
 });

@@ -1,4 +1,5 @@
 import { attribute, defineNode, union } from '../../../api';
+import { examples } from './ArrayTypeNode.examples';
 
 export const arrayTypeNode = defineNode('arrayTypeNode', {
     docs: [
@@ -12,4 +13,5 @@ export const arrayTypeNode = defineNode('arrayTypeNode', {
             docs: ['The strategy used to determine the number of items.'],
         }),
     ],
+    examples,
 });

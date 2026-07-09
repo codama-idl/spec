@@ -1,4 +1,5 @@
 import { attribute, defineNode, docs, optionalAttribute, stringIdentifier, union } from '../../api';
+import { examples } from './DefinedTypeNode.examples';
 
 export const definedTypeNode = defineNode('definedTypeNode', {
     docs: ['A reusable named type that can be referenced by `definedTypeLinkNode` from elsewhere in the IDL.'],
@@ -13,4 +14,5 @@ export const definedTypeNode = defineNode('definedTypeNode', {
             docs: ['The type definition.'],
         }),
     ],
+    examples,
 });

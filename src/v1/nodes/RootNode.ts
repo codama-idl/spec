@@ -1,4 +1,5 @@
 import { array, attribute, codamaVersion, defineNode, literal, node } from '../../api';
+import { examples } from './RootNode.examples';
 
 export const rootNode = defineNode('rootNode', {
     docs: [
@@ -19,4 +20,5 @@ export const rootNode = defineNode('rootNode', {
             docs: ['Additional programs referenced by the primary program.'],
         }),
     ],
+    examples,
 });

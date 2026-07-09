@@ -1,4 +1,5 @@
 import { attribute, defineNode, node, optionalAttribute, stringIdentifier } from '../../../api';
+import { examples } from './PdaLinkNode.examples';
 
 export const pdaLinkNode = defineNode('pdaLinkNode', {
     docs: ['A reference to a PDA defined elsewhere — possibly in a different program.'],
@@ -10,4 +11,5 @@ export const pdaLinkNode = defineNode('pdaLinkNode', {
             docs: ['The name of the referenced PDA.'],
         }),
     ],
+    examples,
 });

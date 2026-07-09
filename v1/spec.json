@@ -47,7 +47,23 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "2-decimals USD amount",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "amountTypeNode(numberTypeNode('u32'), 2, 'USD');",
+                                        "",
+                                        "// 0.01 USD   => 0x01000000",
+                                        "// 10 USD     => 0xE8030000",
+                                        "// 400.60 USD => 0x7C9C0000"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "arrayTypeNode",
@@ -76,7 +92,32 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create an array type node from a type node and a count node",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = arrayTypeNode(publicKeyTypeNode(), prefixedCountNode(numberTypeNode('u32')));"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "u32 prefixed array of u8 numbers",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "arrayTypeNode(numberTypeNode('u8'), prefixedCountNode(numberTypeNode('u32')));",
+                                        "",
+                                        "// [1, 2, 3] => 0x03000000010203"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "booleanTypeNode",
@@ -96,7 +137,36 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "u8 booleans",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "booleanTypeNode();",
+                                        "",
+                                        "// true  => 0x01",
+                                        "// false => 0x00"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "u32 booleans",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "booleanTypeNode(numberTypeNode('u32'));",
+                                        "",
+                                        "// true  => 0x01000000",
+                                        "// false => 0x00000000"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "bytesTypeNode",
@@ -104,7 +174,19 @@
                         "A raw sequence of bytes. Typically used inside a fixed-size, size-prefixed, or sentinel-terminated wrapper."
                     ],
                     "attributes": [],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a bytes type node",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = bytesTypeNode();"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "dateTimeTypeNode",
@@ -124,7 +206,32 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a date time type node from a number type node",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = dateTimeTypeNode(numberTypeNode('u64'));"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "u64 unix datetime",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "dateTimeTypeNode(numberTypeNode('u64'));",
+                                        "",
+                                        "// 2024-06-27T14:57:56Z => 0xF47D7D6600000000"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "enumEmptyVariantTypeNode",
@@ -165,7 +272,19 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create an empty enum variant type node from a name",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = enumEmptyVariantTypeNode('myVariantName');"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "enumStructVariantTypeNode",
@@ -217,7 +336,25 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a struct enum variant type node from a name and a struct",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = enumStructVariantTypeNode(",
+                                        "    'coordinates',",
+                                        "    structTypeNode([",
+                                        "        structFieldTypeNode({ name: 'x', type: numberTypeNode('u32') }),",
+                                        "        structFieldTypeNode({ name: 'y', type: numberTypeNode('u32') }),",
+                                        "    ]),",
+                                        ");"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "enumTupleVariantTypeNode",
@@ -269,7 +406,19 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a tuple enum variant type node from a name and a tuple",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = enumTupleVariantTypeNode('coordinates', tupleTypeNode([numberTypeNode('u32'), numberTypeNode('u32')]));"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "enumTypeNode",
@@ -302,7 +451,33 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Enum with u8 discriminator",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "enumTypeNode([",
+                                        "    enumEmptyVariantTypeNode('flip'),",
+                                        "    enumTupleVariantTypeNode('rotate', tupleTypeNode([numberTypeNode('u32')])),",
+                                        "    enumStructVariantTypeNode(",
+                                        "        'move',",
+                                        "        structTypeNode([",
+                                        "            structFieldTypeNode({ name: 'x', type: numberTypeNode('u16') }),",
+                                        "            structFieldTypeNode({ name: 'y', type: numberTypeNode('u16') }),",
+                                        "        ]),",
+                                        "    ),",
+                                        "]);",
+                                        "",
+                                        "// Flip                => 0x00",
+                                        "// Rotate (42)         => 0x012A000000",
+                                        "// Move { x: 1, y: 2 } => 0x0201000200"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "fixedSizeTypeNode",
@@ -331,7 +506,46 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a fixed size type node from a type node and a byte length",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = fixedSizeTypeNode(stringTypeNode('utf8'), 32);"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Fixed UTF-8 strings",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "fixedSizeTypeNode(stringTypeNode('utf8'), 10);",
+                                        "",
+                                        "// Hello => 0x48656C6C6F0000000000"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Fixed byte arrays",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "fixedSizeTypeNode(bytesTypeNode(), 4);",
+                                        "",
+                                        "// [1, 2]          => 0x01020000",
+                                        "// [1, 2, 3, 4, 5] => 0x01020304"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "hiddenPrefixTypeNode",
@@ -363,7 +577,49 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a hidden prefix type node from a type node and constant value nodes",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = hiddenPrefixTypeNode(numberTypeNode('u32'), [",
+                                        "    constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffff')),",
+                                        "]);"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A number prefixed with 0xFFFF",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "hiddenPrefixTypeNode(numberTypeNode('u32'), [constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffff'))]);",
+                                        "",
+                                        "// 42 => 0xFFFF2A000000"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A fixed UTF-8 string prefixed with \"Hello\"",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "hiddenPrefixTypeNode(fixedSizeTypeNode(stringTypeNode('utf8'), 10), [",
+                                        "    constantValueNode(stringTypeNode('utf8'), stringValueNode('Hello')),",
+                                        "]);",
+                                        "",
+                                        "// World => 0x48656C6C6F576F726C640000000000"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "hiddenSuffixTypeNode",
@@ -395,7 +651,49 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a hidden suffix type node from a type node and constant value nodes",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = hiddenSuffixTypeNode(numberTypeNode('u32'), [",
+                                        "    constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffff')),",
+                                        "]);"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A number suffixed with 0xFFFF",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "hiddenSuffixTypeNode(numberTypeNode('u32'), [constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffff'))]);",
+                                        "",
+                                        "// 42 => 0x2A000000FFFF"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A fixed UTF-8 string suffixed with \"Hello\"",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "hiddenSuffixTypeNode(fixedSizeTypeNode(stringTypeNode('utf8'), 10), [",
+                                        "    constantValueNode(stringTypeNode('utf8'), stringValueNode('Hello')),",
+                                        "]);",
+                                        "",
+                                        "// World => 0x576F726C64000000000048656c6c6F"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "mapTypeNode",
@@ -435,7 +733,36 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a map type node from a key type, a value type, and a count node",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = mapTypeNode(publicKeyTypeNode(), numberTypeNode('u32'), prefixedCountNode(numberTypeNode('u32')));"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A histogram that counts letters",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "mapTypeNode(",
+                                        "    fixedSizeTypeNode(stringTypeNode('utf8'), 1), // Key: Single UTF-8 character.",
+                                        "    numberTypeNode('u16'), // Value: 16-bit unsigned integer.",
+                                        "    prefixedCountNode(numberTypeNode('u8')), // Count: map length is prefixed with a u8.",
+                                        ");",
+                                        "",
+                                        "// { A: 42, B: 1, C: 16 } => 0x03412A00420100431000"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "numberTypeNode",
@@ -475,7 +802,53 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Encoding `u32` integers",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "numberTypeNode('u32');",
+                                        "",
+                                        "// 5     => 0x05000000",
+                                        "// 42    => 0x2A000000",
+                                        "// 65535 => 0xFFFF0000"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Encoding `f32` big-endian decimal numbers",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "numberTypeNode('f32', 'be');",
+                                        "",
+                                        "// 1      => 0x3F800000",
+                                        "// -42    => 0xC2280000",
+                                        "// 3.1415 => 0x40490E56"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Encoding `shortU16` integers",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "numberTypeNode('shortU16');",
+                                        "",
+                                        "// 42    => 0x2A",
+                                        "// 128   => 0x8001",
+                                        "// 16384 => 0x808001"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "optionTypeNode",
@@ -515,7 +888,36 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "An optional UTF-8 with a u16 prefix",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "optionTypeNode(stringTypeNode('utf8'), { prefix: numberTypeNode('u16') });",
+                                        "",
+                                        "// None          => 0x0000",
+                                        "// Some(\"Hello\") => 0x010048656C6C6F"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A fixed optional u32 number",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "optionTypeNode(numberTypeNode('u32'), { fixed: true });",
+                                        "",
+                                        "// None     => 0x0000000000",
+                                        "// Some(42) => 0x012A000000"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "postOffsetTypeNode",
@@ -554,7 +956,57 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "A relative post-offset (the default strategy)",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "postOffsetTypeNode(numberTypeNode('u32'), 2);"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An absolute post-offset from the end of the buffer",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "postOffsetTypeNode(numberTypeNode('u32'), -2, 'absolute');"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A right-padded u32 number",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "postOffsetTypeNode(numberTypeNode('u32'), 4, 'padded');",
+                                        "",
+                                        "// 42 => 0x2A00000000000000"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A u32 number overwritten by a u16 number",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "tupleTypeNode([postOffsetTypeNode(numberTypeNode('u32'), -2), numberTypeNode('u16')]);",
+                                        "",
+                                        "// [1, 2]           => 0x01000200",
+                                        "// [0xFFFFFFFF, 42] => 0xFFFF2A00"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "preOffsetTypeNode",
@@ -593,7 +1045,57 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "A relative pre-offset (the default strategy)",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "preOffsetTypeNode(numberTypeNode('u32'), 2);"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An absolute pre-offset",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "preOffsetTypeNode(numberTypeNode('u32'), -2, 'absolute');"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A left-padded u32 number",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "preOffsetTypeNode(numberTypeNode('u32'), 4, 'padded');",
+                                        "",
+                                        "// 42 => 0x000000002A000000"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A u32 number overwritten by a u16 number",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "tupleTypeNode([numberTypeNode('u32'), preOffsetTypeNode(numberTypeNode('u16'), -2)]);",
+                                        "",
+                                        "// [1, 2]           => 0x01000200",
+                                        "// [0xFFFFFFFF, 42] => 0xFFFF2A00"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "publicKeyTypeNode",
@@ -601,7 +1103,19 @@
                         "A 32-byte Solana public key."
                     ],
                     "attributes": [],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a public key type node",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = publicKeyTypeNode();"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "remainderOptionTypeNode",
@@ -620,7 +1134,22 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "An optional UTF-8 string using remaining bytes",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "remainderOptionTypeNode(stringTypeNode('utf8'));",
+                                        "",
+                                        "// None          => 0x",
+                                        "// Some(\"Hello\") => 0x48656C6C6F"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "sentinelTypeNode",
@@ -649,7 +1178,21 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "A UTF-8 string terminated by 0xFF",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "sentinelTypeNode(stringTypeNode('utf8'), constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ff')));",
+                                        "",
+                                        "// Hello => 0x48656C6C6FFF"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "setTypeNode",
@@ -678,7 +1221,21 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "u32 prefixed set of u8 numbers",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "setTypeNode(numberTypeNode('u8'), prefixedCountNode(numberTypeNode('u32')));",
+                                        "",
+                                        "// Set (1, 2, 3) => 0x03000000010203"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "sizePrefixTypeNode",
@@ -708,7 +1265,22 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "A UTF-8 string prefixed with a u16 size",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "sizePrefixTypeNode(stringTypeNode('utf8'), numberTypeNode('u16'));",
+                                        "",
+                                        "// \"\"      => 0x0000",
+                                        "// \"Hello\" => 0x050048656C6C6F"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "solAmountTypeNode",
@@ -728,7 +1300,22 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "u64 Solana amounts",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "solAmountTypeNode(numberTypeNode('u64'));",
+                                        "",
+                                        "// 1.5 SOL => 0x002F685900000000",
+                                        "// 300 SOL => 0x00B864D945000000"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "stringTypeNode",
@@ -760,7 +1347,19 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a string type node from an encoding",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = stringTypeNode('utf8');"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "structFieldTypeNode",
@@ -832,7 +1431,26 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "A struct field with a default value",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "structFieldTypeNode({",
+                                        "    name: 'age',",
+                                        "    type: numberTypeNode('u8'),",
+                                        "    defaultValue: numberValueNode(42),",
+                                        "});",
+                                        "",
+                                        "// {}          => 0x2A",
+                                        "// { age: 29 } => 0x1D"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "structTypeNode",
@@ -854,7 +1472,24 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "A struct storing a person's name and age",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "structTypeNode([",
+                                        "    structFieldTypeNode({ name: 'name', type: fixedSizeTypeNode(stringTypeNode('utf8'), 10) }),",
+                                        "    structFieldTypeNode({ name: 'age', type: numberTypeNode('u8') }),",
+                                        "]);",
+                                        "",
+                                        "// { name: Alice, age: 42 } => 0x416C69636500000000002A"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "tupleTypeNode",
@@ -876,7 +1511,21 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "A tuple storing a person's name and age",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "tupleTypeNode([fixedSizeTypeNode(stringTypeNode('utf8'), 10), numberTypeNode('u8')]);",
+                                        "",
+                                        "// (Alice, 42) => 0x416C69636500000000002A"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "zeroableOptionTypeNode",
@@ -906,7 +1555,36 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "a u32 zeroable option",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "zeroableOptionTypeNode(numberTypeNode('u32'));",
+                                        "",
+                                        "// None     => 0x00000000",
+                                        "// Some(42) => 0x2A000000"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "a u32 zeroable option with a custom zero value",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "zeroableOptionTypeNode(numberTypeNode('u32'), constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffffffff')));",
+                                        "",
+                                        "// None     => 0xFFFFFFFF",
+                                        "// Some(42) => 0x2A000000"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ],
             "unions": [
@@ -1121,7 +1799,19 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create an array value node from value nodes",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = arrayValueNode([numberValueNode(1), numberValueNode(2), numberValueNode(3)]);"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "booleanValueNode",
@@ -1139,7 +1829,19 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a boolean value node from a boolean",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = booleanValueNode(true);"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "bytesValueNode",
@@ -1167,7 +1869,20 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a bytes value node from an encoding and data",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = bytesValueNode('base16', '010203');",
+                                        "const utf8Node = bytesValueNode('utf8', 'Hello');"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "constantValueNode",
@@ -1196,7 +1911,19 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a constant value node from a type and a value node",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = constantValueNode(numberTypeNode('u32'), numberValueNode(42));"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "enumValueNode",
@@ -1237,7 +1964,29 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create an enum value node from an enum, a variant, and an optional value",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = enumValueNode('myEnum', 'myVariant');",
+                                        "const nodeWithExplicitEnum = enumValueNode(definedTypeLinkNode('myEnum'), 'myVariant');",
+                                        "",
+                                        "const nodeWithData = enumValueNode(",
+                                        "    'myEnum',",
+                                        "    'myVariantWithData',",
+                                        "    structValueNode([",
+                                        "        structFieldValueNode('name', stringValueNode('Alice')),",
+                                        "        structFieldValueNode('age', numberValueNode(42)),",
+                                        "    ]),",
+                                        ");"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "injectedValueNode",
@@ -1299,7 +2048,19 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a map entry value node from a key and a value",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = mapEntryValueNode(stringValueNode('total'), numberValueNode(42));"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "mapValueNode",
@@ -1321,7 +2082,23 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a map value node from entries",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = mapValueNode([",
+                                        "    mapEntryValueNode(stringValueNode('apples'), numberValueNode(12)),",
+                                        "    mapEntryValueNode(stringValueNode('bananas'), numberValueNode(34)),",
+                                        "    mapEntryValueNode(stringValueNode('carrots'), numberValueNode(56)),",
+                                        "]);"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "noneValueNode",
@@ -1329,7 +2106,19 @@
                         "The \"absent\" value for an optional type."
                     ],
                     "attributes": [],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a none value node",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = noneValueNode();"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "numberValueNode",
@@ -1349,7 +2138,19 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a number value node from a number",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = numberValueNode(42);"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "publicKeyValueNode",
@@ -1378,7 +2179,19 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a public key value node from a base58 public key",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = publicKeyValueNode('7rA1KcBdW5hKmMasQdRVBFsD6T1nLtYuR6y59TJNgevR');"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "setValueNode",
@@ -1400,7 +2213,19 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a set value node from value nodes",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = setValueNode([numberValueNode(1), numberValueNode(2), numberValueNode(3)]);"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "someValueNode",
@@ -1419,7 +2244,19 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a some value node from a value node",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = someValueNode(numberValueNode(42));"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "stringValueNode",
@@ -1437,7 +2274,19 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a string value node from a string",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = stringValueNode('Hello');"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "structFieldValueNode",
@@ -1466,7 +2315,19 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a struct field value node from a name and a value",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = structFieldValueNode('age', numberValueNode(42));"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "structValueNode",
@@ -1488,7 +2349,22 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a struct value node from field value nodes",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = structValueNode([",
+                                        "    structFieldValueNode('name', stringValueNode('Alice')),",
+                                        "    structFieldValueNode('age', numberValueNode(42)),",
+                                        "]);"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "tupleValueNode",
@@ -1510,7 +2386,19 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a tuple value node from value nodes",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = tupleValueNode([stringValueNode('Alice'), numberValueNode(42)]);"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ],
             "unions": [
@@ -1700,7 +2588,20 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create an account link node from an account name",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = accountLinkNode('myAccount');",
+                                        "const nodeFromAnotherProgram = accountLinkNode('myAccount', 'myOtherProgram');"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "definedTypeLinkNode",
@@ -1730,7 +2631,20 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a defined type link node from a type name",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = definedTypeLinkNode('myDefinedType');",
+                                        "const nodeFromAnotherProgram = definedTypeLinkNode('myDefinedType', 'myOtherProgram');"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "instructionAccountLinkNode",
@@ -1760,7 +2674,29 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create an instruction account link node from an account name",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "// Links to an account in the current instruction.",
+                                        "const node = instructionAccountLinkNode('myAccount');",
+                                        "",
+                                        "// Links to an account in another instruction but within the same program.",
+                                        "const nodeFromAnotherInstruction = instructionAccountLinkNode('myAccount', 'myOtherInstruction');",
+                                        "",
+                                        "// Links to an account in another instruction from another program.",
+                                        "const nodeFromAnotherProgram = instructionAccountLinkNode(",
+                                        "    'myAccount',",
+                                        "    instructionLinkNode('myOtherInstruction', 'myOtherProgram'),",
+                                        ");"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "instructionArgumentLinkNode",
@@ -1790,7 +2726,29 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create an instruction argument link node from an argument name",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "// Links to an argument in the current instruction.",
+                                        "const node = instructionArgumentLinkNode('myArgument');",
+                                        "",
+                                        "// Links to an argument in another instruction but within the same program.",
+                                        "const nodeFromAnotherInstruction = instructionArgumentLinkNode('myArgument', 'myOtherInstruction');",
+                                        "",
+                                        "// Links to an argument in another instruction from another program.",
+                                        "const nodeFromAnotherProgram = instructionArgumentLinkNode(",
+                                        "    'myArgument',",
+                                        "    instructionLinkNode('myOtherInstruction', 'myOtherProgram'),",
+                                        ");"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "instructionLinkNode",
@@ -1820,7 +2778,20 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create an instruction link node from an instruction name",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = instructionLinkNode('myInstruction');",
+                                        "const nodeFromAnotherProgram = instructionLinkNode('myInstruction', 'myOtherProgram');"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "pdaLinkNode",
@@ -1850,7 +2821,20 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a PDA link node from a PDA name",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = pdaLinkNode('myPda');",
+                                        "const nodeFromAnotherProgram = pdaLinkNode('myPda', 'myOtherProgram');"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "programLinkNode",
@@ -1869,7 +2853,19 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a program link node from a program name",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = programLinkNode('myProgram');"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ],
             "unions": [
@@ -1958,7 +2954,22 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "A PDA node with a UTF-8 constant seed",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "pdaNode({",
+                                        "    name: 'tickets',",
+                                        "    seeds: [constantPdaSeedNodeFromString('utf8', 'tickets')],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "variablePdaSeedNode",
@@ -1997,7 +3008,33 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a variable PDA seed node from a name and a type node",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = variablePdaSeedNode('amount', numberTypeNode('u32'));"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A PDA node with a public key variable seed",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "pdaNode({",
+                                        "    name: 'ticket',",
+                                        "    seeds: [variablePdaSeedNode('authority', publicKeyTypeNode())],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ],
             "unions": [
@@ -2072,7 +3109,30 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a fixed count node from a number",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = fixedCountNode(42);"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An array of three public keys",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "arrayTypeNode(publicKeyTypeNode(), fixedCountNode(3));"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "prefixedCountNode",
@@ -2092,7 +3152,30 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a prefixed count node from a number node",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = prefixedCountNode(numberTypeNode('u32'));"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A variable array of public keys prefixed with a u32",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "arrayTypeNode(publicKeyTypeNode(), prefixedCountNode(numberTypeNode('u32')));"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "remainderCountNode",
@@ -2100,7 +3183,30 @@
                         "A count strategy where items are read until the buffer is exhausted."
                     ],
                     "attributes": [],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a remainder count node",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = remainderCountNode();"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A remainder array of public keys",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "arrayTypeNode(publicKeyTypeNode(), remainderCountNode());"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ],
             "unions": [
@@ -2173,7 +3279,49 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a constant discriminator node from a constant value and an optional offset",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = constantDiscriminatorNode(constantValueNode(stringTypeNode('utf8'), stringValueNode('Hello')), 64);"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An account distinguished by a u32 number equal to 42 at offset 0",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "accountNode({",
+                                        "    discriminators: [constantDiscriminatorNode(constantValueNode(numberTypeNode('u32'), numberValueNode(42)))],",
+                                        "    // ...",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An instruction distinguished by an 8-byte hash at offset 0",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    discriminators: [",
+                                        "        constantDiscriminatorNode(constantValueNode(bytesTypeNode(), bytesValueNode('base16', '0011223344556677'))),",
+                                        "    ],",
+                                        "    // ...",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "fieldDiscriminatorNode",
@@ -2202,7 +3350,65 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a field discriminator node from a field name and an optional offset",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = fieldDiscriminatorNode('accountState', 64);"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An account distinguished by a u32 field at offset 0",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "accountNode({",
+                                        "    data: structTypeNode([",
+                                        "        structFieldTypeNode({",
+                                        "            name: 'discriminator',",
+                                        "            type: numberTypeNode('u32'),",
+                                        "            defaultValue: numberValueNode(42),",
+                                        "            defaultValueStrategy: 'omitted',",
+                                        "        }),",
+                                        "        // ...",
+                                        "    ]),",
+                                        "    discriminators: [fieldDiscriminatorNode('discriminator')],",
+                                        "    // ...",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An instruction distinguished by an 8-byte argument at offset 0",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    arguments: [",
+                                        "        instructionArgumentNode({",
+                                        "            name: 'discriminator',",
+                                        "            type: fixedSizeTypeNode(bytesTypeNode(), 8),",
+                                        "            defaultValue: bytesValueNode('base16', '0011223344556677'),",
+                                        "            defaultValueStrategy: 'omitted',",
+                                        "        }),",
+                                        "        // ...",
+                                        "    ],",
+                                        "    discriminators: [fieldDiscriminatorNode('discriminator')],",
+                                        "    // ...",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "sizeDiscriminatorNode",
@@ -2221,7 +3427,47 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a size discriminator node from a size",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = sizeDiscriminatorNode(165);"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An account distinguished by its size being equal to 42",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "accountNode({",
+                                        "    discriminators: [sizeDiscriminatorNode(42)],",
+                                        "    // ...",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An instruction distinguished by its size being equal to 42",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    discriminators: [sizeDiscriminatorNode(42)],",
+                                        "    // ...",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ],
             "unions": [
@@ -2300,7 +3546,41 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "A fixed 9-decimal SOL amount",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "numberTypeNode('u64', 'le', {",
+                                        "    display: amountNumberDisplayNode({ decimals: numberValueNode(9), unit: stringValueNode('SOL') }),",
+                                        "});",
+                                        "",
+                                        "// 1_100_000_000 => \"1.1 SOL\""
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Decimals and unit injected from surrounding account state",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "numberTypeNode('u64', 'le', {",
+                                        "    display: amountNumberDisplayNode({",
+                                        "        decimals: injectedValueNode({ key: 'decimals' }),",
+                                        "        unit: injectedValueNode({ key: 'symbol' }),",
+                                        "    }),",
+                                        "});",
+                                        "",
+                                        "// 1_500_000 with injected decimals 6 and symbol \"USDC\" => \"1.5 USDC\""
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "dateTimeNumberDisplayNode",
@@ -2322,7 +3602,34 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "A Unix timestamp already in seconds",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "numberTypeNode('i64', 'le', { display: dateTimeNumberDisplayNode({}) });",
+                                        "",
+                                        "// 1_761_365_183 => \"2025-10-25T04:06:23.000Z\""
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A millisecond timestamp scaled back to seconds",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "numberTypeNode('i64', 'le', { display: dateTimeNumberDisplayNode({ ticksPerSecond: 1000 }) });",
+                                        "",
+                                        "// 1_761_365_183_000 => \"2025-10-25T04:06:23.000Z\""
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "durationNumberDisplayNode",
@@ -2345,7 +3652,34 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "A duration already in seconds",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "numberTypeNode('u32', 'le', { display: durationNumberDisplayNode({}) });",
+                                        "",
+                                        "// 3600 => \"01:00:00\""
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A duration in milliseconds scaled back to seconds",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "numberTypeNode('u64', 'le', { display: durationNumberDisplayNode({ ticksPerSecond: 1000 }) });",
+                                        "",
+                                        "// 90_000 => \"00:01:30\""
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "enumVariantDisplayNode",
@@ -2376,7 +3710,40 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Relabelling a struct variant",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "enumStructVariantTypeNode(",
+                                        "    'buy',",
+                                        "    structTypeNode([structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') })]),",
+                                        "    undefined,",
+                                        "    { display: enumVariantDisplayNode({ label: 'Buy' }) },",
+                                        ");"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Hiding a tuple payload so only the label is shown",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "enumTupleVariantTypeNode(",
+                                        "    'increment',",
+                                        "    tupleTypeNode([numberTypeNode('u64')]),",
+                                        "    undefined,",
+                                        "    { display: enumVariantDisplayNode({ label: 'Increment', skipInnerData: true }) },",
+                                        ");"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "instructionAccountDisplayNode",
@@ -2407,7 +3774,40 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Relabelling an account in the fallback list",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionAccountNode({",
+                                        "    name: 'destination',",
+                                        "    isSigner: false,",
+                                        "    isWritable: true,",
+                                        "    display: instructionAccountDisplayNode({ label: 'To' }),",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Hiding an account once its value is surfaced elsewhere",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionAccountNode({",
+                                        "    name: 'mint',",
+                                        "    isSigner: false,",
+                                        "    isWritable: false,",
+                                        "    display: instructionAccountDisplayNode({ label: 'Token Mint', skip: 'whenInjected' }),",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "instructionDisplayNode",
@@ -2439,7 +3839,44 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "An intent label plus an interpolated sentence",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'transferChecked',",
+                                        "    display: instructionDisplayNode({",
+                                        "        intent: 'Transfer',",
+                                        "        interpolatedIntent: 'Transfer ${data.amount} to ${accounts.destination}',",
+                                        "    }),",
+                                        "    // ...accounts and arguments",
+                                        "});",
+                                        "",
+                                        "// intent      => \"Transfer\"",
+                                        "// interpolated => \"Transfer 1.5 USDC to 3Wnd5…5PxJX\""
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An intent label only, letting the renderer build the fallback list",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'closeAccount',",
+                                        "    display: instructionDisplayNode({ intent: 'Close Account' }),",
+                                        "    // ...accounts and arguments",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "stringDisplayNode",
@@ -2473,7 +3910,34 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Displaying the whole string",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "stringTypeNode('utf8', { display: stringDisplayNode({}) });",
+                                        "",
+                                        "// \"SOLANA\" => \"SOLANA\""
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Displaying a leading slice",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "stringTypeNode('utf8', { display: stringDisplayNode({ sliceStart: 0, sliceEnd: 3 }) });",
+                                        "",
+                                        "// \"SOLANA\" => \"SOL\""
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "structFieldDisplayNode",
@@ -2528,7 +3992,53 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Relabelling an instruction argument",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionArgumentNode({",
+                                        "    name: 'amount',",
+                                        "    type: numberTypeNode('u64'),",
+                                        "    display: structFieldDisplayNode({ label: 'Amount' }),",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Hiding a discriminator argument from the fallback list",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionArgumentNode({",
+                                        "    name: 'discriminator',",
+                                        "    type: numberTypeNode('u8'),",
+                                        "    display: structFieldDisplayNode({ skip: 'always' }),",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Flattening a nested struct into its parent with a label prefix",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "structFieldTypeNode({",
+                                        "    name: 'config',",
+                                        "    type: definedTypeLinkNode('config'),",
+                                        "    display: structFieldDisplayNode({ flatten: true, flattenPrefix: 'config.' }),",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ],
             "unions": [
@@ -2631,7 +4141,48 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create an account bump value node from an account name",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = accountBumpValueNode('associatedTokenAccount');"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An instruction argument defaulting to the bump derivation of an instruction account",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'transfer',",
+                                        "    accounts: [",
+                                        "        instructionAccountNode({",
+                                        "            name: 'associatedTokenAccount',",
+                                        "            isSigner: false,",
+                                        "            isWritable: true,",
+                                        "        }),",
+                                        "        // ...",
+                                        "    ],",
+                                        "    arguments: [",
+                                        "        instructionArgumentNode({",
+                                        "            name: 'bump',",
+                                        "            type: numberTypeNode('u8'),",
+                                        "            defaultValue: accountBumpValueNode('associatedTokenAccount'),",
+                                        "        }),",
+                                        "        // ...",
+                                        "    ],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "accountFieldValueNode",
@@ -2683,7 +4234,46 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create an account value node from an account name",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = accountValueNode('mint');"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An instruction account defaulting to another account",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'mint',",
+                                        "    accounts: [",
+                                        "        instructionAccountNode({",
+                                        "            name: 'payer',",
+                                        "            isSigner: true,",
+                                        "            isWritable: false,",
+                                        "        }),",
+                                        "        instructionAccountNode({",
+                                        "            name: 'authority',",
+                                        "            isSigner: false,",
+                                        "            isWritable: true,",
+                                        "            defaultValue: accountValueNode('payer'),",
+                                        "        }),",
+                                        "        // ...",
+                                        "    ],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "argumentValueNode",
@@ -2702,7 +4292,44 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create an argument value node from an argument name",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = argumentValueNode('amount');"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An instruction argument defaulting to another argument",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'mint',",
+                                        "    arguments: [",
+                                        "        instructionArgumentNode({",
+                                        "            name: 'amount',",
+                                        "            type: numberTypeNode('u64'),",
+                                        "        }),",
+                                        "        instructionArgumentNode({",
+                                        "            name: 'amountToDelegate',",
+                                        "            type: numberTypeNode('u64'),",
+                                        "            defaultValue: argumentValueNode('amount'),",
+                                        "        }),",
+                                        "        // ...",
+                                        "    ],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "conditionalValueNode",
@@ -2756,7 +4383,62 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a conditional value node from an input object",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = conditionalValueNode({",
+                                        "    condition: argumentValueNode('amount'),",
+                                        "    value: numberValueNode(0),",
+                                        "    ifTrue: accountValueNode('mint'),",
+                                        "    ifFalse: programIdValueNode(),",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An instruction account that defaults to another account if a condition is met",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'transfer',",
+                                        "    accounts: [",
+                                        "        instructionAccountNode({",
+                                        "            name: 'source',",
+                                        "            isSigner: false,",
+                                        "            isWritable: true,",
+                                        "        }),",
+                                        "        instructionAccountNode({",
+                                        "            name: 'destination',",
+                                        "            isSigner: false,",
+                                        "            isWritable: true,",
+                                        "            isOptional: true,",
+                                        "            defaultValue: conditionalValueNode({",
+                                        "                condition: argumentValueNode('amount'),",
+                                        "                value: numberValueNode(0),",
+                                        "                ifTrue: accountValueNode('source'),",
+                                        "            }),",
+                                        "        }),",
+                                        "        // ...",
+                                        "    ],",
+                                        "    arguments: [",
+                                        "        instructionArgumentNode({",
+                                        "            name: 'amount',",
+                                        "            type: numberTypeNode('u64'),",
+                                        "        }),",
+                                        "    ],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "identityValueNode",
@@ -2764,7 +4446,41 @@
                         "Refers to the wallet identity providing the instruction context."
                     ],
                     "attributes": [],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create an identity value node",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = identityValueNode();"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An instruction account defaulting to the identity value",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'transfer',",
+                                        "    accounts: [",
+                                        "        instructionAccountNode({",
+                                        "            name: 'authority',",
+                                        "            isSigner: true,",
+                                        "            isWritable: false,",
+                                        "            defaultValue: identityValueNode(),",
+                                        "        }),",
+                                        "        // ...",
+                                        "    ],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "payerValueNode",
@@ -2772,7 +4488,41 @@
                         "Refers to the wallet paying for the surrounding transaction."
                     ],
                     "attributes": [],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a payer value node",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = payerValueNode();"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An instruction account defaulting to the payer value",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'transfer',",
+                                        "    accounts: [",
+                                        "        instructionAccountNode({",
+                                        "            name: 'payer',",
+                                        "            isSigner: true,",
+                                        "            isWritable: false,",
+                                        "            defaultValue: payerValueNode(),",
+                                        "        }),",
+                                        "        // ...",
+                                        "    ],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "pdaSeedValueNode",
@@ -2801,7 +4551,19 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a PDA seed value node from a name and a value",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = pdaSeedValueNode('mint', accountValueNode('mint'));"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "pdaValueNode",
@@ -2844,7 +4606,59 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a PDA value node from a PDA definition and seed values",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = pdaValueNode('associatedToken', [",
+                                        "    pdaSeedValueNode('mint', publicKeyValueNode('G345gmp34svbGxyXuCvKVVHDbqJQ66y65vVrx7m7FmBE')),",
+                                        "    pdaSeedValueNode('owner', publicKeyValueNode('Nzgr9bYfMRq5768bHfXsXoPTnLWAXgQNosRBxK63jRH')),",
+                                        "]);"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A PDA value whose seeds point to other accounts",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "pdaValueNode('associatedToken', [",
+                                        "    pdaSeedValueNode('mint', accountValueNode('mint')),",
+                                        "    pdaSeedValueNode('owner', accountValueNode('authority')),",
+                                        "]);"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A PDA value with an inlined PDA definition",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const inlinedPdaNode = pdaNode({",
+                                        "    name: 'associatedToken',",
+                                        "    seeds: [",
+                                        "        variablePdaSeedNode('mint', publicKeyTypeNode()),",
+                                        "        constantPdaSeedNode(publicKeyTypeNode(), publicKeyValueNode('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA')),",
+                                        "        variablePdaSeedNode('owner', publicKeyTypeNode()),",
+                                        "    ],",
+                                        "});",
+                                        "",
+                                        "pdaValueNode(inlinedPdaNode, [",
+                                        "    pdaSeedValueNode('mint', accountValueNode('mint')),",
+                                        "    pdaSeedValueNode('owner', accountValueNode('authority')),",
+                                        "]);"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "programIdValueNode",
@@ -2852,7 +4666,19 @@
                         "Refers to the program ID of the surrounding instruction."
                     ],
                     "attributes": [],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a program id value node",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = programIdValueNode();"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "resolverValueNode",
@@ -2896,7 +4722,26 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a resolver value node from a name and options",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = resolverValueNode('resolveCustomTokenProgram', {",
+                                        "    docs: [",
+                                        "        'If the mint account has more than 0 decimals and the ',",
+                                        "        'delegated amount is greater than zero, then we use our ',",
+                                        "        'own custom token program. Otherwise, we use Token 2022.',",
+                                        "    ],",
+                                        "    dependsOn: [accountValueNode('mint'), argumentValueNode('delegatedAmount')],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ],
             "unions": [
@@ -3497,7 +5342,57 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "A fixed-size account",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = accountNode({",
+                                        "    name: 'token',",
+                                        "    data: structTypeNode([",
+                                        "        structFieldTypeNode({ name: 'mint', type: publicKeyTypeNode() }),",
+                                        "        structFieldTypeNode({ name: 'owner', type: publicKeyTypeNode() }),",
+                                        "        structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') }),",
+                                        "    ]),",
+                                        "    discriminators: [sizeDiscriminatorNode(72)],",
+                                        "    size: 72,",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An account with a linked PDA",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "programNode({",
+                                        "    name: 'myProgram',",
+                                        "    accounts: [",
+                                        "        accountNode({",
+                                        "            name: 'token',",
+                                        "            data: structTypeNode([structFieldTypeNode({ name: 'authority', type: publicKeyTypeNode() })]),",
+                                        "            pda: pdaLinkNode('myPda'),",
+                                        "        }),",
+                                        "    ],",
+                                        "    pdas: [",
+                                        "        pdaNode({",
+                                        "            name: 'myPda',",
+                                        "            seeds: [",
+                                        "                constantPdaSeedNodeFromString('utf8', 'token'),",
+                                        "                variablePdaSeedNode('authority', publicKeyTypeNode()),",
+                                        "            ],",
+                                        "        }),",
+                                        "    ],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "constantNode",
@@ -3546,7 +5441,43 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Numeric Constant",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = constantNode('maxSize', numberTypeNode('u32'), numberValueNode(100));"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Bytes Constant",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = constantNode('seedPrefix', bytesTypeNode(), bytesValueNode('base16', '74657374'));"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "With Documentation",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = constantNode('maxItems', numberTypeNode('u64'), numberValueNode(1000), [",
+                                        "    'The maximum number of items allowed.',",
+                                        "]);"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "definedTypeNode",
@@ -3585,7 +5516,26 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a defined type node from an input object",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = definedTypeNode({",
+                                        "    name: 'person',",
+                                        "    docs: ['This type describes a Person.'],",
+                                        "    type: structTypeNode([",
+                                        "        structFieldTypeNode({ name: 'name', type: stringTypeNode('utf8') }),",
+                                        "        structFieldTypeNode({ name: 'age', type: numberTypeNode('u8') }),",
+                                        "    ]),",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "errorNode",
@@ -3633,7 +5583,23 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create an error node from an input object",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = errorNode({",
+                                        "    name: 'invalidAmountArgument',",
+                                        "    code: 1,",
+                                        "    message: 'The amount argument is invalid.',",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "eventNode",
@@ -3686,7 +5652,46 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "An event with a struct payload",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "eventNode({",
+                                        "    name: 'transferEvent',",
+                                        "    data: structTypeNode([",
+                                        "        structFieldTypeNode({ name: 'authority', type: publicKeyTypeNode() }),",
+                                        "        structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') }),",
+                                        "    ]),",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An event with a hidden prefix discriminator",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "eventNode({",
+                                        "    name: 'transferEvent',",
+                                        "    data: hiddenPrefixTypeNode(structTypeNode([structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') })]), [",
+                                        "        constantValueNode(fixedSizeTypeNode(bytesTypeNode(), 8), bytesValueNode('base16', '0102030405060708')),",
+                                        "    ]),",
+                                        "    discriminators: [",
+                                        "        constantDiscriminatorNode(",
+                                        "            constantValueNode(fixedSizeTypeNode(bytesTypeNode(), 8), bytesValueNode('base16', '0102030405060708')),",
+                                        "        ),",
+                                        "    ],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "instructionAccountNode",
@@ -3783,7 +5788,41 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "An optional account",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionAccountNode({",
+                                        "    name: 'freezeAuthority',",
+                                        "    isWritable: false,",
+                                        "    isSigner: false,",
+                                        "    isOptional: true,",
+                                        "    docs: ['The freeze authority to set on the asset, if any.'],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An optional signer account",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionAccountNode({",
+                                        "    name: 'owner',",
+                                        "    isWritable: true,",
+                                        "    isSigner: 'either',",
+                                        "    docs: ['The owner of the asset. The owner must only sign the transaction if the asset is being updated.'],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "instructionArgumentNode",
@@ -3855,7 +5894,39 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "An argument with a default value",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionArgumentNode({",
+                                        "    name: 'amount',",
+                                        "    type: numberTypeNode('u64'),",
+                                        "    defaultValue: numberValueNode(0),",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An argument with an omitted default value",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionArgumentNode({",
+                                        "    name: 'instructionDiscriminator',",
+                                        "    type: numberTypeNode('u8'),",
+                                        "    defaultValue: numberValueNode(42),",
+                                        "    defaultValueStrategy: 'omitted',",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "instructionByteDeltaNode",
@@ -3893,7 +5964,41 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "A byte delta that represents a new account",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionByteDeltaNode(accountLinkNode('token'));"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A byte delta that represents an account deletion",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionByteDeltaNode(accountLinkNode('token'), { subtract: true });"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A byte delta that uses an argument value to increase the space of an account",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionByteDeltaNode(argumentValueNode('additionalSpace'), { withHeader: false });"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "instructionNode",
@@ -4081,7 +6186,194 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "An instruction with a u8 discriminator",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'increment',",
+                                        "    accounts: [",
+                                        "        instructionAccountNode({ name: 'counter', isWritable: true, isSigner: true }),",
+                                        "        instructionAccountNode({ name: 'authority', isWritable: false, isSigner: false }),",
+                                        "    ],",
+                                        "    arguments: [",
+                                        "        instructionArgumentNode({",
+                                        "            name: 'discriminator',",
+                                        "            type: numberTypeNode('u8'),",
+                                        "            defaultValue: numberValueNode(42),",
+                                        "            defaultValueStrategy: 'omitted',",
+                                        "        }),",
+                                        "    ],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An instruction that creates a new account",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'createCounter',",
+                                        "    accounts: [",
+                                        "        instructionAccountNode({ name: 'counter', isWritable: true, isSigner: true }),",
+                                        "        instructionAccountNode({ name: 'authority', isWritable: false, isSigner: false }),",
+                                        "    ],",
+                                        "    byteDeltas: [instructionByteDeltaNode(accountLinkNode('counter'))],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An instruction with omitted optional accounts",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'initialize',",
+                                        "    accounts: [",
+                                        "        instructionAccountNode({ name: 'counter', isWritable: true, isSigner: true }),",
+                                        "        instructionAccountNode({ name: 'authority', isWritable: false, isSigner: false }),",
+                                        "        instructionAccountNode({ name: 'freezeAuthority', isWritable: false, isSigner: false, isOptional: true }),",
+                                        "    ],",
+                                        "    optionalAccountStrategy: 'omitted',",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An instruction with remaining signers",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'multisigIncrement',",
+                                        "    accounts: [instructionAccountNode({ name: 'counter', isWritable: true, isSigner: false })],",
+                                        "    remainingAccounts: [instructionRemainingAccountsNode(argumentValueNode('authorities'), { isSigner: true })],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An instruction with nested versioned instructions",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'increment',",
+                                        "    accounts: [",
+                                        "        instructionAccountNode({ name: 'counter', isWritable: true, isSigner: 'either' }),",
+                                        "        instructionAccountNode({ name: 'authority', isWritable: false, isSigner: true }),",
+                                        "    ],",
+                                        "    arguments: [",
+                                        "        instructionArgumentNode({ name: 'version', type: numberTypeNode('u8') }),",
+                                        "        instructionArgumentNode({ name: 'amount', type: numberTypeNode('u8') }),",
+                                        "    ],",
+                                        "    subInstructions: [",
+                                        "        instructionNode({",
+                                        "            name: 'incrementV1',",
+                                        "            accounts: [instructionAccountNode({ name: 'counter', isWritable: true, isSigner: true })],",
+                                        "            arguments: [",
+                                        "                instructionArgumentNode({",
+                                        "                    name: 'version',",
+                                        "                    type: numberTypeNode('u8'),",
+                                        "                    defaultValue: numberValueNode(0),",
+                                        "                    defaultValueStrategy: 'omitted',",
+                                        "                }),",
+                                        "                instructionArgumentNode({ name: 'amount', type: numberTypeNode('u8') }),",
+                                        "            ],",
+                                        "        }),",
+                                        "        instructionNode({",
+                                        "            name: 'incrementV2',",
+                                        "            accounts: [",
+                                        "                instructionAccountNode({ name: 'counter', isWritable: true, isSigner: false }),",
+                                        "                instructionAccountNode({ name: 'authority', isWritable: false, isSigner: true }),",
+                                        "            ],",
+                                        "            arguments: [",
+                                        "                instructionArgumentNode({",
+                                        "                    name: 'version',",
+                                        "                    type: numberTypeNode('u8'),",
+                                        "                    defaultValue: numberValueNode(1),",
+                                        "                    defaultValueStrategy: 'omitted',",
+                                        "                }),",
+                                        "                instructionArgumentNode({ name: 'amount', type: numberTypeNode('u8') }),",
+                                        "            ],",
+                                        "        }),",
+                                        "    ],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A deprecated instruction",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'oldIncrement',",
+                                        "    status: instructionStatusNode(",
+                                        "        'deprecated',",
+                                        "        'Use the `increment` instruction instead. This will be removed in v3.0.0.',",
+                                        "    ),",
+                                        "    accounts: [instructionAccountNode({ name: 'counter', isWritable: true, isSigner: false })],",
+                                        "    arguments: [instructionArgumentNode({ name: 'amount', type: numberTypeNode('u8') })],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An archived instruction",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'legacyTransfer',",
+                                        "    status: instructionStatusNode(",
+                                        "        'archived',",
+                                        "        'This instruction was removed in v2.0.0. It is kept here for historical parsing.',",
+                                        "    ),",
+                                        "    accounts: [",
+                                        "        instructionAccountNode({ name: 'source', isWritable: true, isSigner: true }),",
+                                        "        instructionAccountNode({ name: 'destination', isWritable: true, isSigner: false }),",
+                                        "    ],",
+                                        "    arguments: [instructionArgumentNode({ name: 'amount', type: numberTypeNode('u64') })],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A draft instruction",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'experimentalFeature',",
+                                        "    status: instructionStatusNode('draft', 'This instruction is under development and may change.'),",
+                                        "    accounts: [instructionAccountNode({ name: 'config', isWritable: true, isSigner: true })],",
+                                        "    arguments: [],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "instructionRemainingAccountsNode",
@@ -4157,7 +6449,51 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Optional remaining signers",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionRemainingAccountsNode(argumentValueNode('authorities'), {",
+                                        "    isSigner: true,",
+                                        "    isOptional: true,",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Remaining accounts that may or may not be signers",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionRemainingAccountsNode(argumentValueNode('authorities'), {",
+                                        "    isSigner: 'either',",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Remaining accounts using a resolver",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionRemainingAccountsNode(",
+                                        "    resolverValueNode('resolveTransferRemainingAccounts', {",
+                                        "        docs: ['Provide authorities as remaining accounts if and only if the asset has a multisig set up.'],",
+                                        "        dependsOn: [argumentValueNode('hasMultisig'), argumentValueNode('authorities')],",
+                                        "    }),",
+                                        ");"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "instructionStatusNode",
@@ -4186,7 +6522,87 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "A live instruction (no status needed)",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'transfer',",
+                                        "    accounts: [...],",
+                                        "    arguments: [...],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A deprecated instruction",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'oldTransfer',",
+                                        "    status: instructionStatusNode('deprecated', 'Use the `transfer` instruction instead. This will be removed in v3.0.0.'),",
+                                        "    accounts: [...],",
+                                        "    arguments: [...],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An archived instruction",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'legacyTransfer',",
+                                        "    status: instructionStatusNode('archived', 'This instruction was removed in v2.0.0. It is kept here for historical parsing.'),",
+                                        "    accounts: [...],",
+                                        "    arguments: [...],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A draft instruction",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'experimentalFeature',",
+                                        "    status: instructionStatusNode('draft', 'This instruction is under development and may change.'),",
+                                        "    accounts: [...],",
+                                        "    arguments: [...],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Status without a message",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'someInstruction',",
+                                        "    status: instructionStatusNode('deprecated'),",
+                                        "    accounts: [...],",
+                                        "    arguments: [...],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "pdaNode",
@@ -4238,7 +6654,41 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "A PDA with constant and variable seeds",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "pdaNode({",
+                                        "    name: 'ticket',",
+                                        "    seeds: [",
+                                        "        constantPdaSeedNodeFromString('utf8', 'raffles'),",
+                                        "        variablePdaSeedNode('raffle', publicKeyTypeNode()),",
+                                        "        constantPdaSeedNodeFromString('utf8', 'tickets'),",
+                                        "        variablePdaSeedNode('ticketNumber', numberTypeNode('u32')),",
+                                        "    ],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A PDA with no seeds",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "pdaNode({",
+                                        "    name: 'seedlessPda',",
+                                        "    seeds: [],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "pluginNode",
@@ -4418,7 +6868,29 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create a program node from an input object",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = programNode({",
+                                        "    name: 'counter',",
+                                        "    publicKey: '7ovtg4pFqjQdSwFAUCu8gTnh5thZHzAyJFXy3Ssnj3yK',",
+                                        "    version: '1.42.6',",
+                                        "    accounts: [],",
+                                        "    instructions: [],",
+                                        "    definedTypes: [],",
+                                        "    pdas: [],",
+                                        "    events: [],",
+                                        "    errors: [],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "providedNode",
@@ -4499,7 +6971,40 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "A root node with a single program",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = rootNode(",
+                                        "    programNode({",
+                                        "        name: 'counter',",
+                                        "        publicKey: '2R3Ui2TVUUCyGcZdopxJauk8ZBzgAaHHZCVUhm5ifPaC',",
+                                        "        version: '1.0.0',",
+                                        "        accounts: [",
+                                        "            accountNode({",
+                                        "                name: 'counter',",
+                                        "                data: structTypeNode([",
+                                        "                    structFieldTypeNode({ name: 'authority', type: publicKeyTypeNode() }),",
+                                        "                    structFieldTypeNode({ name: 'value', type: numberTypeNode('u32') }),",
+                                        "                ]),",
+                                        "            }),",
+                                        "        ],",
+                                        "        instructions: [",
+                                        "            instructionNode({ name: 'create' /* ... */ }),",
+                                        "            instructionNode({ name: 'increment' /* ... */ }),",
+                                        "            instructionNode({ name: 'transferAuthority' /* ... */ }),",
+                                        "            instructionNode({ name: 'delete' /* ... */ }),",
+                                        "        ],",
+                                        "    }),",
+                                        ");"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ],
             "unions": [

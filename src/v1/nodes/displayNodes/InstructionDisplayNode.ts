@@ -1,4 +1,5 @@
 import { defineNode, optionalAttribute, string } from '../../../api';
+import { examples } from './InstructionDisplayNode.examples';
 
 export const instructionDisplayNode = defineNode('instructionDisplayNode', {
     docs: [
@@ -17,4 +18,5 @@ export const instructionDisplayNode = defineNode('instructionDisplayNode', {
             ],
         }),
     ],
+    examples,
 });

@@ -1,4 +1,5 @@
 import { attribute, defineNode, enumeration, i64, union } from '../../../api';
+import { examples } from './PreOffsetTypeNode.examples';
 
 export const preOffsetTypeNode = defineNode('preOffsetTypeNode', {
     docs: [
@@ -15,4 +16,5 @@ export const preOffsetTypeNode = defineNode('preOffsetTypeNode', {
             docs: ['The wrapped type whose serialisation is preceded by the offset.'],
         }),
     ],
+    examples,
 });

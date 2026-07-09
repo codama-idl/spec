@@ -10,6 +10,7 @@ import {
     stringIdentifier,
     stringVersion,
 } from '../../api';
+import { examples } from './ProgramNode.examples';
 
 export const programNode = defineNode('programNode', {
     docs: [
@@ -53,4 +54,5 @@ export const programNode = defineNode('programNode', {
             docs: ['The constants exposed by the program.'],
         }),
     ],
+    examples,
 });

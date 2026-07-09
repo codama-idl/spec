@@ -1,4 +1,5 @@
 import { attribute, defineNode, node, union } from '../../../api';
+import { examples } from './SentinelTypeNode.examples';
 
 export const sentinelTypeNode = defineNode('sentinelTypeNode', {
     docs: [
@@ -12,4 +13,5 @@ export const sentinelTypeNode = defineNode('sentinelTypeNode', {
             docs: ['The constant value written immediately after the wrapped type to mark its end.'],
         }),
     ],
+    examples,
 });

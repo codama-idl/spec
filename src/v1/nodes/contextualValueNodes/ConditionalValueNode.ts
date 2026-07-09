@@ -1,4 +1,5 @@
 import { attribute, defineNode, optionalAttribute, union } from '../../../api';
+import { examples } from './ConditionalValueNode.examples';
 
 export const conditionalValueNode = defineNode('conditionalValueNode', {
     docs: [
@@ -22,4 +23,5 @@ export const conditionalValueNode = defineNode('conditionalValueNode', {
             docs: ['The value used when the condition resolves falsy (or does not match `value`).'],
         }),
     ],
+    examples,
 });

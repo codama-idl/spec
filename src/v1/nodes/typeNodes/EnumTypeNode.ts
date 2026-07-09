@@ -1,4 +1,5 @@
 import { array, attribute, defineNode, nestedUnion, union } from '../../../api';
+import { examples } from './EnumTypeNode.examples';
 
 export const enumTypeNode = defineNode('enumTypeNode', {
     docs: ['A tagged union: a numeric discriminator followed by one of several variant payloads.'],
@@ -10,4 +11,5 @@ export const enumTypeNode = defineNode('enumTypeNode', {
             docs: ['The numeric type used to serialise the discriminator.'],
         }),
     ],
+    examples,
 });
