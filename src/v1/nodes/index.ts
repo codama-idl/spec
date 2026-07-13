@@ -17,6 +17,7 @@ import { instructionStatusNode } from './InstructionStatusNode';
 import { ALL_LINK_NODE_UNIONS, ALL_LINK_NODES } from './linkNodes';
 import { pdaNode } from './PdaNode';
 import { ALL_PDA_SEED_NODE_UNIONS, ALL_PDA_SEED_NODES } from './pdaSeedNodes';
+import { pluginNode } from './PluginNode';
 import { programNode } from './ProgramNode';
 import { providedNode } from './ProvidedNode';
 import { rootNode } from './RootNode';
@@ -46,6 +47,7 @@ export const ALL_NODES = [
     instructionRemainingAccountsNode,
     instructionStatusNode,
     pdaNode,
+    pluginNode,
     programNode,
     providedNode,
     rootNode,

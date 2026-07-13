@@ -64,6 +64,7 @@ describe('v1 spec — coverage smoke checks', () => {
             // top-level
             'accountNode',
             'instructionNode',
+            'pluginNode',
             'programNode',
             'providedNode',
             'rootNode',
@@ -451,6 +452,34 @@ describe('v1 spec — instructionNode.provides', () => {
         expect(provides.optional).toBe(true);
         expect(provides.type).toEqual({ kind: 'array', of: { kind: 'node', name: 'providedNode' } });
         expect(isChildAttribute(provides.type)).toBe(true);
+    });
+});
+
+describe('v1 spec — pluginNode shape', () => {
+    it('matches the encoded shape exactly', () => {
+        const n = getNode('pluginNode')!;
+        expect(n.attributes.map(a => a.name)).toEqual(['name', 'payload']);
+
+        const name = n.attributes.find(a => a.name === 'name')!;
+        expect(name.type).toEqual({ constraint: 'identifier', kind: 'string' });
+        expect(name.optional).toBeUndefined();
+
+        const payload = n.attributes.find(a => a.name === 'payload')!;
+        expect(payload.optional).toBe(true);
+        expect(payload.type).toEqual({ kind: 'json' });
+        // A json payload carries no nodes, so it is data — never a child.
+        expect(isChildAttribute(payload.type)).toBe(false);
+    });
+});
+
+describe('v1 spec — instructionNode.plugins', () => {
+    it('declares an optional array of pluginNode', () => {
+        const n = getNode('instructionNode')!;
+        const plugins = n.attributes.find(a => a.name === 'plugins')!;
+        expect(plugins).toBeDefined();
+        expect(plugins.optional).toBe(true);
+        expect(plugins.type).toEqual({ kind: 'array', of: { kind: 'node', name: 'pluginNode' } });
+        expect(isChildAttribute(plugins.type)).toBe(true);
     });
 });
 

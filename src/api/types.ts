@@ -29,7 +29,7 @@ export type LiteralValue = boolean | number | string;
  * Constituents are listed alphabetically by `kind` to satisfy the lint
  * rule; logical grouping lives in the doc comments below.
  *
- * Leaf primitives:    address, boolean, docs, float, integer, literal, literalUnion, string.
+ * Leaf primitives:    address, boolean, docs, float, integer, json, literal, literalUnion, string.
  * Named references:   codamaVersion, enumeration, nestedUnion, node, union.
  * Anonymous nodes:    anyNode (any node kind defined by the spec).
  * Compounds:          array, tuple.
@@ -68,6 +68,7 @@ export type TypeExpr =
     | { readonly kind: 'enumeration'; readonly name: string }
     | { readonly kind: 'float'; readonly width: FloatWidth }
     | { readonly kind: 'integer'; readonly width: IntegerWidth }
+    | { readonly kind: 'json' }
     | { readonly kind: 'literal'; readonly value: LiteralValue }
     /**
      * A heterogeneous union of literal values — useful for cross-typed sum
