@@ -33,8 +33,8 @@ pnpm add @codama/spec
 import { getSpec, getNode, SPEC_VERSION } from '@codama/spec/v1';
 
 const spec = getSpec();
-console.log(spec.version); // → '1.6.0'
-console.log(SPEC_VERSION); // → '1.6.0'
+console.log(spec.version); // → '1.8.0'
+console.log(SPEC_VERSION); // → '1.8.0'
 
 const account = getNode('accountNode');
 console.log(account?.attributes.map(a => a.name));
@@ -76,8 +76,6 @@ v1/                        # generated artifacts mirroring the @codama/spec/v1 s
 1. Run `pnpm changeset` on your branch to record a bump and a user-facing summary.
 2. Commit the generated `.changeset/*.md` alongside your changes.
 3. On merge to `main`, the [`Main` workflow](./.github/workflows/main.yml) either opens a "Release package" PR (when changesets are pending) or publishes `@codama/spec` to npm (when versions have been bumped).
-
-The repo is currently in **release-candidate mode** under the `rc` tag (see `.changeset/pre.json`). Every `pnpm changeset version` produces a `1.6.0-rc.N` version. To cut the stable release, run `pnpm changeset pre exit`, then `pnpm changeset version` and merge the resulting "Release package" PR.
 
 ## License
 
