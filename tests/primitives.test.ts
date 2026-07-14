@@ -13,6 +13,7 @@ import {
     i32,
     i64,
     i128,
+    json,
     literal,
     literalUnion,
     nestedUnion,
@@ -90,6 +91,15 @@ describe('float primitives', () => {
 describe('boolean primitive', () => {
     it('returns the boolean kind', () => {
         expect(boolean()).toEqual({ kind: 'boolean' });
+    });
+});
+
+describe('json primitive', () => {
+    it('returns the json kind', () => {
+        expect(json()).toEqual({ kind: 'json' });
+    });
+    it('freezes the result', () => {
+        expect(Object.isFrozen(json())).toBe(true);
     });
 });
 

@@ -102,6 +102,19 @@ export function literalUnion(...values: LiteralValue[]): TypeExpr {
     return Object.freeze({ kind: 'literalUnion' as const, values: Object.freeze([...values]) });
 }
 
+// Opaque data.
+
+/**
+ * An opaque, arbitrary JSON value carried verbatim through the encoded
+ * spec. Its shape is intentionally not described by the spec — use it for
+ * free-form, consumer-defined data such as a plugin payload. Codegen
+ * targets emit their language's "any JSON" type: `unknown` in TypeScript,
+ * `serde_json::Value` in Rust.
+ */
+export function json(): TypeExpr {
+    return Object.freeze({ kind: 'json' as const });
+}
+
 // Named references.
 
 /** Reference to a named enumeration declared via `defineEnumeration`. */

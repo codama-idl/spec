@@ -12,6 +12,7 @@ import {
     defineUnion,
     enumeration,
     isChildAttribute,
+    json,
     nestedUnion,
     node,
     optionalAttribute,
@@ -303,5 +304,10 @@ describe('isChildAttribute', () => {
         expect(isChildAttribute(string())).toBe(false);
         expect(isChildAttribute(u64())).toBe(false);
         expect(isChildAttribute(tuple(string(), u64()))).toBe(false);
+    });
+
+    it('classifies an opaque json attribute as data', () => {
+        expect(isChildAttribute(json())).toBe(false);
+        expect(isChildAttribute(array(json()))).toBe(false);
     });
 });

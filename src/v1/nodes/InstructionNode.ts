@@ -62,5 +62,8 @@ export const instructionNode = defineNode('instructionNode', {
         optionalAttribute('display', node('instructionDisplayNode'), {
             docs: ['Display metadata describing how the instruction is presented.'],
         }),
+        optionalAttribute('plugins', array(node('pluginNode')), {
+            docs: ['Namespaced plugins with custom structured data.'],
+        }),
     ],
 });

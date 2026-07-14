@@ -31,6 +31,7 @@ import { instructionStatusNode } from './nodes/InstructionStatusNode';
 import { ALL_LINK_NODE_UNIONS, ALL_LINK_NODES } from './nodes/linkNodes';
 import { pdaNode } from './nodes/PdaNode';
 import { ALL_PDA_SEED_NODE_UNIONS, ALL_PDA_SEED_NODES } from './nodes/pdaSeedNodes';
+import { pluginNode } from './nodes/PluginNode';
 import { programNode } from './nodes/ProgramNode';
 import { providedNode } from './nodes/ProvidedNode';
 import { rootNode } from './nodes/RootNode';
@@ -40,7 +41,7 @@ import { ALL_VALUE_NODE_UNIONS, ALL_VALUE_NODES } from './nodes/valueNodes';
 export * from '../api/public';
 
 /** The version string of the v1 spec. */
-export const SPEC_VERSION = '1.7.0';
+export const SPEC_VERSION = '1.8.0';
 
 const TYPE_CATEGORY = defineCategory('type', {
     docs: ['Type nodes — the building blocks of every value shape.'],
@@ -113,6 +114,7 @@ const TOP_LEVEL_CATEGORY = defineCategory('topLevel', {
         instructionRemainingAccountsNode,
         instructionStatusNode,
         pdaNode,
+        pluginNode,
         programNode,
         providedNode,
         rootNode,
