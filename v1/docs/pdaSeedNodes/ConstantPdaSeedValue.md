@@ -1,4 +1,4 @@
-# `ConstantPdaSeedValue` (abstract)
+# ConstantPdaSeedValue (abstract)
 
 The value forms a `constantPdaSeedNode` may carry — either a literal value or the program ID placeholder.
 

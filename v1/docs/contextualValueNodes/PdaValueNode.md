@@ -1,4 +1,4 @@
-# `PdaValueNode`
+# PdaValueNode
 
 Resolves to a PDA derived from a list of seed values.
 

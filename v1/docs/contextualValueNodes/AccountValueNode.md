@@ -1,4 +1,4 @@
-# `AccountValueNode`
+# AccountValueNode
 
 Refers to a named account in the surrounding instruction.
 

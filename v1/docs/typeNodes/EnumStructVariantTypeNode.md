@@ -1,4 +1,4 @@
-# `EnumStructVariantTypeNode`
+# EnumStructVariantTypeNode
 
 A variant of an enum that carries a struct payload (named fields).
 

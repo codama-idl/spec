@@ -1,4 +1,4 @@
-# `BooleanTypeNode`
+# BooleanTypeNode
 
 A boolean serialised as a numeric value. The wrapped number type determines the byte width.
 

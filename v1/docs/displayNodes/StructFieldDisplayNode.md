@@ -1,4 +1,4 @@
-# `StructFieldDisplayNode`
+# StructFieldDisplayNode
 
 Display metadata for a named member: its label, whether it is shown in the fallback list, and whether it is flattened into its parent. Value presentation is carried by the member's type; this node only addresses naming and composition.
 

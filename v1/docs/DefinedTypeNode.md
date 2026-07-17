@@ -1,4 +1,4 @@
-# `DefinedTypeNode`
+# DefinedTypeNode
 
 A reusable named type that can be referenced by `definedTypeLinkNode` from elsewhere in the IDL.
 

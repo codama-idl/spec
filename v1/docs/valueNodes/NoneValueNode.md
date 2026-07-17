@@ -1,4 +1,4 @@
-# `NoneValueNode`
+# NoneValueNode
 
 The "absent" value for an optional type.
 

@@ -1,4 +1,4 @@
-# `EnumVariantDisplayNode`
+# EnumVariantDisplayNode
 
 Display metadata for an enum variant: its label and whether to hide its inner payload.
 

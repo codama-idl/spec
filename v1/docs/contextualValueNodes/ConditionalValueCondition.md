@@ -1,4 +1,4 @@
-# `ConditionalValueCondition` (abstract)
+# ConditionalValueCondition (abstract)
 
 The condition forms accepted by a `conditionalValueNode`.
 

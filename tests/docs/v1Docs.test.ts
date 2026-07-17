@@ -143,7 +143,7 @@ describe('v1 docs generation over the real spec', () => {
 
     it('renders the accountNode page with a Data/Children split and the nested-union data link', () => {
         const content = pageOf(MODEL, 'node', 'accountNode').content;
-        expect(content.startsWith('# `AccountNode`')).toBe(true);
+        expect(content.startsWith('# AccountNode')).toBe(true);
         expect(content).toContain('### Data');
         expect(content).toContain('### Children');
         // accountNode.data is a nestedUnion 'nestedTypeNode<structTypeNode>' - both arms are linked

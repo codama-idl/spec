@@ -1,4 +1,4 @@
-# `ArgumentValueNode`
+# ArgumentValueNode
 
 Refers to a named argument of the surrounding instruction.
 

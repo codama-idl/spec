@@ -1,4 +1,4 @@
-# `InstructionLinkNode`
+# InstructionLinkNode
 
 A reference to an instruction defined elsewhere — possibly in a different program.
 

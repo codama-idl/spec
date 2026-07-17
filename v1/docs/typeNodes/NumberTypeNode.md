@@ -1,4 +1,4 @@
-# `NumberTypeNode`
+# NumberTypeNode
 
 A numeric type with a fixed wire format and byte order.
 

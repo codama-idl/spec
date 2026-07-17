@@ -1,4 +1,4 @@
-# `MapEntryValueNode`
+# MapEntryValueNode
 
 A single (key, value) pair inside a `mapValueNode`.
 

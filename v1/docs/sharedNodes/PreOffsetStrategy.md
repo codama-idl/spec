@@ -1,4 +1,4 @@
-# `PreOffsetStrategy`
+# PreOffsetStrategy
 
 How a pre-offset modifier interprets its offset value before serialising the wrapped type.
 

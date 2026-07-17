@@ -1,4 +1,4 @@
-# `PrefixedCountNode`
+# PrefixedCountNode
 
 A count strategy where the number of items is read from a numeric prefix.
 

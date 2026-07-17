@@ -1,4 +1,4 @@
-# `HiddenPrefixTypeNode`
+# HiddenPrefixTypeNode
 
 Prefixes another type with a list of constant values that are written and read but not surfaced as fields to consumers.
 

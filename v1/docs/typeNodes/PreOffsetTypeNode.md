@@ -1,4 +1,4 @@
-# `PreOffsetTypeNode`
+# PreOffsetTypeNode
 
 Before serialising the wrapped type, advance the cursor by `offset` bytes interpreted via the chosen strategy.
 

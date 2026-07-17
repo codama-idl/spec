@@ -1,4 +1,4 @@
-# `ErrorNode`
+# ErrorNode
 
 A program error — a numeric code paired with a name and human-readable message.
 

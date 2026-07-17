@@ -1,4 +1,4 @@
-# `IdentityValueNode`
+# IdentityValueNode
 
 Refers to the wallet identity providing the instruction context.
 

@@ -1,4 +1,4 @@
-# `PdaValueProgramId` (abstract)
+# PdaValueProgramId (abstract)
 
 The program-id forms accepted by a `pdaValueNode`.
 

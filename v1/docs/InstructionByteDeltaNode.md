@@ -1,4 +1,4 @@
-# `InstructionByteDeltaNode`
+# InstructionByteDeltaNode
 
 A byte-size delta applied when computing rent or buffer size — typically used by instructions that resize accounts.
 

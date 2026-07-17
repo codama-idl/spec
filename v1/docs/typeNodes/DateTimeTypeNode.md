@@ -1,4 +1,4 @@
-# `DateTimeTypeNode`
+# DateTimeTypeNode
 
 A timestamp encoded as a number, typically seconds since the Unix epoch. The wrapped number type determines the byte width.
 

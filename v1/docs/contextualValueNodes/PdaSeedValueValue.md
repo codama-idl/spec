@@ -1,4 +1,4 @@
-# `PdaSeedValueValue` (abstract)
+# PdaSeedValueValue (abstract)
 
 The value forms accepted by a `pdaSeedValueNode`.
 

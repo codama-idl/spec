@@ -1,4 +1,4 @@
-# `StringValueNode`
+# StringValueNode
 
 A concrete string value.
 

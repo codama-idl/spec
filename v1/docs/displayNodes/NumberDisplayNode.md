@@ -1,4 +1,4 @@
-# `NumberDisplayNode` (abstract)
+# NumberDisplayNode (abstract)
 
 The presentation forms a number may take. Raw rendering is expressed by the absence of a display attribute.
 

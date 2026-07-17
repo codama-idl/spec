@@ -1,4 +1,4 @@
-# `ConstantDiscriminatorNode`
+# ConstantDiscriminatorNode
 
 Identifies a node by a constant value at a known byte offset (e.g. a magic header).
 

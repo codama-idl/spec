@@ -1,4 +1,4 @@
-# `DefaultValueStrategy`
+# DefaultValueStrategy
 
 How an attribute that carries a default value is exposed in generated APIs.
 

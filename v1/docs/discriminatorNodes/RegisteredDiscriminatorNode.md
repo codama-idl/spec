@@ -1,4 +1,4 @@
-# `RegisteredDiscriminatorNode` (abstract)
+# RegisteredDiscriminatorNode (abstract)
 
 Every node tagged as a discriminator strategy.
 

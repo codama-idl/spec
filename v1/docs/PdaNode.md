@@ -1,4 +1,4 @@
-# `PdaNode`
+# PdaNode
 
 A program-derived address: its name, optional program ID override, and the seeds used to derive it.
 

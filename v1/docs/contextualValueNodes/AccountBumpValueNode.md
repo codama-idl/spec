@@ -1,4 +1,4 @@
-# `AccountBumpValueNode`
+# AccountBumpValueNode
 
 Refers to the bump seed of a named PDA-derived account in the surrounding instruction.
 

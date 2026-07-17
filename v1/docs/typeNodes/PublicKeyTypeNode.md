@@ -1,4 +1,4 @@
-# `PublicKeyTypeNode`
+# PublicKeyTypeNode
 
 A 32-byte Solana public key.
 

@@ -1,4 +1,4 @@
-# `EnumTypeNode`
+# EnumTypeNode
 
 A tagged union: a numeric discriminator followed by one of several variant payloads.
 

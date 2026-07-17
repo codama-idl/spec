@@ -1,4 +1,4 @@
-# `Endianness`
+# Endianness
 
 The byte order of a numeric serialization.
 

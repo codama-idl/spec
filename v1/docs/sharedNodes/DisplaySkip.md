@@ -1,4 +1,4 @@
-# `DisplaySkip`
+# DisplaySkip
 
 Whether a member should be hidden from the fallback display list. The interpolated sentence on `instructionDisplayNode` is governed separately — a member may be referenced there regardless of its skip value.
 

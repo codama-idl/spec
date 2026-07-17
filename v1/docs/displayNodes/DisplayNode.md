@@ -1,4 +1,4 @@
-# `DisplayNode` (abstract)
+# DisplayNode (abstract)
 
 The composable form: any registered display node.
 

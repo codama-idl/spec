@@ -1,4 +1,4 @@
-# `PdaLinkNode`
+# PdaLinkNode
 
 A reference to a PDA defined elsewhere — possibly in a different program.
 

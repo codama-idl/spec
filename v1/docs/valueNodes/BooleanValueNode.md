@@ -1,4 +1,4 @@
-# `BooleanValueNode`
+# BooleanValueNode
 
 A concrete boolean value.
 

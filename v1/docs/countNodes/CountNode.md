@@ -1,4 +1,4 @@
-# `CountNode` (abstract)
+# CountNode (abstract)
 
 The composable form: any registered count node.
 

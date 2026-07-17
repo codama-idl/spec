@@ -1,4 +1,4 @@
-# `StructFieldTypeNode`
+# StructFieldTypeNode
 
 A named field within a struct type.
 

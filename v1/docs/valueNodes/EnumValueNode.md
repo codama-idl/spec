@@ -1,4 +1,4 @@
-# `EnumValueNode`
+# EnumValueNode
 
 A concrete value of a defined enum: a variant identifier plus an optional payload.
 

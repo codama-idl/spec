@@ -1,4 +1,4 @@
-# `InstructionDisplayNode`
+# InstructionDisplayNode
 
 Display metadata for an instruction: a short intent label and an interpolated sentence template. Either form may be absent; presentation strategy is left to the renderer.
 

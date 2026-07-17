@@ -1,4 +1,4 @@
-# `VariablePdaSeedNode`
+# VariablePdaSeedNode
 
 A PDA seed whose value is provided at derivation time, identified by name.
 

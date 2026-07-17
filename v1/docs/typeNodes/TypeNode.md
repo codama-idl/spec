@@ -1,4 +1,4 @@
-# `TypeNode` (abstract)
+# TypeNode (abstract)
 
 The composable form: any standalone type, or a reference to a defined type via `definedTypeLinkNode`.
 

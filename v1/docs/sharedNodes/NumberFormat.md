@@ -1,4 +1,4 @@
-# `NumberFormat`
+# NumberFormat
 
 The wire format of a numeric serialization.
 

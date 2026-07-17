@@ -1,4 +1,4 @@
-# `EnumEmptyVariantTypeNode`
+# EnumEmptyVariantTypeNode
 
 A unit-style variant of an enum that carries no payload.
 

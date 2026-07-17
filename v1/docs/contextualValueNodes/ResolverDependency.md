@@ -1,4 +1,4 @@
-# `ResolverDependency` (abstract)
+# ResolverDependency (abstract)
 
 The dependency forms accepted by a `resolverValueNode`.
 

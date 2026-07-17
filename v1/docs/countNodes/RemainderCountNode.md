@@ -1,4 +1,4 @@
-# `RemainderCountNode`
+# RemainderCountNode
 
 A count strategy where items are read until the buffer is exhausted.
 

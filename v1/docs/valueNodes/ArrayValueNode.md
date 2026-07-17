@@ -1,4 +1,4 @@
-# `ArrayValueNode`
+# ArrayValueNode
 
 A concrete array value: a list of value nodes.
 

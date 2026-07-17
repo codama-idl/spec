@@ -1,4 +1,4 @@
-# `InstructionRemainingAccountsValue` (abstract)
+# InstructionRemainingAccountsValue (abstract)
 
 The value forms accepted by an `instructionRemainingAccountsNode`.
 

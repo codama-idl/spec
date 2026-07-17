@@ -1,4 +1,4 @@
-# `StandaloneContextualValueNode` (abstract)
+# StandaloneContextualValueNode (abstract)
 
 Every contextual-value node usable as a top-level value.
 

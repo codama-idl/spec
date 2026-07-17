@@ -1,4 +1,4 @@
-# `NestedTypeNode` (recursive)
+# NestedTypeNode (recursive)
 
 A type, possibly wrapped in zero-or-more size, offset, sentinel, or hidden prefix/suffix modifiers. The wrapping is recursive: each modifier wraps another `nestedTypeNode<T>` until the inner `T` is reached.
 

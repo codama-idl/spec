@@ -1,4 +1,4 @@
-# `FieldDiscriminatorNode`
+# FieldDiscriminatorNode
 
 Identifies a node by the value of a named field at a known byte offset.
 

@@ -1,4 +1,4 @@
-# `InjectableStringValueNode` (abstract)
+# InjectableStringValueNode (abstract)
 
 A concrete string value, or a key resolved at presentation time from a surrounding provider.
 

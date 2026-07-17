@@ -1,4 +1,4 @@
-# `RegisteredValueNode` (abstract)
+# RegisteredValueNode (abstract)
 
 Every node tagged as a value-shaped node, including container variants.
 

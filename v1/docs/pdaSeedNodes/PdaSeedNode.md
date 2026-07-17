@@ -1,4 +1,4 @@
-# `PdaSeedNode` (abstract)
+# PdaSeedNode (abstract)
 
 The composable form: any registered PDA seed node.
 

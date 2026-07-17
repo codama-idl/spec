@@ -1,4 +1,4 @@
-# `SetTypeNode`
+# SetTypeNode
 
 A unique-valued collection. The item type is defined by `item`; the size is determined by the `count` strategy.
 

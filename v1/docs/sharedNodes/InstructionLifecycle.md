@@ -1,4 +1,4 @@
-# `InstructionLifecycle`
+# InstructionLifecycle
 
 The lifecycle stage of an instruction.
 

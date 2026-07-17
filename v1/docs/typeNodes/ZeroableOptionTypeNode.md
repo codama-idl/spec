@@ -1,4 +1,4 @@
-# `ZeroableOptionTypeNode`
+# ZeroableOptionTypeNode
 
 An optional value whose absence is signalled by a designated zero value rather than a presence flag.
 

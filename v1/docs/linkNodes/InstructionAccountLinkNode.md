@@ -1,4 +1,4 @@
-# `InstructionAccountLinkNode`
+# InstructionAccountLinkNode
 
 A reference to an account of another instruction.
 

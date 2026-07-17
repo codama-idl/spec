@@ -1,4 +1,4 @@
-# `StructFieldValueNode`
+# StructFieldValueNode
 
 A named field of a `structValueNode`.
 

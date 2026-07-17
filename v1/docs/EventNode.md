@@ -1,4 +1,4 @@
-# `EventNode`
+# EventNode
 
 A program event: its data shape and optional discriminators used to identify it on the wire.
 

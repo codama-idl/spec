@@ -1,4 +1,4 @@
-# `StandaloneTypeNode` (abstract)
+# StandaloneTypeNode (abstract)
 
 Every type node that can be used as a top-level type.
 

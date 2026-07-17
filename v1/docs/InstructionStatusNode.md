@@ -1,4 +1,4 @@
-# `InstructionStatusNode`
+# InstructionStatusNode
 
 The lifecycle stage of an instruction (draft, live, deprecated, archived) with an optional accompanying message.
 

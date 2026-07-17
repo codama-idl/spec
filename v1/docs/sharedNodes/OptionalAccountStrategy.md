@@ -1,4 +1,4 @@
-# `OptionalAccountStrategy`
+# OptionalAccountStrategy
 
 How an absent optional account is represented when serialising an instruction.
 

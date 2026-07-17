@@ -1,4 +1,4 @@
-# `InstructionAccountDisplayNode`
+# InstructionAccountDisplayNode
 
 Display metadata for an instruction account: its label in the fallback list and whether it is shown.
 

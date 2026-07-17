@@ -1,4 +1,4 @@
-# `ConstantPdaSeedNode`
+# ConstantPdaSeedNode
 
 A PDA seed with a constant value (e.g. a UTF-8 string or a fixed byte sequence).
 

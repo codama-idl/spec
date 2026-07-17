@@ -1,4 +1,4 @@
-# `InjectedValueNode`
+# InjectedValueNode
 
 A value resolved by key from a surrounding provider. A `providedNode` higher in the resolution tree supplies the actual value; the consumer references only the `key`, so the same type stays portable across instructions that wire the key differently. Resolution is a per-context property: a value with the same key may resolve in one instruction and not another.
 

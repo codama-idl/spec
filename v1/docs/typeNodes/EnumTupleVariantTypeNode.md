@@ -1,4 +1,4 @@
-# `EnumTupleVariantTypeNode`
+# EnumTupleVariantTypeNode
 
 A variant of an enum that carries a tuple payload (positional fields).
 

@@ -1,4 +1,4 @@
-# `ArrayTypeNode`
+# ArrayTypeNode
 
 A homogeneous list of items. The item type is defined by `item`; the length is determined by the `count` strategy.
 

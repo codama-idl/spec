@@ -1,4 +1,4 @@
-# `BytesValueNode`
+# BytesValueNode
 
 A concrete bytes value, encoded as text in the chosen encoding.
 

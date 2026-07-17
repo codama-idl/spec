@@ -1,4 +1,4 @@
-# `SolAmountTypeNode`
+# SolAmountTypeNode
 
 A SOL amount expressed in lamports under the wrapped numeric type.
 

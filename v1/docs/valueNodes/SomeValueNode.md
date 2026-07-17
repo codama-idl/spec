@@ -1,4 +1,4 @@
-# `SomeValueNode`
+# SomeValueNode
 
 The "present" value for an optional type, wrapping a concrete value node.
 

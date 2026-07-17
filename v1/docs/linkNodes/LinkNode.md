@@ -1,4 +1,4 @@
-# `LinkNode` (abstract)
+# LinkNode (abstract)
 
 The composable form: any registered link node.
 

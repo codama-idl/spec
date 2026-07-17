@@ -1,4 +1,4 @@
-# `BytesEncoding`
+# BytesEncoding
 
 How a string of bytes is encoded for transport.
 

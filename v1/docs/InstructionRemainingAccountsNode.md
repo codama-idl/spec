@@ -1,4 +1,4 @@
-# `InstructionRemainingAccountsNode`
+# InstructionRemainingAccountsNode
 
 A "remaining accounts" slot in an instruction — a variable-length tail of accounts derived from a value.
 

@@ -1,4 +1,4 @@
-# `TupleValueNode`
+# TupleValueNode
 
 A concrete tuple value: a fixed-length sequence of positional value nodes.
 

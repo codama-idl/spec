@@ -1,4 +1,4 @@
-# `SetValueNode`
+# SetValueNode
 
 A concrete set value: a list of unique value nodes.
 

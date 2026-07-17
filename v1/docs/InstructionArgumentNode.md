@@ -1,4 +1,4 @@
-# `InstructionArgumentNode`
+# InstructionArgumentNode
 
 A named argument of an instruction, with its type and an optional default value.
 

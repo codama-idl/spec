@@ -1,4 +1,4 @@
-# `InstructionArgumentLinkNode`
+# InstructionArgumentLinkNode
 
 A reference to an argument of another instruction.
 

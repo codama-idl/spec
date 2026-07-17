@@ -1,4 +1,4 @@
-# `RegisteredDisplayNode` (abstract)
+# RegisteredDisplayNode (abstract)
 
 Every node tagged as display metadata.
 

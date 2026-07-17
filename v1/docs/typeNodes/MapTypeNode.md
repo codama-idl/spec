@@ -1,4 +1,4 @@
-# `MapTypeNode`
+# MapTypeNode
 
 A keyed map. The key and value types are described by their respective type nodes; the entry count is determined by a count strategy.
 

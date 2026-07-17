@@ -1,4 +1,4 @@
-# `AccountLinkNode`
+# AccountLinkNode
 
 A reference to an account defined elsewhere — possibly in a different program.
 

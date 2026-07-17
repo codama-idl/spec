@@ -1,4 +1,4 @@
-# `StructTypeNode`
+# StructTypeNode
 
 A composite type made of an ordered list of named fields. Fields are encoded and decoded in declaration order.
 

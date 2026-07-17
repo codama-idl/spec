@@ -1,4 +1,4 @@
-# `TupleTypeNode`
+# TupleTypeNode
 
 A heterogeneous fixed-length sequence in which each positional slot has its own type.
 

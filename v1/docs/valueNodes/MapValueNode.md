@@ -1,4 +1,4 @@
-# `MapValueNode`
+# MapValueNode
 
 A concrete map value: a list of (key, value) entries.
 

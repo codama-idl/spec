@@ -1,4 +1,4 @@
-# `EnumVariantTypeNode` (abstract)
+# EnumVariantTypeNode (abstract)
 
 The variant flavours of an `enumTypeNode`.
 

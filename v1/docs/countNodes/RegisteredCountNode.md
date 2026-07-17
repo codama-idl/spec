@@ -1,4 +1,4 @@
-# `RegisteredCountNode` (abstract)
+# RegisteredCountNode (abstract)
 
 Every node tagged as a count strategy.
 

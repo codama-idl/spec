@@ -1,4 +1,4 @@
-# `InstructionNode`
+# InstructionNode
 
 A program instruction: its accounts, arguments, byte-delta hints, discriminators, optional status, and optional sub-instructions.
 

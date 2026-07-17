@@ -1,4 +1,4 @@
-# `SizeDiscriminatorNode`
+# SizeDiscriminatorNode
 
 Identifies a node by its expected total byte size.
 

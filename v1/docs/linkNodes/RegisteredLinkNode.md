@@ -1,4 +1,4 @@
-# `RegisteredLinkNode` (abstract)
+# RegisteredLinkNode (abstract)
 
 Every node tagged as a link to another part of the IDL.
 

@@ -1,4 +1,4 @@
-# `PayerValueNode`
+# PayerValueNode
 
 Refers to the wallet paying for the surrounding transaction.
 

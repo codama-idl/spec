@@ -1,4 +1,4 @@
-# `ProgramNode`
+# ProgramNode
 
 A Solana program: its identity, version, accounts, instructions, defined types, PDAs, events, errors, and constants.
 

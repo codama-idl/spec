@@ -1,4 +1,4 @@
-# `FixedCountNode`
+# FixedCountNode
 
 A count strategy that fixes the number of items at a constant value.
 

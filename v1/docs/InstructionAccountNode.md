@@ -1,4 +1,4 @@
-# `InstructionAccountNode`
+# InstructionAccountNode
 
 An account participating in an instruction, with its name, signing/writability flags, and an optional default value.
 

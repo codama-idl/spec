@@ -1,4 +1,4 @@
-# `StructValueNode`
+# StructValueNode
 
 A concrete struct value: a list of named field values.
 

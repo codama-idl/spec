@@ -1,4 +1,4 @@
-# `DefinedTypeLinkNode`
+# DefinedTypeLinkNode
 
 A reference to a defined type — possibly in a different program.
 

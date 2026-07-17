@@ -1,4 +1,4 @@
-# `AmountNumberDisplayNode`
+# AmountNumberDisplayNode
 
 Display metadata that presents a number as a scaled amount with an optional unit. The value is divided by `10 ^ decimals` and rendered alongside `unit` (e.g. `"USDC"`, `"%"`, `"bps"`).
 

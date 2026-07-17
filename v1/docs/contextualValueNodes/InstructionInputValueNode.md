@@ -1,4 +1,4 @@
-# `InstructionInputValueNode` (abstract)
+# InstructionInputValueNode (abstract)
 
 Anything that can be used as the input value for an instruction account or argument default. Covers concrete values, contextual references, and program links.
 

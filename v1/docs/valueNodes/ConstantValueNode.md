@@ -1,4 +1,4 @@
-# `ConstantValueNode`
+# ConstantValueNode
 
 A typed constant: a type node paired with a concrete value node.
 

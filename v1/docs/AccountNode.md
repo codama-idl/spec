@@ -1,4 +1,4 @@
-# `AccountNode`
+# AccountNode
 
 An on-chain account: its name, data structure, optional fixed size, optional PDA, and optional discriminators.
 

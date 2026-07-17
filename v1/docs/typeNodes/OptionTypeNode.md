@@ -1,4 +1,4 @@
-# `OptionTypeNode`
+# OptionTypeNode
 
 A value that may be present or absent (Some/None), with an explicit numeric prefix indicating presence.
 

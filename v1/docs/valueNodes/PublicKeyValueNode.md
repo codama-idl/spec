@@ -1,4 +1,4 @@
-# `PublicKeyValueNode`
+# PublicKeyValueNode
 
 A concrete public key, with an optional symbolic identifier for the address.
 

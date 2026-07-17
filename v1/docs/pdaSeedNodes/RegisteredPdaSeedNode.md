@@ -1,4 +1,4 @@
-# `RegisteredPdaSeedNode` (abstract)
+# RegisteredPdaSeedNode (abstract)
 
 Every node tagged as a PDA seed.
 

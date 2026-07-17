@@ -1,4 +1,4 @@
-# `SentinelTypeNode`
+# SentinelTypeNode
 
 Wraps another type and delimits it with a constant sentinel value written immediately after the wrapped type.
 

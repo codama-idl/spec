@@ -1,4 +1,4 @@
-# `PostOffsetStrategy`
+# PostOffsetStrategy
 
 How a post-offset modifier interprets its offset value after serialising the wrapped type.
 

@@ -1,4 +1,4 @@
-# `ValueNode` (abstract)
+# ValueNode (abstract)
 
 The composable form: any standalone value node.
 

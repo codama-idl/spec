@@ -1,4 +1,4 @@
-# `ContextualValueNode` (abstract)
+# ContextualValueNode (abstract)
 
 The composable form: any standalone contextual-value node.
 

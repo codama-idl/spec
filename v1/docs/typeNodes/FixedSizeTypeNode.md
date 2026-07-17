@@ -1,4 +1,4 @@
-# `FixedSizeTypeNode`
+# FixedSizeTypeNode
 
 Wraps another type and asserts a fixed total byte size. Padding or truncation is applied as needed.
 

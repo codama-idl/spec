@@ -1,4 +1,4 @@
-# `SizePrefixTypeNode`
+# SizePrefixTypeNode
 
 Wraps another type with a numeric prefix indicating the byte length of the wrapped type.
 

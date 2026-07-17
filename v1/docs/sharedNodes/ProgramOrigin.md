@@ -1,4 +1,4 @@
-# `ProgramOrigin`
+# ProgramOrigin
 
 The toolchain that originally generated a program description.
 

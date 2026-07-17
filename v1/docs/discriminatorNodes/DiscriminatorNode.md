@@ -1,4 +1,4 @@
-# `DiscriminatorNode` (abstract)
+# DiscriminatorNode (abstract)
 
 The composable form: any registered discriminator node.
 

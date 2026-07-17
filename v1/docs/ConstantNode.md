@@ -1,4 +1,4 @@
-# `ConstantNode`
+# ConstantNode
 
 A named constant exposed by the program: a typed value associated with a name.
 

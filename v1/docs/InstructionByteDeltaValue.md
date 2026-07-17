@@ -1,4 +1,4 @@
-# `InstructionByteDeltaValue` (abstract)
+# InstructionByteDeltaValue (abstract)
 
 The value forms accepted by an `instructionByteDeltaNode`.
 

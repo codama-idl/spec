@@ -1,4 +1,4 @@
-# `PdaSeedValueNode`
+# PdaSeedValueNode
 
 Pairs a PDA seed name with the value to substitute when deriving the PDA.
 

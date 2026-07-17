@@ -1,4 +1,4 @@
-# `StandaloneValueNode` (abstract)
+# StandaloneValueNode (abstract)
 
 Every value node that can be used as a top-level value.
 

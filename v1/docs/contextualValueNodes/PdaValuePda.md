@@ -1,4 +1,4 @@
-# `PdaValuePda` (abstract)
+# PdaValuePda (abstract)
 
 A `pdaValueNode` may reference a PDA either by link or inline.
 

@@ -1,4 +1,4 @@
-# `ProgramLinkNode`
+# ProgramLinkNode
 
 A reference to a program by name.
 

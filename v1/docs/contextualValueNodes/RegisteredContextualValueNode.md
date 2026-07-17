@@ -1,4 +1,4 @@
-# `RegisteredContextualValueNode` (abstract)
+# RegisteredContextualValueNode (abstract)
 
 Every node tagged as a contextual-value node, including helper variants.
 
