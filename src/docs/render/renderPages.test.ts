@@ -35,7 +35,7 @@ describe('renderNodePage', () => {
 
         expect(page.ref).toEqual({ kind: 'node', name: 'numberValueNode' });
         expect(page.pathSegments).toEqual(['generated', 'page']);
-        expect(page.content).toContain('# `NumberValueNode`');
+        expect(page.content).toContain('# NumberValueNode');
         expect(page.content).toContain('A literal number value.');
         expect(page.content).toContain('## Attributes');
         expect(page.content).toContain('### Data');
@@ -69,7 +69,7 @@ describe('renderEnumPage', () => {
 
         const page = renderEnumPage(enumeration, makeCtx());
 
-        expect(page.content).toContain('# `ValueScope`');
+        expect(page.content).toContain('# ValueScope');
         expect(page.content).toContain('## Variants');
         expect(page.content).toContain('- `global` - Applies everywhere.');
         // no docs -> bare label, no trailing ' - ' blurb

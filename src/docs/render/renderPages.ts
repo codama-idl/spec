@@ -58,7 +58,7 @@ export function renderNodePage(node: NodeSpec, ctx: RenderCtx): DocPage {
     const cols = ['Attribute', 'Type', 'Description'];
     const parts: (string | undefined)[] = [
         // header
-        markup.heading(1, markup.code(pascalCase(node.kind))),
+        markup.heading(1, pascalCase(node.kind)),
         // description
         renderSpecDocs(node.docs, markup),
         // injection: afterDescription
@@ -91,7 +91,7 @@ export function renderUnionPage(union: UnionSpec, ctx: RenderCtx): DocPage {
     );
     const parts: (string | undefined)[] = [
         // header
-        markup.heading(1, `${markup.code(pascalCase(union.name))} (abstract)`),
+        markup.heading(1, `${pascalCase(union.name)} (abstract)`),
         // description
         renderSpecDocs(union.docs, markup),
         // injection: afterDescription
@@ -120,7 +120,7 @@ export function renderNestedUnionPage(nestedUnion: NestedUnionSpec, ctx: RenderC
     );
     const parts: (string | undefined)[] = [
         // header
-        markup.heading(1, `${markup.code(pascalCase(nestedUnion.name))} (recursive)`),
+        markup.heading(1, `${pascalCase(nestedUnion.name)} (recursive)`),
         // description
         renderSpecDocs(nestedUnion.docs, markup),
         // injection: afterDescription
@@ -149,7 +149,7 @@ export function renderEnumPage(enumeration: EnumerationSpec, ctx: RenderCtx): Do
     );
     const parts: (string | undefined)[] = [
         // header
-        markup.heading(1, markup.code(pascalCase(enumeration.name))),
+        markup.heading(1, pascalCase(enumeration.name)),
         // description
         renderSpecDocs(enumeration.docs, markup),
         // injection: afterDescription
