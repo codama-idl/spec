@@ -52,6 +52,19 @@ const myNode = defineNode('myNode', {
 });
 ```
 
+## Conventions
+
+### Array attributes are omitted when empty
+
+Every array attribute of a node — whether declared with `attribute(...)` or `optionalAttribute(...)` — follows a single serialisation convention:
+
+- **On write**, an empty array is omitted from the encoded document. Codegen targets never emit `"myArray": []`.
+- **On read**, a missing array attribute defaults to the empty array. Consumers MUST normalise an absent array to `[]` rather than treating it as a distinct state.
+
+In other words, an absent array and an empty array are semantically identical: both mean "no items". This keeps encoded IDLs small (relevant because they are often uploaded on-chain) and makes adding or omitting an array attribute a non-breaking change.
+
+The `attribute` vs `optionalAttribute` distinction therefore has **no effect on how arrays serialise** — it only documents intent and governs the optionality of non-array attributes. Should a future attribute genuinely need to distinguish "absent" from "empty", model it explicitly (e.g. an optional attribute wrapping the array) rather than relying on a bare array's presence.
+
 ## Repository layout
 
 ```
