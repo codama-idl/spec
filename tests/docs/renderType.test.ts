@@ -25,7 +25,7 @@ describe('renderType', () => {
     it('renders a nestedUnion as Alias<Inner>, both linked', () => {
         expect(
             renderType({ kind: 'nestedUnion', alias: 'nestedTypeNode', name: 'structTypeNode' }, markdown, linkTo),
-        ).toBe('[`NestedTypeNode`](#nestedUnion:nestedTypeNode)<[`StructTypeNode`](#node:structTypeNode)>');
+        ).toBe('[`NestedTypeNode`](#nestedUnion:nestedTypeNode)\\<[`StructTypeNode`](#node:structTypeNode)>');
     });
     it('renders primitives as code spans', () => {
         expect(renderType({ kind: 'integer', width: 'u64' }, markdown, linkTo)).toBe('`u64`');

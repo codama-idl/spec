@@ -52,6 +52,12 @@ describe('markdownRenderer', () => {
         expect(markdown.list('numbered', ['a', 'b'])).toBe('1. a\n2. b');
     });
 
+    it('escapes mdx-significant chars in prose but leaves inline code spans literal', () => {
+        expect(markdown.prose('width < 128 and {x}')).toBe('width \\< 128 and \\{x}');
+        expect(markdown.prose('use `Array<T>` here')).toBe('use `Array<T>` here');
+        expect(markdown.escapeChar('<')).toBe('\\<');
+    });
+
     it('fences code spans so inner backticks do not close the span early', () => {
         // no backticks: single-backtick fence, unchanged
         expect(markdown.code('u64')).toBe('`u64`');
