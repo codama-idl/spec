@@ -1,8 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
 import type { EnumerationSpec, NodeSpec } from '../../api';
-import { relativeLinks } from '../links';
-import { LocalDocsPathConfig } from '../pathConfig';
 import type { DocRef, NavRegistry } from '../types';
 import { markdownRenderer } from './markdown';
 import type { RenderCtx } from './renderPages';
@@ -17,7 +15,7 @@ function makeCtx(): RenderCtx {
     return {
         markup: markdownRenderer,
         registry,
-        config: { pathConfig: LocalDocsPathConfig, linkStrategy: relativeLinks('md') },
+        config: {},
         link: () => '#',
     };
 }

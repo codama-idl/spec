@@ -20,10 +20,10 @@ import type {
     MarkupRenderer,
     NavRegistry,
 } from '../types';
-import { BLOCK_SEPARATOR, DEFAULT_ROOT_DESCRIPTION, DEFAULT_ROOT_TITLE, GROUP_TITLES } from './constants';
+import { BLOCK_SEPARATOR, GROUP_TITLES, ROOT_DESCRIPTION, ROOT_TITLE } from './constants';
 import { isDocChild, linkedEntity, renderType } from './renderType';
 
-/** Shared context threaded through every page renderer. `link` is the registry-resolved LinkStrategy. */
+/** Shared context threaded through every page renderer. `link` resolves a relative `.mdx` href between two pages. */
 export interface RenderCtx {
     markup: MarkupRenderer;
     registry: NavRegistry;
@@ -206,12 +206,10 @@ export function renderRootIndexPage(spec: Spec, ctx: RenderCtx): DocPage {
     const { markup } = ctx;
     const ref: DocRef = { kind: 'rootIndex' };
     const { linkTo, createInjectContext } = createPageContext(ctx, ref, { kind: 'rootIndex', spec });
-    const title = ctx.config.root?.title ?? DEFAULT_ROOT_TITLE;
-    const description = ctx.config.root?.description ?? DEFAULT_ROOT_DESCRIPTION;
 
     // categories with their own directory, listed alphabetically as PascalCased links
     const categories: ListItem[] = spec.categories
-        .filter(category => hasOwnDirectory(ctx.config.pathConfig, category))
+        .filter(category => hasOwnDirectory(category))
         .sort((a, b) => a.name.localeCompare(b.name))
         .map(category =>
             withBlurb(
@@ -221,14 +219,14 @@ export function renderRootIndexPage(spec: Spec, ctx: RenderCtx): DocPage {
         );
     // root-level categories (no own directory, e.g. topLevel) get their own section below
     const rootSections = spec.categories
-        .filter(category => !hasOwnDirectory(ctx.config.pathConfig, category))
+        .filter(category => !hasOwnDirectory(category))
         .map(category => renderRootCategorySection(category, ctx, linkTo));
 
     const parts: (string | undefined)[] = [
         // header: title
-        markup.heading(1, title),
+        markup.heading(1, ROOT_TITLE),
         // description
-        markup.paragraph(description),
+        markup.paragraph(ROOT_DESCRIPTION),
         // injection: afterDescription
         ctx.config.inject?.(createInjectContext('afterDescription')),
         // version

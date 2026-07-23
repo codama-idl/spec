@@ -4,11 +4,11 @@ import type { CategoryGroup } from '../types';
 /** Blank line between rendered blocks (headings, tables, paragraphs). */
 export const BLOCK_SEPARATOR = '\n\n';
 
-/** Fallback root-page title when `config.root.title` is not set. */
-export const DEFAULT_ROOT_TITLE = 'Codama spec';
+/** Root-page title. */
+export const ROOT_TITLE = 'Codama Spec';
 
-/** Fallback root-page description when `config.root.description` is not set. */
-export const DEFAULT_ROOT_DESCRIPTION = 'The canonical Codama node specification.';
+/** Root-page description. */
+export const ROOT_DESCRIPTION = 'The canonical Codama node specification.';
 
 /** The display heading for each category group kind - a rendering concern, kept out of the CategoryGroup data. */
 export const GROUP_TITLES: Record<CategoryGroup['kind'], string> = {

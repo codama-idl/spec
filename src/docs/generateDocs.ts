@@ -1,5 +1,6 @@
 import type { Spec } from '../api';
-import { buildNavigation, buildNavRegistry, hasOwnDirectory } from './navigation';
+import { relativeMdxLink } from './links';
+import { buildNavRegistry, hasOwnDirectory } from './navigation';
 import {
     markdownRenderer,
     renderCategoryIndexPage,
@@ -13,10 +14,10 @@ import type { RenderCtx } from './render';
 import type { DocConfig, DocModel, DocPage, DocRef } from './types';
 
 /** Turns a Spec into a DocModel. */
-export function generateDocs(spec: Spec, config: DocConfig): DocModel {
-    const registry = buildNavRegistry(config.pathConfig, spec);
+export function generateDocs(spec: Spec, config: DocConfig = {}): DocModel {
+    const registry = buildNavRegistry(spec);
     function link(from: DocRef, to: DocRef): string {
-        return config.linkStrategy(registry.lookup(from), registry.lookup(to));
+        return relativeMdxLink(registry.lookup(from), registry.lookup(to));
     }
     const ctx: RenderCtx = { markup: markdownRenderer, registry, config, link };
 
@@ -34,12 +35,12 @@ export function generateDocs(spec: Spec, config: DocConfig): DocModel {
         for (const enumeration of category.enumerations) {
             pages.push(renderEnumPage(enumeration, ctx));
         }
-        if (hasOwnDirectory(config.pathConfig, category)) {
+        if (hasOwnDirectory(category)) {
             // topLevel shares the root index
             pages.push(renderCategoryIndexPage(category, ctx));
         }
     }
     pages.push(renderRootIndexPage(spec, ctx));
 
-    return { pages, navigation: buildNavigation(config.pathConfig, spec) };
+    return { pages };
 }
