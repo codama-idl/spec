@@ -2,12 +2,6 @@ import type { CategorySpec, EnumerationSpec, NestedUnionSpec, NodeSpec, Spec, Un
 
 /** Configuration for the docs generator */
 export interface DocConfig {
-    /** Maps refs and categories to locations */
-    readonly pathConfig: PathConfig;
-    /** Link strategy for href computation (absolute, relative).  */
-    readonly linkStrategy: LinkStrategy;
-    /** Root page overrides */
-    readonly root?: { readonly title: string; readonly description: string };
     /** Hook for injecting extra markup to a page via defined slots. */
     readonly inject?: InjectContent;
 }
@@ -37,22 +31,9 @@ export interface DocPage {
     readonly content: string;
 }
 
-/** The navigation tree of a DocModel - top-level root refs plus grouped categories. */
-export interface Navigation {
-    readonly root: readonly DocRef[];
-    readonly categories: readonly NavCategory[];
-}
-
-/** A navigation group - a category name and the ordered refs filed under it. */
-export interface NavCategory {
-    readonly name: string;
-    readonly pages: readonly DocRef[];
-}
-
-/** The complete generator output - every rendered page plus the navigation tree. */
+/** The complete generator output - every rendered page. */
 export interface DocModel {
     readonly pages: readonly DocPage[];
-    readonly navigation: Navigation;
 }
 
 /** Internal registry assigning every entity its path segments. `lookup` resolves a ref to its entry. */
@@ -67,29 +48,8 @@ export interface NavEntry {
     readonly pathSegments: readonly string[];
 }
 
-/**
- * Maps refs and categories to on-disk locations, all extension-less.
- *
- * @example
- * ```ts
- * const localDocs: PathConfig = {
- *     categoryDir: (category) => `${category.name}Nodes`, // 'pdaSeed' -> 'pdaSeedNodes'
- *     fileName: (ref) => displayName(ref), // node ref -> PascalCased 'ConstantPdaSeedNode'
- *     indexFileName: 'README',
- * };
- * ```
- */
-export interface PathConfig {
-    /** Transform directory name for a category, '' means the docs root. Example: category 'pdaSeed' -> 'pdaSeedNodes'. */
-    categoryDir: (category: CategorySpec) => string;
-    /** Transform basename for a ref. Example: node ref constantPdaSeedNode -> 'ConstantPdaSeedNode'. */
-    fileName: (ref: DocRef) => string;
-    /** Define basename for index pages. Example: 'README' or 'index' or 'landing'. */
-    indexFileName: string;
-}
-
-/** Computes the href from one page to another, given both nav entries. */
-export type LinkStrategy = (from: NavEntry, to: NavEntry) => string;
+/** A list item: a leaf line, or a line with a nested sub-list. */
+export type ListItem = string | { readonly content: string; readonly children: readonly ListItem[] };
 
 /** Markup renderer interface for documentation - each method renders one block. */
 export interface MarkupRenderer {
@@ -97,11 +57,18 @@ export interface MarkupRenderer {
     paragraph(content: string): string;
     table(head: readonly string[], rows: readonly (readonly string[])[]): string; // padded GitHub-style
     codeBlock(language: string, code: string): string;
-    list(ordered: boolean, items: readonly string[]): string;
+    list(type: 'bulleted' | 'numbered', items: readonly ListItem[]): string;
     code(value: string): string;
     link(text: string, href: string): string;
     bold(content: string): string;
     italic(content: string): string;
+    /**
+     * Escape authored prose (markdown) so the generated output is safe as both `.md` and `.mdx`.
+     * Neutralizes the two mdx-significant chars - `<` (opens JSX) and `{` (opens an expression) - outside code spans,
+     * while leaving existing markdown live: code spans, emphasis, links, etc. render as authored. Use for spec text.
+     */
+    prose(value: string): string;
+    escapeChar(value: string): string;
 }
 
 /** Hook for injecting extra markup to a page via defined slots. */
