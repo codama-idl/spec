@@ -72,9 +72,7 @@ export function renderNodePage(node: NodeSpec, ctx: RenderCtx): DocPage {
 
 /** Render all Node examples. Every language carried by the spec is rendered. */
 function renderExamples(examples: DocExamples, markup: MarkupRenderer): string | undefined {
-    const rendered = examples
-        .map(example => renderExample(example, markup))
-        .filter(block => block !== undefined);
+    const rendered = examples.map(example => renderExample(example, markup)).filter(block => block !== undefined);
     if (!rendered.length) return undefined;
     return [markup.heading(2, 'Examples'), ...rendered].join(BLOCK_SEPARATOR);
 }

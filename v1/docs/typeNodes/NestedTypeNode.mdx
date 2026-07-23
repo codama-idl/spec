@@ -1,0 +1,15 @@
+# NestedTypeNode (recursive)
+
+A type, possibly wrapped in zero-or-more size, offset, sentinel, or hidden prefix/suffix modifiers. The wrapping is recursive: each modifier wraps another `nestedTypeNode<T>` until the inner `T` is reached.
+
+Base: [`TypeNode`](./TypeNode.mdx)
+
+## Wrappers
+
+- [`FixedSizeTypeNode`](./FixedSizeTypeNode.mdx)
+- [`SizePrefixTypeNode`](./SizePrefixTypeNode.mdx)
+- [`PreOffsetTypeNode`](./PreOffsetTypeNode.mdx)
+- [`PostOffsetTypeNode`](./PostOffsetTypeNode.mdx)
+- [`SentinelTypeNode`](./SentinelTypeNode.mdx)
+- [`HiddenPrefixTypeNode`](./HiddenPrefixTypeNode.mdx)
+- [`HiddenSuffixTypeNode`](./HiddenSuffixTypeNode.mdx)
