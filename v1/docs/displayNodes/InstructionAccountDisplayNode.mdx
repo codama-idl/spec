@@ -1,0 +1,18 @@
+# InstructionAccountDisplayNode
+
+Display metadata for an instruction account: its label in the fallback list and whether it is shown.
+
+## Attributes
+
+### Data
+
+| Attribute | Type                              | Description                                                 |
+| --------- | --------------------------------- | ----------------------------------------------------------- |
+| `kind`    | `"instructionAccountDisplayNode"` | The node discriminator.                                     |
+| `label`   | `string` _(optional)_             | An override label shown in the fallback list (e.g. `"To"`). |
+
+### Children
+
+| Attribute | Type                                                         | Description                                                                              |
+| --------- | ------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| `skip`    | [`DisplaySkip`](../sharedNodes/DisplaySkip.mdx) _(optional)_ | Whether the account is shown in the fallback list. Defaults to `"never"` (always shown). |

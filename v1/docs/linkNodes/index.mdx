@@ -1,0 +1,18 @@
+# Link
+
+Link nodes — references to other named entities (programs, PDAs, accounts, …).
+
+## Nodes
+
+- [`AccountLinkNode`](./AccountLinkNode.mdx) - A reference to an account defined elsewhere — possibly in a different program.
+- [`DefinedTypeLinkNode`](./DefinedTypeLinkNode.mdx) - A reference to a defined type — possibly in a different program.
+- [`InstructionAccountLinkNode`](./InstructionAccountLinkNode.mdx) - A reference to an account of another instruction.
+- [`InstructionArgumentLinkNode`](./InstructionArgumentLinkNode.mdx) - A reference to an argument of another instruction.
+- [`InstructionLinkNode`](./InstructionLinkNode.mdx) - A reference to an instruction defined elsewhere — possibly in a different program.
+- [`PdaLinkNode`](./PdaLinkNode.mdx) - A reference to a PDA defined elsewhere — possibly in a different program.
+- [`ProgramLinkNode`](./ProgramLinkNode.mdx) - A reference to a program by name.
+
+## Unions
+
+- [`LinkNode`](./LinkNode.mdx) - The composable form: any registered link node.
+- [`RegisteredLinkNode`](./RegisteredLinkNode.mdx) - Every node tagged as a link to another part of the IDL.

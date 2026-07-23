@@ -1,0 +1,18 @@
+# InstructionAccountLinkNode
+
+A reference to an account of another instruction.
+
+## Attributes
+
+### Data
+
+| Attribute | Type                           | Description                                     |
+| --------- | ------------------------------ | ----------------------------------------------- |
+| `kind`    | `"instructionAccountLinkNode"` | The node discriminator.                         |
+| `name`    | `CamelCaseString`              | The name of the referenced instruction account. |
+
+### Children
+
+| Attribute     | Type                                                            | Description                                                                                              |
+| ------------- | --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `instruction` | [`InstructionLinkNode`](./InstructionLinkNode.mdx) _(optional)_ | The instruction the referenced account belongs to. When omitted, the surrounding instruction is assumed. |

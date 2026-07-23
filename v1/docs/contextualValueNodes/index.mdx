@@ -1,0 +1,29 @@
+# ContextualValue
+
+Contextual-value nodes — references resolved at instruction-build time (account values, argument values, …).
+
+## Nodes
+
+- [`AccountBumpValueNode`](./AccountBumpValueNode.mdx) - Refers to the bump seed of a named PDA-derived account in the surrounding instruction.
+- [`AccountFieldValueNode`](./AccountFieldValueNode.mdx) - Refers to a field of a named account's decoded data.
+- [`AccountValueNode`](./AccountValueNode.mdx) - Refers to a named account in the surrounding instruction.
+- [`ArgumentValueNode`](./ArgumentValueNode.mdx) - Refers to a named argument of the surrounding instruction.
+- [`ConditionalValueNode`](./ConditionalValueNode.mdx) - A branching contextual value.
+- [`IdentityValueNode`](./IdentityValueNode.mdx) - Refers to the wallet identity providing the instruction context.
+- [`PayerValueNode`](./PayerValueNode.mdx) - Refers to the wallet paying for the surrounding transaction.
+- [`PdaSeedValueNode`](./PdaSeedValueNode.mdx) - Pairs a PDA seed name with the value to substitute when deriving the PDA.
+- [`PdaValueNode`](./PdaValueNode.mdx) - Resolves to a PDA derived from a list of seed values.
+- [`ProgramIdValueNode`](./ProgramIdValueNode.mdx) - Refers to the program ID of the surrounding instruction.
+- [`ResolverValueNode`](./ResolverValueNode.mdx) - A custom resolver: a named function provided by the consumer that produces a value.
+
+## Unions
+
+- [`ConditionalValueCondition`](./ConditionalValueCondition.mdx) - The condition forms accepted by a `conditionalValueNode`.
+- [`ContextualValueNode`](./ContextualValueNode.mdx) - The composable form: any standalone contextual-value node.
+- [`InstructionInputValueNode`](./InstructionInputValueNode.mdx) - Anything that can be used as the input value for an instruction account or argument default.
+- [`PdaSeedValueValue`](./PdaSeedValueValue.mdx) - The value forms accepted by a `pdaSeedValueNode`.
+- [`PdaValuePda`](./PdaValuePda.mdx) - A `pdaValueNode` may reference a PDA either by link or inline.
+- [`PdaValueProgramId`](./PdaValueProgramId.mdx) - The program-id forms accepted by a `pdaValueNode`.
+- [`RegisteredContextualValueNode`](./RegisteredContextualValueNode.mdx) - Every node tagged as a contextual-value node, including helper variants.
+- [`ResolverDependency`](./ResolverDependency.mdx) - The dependency forms accepted by a `resolverValueNode`.
+- [`StandaloneContextualValueNode`](./StandaloneContextualValueNode.mdx) - Every contextual-value node usable as a top-level value.

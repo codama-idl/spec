@@ -1,0 +1,17 @@
+# SetValueNode
+
+A concrete set value: a list of unique value nodes.
+
+## Attributes
+
+### Data
+
+| Attribute | Type             | Description             |
+| --------- | ---------------- | ----------------------- |
+| `kind`    | `"setValueNode"` | The node discriminator. |
+
+### Children
+
+| Attribute | Type                             | Description           |
+| --------- | -------------------------------- | --------------------- |
+| `items`   | [`ValueNode`](./ValueNode.mdx)[] | The items of the set. |

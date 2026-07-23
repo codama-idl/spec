@@ -1,7 +1,5 @@
 export { generateDocs } from './generateDocs';
-export { absoluteLinks, relativeLinks } from './links';
-export { LocalDocsPathConfig } from './pathConfig';
-export { markdownRenderer } from './render/markdown';
+export { markdownRenderer } from './render';
 export type {
     DocConfig,
     DocFile,
@@ -11,10 +9,5 @@ export type {
     InjectContent,
     InjectionSlot,
     InjectPage,
-    LinkStrategy,
     MarkupRenderer,
-    NavCategory,
-    NavEntry,
-    Navigation,
-    PathConfig,
 } from './types';
