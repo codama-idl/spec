@@ -11,15 +11,15 @@ import {
     renderUnionPage,
 } from './render';
 import type { RenderCtx } from './render';
-import type { DocConfig, DocModel, DocPage, DocRef } from './types';
+import type { DocModel, DocPage, DocRef } from './types';
 
 /** Turns a Spec into a DocModel. */
-export function generateDocs(spec: Spec, config: DocConfig = {}): DocModel {
+export function generateDocs(spec: Spec): DocModel {
     const registry = buildNavRegistry(spec);
     function link(from: DocRef, to: DocRef): string {
         return relativeMdxLink(registry.lookup(from), registry.lookup(to));
     }
-    const ctx: RenderCtx = { markup: markdownRenderer, registry, config, link };
+    const ctx: RenderCtx = { markup: markdownRenderer, registry, link };
 
     const pages: DocPage[] = [];
     for (const category of spec.categories) {

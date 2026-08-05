@@ -11,17 +11,7 @@ import type {
 } from '../../api';
 import { categoryGroups, hasOwnDirectory } from '../navigation';
 import { displayName, refName } from '../ref';
-import type {
-    CategoryGroup,
-    DocConfig,
-    DocPage,
-    DocRef,
-    InjectionSlot,
-    InjectPage,
-    ListItem,
-    MarkupRenderer,
-    NavRegistry,
-} from '../types';
+import type { CategoryGroup, DocPage, DocRef, ListItem, MarkupRenderer, NavRegistry } from '../types';
 import { BLOCK_SEPARATOR, GROUP_TITLES, ROOT_DESCRIPTION, ROOT_TITLE } from './constants';
 import { isDocChild, linkedEntity, renderType } from './renderType';
 
@@ -29,21 +19,18 @@ import { isDocChild, linkedEntity, renderType } from './renderType';
 export interface RenderCtx {
     markup: MarkupRenderer;
     registry: NavRegistry;
-    config: DocConfig;
     link: (from: DocRef, to: DocRef) => string;
 }
 
-/** Per-page helpers: `linkTo` binds this page as the link source, `createInjectContext` builds a slot's inject context. */
-function createPageContext(ctx: RenderCtx, from: DocRef, page: InjectPage) {
-    const linkTo = (target: DocRef): string => ctx.link(from, target);
-    const createInjectContext = (slot: InjectionSlot) => ({ page, slot, markup: ctx.markup, linkTo });
-    return { linkTo, createInjectContext };
+/** Binds a page as the link source, so renderers resolve hrefs by target ref alone. */
+function linkFrom(ctx: RenderCtx, from: DocRef): (target: DocRef) => string {
+    return (target: DocRef): string => ctx.link(from, target);
 }
 
 export function renderNodePage(node: NodeSpec, ctx: RenderCtx): DocPage {
     const { markup } = ctx;
     const ref: DocRef = { kind: 'node', name: node.kind };
-    const { linkTo, createInjectContext } = createPageContext(ctx, ref, { kind: 'node', node });
+    const linkTo = linkFrom(ctx, ref);
 
     // classify: synthesized `kind` row first, then each attribute into Data or Children (declaration order)
     const dataRows: string[][] = [[markup.code('kind'), markup.code(`"${node.kind}"`), 'The node discriminator.']];
@@ -63,8 +50,6 @@ export function renderNodePage(node: NodeSpec, ctx: RenderCtx): DocPage {
         markup.heading(1, pascalCase(node.kind)),
         // description
         renderSpecDocs(node.docs, markup),
-        // injection: afterDescription
-        ctx.config.inject?.(createInjectContext('afterDescription')),
         // attributes section
         markup.heading(2, 'Attributes'),
         // data table
@@ -73,8 +58,6 @@ export function renderNodePage(node: NodeSpec, ctx: RenderCtx): DocPage {
         childRows.length
             ? `${markup.heading(3, 'Children')}${BLOCK_SEPARATOR}${markup.table(cols, childRows)}`
             : undefined,
-        // injection: end
-        ctx.config.inject?.(createInjectContext('end')),
     ];
     return {
         ref,
@@ -86,7 +69,7 @@ export function renderNodePage(node: NodeSpec, ctx: RenderCtx): DocPage {
 export function renderUnionPage(union: UnionSpec, ctx: RenderCtx): DocPage {
     const { markup } = ctx;
     const ref: DocRef = { kind: 'union', name: union.name };
-    const { linkTo, createInjectContext } = createPageContext(ctx, ref, { kind: 'union', union });
+    const linkTo = linkFrom(ctx, ref);
     const members = markup.list(
         'bulleted',
         union.members.map(member => linkedEntity({ kind: member.kind, name: member.name }, markup, linkTo)),
@@ -96,14 +79,10 @@ export function renderUnionPage(union: UnionSpec, ctx: RenderCtx): DocPage {
         markup.heading(1, `${pascalCase(union.name)} (abstract)`),
         // description
         renderSpecDocs(union.docs, markup),
-        // injection: afterDescription
-        ctx.config.inject?.(createInjectContext('afterDescription')),
         // body: lead-in
         markup.paragraph('One of the following:'),
         // body: member links
         members,
-        // injection: end
-        ctx.config.inject?.(createInjectContext('end')),
     ];
     return {
         ref,
@@ -115,7 +94,7 @@ export function renderUnionPage(union: UnionSpec, ctx: RenderCtx): DocPage {
 export function renderNestedUnionPage(nestedUnion: NestedUnionSpec, ctx: RenderCtx): DocPage {
     const { markup } = ctx;
     const ref: DocRef = { kind: 'nestedUnion', name: nestedUnion.name };
-    const { linkTo, createInjectContext } = createPageContext(ctx, ref, { kind: 'nestedUnion', nestedUnion });
+    const linkTo = linkFrom(ctx, ref);
     const wrappers = markup.list(
         'bulleted',
         nestedUnion.wrappers.map(wrapper => linkedEntity({ kind: 'node', name: wrapper }, markup, linkTo)),
@@ -125,14 +104,10 @@ export function renderNestedUnionPage(nestedUnion: NestedUnionSpec, ctx: RenderC
         markup.heading(1, `${pascalCase(nestedUnion.name)} (recursive)`),
         // description
         renderSpecDocs(nestedUnion.docs, markup),
-        // injection: afterDescription
-        ctx.config.inject?.(createInjectContext('afterDescription')),
         // body: base type
         markup.paragraph(`Base: ${renderType(nestedUnion.base, markup, linkTo)}`),
         // body: wrappers section
         `${markup.heading(2, 'Wrappers')}${BLOCK_SEPARATOR}${wrappers}`,
-        // injection: end
-        ctx.config.inject?.(createInjectContext('end')),
     ];
     return {
         ref,
@@ -144,7 +119,6 @@ export function renderNestedUnionPage(nestedUnion: NestedUnionSpec, ctx: RenderC
 export function renderEnumPage(enumeration: EnumerationSpec, ctx: RenderCtx): DocPage {
     const { markup } = ctx;
     const ref: DocRef = { kind: 'enumeration', name: enumeration.name };
-    const { createInjectContext } = createPageContext(ctx, ref, { kind: 'enumeration', enumeration });
     const variants = markup.list(
         'bulleted',
         enumeration.variants.map(variant => withBlurb(markup.code(variant.name), variant.docs)),
@@ -154,12 +128,8 @@ export function renderEnumPage(enumeration: EnumerationSpec, ctx: RenderCtx): Do
         markup.heading(1, pascalCase(enumeration.name)),
         // description
         renderSpecDocs(enumeration.docs, markup),
-        // injection: afterDescription
-        ctx.config.inject?.(createInjectContext('afterDescription')),
         // body: variants section
         `${markup.heading(2, 'Variants')}${BLOCK_SEPARATOR}${variants}`,
-        // injection: end
-        ctx.config.inject?.(createInjectContext('end')),
     ];
     return {
         ref,
@@ -184,18 +154,14 @@ function renderGroup(group: CategoryGroup, markup: MarkupRenderer, linkTo: (r: D
 export function renderCategoryIndexPage(category: CategorySpec, ctx: RenderCtx): DocPage {
     const { markup } = ctx;
     const ref: DocRef = { kind: 'categoryIndex', category: category.name };
-    const { linkTo, createInjectContext } = createPageContext(ctx, ref, { kind: 'categoryIndex', category });
+    const linkTo = linkFrom(ctx, ref);
     const parts: (string | undefined)[] = [
         // header: PascalCased category name (e.g. pdaSeed -> PdaSeed)
         markup.heading(1, pascalCase(category.name)),
         // description
         renderSpecDocs(category.docs, markup),
-        // injection: afterDescription
-        ctx.config.inject?.(createInjectContext('afterDescription')),
         // body: one section per non-empty group
         ...categoryGroups(category).map(group => renderGroup(group, markup, linkTo)),
-        // injection: end
-        ctx.config.inject?.(createInjectContext('end')),
     ];
     return {
         ref,
@@ -207,7 +173,7 @@ export function renderCategoryIndexPage(category: CategorySpec, ctx: RenderCtx):
 export function renderRootIndexPage(spec: Spec, ctx: RenderCtx): DocPage {
     const { markup } = ctx;
     const ref: DocRef = { kind: 'rootIndex' };
-    const { linkTo, createInjectContext } = createPageContext(ctx, ref, { kind: 'rootIndex', spec });
+    const linkTo = linkFrom(ctx, ref);
 
     // categories with their own directory, listed alphabetically as PascalCased links
     const categories: ListItem[] = spec.categories
@@ -229,16 +195,12 @@ export function renderRootIndexPage(spec: Spec, ctx: RenderCtx): DocPage {
         markup.heading(1, ROOT_TITLE),
         // description
         markup.paragraph(ROOT_DESCRIPTION),
-        // injection: afterDescription
-        ctx.config.inject?.(createInjectContext('afterDescription')),
         // version
         markup.paragraph(`Version ${spec.version}`),
         // body: linked categories
         `${markup.heading(2, 'Categories')}${BLOCK_SEPARATOR}${markup.list('bulleted', categories)}`,
         // body: one section per root-level category (topLevel)
         ...rootSections,
-        // injection: end
-        ctx.config.inject?.(createInjectContext('end')),
     ];
     return {
         ref,

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { generateDocs } from '../../src/docs/generateDocs';
-import type { DocModel, DocPage, DocRef, InjectContent } from '../../src/docs/types';
+import type { DocModel, DocPage, DocRef } from '../../src/docs/types';
 import { SPEC } from './__fixtures__/spec';
 
 function findPage(model: DocModel, predicate: (page: DocPage) => boolean): DocPage {
@@ -110,44 +110,5 @@ describe('generateDocs - root index', () => {
     });
     it('lists topLevel unions in the TopLevel section too, not just nodes (root index == Navigation)', () => {
         expect(rootContent()).toContain('- [HelperUnion](./HelperUnion.mdx)');
-    });
-});
-
-describe('generateDocs - injection slots', () => {
-    const inject: InjectContent = ({ page, slot, markup, linkTo }) => {
-        if (slot === 'afterDescription' && page.kind === 'node' && page.node.kind === 'constantPdaSeedNode') {
-            const link = markup.link('PdaNode', linkTo({ kind: 'node', name: 'pdaNode' }));
-            return `${markup.heading(2, 'Usage notes')}\n\n${markup.paragraph(`In a ${link}.`)}`;
-        }
-        return undefined;
-    };
-
-    function injectedContent(): string {
-        const model = generateDocs(SPEC, { inject });
-        return nodePage(model, 'constantPdaSeedNode').content;
-    }
-
-    it('places afterDescription content between description and Attributes', () => {
-        const content = injectedContent();
-        expect(content.indexOf('## Usage notes')).toBeLessThan(content.indexOf('## Attributes'));
-    });
-    it('resolves in-slot links relative to the current page', () => {
-        expect(injectedContent()).toContain('[PdaNode](../PdaNode.mdx)');
-    });
-    it('throws when a slot links an unknown ref', () => {
-        const bad: InjectContent = ({ slot, linkTo }) => {
-            return slot === 'afterDescription' ? linkTo({ kind: 'node', name: 'nope' }) : undefined;
-        };
-        expect(() => generateDocs(SPEC, { inject: bad })).toThrow('Unresolved DocRef: node:nope');
-    });
-    it('injects into a non-node page (category index) via the discriminated page subject', () => {
-        const injectCat: InjectContent = ({ page, slot, markup }) => {
-            return slot === 'end' && page.kind === 'categoryIndex' && page.category.name === 'pdaSeed'
-                ? markup.paragraph(`Injected into ${page.category.name}.`)
-                : undefined;
-        };
-        const model = generateDocs(SPEC, { inject: injectCat });
-        const content = pageOfKind(model, 'categoryIndex', 'pdaSeed').content;
-        expect(content).toContain('Injected into pdaSeed.');
     });
 });

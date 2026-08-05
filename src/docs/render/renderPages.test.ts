@@ -15,7 +15,6 @@ function makeCtx(): RenderCtx {
     return {
         markup: markdownRenderer,
         registry,
-        config: {},
         link: () => '#',
     };
 }
