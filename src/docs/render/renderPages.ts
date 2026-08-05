@@ -1,3 +1,5 @@
+import { pascalCase } from '@codama/fragments';
+
 import type {
     AttributeSpec,
     CategorySpec,
@@ -8,7 +10,7 @@ import type {
     UnionSpec,
 } from '../../api';
 import { categoryGroups, hasOwnDirectory } from '../navigation';
-import { displayName, pascalCase, refName } from '../ref';
+import { displayName, refName } from '../ref';
 import type {
     CategoryGroup,
     DocConfig,
