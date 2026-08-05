@@ -1,12 +1,9 @@
 import { describe, expect, expectTypeOf, it } from 'vitest';
 
-import { displayName, docRefKey, pascalCase, refName } from '../../src/docs/ref';
+import { displayName, docRefKey, refName } from '../../src/docs/ref';
 import type { DocRef, DocRefKey } from '../../src/docs/types';
 
 describe('ref helpers', () => {
-    it('pascalCase capitalises only the first char', () => {
-        expect(pascalCase('constantPdaSeedNode')).toBe('ConstantPdaSeedNode');
-    });
     it('refName maps structural refs to sentinel names', () => {
         expect(refName({ kind: 'rootIndex' })).toBe('root');
         expect(refName({ kind: 'categoryIndex', category: 'pdaSeed' })).toBe('pdaSeed');
@@ -32,7 +29,6 @@ describe('ref types', () => {
         expectTypeOf(docRefKey).returns.toEqualTypeOf<DocRefKey>();
     });
     it('name helpers return plain strings', () => {
-        expectTypeOf(pascalCase).returns.toBeString();
         expectTypeOf(refName).returns.toBeString();
         expectTypeOf(displayName).returns.toBeString();
     });
