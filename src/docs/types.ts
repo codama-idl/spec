@@ -1,11 +1,3 @@
-import type { CategorySpec, EnumerationSpec, NestedUnionSpec, NodeSpec, Spec, UnionSpec } from '../api';
-
-/** Configuration for the docs generator */
-export interface DocConfig {
-    /** Hook for injecting extra markup to a page via defined slots. */
-    readonly inject?: InjectContent;
-}
-
 /**
  * A name-only reference to a doc page - the identity used for links and navigation.
  * Entity kinds (node, union, nestedUnion, enumeration) map 1:1 onto TypeExpr ref arms.
@@ -70,26 +62,6 @@ export interface MarkupRenderer {
     prose(value: string): string;
     escapeChar(value: string): string;
 }
-
-/** Hook for injecting extra markup to a page via defined slots. */
-export type InjectContent = (ctx: {
-    page: InjectPage;
-    slot: InjectionSlot;
-    markup: MarkupRenderer;
-    linkTo: (target: DocRef) => string;
-}) => string | undefined;
-
-/** Where injected content is placed within a page body. */
-export type InjectionSlot = 'afterDescription' | 'end';
-
-/** The current page as a discriminated spec subject - same kinds as DocRef. */
-export type InjectPage =
-    | { readonly kind: 'node'; readonly node: NodeSpec }
-    | { readonly kind: 'union'; readonly union: UnionSpec }
-    | { readonly kind: 'nestedUnion'; readonly nestedUnion: NestedUnionSpec }
-    | { readonly kind: 'enumeration'; readonly enumeration: EnumerationSpec }
-    | { readonly kind: 'categoryIndex'; readonly category: CategorySpec }
-    | { readonly kind: 'rootIndex'; readonly spec: Spec };
 
 /** A consumer-side emitted file - contains file path and string content. */
 export interface DocFile {

@@ -1,6 +1,6 @@
 import { describe, expectTypeOf, it } from 'vitest';
 
-import type { DocRef, DocRefKey, InjectPage } from '../../src/docs/types';
+import type { DocRef, DocRefKey } from '../../src/docs/types';
 
 describe('DocRef type', () => {
     it('exposes exactly the six known kinds', () => {
@@ -22,21 +22,5 @@ describe('DocRefKey type', () => {
         expectTypeOf<'categoryIndex:pdaSeed'>().toExtend<DocRefKey>();
         expectTypeOf<'node'>().not.toExtend<DocRefKey>();
         expectTypeOf<'unknownKind:foo'>().not.toExtend<DocRefKey>();
-    });
-});
-
-describe('InjectPage type', () => {
-    // The doc comment on both types states InjectPage kinds map 1:1 onto DocRef kinds.
-    // This guards that invariant: adding a kind to one without the other fails the build.
-    it('keeps its kind set in lockstep with DocRef', () => {
-        expectTypeOf<InjectPage['kind']>().toEqualTypeOf<DocRef['kind']>();
-    });
-    it('carries the spec subject matching each kind', () => {
-        expectTypeOf<Extract<InjectPage, { kind: 'node' }>>().toHaveProperty('node');
-        expectTypeOf<Extract<InjectPage, { kind: 'union' }>>().toHaveProperty('union');
-        expectTypeOf<Extract<InjectPage, { kind: 'nestedUnion' }>>().toHaveProperty('nestedUnion');
-        expectTypeOf<Extract<InjectPage, { kind: 'enumeration' }>>().toHaveProperty('enumeration');
-        expectTypeOf<Extract<InjectPage, { kind: 'categoryIndex' }>>().toHaveProperty('category');
-        expectTypeOf<Extract<InjectPage, { kind: 'rootIndex' }>>().toHaveProperty('spec');
     });
 });
