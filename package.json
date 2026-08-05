@@ -19,9 +19,9 @@
     },
     "files": [
         "./dist/types",
+        "!dist/types/docs/**",
         "./dist/index.*",
         "./dist/api.*",
-        "./dist/docs.*",
         "./dist/v1.*"
     ],
     "type": "commonjs",
@@ -50,17 +50,6 @@
             "node": {
                 "import": "./dist/api.node.mjs",
                 "require": "./dist/api.node.cjs"
-            }
-        },
-        "./docs": {
-            "types": "./dist/types/docs/index.d.ts",
-            "browser": {
-                "import": "./dist/docs.browser.mjs",
-                "require": "./dist/docs.browser.cjs"
-            },
-            "node": {
-                "import": "./dist/docs.node.mjs",
-                "require": "./dist/docs.node.cjs"
             }
         },
         "./v1": {

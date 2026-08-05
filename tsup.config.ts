@@ -11,7 +11,6 @@ type BuildOptions = {
 
 const ENTRY: Record<string, string> = {
     api: './src/api/index.ts',
-    docs: './src/docs/index.ts',
     index: './src/index.ts',
     v1: './src/v1/index.ts',
 };
