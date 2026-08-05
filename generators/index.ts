@@ -22,7 +22,8 @@ import { generate as generateJsonSpec } from './json-spec/index';
 
 type Generator = {
     name: string;
-    generate: () => Promise<void>;
+    /** Sync is allowed - the fragments render-map writers are sync. */
+    generate: () => Promise<void> | void;
 };
 
 const GENERATORS: readonly Generator[] = [
