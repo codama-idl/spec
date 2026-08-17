@@ -1,10 +1,11 @@
 import { relativePath } from '@codama/fragments';
 
+import { PAGE_EXTENSION } from './constants';
 import type { NavEntry } from './types';
 
-/** POSIX relative `.mdx` link from one page to another. */
-export function relativeMdxLink(from: NavEntry, to: NavEntry): string {
+/** POSIX relative link from one page to another, using the target's page extension. */
+export function relativePageLink(from: NavEntry, to: NavEntry): string {
     const rel = relativePath(from.pathSegments.slice(0, -1).join('/'), to.pathSegments.join('/'));
     const prefix = rel.startsWith('.') ? '' : './';
-    return `${prefix}${rel}.mdx`;
+    return `${prefix}${rel}${PAGE_EXTENSION}`;
 }

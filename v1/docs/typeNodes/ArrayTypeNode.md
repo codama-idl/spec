@@ -1,0 +1,34 @@
+# ArrayTypeNode
+
+A homogeneous list of items. The item type is defined by `item`; the length is determined by the `count` strategy.
+
+## Attributes
+
+### Data
+
+| Attribute | Type              | Description             |
+| --------- | ----------------- | ----------------------- |
+| `kind`    | `"arrayTypeNode"` | The node discriminator. |
+
+### Children
+
+| Attribute | Type                                      | Description                                         |
+| --------- | ----------------------------------------- | --------------------------------------------------- |
+| `item`    | [`TypeNode`](./TypeNode.md)               | The type of each item in the array.                 |
+| `count`   | [`CountNode`](../countNodes/CountNode.md) | The strategy used to determine the number of items. |
+
+## Examples
+
+### Create an array type node from a type node and a count node
+
+```typescript
+const node = arrayTypeNode(publicKeyTypeNode(), prefixedCountNode(numberTypeNode('u32')));
+```
+
+### u32 prefixed array of u8 numbers
+
+```typescript
+arrayTypeNode(numberTypeNode('u8'), prefixedCountNode(numberTypeNode('u32')));
+
+// [1, 2, 3] => 0x03000000010203
+```

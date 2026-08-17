@@ -1,0 +1,8 @@
+# EnumValuePayload (abstract)
+
+The payload kinds an `enumValueNode` may carry — struct fields or positional tuple slots.
+
+One of the following:
+
+- [`StructValueNode`](./StructValueNode.md)
+- [`TupleValueNode`](./TupleValueNode.md)

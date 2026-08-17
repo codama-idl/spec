@@ -1,11 +1,9 @@
 import { pascalCase } from '@codama/fragments';
 
 import type { CategorySpec, Spec } from '../api';
+import { INDEX_FILE_NAME } from './constants';
 import { docRefKey, refName } from './ref';
 import type { CategoryGroup, DocRef, DocRefKey, NavEntry, NavRegistry } from './types';
-
-/** Index page basename - Fumadocs treats a folder's `index` file as its landing page, served at the folder URL. */
-const INDEX_FILE_NAME = 'index';
 
 /** `categoryDir` value meaning "the docs root": a category with no folder of its own. */
 const DOCS_ROOT_DIR = '';

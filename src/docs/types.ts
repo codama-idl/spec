@@ -76,12 +76,11 @@ export interface MarkupRenderer {
     bold(content: string): string;
     italic(content: string): string;
     /**
-     * Escape authored prose (markdown) so the generated output is safe as both `.md` and `.mdx`.
-     * Neutralizes the two mdx-significant chars - `<` (opens JSX) and `{` (opens an expression) - outside code spans,
-     * while leaving existing markdown live: code spans, emphasis, links, etc. render as authored. Use for spec text.
+     * Render authored prose (spec `docs` text, example titles) safely for this output format.
+     * The markdown renderer passes prose through unchanged since spec docs are authored as markdown.
+     * Renderers for stricter formats (e.g. MDX) escape their format-significant characters here.
      */
     prose(value: string): string;
-    escapeChar(value: string): string;
 }
 
 /** A consumer-side emitted file - contains file path and string content. */

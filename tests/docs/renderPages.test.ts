@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
 import type { EnumerationSpec, NodeSpec } from '../../src/api';
-import type { DocRef, NavRegistry } from '../../src/docs/types';
 import { markdownRenderer } from '../../src/docs/render/markdown';
 import type { RenderCtx } from '../../src/docs/render/renderPages';
 import { renderEnumPage, renderNodePage } from '../../src/docs/render/renderPages';
+import type { DocRef, NavRegistry } from '../../src/docs/types';
 
 /** A minimal RenderCtx over the real markdown renderer - lookup returns fixed path segments, links resolve to '#'. */
 function makeCtx(): RenderCtx {

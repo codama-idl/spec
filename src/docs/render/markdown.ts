@@ -48,16 +48,8 @@ export const markdownRenderer: MarkupRenderer = {
         return markdownTable([head.map(escapeCell), ...rows.map(row => row.map(escapeCell))]);
     },
     prose(value) {
-        // Escape the mdx-significant chars in authored prose, but not inside inline code spans - there `<`/`{` are
-        // already literal and a backslash would render visibly. split() captures the spans, so prose lands on even
-        // indices and spans on odd; escape only the prose halves, reusing escapeChar per matched char.
-        return value
-            .split(/(`[^`]*`)/)
-            .map((part, i) => (i % 2 === 0 ? part.replace(/[<{]/g, char => this.escapeChar(char)) : part))
-            .join('');
-    },
-    escapeChar(value) {
-        return `\\${value}`;
+        // Spec docs are authored as markdown, so they pass through unchanged.
+        return value;
     },
 };
 

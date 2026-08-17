@@ -52,10 +52,9 @@ describe('markdownRenderer', () => {
         expect(markdown.list('numbered', ['a', 'b'])).toBe('1. a\n2. b');
     });
 
-    it('escapes mdx-significant chars in prose but leaves inline code spans literal', () => {
-        expect(markdown.prose('width < 128 and {x}')).toBe('width \\< 128 and \\{x}');
-        expect(markdown.prose('use `Array<T>` here')).toBe('use `Array<T>` here');
-        expect(markdown.escapeChar('<')).toBe('\\<');
+    it('passes authored prose through unchanged - spec docs are already markdown', () => {
+        expect(markdown.prose('width < 128 and {x}')).toBe('width < 128 and {x}');
+        expect(markdown.prose('use `Array<T>` and _emphasis_ here')).toBe('use `Array<T>` and _emphasis_ here');
     });
 
     it('renders a nested list, indenting children by four spaces', () => {

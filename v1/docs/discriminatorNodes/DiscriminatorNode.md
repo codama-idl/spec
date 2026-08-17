@@ -1,0 +1,7 @@
+# DiscriminatorNode (abstract)
+
+The composable form: any registered discriminator node.
+
+One of the following:
+
+- [`RegisteredDiscriminatorNode`](./RegisteredDiscriminatorNode.md)

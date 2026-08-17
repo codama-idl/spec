@@ -32,9 +32,9 @@ describe('buildNavRegistry', () => {
     });
     it('names the index files from the preset', () => {
         expect(registry.lookup({ kind: 'categoryIndex', category: 'pdaSeed' }).pathSegments.join('/')).toBe(
-            'pdaSeedNodes/index',
+            'pdaSeedNodes/README',
         );
-        expect(registry.lookup({ kind: 'rootIndex' }).pathSegments.join('/')).toBe('index');
+        expect(registry.lookup({ kind: 'rootIndex' }).pathSegments.join('/')).toBe('README');
     });
     it('emits no categoryIndex entry for topLevel (shares root index)', () => {
         expect(() => registry.lookup({ kind: 'categoryIndex', category: 'topLevel' })).toThrow(
