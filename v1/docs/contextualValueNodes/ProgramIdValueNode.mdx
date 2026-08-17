@@ -9,3 +9,11 @@ Refers to the program ID of the surrounding instruction.
 | Attribute | Type                   | Description             |
 | --------- | ---------------------- | ----------------------- |
 | `kind`    | `"programIdValueNode"` | The node discriminator. |
+
+## Examples
+
+### Create a program id value node
+
+```typescript
+const node = programIdValueNode();
+```

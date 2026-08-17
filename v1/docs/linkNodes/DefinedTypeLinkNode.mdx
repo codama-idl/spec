@@ -16,3 +16,12 @@ A reference to a defined type — possibly in a different program.
 | Attribute | Type                                                    | Description                                                                                      |
 | --------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | `program` | [`ProgramLinkNode`](./ProgramLinkNode.mdx) _(optional)_ | The program the referenced type is defined in. When omitted, the surrounding program is assumed. |
+
+## Examples
+
+### Create a defined type link node from a type name
+
+```typescript
+const node = definedTypeLinkNode('myDefinedType');
+const nodeFromAnotherProgram = definedTypeLinkNode('myDefinedType', 'myOtherProgram');
+```

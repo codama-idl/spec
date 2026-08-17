@@ -17,3 +17,18 @@ A reusable named type that can be referenced by `definedTypeLinkNode` from elsew
 | Attribute | Type                                   | Description          |
 | --------- | -------------------------------------- | -------------------- |
 | `type`    | [`TypeNode`](./typeNodes/TypeNode.mdx) | The type definition. |
+
+## Examples
+
+### Create a defined type node from an input object
+
+```typescript
+const node = definedTypeNode({
+    name: 'person',
+    docs: ['This type describes a Person.'],
+    type: structTypeNode([
+        structFieldTypeNode({ name: 'name', type: stringTypeNode('utf8') }),
+        structFieldTypeNode({ name: 'age', type: numberTypeNode('u8') }),
+    ]),
+});
+```

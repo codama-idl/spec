@@ -14,6 +14,7 @@
  * meta-model itself just stores a flat list.
  */
 
+import type { DocExamples } from './example';
 import type { AttributeSpec, NodeSpec } from './types';
 
 export interface DefineNodeOptions {
@@ -24,8 +25,11 @@ export interface DefineNodeOptions {
      * via `attribute(...)` or `optionalAttribute(...)`.
      */
     readonly attributes: readonly AttributeSpec[];
-    /** Free-form examples (shape defined per spec major version). */
-    readonly examples?: readonly unknown[];
+    /**
+     * Documentation examples for the node.
+     * Construct each via `example(...)`.
+     * */
+    readonly examples?: DocExamples;
 }
 
 export function defineNode(kind: string, options: DefineNodeOptions): NodeSpec {

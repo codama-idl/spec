@@ -16,3 +16,12 @@ A concrete bytes value, encoded as text in the chosen encoding.
 | Attribute  | Type                                                | Description                                       |
 | ---------- | --------------------------------------------------- | ------------------------------------------------- |
 | `encoding` | [`BytesEncoding`](../sharedNodes/BytesEncoding.mdx) | The encoding used to represent the bytes as text. |
+
+## Examples
+
+### Create a bytes value node from an encoding and data
+
+```typescript
+const node = bytesValueNode('base16', '010203');
+const utf8Node = bytesValueNode('utf8', 'Hello');
+```

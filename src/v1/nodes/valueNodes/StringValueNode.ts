@@ -1,4 +1,5 @@
 import { attribute, defineNode, string } from '../../../api';
+import { examples } from './StringValueNode.examples';
 
 export const stringValueNode = defineNode('stringValueNode', {
     docs: ['A concrete string value.'],
@@ -7,4 +8,5 @@ export const stringValueNode = defineNode('stringValueNode', {
             docs: ['The string value.'],
         }),
     ],
+    examples,
 });

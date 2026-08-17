@@ -1,4 +1,5 @@
 import { attribute, defineNode, node, u64 } from '../../../api';
+import { examples } from './ConstantDiscriminatorNode.examples';
 
 export const constantDiscriminatorNode = defineNode('constantDiscriminatorNode', {
     docs: ['Identifies a node by a constant value at a known byte offset (e.g. a magic header).'],
@@ -10,4 +11,5 @@ export const constantDiscriminatorNode = defineNode('constantDiscriminatorNode',
             docs: ['The constant value expected at the offset.'],
         }),
     ],
+    examples,
 });

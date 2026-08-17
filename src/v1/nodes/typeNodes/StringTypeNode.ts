@@ -1,4 +1,5 @@
 import { attribute, defineNode, enumeration, node, optionalAttribute } from '../../../api';
+import { examples } from './StringTypeNode.examples';
 
 export const stringTypeNode = defineNode('stringTypeNode', {
     docs: [
@@ -14,4 +15,5 @@ export const stringTypeNode = defineNode('stringTypeNode', {
             docs: ['Display metadata describing how the string is presented.'],
         }),
     ],
+    examples,
 });

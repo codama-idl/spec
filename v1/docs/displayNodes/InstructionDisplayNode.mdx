@@ -11,3 +11,31 @@ Display metadata for an instruction: a short intent label and an interpolated se
 | `kind`               | `"instructionDisplayNode"` | The node discriminator.                                                                        |
 | `intent`             | `string` _(optional)_      | A short imperative label describing what the instruction does (e.g. `"Transfer"`).             |
 | `interpolatedIntent` | `string` _(optional)_      | A sentence template that composes the instruction into prose with `${root.path}` placeholders. |
+
+## Examples
+
+### An intent label plus an interpolated sentence
+
+```typescript
+instructionNode({
+    name: 'transferChecked',
+    display: instructionDisplayNode({
+        intent: 'Transfer',
+        interpolatedIntent: 'Transfer ${data.amount} to ${accounts.destination}',
+    }),
+    // ...accounts and arguments
+});
+
+// intent      => "Transfer"
+// interpolated => "Transfer 1.5 USDC to 3Wnd5…5PxJX"
+```
+
+### An intent label only, letting the renderer build the fallback list
+
+```typescript
+instructionNode({
+    name: 'closeAccount',
+    display: instructionDisplayNode({ intent: 'Close Account' }),
+    // ...accounts and arguments
+});
+```

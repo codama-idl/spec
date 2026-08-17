@@ -8,6 +8,7 @@ import {
     stringIdentifier,
     union,
 } from '../../../api';
+import { examples } from './StructFieldTypeNode.examples';
 
 export const structFieldTypeNode = defineNode('structFieldTypeNode', {
     docs: ['A named field within a struct type.'],
@@ -31,4 +32,5 @@ export const structFieldTypeNode = defineNode('structFieldTypeNode', {
             docs: ['Display metadata describing how the field is presented.'],
         }),
     ],
+    examples,
 });

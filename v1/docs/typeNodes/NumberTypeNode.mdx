@@ -17,3 +17,35 @@ A numeric type with a fixed wire format and byte order.
 | `format`  | [`NumberFormat`](../sharedNodes/NumberFormat.mdx)                         | The wire format used to serialise the number.            |
 | `endian`  | [`Endianness`](../sharedNodes/Endianness.mdx)                             | The byte order used to serialise the number.             |
 | `display` | [`NumberDisplayNode`](../displayNodes/NumberDisplayNode.mdx) _(optional)_ | Display metadata describing how the number is presented. |
+
+## Examples
+
+### Encoding `u32` integers
+
+```typescript
+numberTypeNode('u32');
+
+// 5     => 0x05000000
+// 42    => 0x2A000000
+// 65535 => 0xFFFF0000
+```
+
+### Encoding `f32` big-endian decimal numbers
+
+```typescript
+numberTypeNode('f32', 'be');
+
+// 1      => 0x3F800000
+// -42    => 0xC2280000
+// 3.1415 => 0x40490E56
+```
+
+### Encoding `shortU16` integers
+
+```typescript
+numberTypeNode('shortU16');
+
+// 42    => 0x2A
+// 128   => 0x8001
+// 16384 => 0x808001
+```

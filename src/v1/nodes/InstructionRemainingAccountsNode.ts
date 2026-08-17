@@ -1,4 +1,5 @@
 import { attribute, boolean, defineNode, docs, literalUnion, node, optionalAttribute, union } from '../../api';
+import { examples } from './InstructionRemainingAccountsNode.examples';
 
 export const instructionRemainingAccountsNode = defineNode('instructionRemainingAccountsNode', {
     docs: ['A "remaining accounts" slot in an instruction — a variable-length tail of accounts derived from a value.'],
@@ -25,4 +26,5 @@ export const instructionRemainingAccountsNode = defineNode('instructionRemaining
             docs: ['Display metadata describing how the remaining-accounts group is presented as a whole.'],
         }),
     ],
+    examples,
 });

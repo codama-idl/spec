@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { attribute, defineNode, optionalAttribute, string, stringIdentifier, u64 } from '../src/api';
+import { attribute, code, defineNode, example, optionalAttribute, string, stringIdentifier, u64 } from '../src/api';
 
 describe('attribute and optionalAttribute', () => {
     it('produces a frozen AttributeSpec from `attribute`', () => {
@@ -89,11 +89,14 @@ describe('defineNode', () => {
     });
 
     it('preserves explicit examples', () => {
+        const ex = example('greeting', code('typescript', `const v = 'hello';`));
         const n = defineNode('exampled', {
             attributes: [attribute('v', string())],
-            examples: [{ v: 'hello' }],
+            examples: [ex],
         });
-        expect(n.examples).toEqual([{ v: 'hello' }]);
+        expect(n.examples).toEqual([
+            { title: 'greeting', code: [{ language: 'typescript', content: [`const v = 'hello';`] }] },
+        ]);
         expect(Object.isFrozen(n.examples)).toBe(true);
     });
 });

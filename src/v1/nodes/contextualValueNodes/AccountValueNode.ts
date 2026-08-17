@@ -1,4 +1,5 @@
 import { attribute, defineNode, stringIdentifier } from '../../../api';
+import { examples } from './AccountValueNode.examples';
 
 export const accountValueNode = defineNode('accountValueNode', {
     docs: ['Refers to a named account in the surrounding instruction.'],
@@ -7,4 +8,5 @@ export const accountValueNode = defineNode('accountValueNode', {
             docs: ['The name of the referenced account.'],
         }),
     ],
+    examples,
 });

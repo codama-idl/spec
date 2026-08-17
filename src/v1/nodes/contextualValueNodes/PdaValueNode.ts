@@ -1,4 +1,5 @@
 import { array, attribute, defineNode, node, optionalAttribute, union } from '../../../api';
+import { examples } from './PdaValueNode.examples';
 
 export const pdaValueNode = defineNode('pdaValueNode', {
     docs: ['Resolves to a PDA derived from a list of seed values.'],
@@ -13,4 +14,5 @@ export const pdaValueNode = defineNode('pdaValueNode', {
             docs: ['The program ID used to derive the PDA. When omitted, the PDA\u2019s declared program is used.'],
         }),
     ],
+    examples,
 });

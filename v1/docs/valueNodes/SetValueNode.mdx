@@ -15,3 +15,11 @@ A concrete set value: a list of unique value nodes.
 | Attribute | Type                             | Description           |
 | --------- | -------------------------------- | --------------------- |
 | `items`   | [`ValueNode`](./ValueNode.mdx)[] | The items of the set. |
+
+## Examples
+
+### Create a set value node from value nodes
+
+```typescript
+const node = setValueNode([numberValueNode(1), numberValueNode(2), numberValueNode(3)]);
+```

@@ -18,3 +18,32 @@ The root of a Codama IDL document. Pairs a primary program with any number of ad
 | -------------------- | ------------------------------------ | ------------------------------------------------------ |
 | `program`            | [`ProgramNode`](./ProgramNode.mdx)   | The primary program described by the document.         |
 | `additionalPrograms` | [`ProgramNode`](./ProgramNode.mdx)[] | Additional programs referenced by the primary program. |
+
+## Examples
+
+### A root node with a single program
+
+```typescript
+const node = rootNode(
+    programNode({
+        name: 'counter',
+        publicKey: '2R3Ui2TVUUCyGcZdopxJauk8ZBzgAaHHZCVUhm5ifPaC',
+        version: '1.0.0',
+        accounts: [
+            accountNode({
+                name: 'counter',
+                data: structTypeNode([
+                    structFieldTypeNode({ name: 'authority', type: publicKeyTypeNode() }),
+                    structFieldTypeNode({ name: 'value', type: numberTypeNode('u32') }),
+                ]),
+            }),
+        ],
+        instructions: [
+            instructionNode({ name: 'create' /* ... */ }),
+            instructionNode({ name: 'increment' /* ... */ }),
+            instructionNode({ name: 'transferAuthority' /* ... */ }),
+            instructionNode({ name: 'delete' /* ... */ }),
+        ],
+    }),
+);
+```

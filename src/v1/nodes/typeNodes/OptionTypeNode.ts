@@ -1,4 +1,5 @@
 import { attribute, boolean, defineNode, nestedUnion, optionalAttribute, union } from '../../../api';
+import { examples } from './OptionTypeNode.examples';
 
 export const optionTypeNode = defineNode('optionTypeNode', {
     docs: ['A value that may be present or absent (Some/None), with an explicit numeric prefix indicating presence.'],
@@ -15,4 +16,5 @@ export const optionTypeNode = defineNode('optionTypeNode', {
             docs: ['The numeric type used as the presence flag.'],
         }),
     ],
+    examples,
 });

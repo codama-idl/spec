@@ -1,4 +1,5 @@
 import { defineNode, optionalAttribute, u64 } from '../../../api';
+import { examples } from './DurationNumberDisplayNode.examples';
 
 export const durationNumberDisplayNode = defineNode('durationNumberDisplayNode', {
     docs: [
@@ -14,4 +15,5 @@ export const durationNumberDisplayNode = defineNode('durationNumberDisplayNode',
             ],
         }),
     ],
+    examples,
 });

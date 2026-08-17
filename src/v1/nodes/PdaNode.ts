@@ -1,4 +1,5 @@
 import { address, array, attribute, defineNode, docs, optionalAttribute, stringIdentifier, union } from '../../api';
+import { examples } from './PdaNode.examples';
 
 export const pdaNode = defineNode('pdaNode', {
     docs: ['A program-derived address: its name, optional program ID override, and the seeds used to derive it.'],
@@ -18,4 +19,5 @@ export const pdaNode = defineNode('pdaNode', {
             docs: ['The seeds used to derive the PDA, in order.'],
         }),
     ],
+    examples,
 });

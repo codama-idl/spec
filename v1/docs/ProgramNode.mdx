@@ -26,3 +26,21 @@ A Solana program: its identity, version, accounts, instructions, defined types, 
 | `events`       | [`EventNode`](./EventNode.mdx)[]                                | The events emitted by the program.                                         |
 | `errors`       | [`ErrorNode`](./ErrorNode.mdx)[]                                | The errors returned by the program.                                        |
 | `constants`    | [`ConstantNode`](./ConstantNode.mdx)[]                          | The constants exposed by the program.                                      |
+
+## Examples
+
+### Create a program node from an input object
+
+```typescript
+const node = programNode({
+    name: 'counter',
+    publicKey: '7ovtg4pFqjQdSwFAUCu8gTnh5thZHzAyJFXy3Ssnj3yK',
+    version: '1.42.6',
+    accounts: [],
+    instructions: [],
+    definedTypes: [],
+    pdas: [],
+    events: [],
+    errors: [],
+});
+```

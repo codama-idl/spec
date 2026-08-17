@@ -1,4 +1,5 @@
 import { attribute, defineNode, node, optionalAttribute, stringIdentifier, u32 } from '../../../api';
+import { examples } from './EnumEmptyVariantTypeNode.examples';
 
 export const enumEmptyVariantTypeNode = defineNode('enumEmptyVariantTypeNode', {
     docs: ['A unit-style variant of an enum that carries no payload.'],
@@ -15,4 +16,5 @@ export const enumEmptyVariantTypeNode = defineNode('enumEmptyVariantTypeNode', {
             docs: ['Display metadata describing how the variant is presented.'],
         }),
     ],
+    examples,
 });

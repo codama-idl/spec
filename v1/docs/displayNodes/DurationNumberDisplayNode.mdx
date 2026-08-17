@@ -10,3 +10,21 @@ Display metadata that presents a number as an elapsed duration. The underlying v
 | ---------------- | ----------------------------- | ---------------------------------------------------------------------------------- |
 | `kind`           | `"durationNumberDisplayNode"` | The node discriminator.                                                            |
 | `ticksPerSecond` | `u64` _(optional)_            | How many ticks make one second. Defaults to `1` (the value is already in seconds). |
+
+## Examples
+
+### A duration already in seconds
+
+```typescript
+numberTypeNode('u32', 'le', { display: durationNumberDisplayNode({}) });
+
+// 3600 => "01:00:00"
+```
+
+### A duration in milliseconds scaled back to seconds
+
+```typescript
+numberTypeNode('u64', 'le', { display: durationNumberDisplayNode({ ticksPerSecond: 1000 }) });
+
+// 90_000 => "00:01:30"
+```

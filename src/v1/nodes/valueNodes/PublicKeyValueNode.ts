@@ -1,4 +1,5 @@
 import { address, attribute, defineNode, optionalAttribute, stringIdentifier } from '../../../api';
+import { examples } from './PublicKeyValueNode.examples';
 
 export const publicKeyValueNode = defineNode('publicKeyValueNode', {
     docs: ['A concrete public key, with an optional symbolic identifier for the address.'],
@@ -10,4 +11,5 @@ export const publicKeyValueNode = defineNode('publicKeyValueNode', {
             docs: ['A symbolic name for the address, useful in generated client code.'],
         }),
     ],
+    examples,
 });

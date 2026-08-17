@@ -1,4 +1,5 @@
 import { attribute, defineNode, nestedUnion, union } from '../../../api';
+import { examples } from './SizePrefixTypeNode.examples';
 
 export const sizePrefixTypeNode = defineNode('sizePrefixTypeNode', {
     docs: ['Wraps another type with a numeric prefix indicating the byte length of the wrapped type.'],
@@ -10,4 +11,5 @@ export const sizePrefixTypeNode = defineNode('sizePrefixTypeNode', {
             docs: ['The numeric type used as the size prefix.'],
         }),
     ],
+    examples,
 });

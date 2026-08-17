@@ -16,3 +16,11 @@ A string value. The encoding describes how its bytes are written. The byte lengt
 | ---------- | ------------------------------------------------------------------------- | -------------------------------------------------------- |
 | `encoding` | [`BytesEncoding`](../sharedNodes/BytesEncoding.mdx)                       | The byte encoding used to serialise the string.          |
 | `display`  | [`StringDisplayNode`](../displayNodes/StringDisplayNode.mdx) _(optional)_ | Display metadata describing how the string is presented. |
+
+## Examples
+
+### Create a string type node from an encoding
+
+```typescript
+const node = stringTypeNode('utf8');
+```

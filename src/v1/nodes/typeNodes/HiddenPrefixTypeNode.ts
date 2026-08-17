@@ -1,4 +1,5 @@
 import { array, attribute, defineNode, node, union } from '../../../api';
+import { examples } from './HiddenPrefixTypeNode.examples';
 
 export const hiddenPrefixTypeNode = defineNode('hiddenPrefixTypeNode', {
     docs: [
@@ -12,4 +13,5 @@ export const hiddenPrefixTypeNode = defineNode('hiddenPrefixTypeNode', {
             docs: ['The constant values written before the wrapped type, in order.'],
         }),
     ],
+    examples,
 });

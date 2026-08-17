@@ -4,6 +4,9 @@
  * Runs the docs generator over the v1 spec, then writes the emitted mdx tree to
  * `v1/docs/` (plain page bodies, relative `.mdx` links, `index` basenames). CI re-runs this and fails if
  * the result differs from what is committed, keeping the docs artifact in lockstep with the spec source.
+ *
+ * The same model also feeds the Fumadocs app tree under `docs/content/spec/<major>/`, which adds YAML
+ * frontmatter per page plus the `meta.json` sidecars the sidebar needs.
  */
 
 import path from 'node:path';

@@ -1,4 +1,5 @@
 import { array, attribute, defineNode, union } from '../../../api';
+import { examples } from './SetValueNode.examples';
 
 export const setValueNode = defineNode('setValueNode', {
     docs: ['A concrete set value: a list of unique value nodes.'],
@@ -7,4 +8,5 @@ export const setValueNode = defineNode('setValueNode', {
             docs: ['The items of the set.'],
         }),
     ],
+    examples,
 });

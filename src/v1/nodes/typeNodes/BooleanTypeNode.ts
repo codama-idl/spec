@@ -1,4 +1,5 @@
 import { attribute, defineNode, nestedUnion } from '../../../api';
+import { examples } from './BooleanTypeNode.examples';
 
 export const booleanTypeNode = defineNode('booleanTypeNode', {
     docs: ['A boolean serialised as a numeric value. The wrapped number type determines the byte width.'],
@@ -7,4 +8,5 @@ export const booleanTypeNode = defineNode('booleanTypeNode', {
             docs: ['The numeric type used to serialise the boolean.'],
         }),
     ],
+    examples,
 });

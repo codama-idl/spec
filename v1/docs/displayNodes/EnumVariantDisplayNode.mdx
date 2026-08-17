@@ -11,3 +11,27 @@ Display metadata for an enum variant: its label and whether to hide its inner pa
 | `kind`          | `"enumVariantDisplayNode"` | The node discriminator.                                                    |
 | `label`         | `string` _(optional)_      | An override label shown for the variant (e.g. `"Buy"`).                    |
 | `skipInnerData` | `boolean` _(optional)_     | When `true`, the variant's payload is hidden — only the label is rendered. |
+
+## Examples
+
+### Relabelling a struct variant
+
+```typescript
+enumStructVariantTypeNode(
+    'buy',
+    structTypeNode([structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') })]),
+    undefined,
+    { display: enumVariantDisplayNode({ label: 'Buy' }) },
+);
+```
+
+### Hiding a tuple payload so only the label is shown
+
+```typescript
+enumTupleVariantTypeNode(
+    'increment',
+    tupleTypeNode([numberTypeNode('u64')]),
+    undefined,
+    { display: enumVariantDisplayNode({ label: 'Increment', skipInnerData: true }) },
+);
+```

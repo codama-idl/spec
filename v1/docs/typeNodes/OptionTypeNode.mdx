@@ -17,3 +17,23 @@ A value that may be present or absent (Some/None), with an explicit numeric pref
 | --------- | ----------------------------------------------------------------------------------- | -------------------------------------------- |
 | `item`    | [`TypeNode`](./TypeNode.mdx)                                                        | The type carried by the option when present. |
 | `prefix`  | [`NestedTypeNode`](./NestedTypeNode.mdx)\<[`NumberTypeNode`](./NumberTypeNode.mdx)> | The numeric type used as the presence flag.  |
+
+## Examples
+
+### An optional UTF-8 with a u16 prefix
+
+```typescript
+optionTypeNode(stringTypeNode('utf8'), { prefix: numberTypeNode('u16') });
+
+// None          => 0x0000
+// Some("Hello") => 0x010048656C6C6F
+```
+
+### A fixed optional u32 number
+
+```typescript
+optionTypeNode(numberTypeNode('u32'), { fixed: true });
+
+// None     => 0x0000000000
+// Some(42) => 0x012A000000
+```

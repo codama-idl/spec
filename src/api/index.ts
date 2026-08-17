@@ -12,6 +12,7 @@ export * from './defineEnumeration';
 export * from './defineNestedUnion';
 export * from './defineNode';
 export * from './defineUnion';
+export * from './example';
 export * from './primitives';
 export * from './semanticAliases';
 export * from './validate';

@@ -3,6 +3,8 @@ import { pascalCase } from '@codama/fragments';
 import type {
     AttributeSpec,
     CategorySpec,
+    DocExample,
+    DocExamples,
     EnumerationSpec,
     NestedUnionSpec,
     NodeSpec,
@@ -58,12 +60,35 @@ export function renderNodePage(node: NodeSpec, ctx: RenderCtx): DocPage {
         childRows.length
             ? `${markup.heading(3, 'Children')}${BLOCK_SEPARATOR}${markup.table(cols, childRows)}`
             : undefined,
+        // Examples section
+        renderExamples(node.examples, markup),
     ];
     return {
         ref,
         pathSegments: ctx.registry.lookup(ref).pathSegments,
         content: parts.filter(Boolean).join(BLOCK_SEPARATOR),
     };
+}
+
+/** Render all Node examples. Every language carried by the spec is rendered. */
+function renderExamples(examples: DocExamples, markup: MarkupRenderer): string | undefined {
+    const rendered = examples.map(example => renderExample(example, markup)).filter(block => block !== undefined);
+    if (!rendered.length) return undefined;
+    return [markup.heading(2, 'Examples'), ...rendered].join(BLOCK_SEPARATOR);
+}
+
+/** Render each example. An example carrying no code block renders nothing rather than a bare heading. */
+function renderExample(example: DocExample, markup: MarkupRenderer): string | undefined {
+    if (!example.code.length) return undefined;
+    const parts: (string | undefined)[] = [
+        // header
+        markup.heading(3, example.title),
+        // description
+        renderSpecDocs(example.docs, markup),
+        // code blocks
+        ...example.code.map(code => markup.codeBlock(code.language, code.content.join('\n'))),
+    ];
+    return parts.filter(Boolean).join(BLOCK_SEPARATOR);
 }
 
 export function renderUnionPage(union: UnionSpec, ctx: RenderCtx): DocPage {

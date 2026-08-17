@@ -16,3 +16,13 @@ Wraps another type and delimits it with a constant sentinel value written immedi
 | ---------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------ |
 | `type`     | [`TypeNode`](./TypeNode.mdx)                               | The wrapped type whose extent is delimited by the sentinel.                    |
 | `sentinel` | [`ConstantValueNode`](../valueNodes/ConstantValueNode.mdx) | The constant value written immediately after the wrapped type to mark its end. |
+
+## Examples
+
+### A UTF-8 string terminated by 0xFF
+
+```typescript
+sentinelTypeNode(stringTypeNode('utf8'), constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ff')));
+
+// Hello => 0x48656C6C6FFF
+```

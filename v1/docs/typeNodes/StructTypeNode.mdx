@@ -15,3 +15,16 @@ A composite type made of an ordered list of named fields. Fields are encoded and
 | Attribute | Type                                                 | Description                                     |
 | --------- | ---------------------------------------------------- | ----------------------------------------------- |
 | `fields`  | [`StructFieldTypeNode`](./StructFieldTypeNode.mdx)[] | The fields of the struct, in declaration order. |
+
+## Examples
+
+### A struct storing a person's name and age
+
+```typescript
+structTypeNode([
+    structFieldTypeNode({ name: 'name', type: fixedSizeTypeNode(stringTypeNode('utf8'), 10) }),
+    structFieldTypeNode({ name: 'age', type: numberTypeNode('u8') }),
+]);
+
+// { name: Alice, age: 42 } => 0x416C69636500000000002A
+```

@@ -16,3 +16,11 @@ A named field of a `structValueNode`.
 | Attribute | Type                           | Description                      |
 | --------- | ------------------------------ | -------------------------------- |
 | `value`   | [`ValueNode`](./ValueNode.mdx) | The concrete value of the field. |
+
+## Examples
+
+### Create a struct field value node from a name and a value
+
+```typescript
+const node = structFieldValueNode('age', numberValueNode(42));
+```

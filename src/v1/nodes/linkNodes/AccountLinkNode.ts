@@ -1,4 +1,5 @@
 import { attribute, defineNode, node, optionalAttribute, stringIdentifier } from '../../../api';
+import { examples } from './AccountLinkNode.examples';
 
 export const accountLinkNode = defineNode('accountLinkNode', {
     docs: ['A reference to an account defined elsewhere — possibly in a different program.'],
@@ -10,4 +11,5 @@ export const accountLinkNode = defineNode('accountLinkNode', {
             docs: ['The name of the referenced account.'],
         }),
     ],
+    examples,
 });

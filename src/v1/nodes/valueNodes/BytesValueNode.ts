@@ -1,4 +1,5 @@
 import { attribute, defineNode, enumeration, string } from '../../../api';
+import { examples } from './BytesValueNode.examples';
 
 export const bytesValueNode = defineNode('bytesValueNode', {
     docs: ['A concrete bytes value, encoded as text in the chosen encoding.'],
@@ -10,4 +11,5 @@ export const bytesValueNode = defineNode('bytesValueNode', {
             docs: ['The encoding used to represent the bytes as text.'],
         }),
     ],
+    examples,
 });

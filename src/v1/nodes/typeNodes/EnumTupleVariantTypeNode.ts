@@ -1,4 +1,5 @@
 import { attribute, defineNode, nestedUnion, node, optionalAttribute, stringIdentifier, u32 } from '../../../api';
+import { examples } from './EnumTupleVariantTypeNode.examples';
 
 export const enumTupleVariantTypeNode = defineNode('enumTupleVariantTypeNode', {
     docs: ['A variant of an enum that carries a tuple payload (positional fields).'],
@@ -18,4 +19,5 @@ export const enumTupleVariantTypeNode = defineNode('enumTupleVariantTypeNode', {
             docs: ['Display metadata describing how the variant is presented.'],
         }),
     ],
+    examples,
 });

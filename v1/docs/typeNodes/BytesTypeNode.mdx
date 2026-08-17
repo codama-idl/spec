@@ -9,3 +9,11 @@ A raw sequence of bytes. Typically used inside a fixed-size, size-prefixed, or s
 | Attribute | Type              | Description             |
 | --------- | ----------------- | ----------------------- |
 | `kind`    | `"bytesTypeNode"` | The node discriminator. |
+
+## Examples
+
+### Create a bytes type node
+
+```typescript
+const node = bytesTypeNode();
+```

@@ -1,4 +1,5 @@
 import { attribute, defineNode, nestedUnion, optionalAttribute, string, u32 } from '../../../api';
+import { examples } from './AmountTypeNode.examples';
 
 export const amountTypeNode = defineNode('amountTypeNode', {
     docs: [
@@ -19,4 +20,5 @@ export const amountTypeNode = defineNode('amountTypeNode', {
             docs: ['The number type the amount wraps.'],
         }),
     ],
+    examples,
 });

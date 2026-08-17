@@ -1,4 +1,5 @@
 import { attribute, defineNode, union } from '../../../api';
+import { examples } from './RemainderOptionTypeNode.examples';
 
 export const remainderOptionTypeNode = defineNode('remainderOptionTypeNode', {
     docs: [
@@ -9,4 +10,5 @@ export const remainderOptionTypeNode = defineNode('remainderOptionTypeNode', {
             docs: ['The type carried by the option when present.'],
         }),
     ],
+    examples,
 });

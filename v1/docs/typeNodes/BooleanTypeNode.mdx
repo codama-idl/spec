@@ -15,3 +15,23 @@ A boolean serialised as a numeric value. The wrapped number type determines the 
 | Attribute | Type                                                                                | Description                                     |
 | --------- | ----------------------------------------------------------------------------------- | ----------------------------------------------- |
 | `size`    | [`NestedTypeNode`](./NestedTypeNode.mdx)\<[`NumberTypeNode`](./NumberTypeNode.mdx)> | The numeric type used to serialise the boolean. |
+
+## Examples
+
+### u8 booleans
+
+```typescript
+booleanTypeNode();
+
+// true  => 0x01
+// false => 0x00
+```
+
+### u32 booleans
+
+```typescript
+booleanTypeNode(numberTypeNode('u32'));
+
+// true  => 0x01000000
+// false => 0x00000000
+```

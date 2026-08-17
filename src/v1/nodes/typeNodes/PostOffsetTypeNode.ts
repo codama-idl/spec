@@ -1,4 +1,5 @@
 import { attribute, defineNode, enumeration, i64, union } from '../../../api';
+import { examples } from './PostOffsetTypeNode.examples';
 
 export const postOffsetTypeNode = defineNode('postOffsetTypeNode', {
     docs: [
@@ -15,4 +16,5 @@ export const postOffsetTypeNode = defineNode('postOffsetTypeNode', {
             docs: ['The wrapped type whose serialisation is followed by the offset.'],
         }),
     ],
+    examples,
 });

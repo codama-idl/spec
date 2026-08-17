@@ -10,3 +10,33 @@ Refers to a named account in the surrounding instruction.
 | --------- | -------------------- | ----------------------------------- |
 | `kind`    | `"accountValueNode"` | The node discriminator.             |
 | `name`    | `CamelCaseString`    | The name of the referenced account. |
+
+## Examples
+
+### Create an account value node from an account name
+
+```typescript
+const node = accountValueNode('mint');
+```
+
+### An instruction account defaulting to another account
+
+```typescript
+instructionNode({
+    name: 'mint',
+    accounts: [
+        instructionAccountNode({
+            name: 'payer',
+            isSigner: true,
+            isWritable: false,
+        }),
+        instructionAccountNode({
+            name: 'authority',
+            isSigner: false,
+            isWritable: true,
+            defaultValue: accountValueNode('payer'),
+        }),
+        // ...
+    ],
+});
+```

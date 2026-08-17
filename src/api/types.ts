@@ -9,6 +9,8 @@
  * enumerations, nested unions, categories).
  */
 
+import type { DocExamples } from './example';
+
 export type IntegerWidth = 'i8' | 'i16' | 'i32' | 'i64' | 'i128' | 'u8' | 'u16' | 'u32' | 'u64' | 'u128';
 
 export type FloatWidth = 'f32' | 'f64';
@@ -102,8 +104,8 @@ export interface NodeSpec {
     readonly kind: string;
     readonly docs?: readonly string[];
     readonly attributes: readonly AttributeSpec[];
-    /** Free-form examples (shape defined per spec major version). */
-    readonly examples: readonly unknown[];
+    /** Worked documentation examples for this node - see `DocExample`. */
+    readonly examples: DocExamples;
 }
 
 /** A member of a union — either a node by name, or another union by name. */

@@ -1,4 +1,5 @@
 import { array, attribute, defineNode, union } from '../../../api';
+import { examples } from './ArrayValueNode.examples';
 
 export const arrayValueNode = defineNode('arrayValueNode', {
     docs: ['A concrete array value: a list of value nodes.'],
@@ -7,4 +8,5 @@ export const arrayValueNode = defineNode('arrayValueNode', {
             docs: ['The items of the array, in order.'],
         }),
     ],
+    examples,
 });

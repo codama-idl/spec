@@ -1,4 +1,5 @@
 import { attribute, defineNode, union } from '../../../api';
+import { examples } from './ConstantValueNode.examples';
 
 export const constantValueNode = defineNode('constantValueNode', {
     docs: ['A typed constant: a type node paired with a concrete value node.'],
@@ -10,4 +11,5 @@ export const constantValueNode = defineNode('constantValueNode', {
             docs: ['The concrete value of the constant.'],
         }),
     ],
+    examples,
 });

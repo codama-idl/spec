@@ -22,3 +22,28 @@ An account participating in an instruction, with its name, signing/writability f
 | `defaultValue` | [`InstructionInputValueNode`](./contextualValueNodes/InstructionInputValueNode.mdx) _(optional)_ | A default value used to fill the slot when the caller does not provide one.                                                      |
 | `accountLink`  | [`AccountLinkNode`](./linkNodes/AccountLinkNode.mdx) _(optional)_                                | A reference to the account's data layout. Required for consumers (e.g. `accountFieldValueNode`) to read fields from the account. |
 | `display`      | [`InstructionAccountDisplayNode`](./displayNodes/InstructionAccountDisplayNode.mdx) _(optional)_ | Display metadata describing how the account is presented.                                                                        |
+
+## Examples
+
+### An optional account
+
+```typescript
+instructionAccountNode({
+    name: 'freezeAuthority',
+    isWritable: false,
+    isSigner: false,
+    isOptional: true,
+    docs: ['The freeze authority to set on the asset, if any.'],
+});
+```
+
+### An optional signer account
+
+```typescript
+instructionAccountNode({
+    name: 'owner',
+    isWritable: true,
+    isSigner: 'either',
+    docs: ['The owner of the asset. The owner must only sign the transaction if the asset is being updated.'],
+});
+```

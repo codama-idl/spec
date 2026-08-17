@@ -1,4 +1,5 @@
 import { attribute, boolean, defineNode } from '../../../api';
+import { examples } from './BooleanValueNode.examples';
 
 export const booleanValueNode = defineNode('booleanValueNode', {
     docs: ['A concrete boolean value.'],
@@ -7,4 +8,5 @@ export const booleanValueNode = defineNode('booleanValueNode', {
             docs: ['The boolean value.'],
         }),
     ],
+    examples,
 });

@@ -10,3 +10,11 @@ A concrete numeric value. Stored as a 64-bit float; consumers narrow to a specif
 | --------- | ------------------- | ----------------------- |
 | `kind`    | `"numberValueNode"` | The node discriminator. |
 | `number`  | `f64`               | The numeric value.      |
+
+## Examples
+
+### Create a number value node from a number
+
+```typescript
+const node = numberValueNode(42);
+```

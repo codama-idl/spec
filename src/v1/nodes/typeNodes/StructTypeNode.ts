@@ -1,4 +1,5 @@
 import { array, attribute, defineNode, node } from '../../../api';
+import { examples } from './StructTypeNode.examples';
 
 export const structTypeNode = defineNode('structTypeNode', {
     docs: [
@@ -9,4 +10,5 @@ export const structTypeNode = defineNode('structTypeNode', {
             docs: ['The fields of the struct, in declaration order.'],
         }),
     ],
+    examples,
 });

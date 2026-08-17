@@ -1,4 +1,5 @@
 import { attribute, defineNode, docs, optionalAttribute, stringIdentifier, union } from '../../../api';
+import { examples } from './VariablePdaSeedNode.examples';
 
 export const variablePdaSeedNode = defineNode('variablePdaSeedNode', {
     docs: ['A PDA seed whose value is provided at derivation time, identified by name.'],
@@ -13,4 +14,5 @@ export const variablePdaSeedNode = defineNode('variablePdaSeedNode', {
             docs: ['The expected type of the seed value.'],
         }),
     ],
+    examples,
 });

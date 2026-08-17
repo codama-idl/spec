@@ -1,4 +1,5 @@
 import { boolean, defineNode, enumeration, optionalAttribute, string } from '../../../api';
+import { examples } from './StructFieldDisplayNode.examples';
 
 export const structFieldDisplayNode = defineNode('structFieldDisplayNode', {
     docs: [
@@ -29,4 +30,5 @@ export const structFieldDisplayNode = defineNode('structFieldDisplayNode', {
             ],
         }),
     ],
+    examples,
 });

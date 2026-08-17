@@ -1,11 +1,13 @@
 import {
     address,
     attribute,
+    code,
     defineCategory,
     defineEnumeration,
     defineNestedUnion,
     defineNode,
     defineUnion,
+    example,
     node,
     optionalAttribute,
     string,
@@ -17,6 +19,16 @@ import type { Spec } from '../../../src/api';
 const numberTypeNode = defineNode('numberTypeNode', {
     docs: ['A number type.'],
     attributes: [attribute('format', string())],
+    examples: [
+        example('u32 integers', code('typescript', `numberTypeNode('u32');`)),
+        example(
+            'cross-language',
+            [code('typescript', `numberTypeNode('u8');`), code('rust', `number_type_node(U8);`)],
+            {
+                docs: ['Shown in both languages.'],
+            },
+        ),
+    ],
 });
 const typeNode = defineUnion('typeNode', { members: [node('numberTypeNode')] });
 const nestedTypeNode = defineNestedUnion('nestedTypeNode', { base: union('typeNode'), wrappers: ['numberTypeNode'] });

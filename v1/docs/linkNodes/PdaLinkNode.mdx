@@ -16,3 +16,12 @@ A reference to a PDA defined elsewhere — possibly in a different program.
 | Attribute | Type                                                    | Description                                                                                  |
 | --------- | ------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | `program` | [`ProgramLinkNode`](./ProgramLinkNode.mdx) _(optional)_ | The program the referenced PDA belongs to. When omitted, the surrounding program is assumed. |
+
+## Examples
+
+### Create a PDA link node from a PDA name
+
+```typescript
+const node = pdaLinkNode('myPda');
+const nodeFromAnotherProgram = pdaLinkNode('myPda', 'myOtherProgram');
+```

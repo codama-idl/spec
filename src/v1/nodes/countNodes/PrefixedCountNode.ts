@@ -1,4 +1,5 @@
 import { attribute, defineNode, nestedUnion } from '../../../api';
+import { examples } from './PrefixedCountNode.examples';
 
 export const prefixedCountNode = defineNode('prefixedCountNode', {
     docs: ['A count strategy where the number of items is read from a numeric prefix.'],
@@ -7,4 +8,5 @@ export const prefixedCountNode = defineNode('prefixedCountNode', {
             docs: ['The numeric type used as the count prefix.'],
         }),
     ],
+    examples,
 });

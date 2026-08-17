@@ -1,4 +1,5 @@
 import { attribute, defineNode, enumeration, optionalAttribute, union } from '../../../api';
+import { examples } from './NumberTypeNode.examples';
 
 export const numberTypeNode = defineNode('numberTypeNode', {
     docs: ['A numeric type with a fixed wire format and byte order.'],
@@ -13,4 +14,5 @@ export const numberTypeNode = defineNode('numberTypeNode', {
             docs: ['Display metadata describing how the number is presented.'],
         }),
     ],
+    examples,
 });

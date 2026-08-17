@@ -18,3 +18,28 @@ A program-derived address: its name, optional program ID override, and the seeds
 | Attribute | Type                                              | Description                                 |
 | --------- | ------------------------------------------------- | ------------------------------------------- |
 | `seeds`   | [`PdaSeedNode`](./pdaSeedNodes/PdaSeedNode.mdx)[] | The seeds used to derive the PDA, in order. |
+
+## Examples
+
+### A PDA with constant and variable seeds
+
+```typescript
+pdaNode({
+    name: 'ticket',
+    seeds: [
+        constantPdaSeedNodeFromString('utf8', 'raffles'),
+        variablePdaSeedNode('raffle', publicKeyTypeNode()),
+        constantPdaSeedNodeFromString('utf8', 'tickets'),
+        variablePdaSeedNode('ticketNumber', numberTypeNode('u32')),
+    ],
+});
+```
+
+### A PDA with no seeds
+
+```typescript
+pdaNode({
+    name: 'seedlessPda',
+    seeds: [],
+});
+```

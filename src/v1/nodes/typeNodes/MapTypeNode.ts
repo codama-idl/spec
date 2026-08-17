@@ -1,4 +1,5 @@
 import { attribute, defineNode, union } from '../../../api';
+import { examples } from './MapTypeNode.examples';
 
 export const mapTypeNode = defineNode('mapTypeNode', {
     docs: [
@@ -16,4 +17,5 @@ export const mapTypeNode = defineNode('mapTypeNode', {
             docs: ['The strategy used to determine the number of entries.'],
         }),
     ],
+    examples,
 });

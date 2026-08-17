@@ -18,3 +18,17 @@ A variant of an enum that carries a struct payload (named fields).
 | --------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------- |
 | `struct`  | [`NestedTypeNode`](./NestedTypeNode.mdx)\<[`StructTypeNode`](./StructTypeNode.mdx)> | The struct of named fields carried by the variant.        |
 | `display` | [`EnumVariantDisplayNode`](../displayNodes/EnumVariantDisplayNode.mdx) _(optional)_ | Display metadata describing how the variant is presented. |
+
+## Examples
+
+### Create a struct enum variant type node from a name and a struct
+
+```typescript
+const node = enumStructVariantTypeNode(
+    'coordinates',
+    structTypeNode([
+        structFieldTypeNode({ name: 'x', type: numberTypeNode('u32') }),
+        structFieldTypeNode({ name: 'y', type: numberTypeNode('u32') }),
+    ]),
+);
+```

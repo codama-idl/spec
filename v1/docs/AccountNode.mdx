@@ -20,3 +20,44 @@ An on-chain account: its name, data structure, optional fixed size, optional PDA
 | `data`           | [`NestedTypeNode`](./typeNodes/NestedTypeNode.mdx)\<[`StructTypeNode`](./typeNodes/StructTypeNode.mdx)> | The struct describing the account data.                                  |
 | `pda`            | [`PdaLinkNode`](./linkNodes/PdaLinkNode.mdx) _(optional)_                                               | A link to the PDA the account is derived from, if applicable.            |
 | `discriminators` | [`DiscriminatorNode`](./discriminatorNodes/DiscriminatorNode.mdx)[] _(optional)_                        | Discriminators that distinguish this account from others in the program. |
+
+## Examples
+
+### A fixed-size account
+
+```typescript
+const node = accountNode({
+    name: 'token',
+    data: structTypeNode([
+        structFieldTypeNode({ name: 'mint', type: publicKeyTypeNode() }),
+        structFieldTypeNode({ name: 'owner', type: publicKeyTypeNode() }),
+        structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') }),
+    ]),
+    discriminators: [sizeDiscriminatorNode(72)],
+    size: 72,
+});
+```
+
+### An account with a linked PDA
+
+```typescript
+programNode({
+    name: 'myProgram',
+    accounts: [
+        accountNode({
+            name: 'token',
+            data: structTypeNode([structFieldTypeNode({ name: 'authority', type: publicKeyTypeNode() })]),
+            pda: pdaLinkNode('myPda'),
+        }),
+    ],
+    pdas: [
+        pdaNode({
+            name: 'myPda',
+            seeds: [
+                constantPdaSeedNodeFromString('utf8', 'token'),
+                variablePdaSeedNode('authority', publicKeyTypeNode()),
+            ],
+        }),
+    ],
+});
+```

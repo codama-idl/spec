@@ -17,3 +17,18 @@ A custom resolver: a named function provided by the consumer that produces a val
 | Attribute   | Type                                                            | Description                                                                                                        |
 | ----------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | `dependsOn` | [`ResolverDependency`](./ResolverDependency.mdx)[] _(optional)_ | The accounts and arguments the resolver depends on. Used by clients to ensure the dependencies are resolved first. |
+
+## Examples
+
+### Create a resolver value node from a name and options
+
+```typescript
+const node = resolverValueNode('resolveCustomTokenProgram', {
+    docs: [
+        'If the mint account has more than 0 decimals and the ',
+        'delegated amount is greater than zero, then we use our ',
+        'own custom token program. Otherwise, we use Token 2022.',
+    ],
+    dependsOn: [accountValueNode('mint'), argumentValueNode('delegatedAmount')],
+});
+```

@@ -15,3 +15,14 @@ A concrete struct value: a list of named field values.
 | Attribute | Type                                                   | Description                           |
 | --------- | ------------------------------------------------------ | ------------------------------------- |
 | `fields`  | [`StructFieldValueNode`](./StructFieldValueNode.mdx)[] | The named fields of the struct value. |
+
+## Examples
+
+### Create a struct value node from field value nodes
+
+```typescript
+const node = structValueNode([
+    structFieldValueNode('name', stringValueNode('Alice')),
+    structFieldValueNode('age', numberValueNode(42)),
+]);
+```

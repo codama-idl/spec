@@ -18,3 +18,33 @@ A program event: its data shape and optional discriminators used to identify it 
 | ---------------- | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
 | `data`           | [`TypeNode`](./typeNodes/TypeNode.mdx)                                           | The type describing the event payload.                                                                                  |
 | `discriminators` | [`DiscriminatorNode`](./discriminatorNodes/DiscriminatorNode.mdx)[] _(optional)_ | Discriminators that distinguish this event from others. When multiple are listed, they are combined with a logical AND. |
+
+## Examples
+
+### An event with a struct payload
+
+```typescript
+eventNode({
+    name: 'transferEvent',
+    data: structTypeNode([
+        structFieldTypeNode({ name: 'authority', type: publicKeyTypeNode() }),
+        structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') }),
+    ]),
+});
+```
+
+### An event with a hidden prefix discriminator
+
+```typescript
+eventNode({
+    name: 'transferEvent',
+    data: hiddenPrefixTypeNode(structTypeNode([structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') })]), [
+        constantValueNode(fixedSizeTypeNode(bytesTypeNode(), 8), bytesValueNode('base16', '0102030405060708')),
+    ]),
+    discriminators: [
+        constantDiscriminatorNode(
+            constantValueNode(fixedSizeTypeNode(bytesTypeNode(), 8), bytesValueNode('base16', '0102030405060708')),
+        ),
+    ],
+});
+```

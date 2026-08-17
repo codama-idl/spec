@@ -17,3 +17,23 @@ A byte-size delta applied when computing rent or buffer size — typically used 
 | Attribute | Type                                                           | Description                                                                                        |
 | --------- | -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | `value`   | [`InstructionByteDeltaValue`](./InstructionByteDeltaValue.mdx) | The source of the delta value — a literal number, a referenced account or argument, or a resolver. |
+
+## Examples
+
+### A byte delta that represents a new account
+
+```typescript
+instructionByteDeltaNode(accountLinkNode('token'));
+```
+
+### A byte delta that represents an account deletion
+
+```typescript
+instructionByteDeltaNode(accountLinkNode('token'), { subtract: true });
+```
+
+### A byte delta that uses an argument value to increase the space of an account
+
+```typescript
+instructionByteDeltaNode(argumentValueNode('additionalSpace'), { withHeader: false });
+```

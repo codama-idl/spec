@@ -28,3 +28,151 @@ A program instruction: its accounts, arguments, byte-delta hints, discriminators
 | `provides`                | [`ProvidedNode`](./ProvidedNode.mdx)[] _(optional)_                                         | Named nodes exposed to consumers in the surrounding scope.                                                |
 | `display`                 | [`InstructionDisplayNode`](./displayNodes/InstructionDisplayNode.mdx) _(optional)_          | Display metadata describing how the instruction is presented.                                             |
 | `plugins`                 | [`PluginNode`](./PluginNode.mdx)[] _(optional)_                                             | Namespaced plugins with custom structured data.                                                           |
+
+## Examples
+
+### An instruction with a u8 discriminator
+
+```typescript
+instructionNode({
+    name: 'increment',
+    accounts: [
+        instructionAccountNode({ name: 'counter', isWritable: true, isSigner: true }),
+        instructionAccountNode({ name: 'authority', isWritable: false, isSigner: false }),
+    ],
+    arguments: [
+        instructionArgumentNode({
+            name: 'discriminator',
+            type: numberTypeNode('u8'),
+            defaultValue: numberValueNode(42),
+            defaultValueStrategy: 'omitted',
+        }),
+    ],
+});
+```
+
+### An instruction that creates a new account
+
+```typescript
+instructionNode({
+    name: 'createCounter',
+    accounts: [
+        instructionAccountNode({ name: 'counter', isWritable: true, isSigner: true }),
+        instructionAccountNode({ name: 'authority', isWritable: false, isSigner: false }),
+    ],
+    byteDeltas: [instructionByteDeltaNode(accountLinkNode('counter'))],
+});
+```
+
+### An instruction with omitted optional accounts
+
+```typescript
+instructionNode({
+    name: 'initialize',
+    accounts: [
+        instructionAccountNode({ name: 'counter', isWritable: true, isSigner: true }),
+        instructionAccountNode({ name: 'authority', isWritable: false, isSigner: false }),
+        instructionAccountNode({ name: 'freezeAuthority', isWritable: false, isSigner: false, isOptional: true }),
+    ],
+    optionalAccountStrategy: 'omitted',
+});
+```
+
+### An instruction with remaining signers
+
+```typescript
+instructionNode({
+    name: 'multisigIncrement',
+    accounts: [instructionAccountNode({ name: 'counter', isWritable: true, isSigner: false })],
+    remainingAccounts: [instructionRemainingAccountsNode(argumentValueNode('authorities'), { isSigner: true })],
+});
+```
+
+### An instruction with nested versioned instructions
+
+```typescript
+instructionNode({
+    name: 'increment',
+    accounts: [
+        instructionAccountNode({ name: 'counter', isWritable: true, isSigner: 'either' }),
+        instructionAccountNode({ name: 'authority', isWritable: false, isSigner: true }),
+    ],
+    arguments: [
+        instructionArgumentNode({ name: 'version', type: numberTypeNode('u8') }),
+        instructionArgumentNode({ name: 'amount', type: numberTypeNode('u8') }),
+    ],
+    subInstructions: [
+        instructionNode({
+            name: 'incrementV1',
+            accounts: [instructionAccountNode({ name: 'counter', isWritable: true, isSigner: true })],
+            arguments: [
+                instructionArgumentNode({
+                    name: 'version',
+                    type: numberTypeNode('u8'),
+                    defaultValue: numberValueNode(0),
+                    defaultValueStrategy: 'omitted',
+                }),
+                instructionArgumentNode({ name: 'amount', type: numberTypeNode('u8') }),
+            ],
+        }),
+        instructionNode({
+            name: 'incrementV2',
+            accounts: [
+                instructionAccountNode({ name: 'counter', isWritable: true, isSigner: false }),
+                instructionAccountNode({ name: 'authority', isWritable: false, isSigner: true }),
+            ],
+            arguments: [
+                instructionArgumentNode({
+                    name: 'version',
+                    type: numberTypeNode('u8'),
+                    defaultValue: numberValueNode(1),
+                    defaultValueStrategy: 'omitted',
+                }),
+                instructionArgumentNode({ name: 'amount', type: numberTypeNode('u8') }),
+            ],
+        }),
+    ],
+});
+```
+
+### A deprecated instruction
+
+```typescript
+instructionNode({
+    name: 'oldIncrement',
+    status: instructionStatusNode(
+        'deprecated',
+        'Use the `increment` instruction instead. This will be removed in v3.0.0.',
+    ),
+    accounts: [instructionAccountNode({ name: 'counter', isWritable: true, isSigner: false })],
+    arguments: [instructionArgumentNode({ name: 'amount', type: numberTypeNode('u8') })],
+});
+```
+
+### An archived instruction
+
+```typescript
+instructionNode({
+    name: 'legacyTransfer',
+    status: instructionStatusNode(
+        'archived',
+        'This instruction was removed in v2.0.0. It is kept here for historical parsing.',
+    ),
+    accounts: [
+        instructionAccountNode({ name: 'source', isWritable: true, isSigner: true }),
+        instructionAccountNode({ name: 'destination', isWritable: true, isSigner: false }),
+    ],
+    arguments: [instructionArgumentNode({ name: 'amount', type: numberTypeNode('u64') })],
+});
+```
+
+### A draft instruction
+
+```typescript
+instructionNode({
+    name: 'experimentalFeature',
+    status: instructionStatusNode('draft', 'This instruction is under development and may change.'),
+    accounts: [instructionAccountNode({ name: 'config', isWritable: true, isSigner: true })],
+    arguments: [],
+});
+```

@@ -1,4 +1,5 @@
 import { attribute, defineNode, docs, optionalAttribute, string, stringIdentifier, u32 } from '../../api';
+import { examples } from './ErrorNode.examples';
 
 export const errorNode = defineNode('errorNode', {
     docs: ['A program error — a numeric code paired with a name and human-readable message.'],
@@ -16,4 +17,5 @@ export const errorNode = defineNode('errorNode', {
             docs: ['Markdown documentation for the error.'],
         }),
     ],
+    examples,
 });

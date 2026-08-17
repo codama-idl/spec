@@ -1,4 +1,5 @@
 import { attribute, boolean, defineNode, optionalAttribute, union } from '../../api';
+import { examples } from './InstructionByteDeltaNode.examples';
 
 export const instructionByteDeltaNode = defineNode('instructionByteDeltaNode', {
     docs: [
@@ -17,4 +18,5 @@ export const instructionByteDeltaNode = defineNode('instructionByteDeltaNode', {
             ],
         }),
     ],
+    examples,
 });

@@ -16,3 +16,12 @@ A reference to an account defined elsewhere — possibly in a different program.
 | Attribute | Type                                                    | Description                                                                                      |
 | --------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | `program` | [`ProgramLinkNode`](./ProgramLinkNode.mdx) _(optional)_ | The program the referenced account belongs to. When omitted, the surrounding program is assumed. |
+
+## Examples
+
+### Create an account link node from an account name
+
+```typescript
+const node = accountLinkNode('myAccount');
+const nodeFromAnotherProgram = accountLinkNode('myAccount', 'myOtherProgram');
+```

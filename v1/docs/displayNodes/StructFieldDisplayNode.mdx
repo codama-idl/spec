@@ -18,3 +18,35 @@ Display metadata for a named member: its label, whether it is shown in the fallb
 | Attribute | Type                                                         | Description                                                                             |
 | --------- | ------------------------------------------------------------ | --------------------------------------------------------------------------------------- |
 | `skip`    | [`DisplaySkip`](../sharedNodes/DisplaySkip.mdx) _(optional)_ | Whether the member is shown in the fallback list. Defaults to `"never"` (always shown). |
+
+## Examples
+
+### Relabelling an instruction argument
+
+```typescript
+instructionArgumentNode({
+    name: 'amount',
+    type: numberTypeNode('u64'),
+    display: structFieldDisplayNode({ label: 'Amount' }),
+});
+```
+
+### Hiding a discriminator argument from the fallback list
+
+```typescript
+instructionArgumentNode({
+    name: 'discriminator',
+    type: numberTypeNode('u8'),
+    display: structFieldDisplayNode({ skip: 'always' }),
+});
+```
+
+### Flattening a nested struct into its parent with a label prefix
+
+```typescript
+structFieldTypeNode({
+    name: 'config',
+    type: definedTypeLinkNode('config'),
+    display: structFieldDisplayNode({ flatten: true, flattenPrefix: 'config.' }),
+});
+```
