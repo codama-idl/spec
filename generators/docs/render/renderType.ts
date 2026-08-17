@@ -63,7 +63,7 @@ export function renderType(t: TypeExpr, markup: MarkupRenderer, linkTo: (r: DocR
 }
 
 /** Whether a type tree references an enumeration (directly, or inside an array/tuple). */
-export function referencesEnumeration(t: TypeExpr): boolean {
+function referencesEnumeration(t: TypeExpr): boolean {
     if (t.kind === 'enumeration') {
         return true;
     }

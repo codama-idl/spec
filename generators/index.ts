@@ -2,16 +2,17 @@
  * Generator orchestrator.
  *
  * Runs every registered generator sequentially. Each generator exposes
- * an `async function generate(): Promise<void>` from its `index.ts`,
- * owns its target output paths, and writes to a versioned subfolder
+ * a `generate()` function (sync or async) from its `index.ts`, owns its
+ * target output paths, and writes to a versioned subfolder
  * (`v1/...`, future `v2/...`, …) at the repo root.
  *
  * Adding a new generator: drop a folder under `generators/`, export a
  * `generate()` from its `index.ts`, then register it in the `GENERATORS`
  * list below.
  *
- * Run via `pnpm generate`, which first rebuilds the package so the
- * generators consume up-to-date sources.
+ * Run via `pnpm generate`. The generators execute straight from the
+ * TypeScript sources with `tsx`; the preceding `pnpm build` is not consumed
+ * by them and simply acts as an extra compile check.
  */
 
 import process from 'node:process';

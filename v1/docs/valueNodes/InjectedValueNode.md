@@ -30,14 +30,3 @@ injectedValueNode({ key: 'decimals' });
 ```typescript
 injectedValueNode({ key: 'decimals', fallback: numberValueNode(0) });
 ```
-
-### A display value injected from surrounding account state
-
-```typescript
-numberTypeNode('u64', 'le', {
-    display: amountNumberDisplayNode({
-        decimals: injectedValueNode({ key: 'decimals' }),
-        unit: injectedValueNode({ key: 'symbol' }),
-    }),
-});
-```

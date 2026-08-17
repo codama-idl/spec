@@ -4,13 +4,10 @@ import type { ListItem, MarkupRenderer } from '../types';
 import { LIST_INDENT, LIST_LINE_SEPARATOR } from './constants';
 
 /**
- * The default markdown renderer.
- * Tables are padded (columns aligned, `>= 3` dashes).
- *
- * Note: this renderer is hand-rolled on purpose to stay dependency-free.
- * Markdown libraries are intentionally avoided until they are needed. (currently only markdownTable is used)
- * Revisit this decision if the renderer grows.
- * */
+ * The default markup renderer - GitHub-flavoured markdown.
+ * Tables are padded (columns aligned, `>= 3` dashes) via `markdown-table`;
+ * every other primitive is hand-rolled, which is fine at this size.
+ */
 export const markdownRenderer: MarkupRenderer = {
     heading(level, content) {
         return `${'#'.repeat(level)} ${content}`;

@@ -2041,22 +2041,6 @@
                                     ]
                                 }
                             ]
-                        },
-                        {
-                            "title": "A display value injected from surrounding account state",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "numberTypeNode('u64', 'le', {",
-                                        "    display: amountNumberDisplayNode({",
-                                        "        decimals: injectedValueNode({ key: 'decimals' }),",
-                                        "        unit: injectedValueNode({ key: 'symbol' }),",
-                                        "    }),",
-                                        "});"
-                                    ]
-                                }
-                            ]
                         }
                     ]
                 },

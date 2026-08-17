@@ -22,7 +22,7 @@ function fileName(ref: DocRef): string {
 export function buildNavRegistry(spec: Spec): NavRegistry {
     const entries = new Map<DocRefKey, NavEntry>();
     const paths = new Map<string, DocRefKey>();
-    function register(ref: DocRef, pathSegments: string[]) {
+    function register(ref: DocRef, pathSegments: readonly string[]): void {
         const key = docRefKey(ref);
         if (entries.has(key)) {
             throw new Error(`Duplicate DocRef registration: ${key}`);
@@ -99,6 +99,6 @@ function toCategoryGroupItems<T extends { docs?: readonly string[] }>(
     }));
 }
 
-function toPathSegments(dir: string, basename: string): string[] {
+function toPathSegments(dir: string, basename: string): readonly string[] {
     return dir ? [dir, basename] : [basename];
 }

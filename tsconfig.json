@@ -20,6 +20,6 @@
         "target": "ESNext",
         "types": ["node"]
     },
-    "include": ["src/**/*", "tests/**/*", "generators/**/*"],
+    "include": ["src/**/*", "tests/**/*", "generators/**/*", "scripts/**/*"],
     "exclude": ["node_modules", "dist"]
 }

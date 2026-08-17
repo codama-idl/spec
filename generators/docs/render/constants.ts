@@ -10,11 +10,6 @@ export const ROOT_TITLE = 'Codama Spec';
 /** Root-page description. */
 export const ROOT_DESCRIPTION = 'The canonical Codama node specification.';
 
-/** Root-page legend explaining the heading suffixes used across entity pages. */
-export const ROOT_LEGEND =
-    'Pages marked _(abstract)_ document unions: sets of nodes that can be used interchangeably. ' +
-    'Pages marked _(recursive)_ document nested unions: wrapper nodes that may nest before reaching a base type.';
-
 /** The display heading for each category group kind - a rendering concern, kept out of the CategoryGroup data. */
 export const GROUP_TITLES: Record<CategoryGroup['kind'], string> = {
     node: 'Nodes',

@@ -72,7 +72,7 @@ jobs:
       - name: Open Version Packages PR or publish
         uses: changesets/action@v1
         with:
-          version: pnpm changeset version
+          version: pnpm release:version
           publish: pnpm changeset publish
           commit: 'Release package'
           title: 'Release package'
