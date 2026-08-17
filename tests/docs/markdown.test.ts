@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { markdownRenderer as markdown } from '../../src/docs/render/markdown';
+import { markdownRenderer as markdown } from '../../generators/docs/render/markdown';
 
 describe('markdownRenderer', () => {
     it('aligns columns to the widest cell and pads the separator', () => {

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { relativePageLink } from '../../src/docs/links';
-import type { NavEntry } from '../../src/docs/types';
+import { relativePageLink } from '../../generators/docs/links';
+import type { NavEntry } from '../../generators/docs/types';
 
 const entry = (pathSegments: string[]): NavEntry => ({ ref: { kind: 'rootIndex' }, pathSegments });
 

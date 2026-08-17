@@ -1,4 +1,5 @@
 import { attribute, defineNode, optionalAttribute, stringIdentifier, union } from '../../../api';
+import { examples } from './InjectedValueNode.examples';
 
 export const injectedValueNode = defineNode('injectedValueNode', {
     docs: [
@@ -17,4 +18,5 @@ export const injectedValueNode = defineNode('injectedValueNode', {
             ],
         }),
     ],
+    examples,
 });

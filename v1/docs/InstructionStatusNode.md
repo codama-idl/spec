@@ -19,56 +19,24 @@ The lifecycle stage of an instruction (draft, live, deprecated, archived) with a
 
 ## Examples
 
-### A live instruction (no status needed)
+### A deprecated status with migration guidance
 
 ```typescript
-instructionNode({
-    name: 'transfer',
-    accounts: [...],
-    arguments: [...],
-});
+instructionStatusNode('deprecated', 'Use the `transfer` instruction instead. This will be removed in v3.0.0.');
 ```
 
-### A deprecated instruction
+### A status without a message
 
 ```typescript
-instructionNode({
-    name: 'oldTransfer',
-    status: instructionStatusNode('deprecated', 'Use the `transfer` instruction instead. This will be removed in v3.0.0.'),
-    accounts: [...],
-    arguments: [...],
-});
+instructionStatusNode('archived');
 ```
 
-### An archived instruction
-
-```typescript
-instructionNode({
-    name: 'legacyTransfer',
-    status: instructionStatusNode('archived', 'This instruction was removed in v2.0.0. It is kept here for historical parsing.'),
-    accounts: [...],
-    arguments: [...],
-});
-```
-
-### A draft instruction
+### Attaching a status to an instruction
 
 ```typescript
 instructionNode({
     name: 'experimentalFeature',
     status: instructionStatusNode('draft', 'This instruction is under development and may change.'),
-    accounts: [...],
-    arguments: [...],
-});
-```
-
-### Status without a message
-
-```typescript
-instructionNode({
-    name: 'someInstruction',
-    status: instructionStatusNode('deprecated'),
-    accounts: [...],
-    arguments: [...],
+    // ...
 });
 ```

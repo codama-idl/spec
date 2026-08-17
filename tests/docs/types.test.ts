@@ -1,6 +1,6 @@
 import { describe, expectTypeOf, it } from 'vitest';
 
-import type { DocRef, DocRefKey } from '../../src/docs/types';
+import type { DocRef, DocRefKey } from '../../generators/docs/types';
 
 describe('DocRef type', () => {
     it('exposes exactly the six known kinds', () => {

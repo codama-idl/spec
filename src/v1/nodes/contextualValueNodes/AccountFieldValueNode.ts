@@ -1,4 +1,5 @@
 import { attribute, defineNode, optionalAttribute, stringIdentifier } from '../../../api';
+import { examples } from './AccountFieldValueNode.examples';
 
 export const accountFieldValueNode = defineNode('accountFieldValueNode', {
     docs: [
@@ -17,4 +18,5 @@ export const accountFieldValueNode = defineNode('accountFieldValueNode', {
             ],
         }),
     ],
+    examples,
 });

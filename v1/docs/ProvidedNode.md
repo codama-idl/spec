@@ -16,3 +16,28 @@ Exposes a node under a name so consumers in the surrounding scope can resolve it
 | Attribute | Type      | Description                                                                                                                                                              |
 | --------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `node`    | `anyNode` | The exposed node. The provider is a transparent pipe — any node may be supplied; the family check happens at the injection point against the consumer's expected family. |
+
+## Examples
+
+### Providing a constant value to consumers
+
+```typescript
+providedNode('decimals', numberValueNode(9));
+```
+
+### A provided value consumed via injection
+
+```typescript
+instructionNode({
+    name: 'transferChecked',
+    provides: [providedNode('decimals', numberValueNode(9))],
+    arguments: [
+        instructionArgumentNode({
+            name: 'decimals',
+            type: numberTypeNode('u8'),
+            defaultValue: injectedValueNode({ key: 'decimals' }),
+        }),
+        // ...
+    ],
+});
+```

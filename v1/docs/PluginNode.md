@@ -11,3 +11,29 @@ Attaches named, plugin-specific data to a node. A plugin is uniquely identified 
 | `kind`    | `"pluginNode"`      | The node discriminator.                                                                                                        |
 | `name`    | `CamelCaseString`   | The unique name identifying the plugin this data belongs to.                                                                   |
 | `payload` | `Json` _(optional)_ | Arbitrary, plugin-specific data. Its shape is defined by the plugin, not by Codama, and is carried through the graph verbatim. |
+
+## Examples
+
+### A plugin carrying custom structured data
+
+```typescript
+pluginNode('explorerHints', {
+    payload: { icon: 'transfer-arrow', priority: 2 },
+});
+```
+
+### A marker plugin without a payload
+
+```typescript
+pluginNode('audited');
+```
+
+### An instruction tagged with a plugin
+
+```typescript
+instructionNode({
+    name: 'transfer',
+    plugins: [pluginNode('explorerHints', { payload: { icon: 'transfer-arrow' } })],
+    // ...
+});
+```

@@ -1,4 +1,5 @@
 import { anyNode, attribute, defineNode, stringIdentifier } from '../../api';
+import { examples } from './ProvidedNode.examples';
 
 export const providedNode = defineNode('providedNode', {
     docs: [
@@ -15,4 +16,5 @@ export const providedNode = defineNode('providedNode', {
             ],
         }),
     ],
+    examples,
 });

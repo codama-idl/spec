@@ -21,8 +21,10 @@ import {
     writeRenderMap,
 } from '@codama/fragments';
 
-import { type DocModel, generateDocs, PAGE_EXTENSION } from '../../src/docs';
 import { getSpec } from '../../src/v1';
+import { PAGE_EXTENSION } from './constants';
+import { generateDocs } from './generateDocs';
+import type { DocModel } from './types';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 // here = <repo>/generators/docs -> repoRoot is two levels up.

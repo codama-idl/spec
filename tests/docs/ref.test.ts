@@ -1,7 +1,7 @@
 import { describe, expect, expectTypeOf, it } from 'vitest';
 
-import { displayName, docRefKey, refName } from '../../src/docs/ref';
-import type { DocRef, DocRefKey } from '../../src/docs/types';
+import { displayName, docRefKey, refName } from '../../generators/docs/ref';
+import type { DocRef, DocRefKey } from '../../generators/docs/types';
 
 describe('ref helpers', () => {
     it('refName maps structural refs to sentinel names', () => {

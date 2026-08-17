@@ -82,9 +82,3 @@ export interface MarkupRenderer {
      */
     prose(value: string): string;
 }
-
-/** A consumer-side emitted file - contains file path and string content. */
-export interface DocFile {
-    readonly path: string;
-    readonly content: string;
-}
