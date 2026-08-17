@@ -1,4 +1,4 @@
-import type { Spec } from '../api';
+import type { Spec } from '../../src/api';
 import { relativePageLink } from './links';
 import { buildNavRegistry, hasOwnDirectory } from './navigation';
 import {

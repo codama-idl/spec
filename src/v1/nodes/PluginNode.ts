@@ -1,4 +1,5 @@
 import { attribute, defineNode, json, optionalAttribute, stringIdentifier } from '../../api';
+import { examples } from './PluginNode.examples';
 
 export const pluginNode = defineNode('pluginNode', {
     docs: [
@@ -15,4 +16,5 @@ export const pluginNode = defineNode('pluginNode', {
             ],
         }),
     ],
+    examples,
 });

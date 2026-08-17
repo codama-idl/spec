@@ -19,7 +19,6 @@
     },
     "files": [
         "./dist/types",
-        "!dist/types/docs/**",
         "./dist/index.*",
         "./dist/api.*",
         "./dist/v1.*"

@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { markdownRenderer as markdown } from '../../src/docs/render/markdown';
-import { isDocChild, renderType } from '../../src/docs/render/renderType';
-import type { DocRef } from '../../src/docs/types';
+import { markdownRenderer as markdown } from '../../generators/docs/render/markdown';
+import { isDocChild, renderType } from '../../generators/docs/render/renderType';
+import type { DocRef } from '../../generators/docs/types';
 
 function linkTo(ref: DocRef): string {
     return `#${ref.kind}:${'name' in ref ? ref.name : ''}`;

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { generateDocs } from '../../src/docs';
-import type { DocModel, DocPage, DocRef } from '../../src/docs';
+import { generateDocs } from '../../generators/docs/generateDocs';
+import type { DocModel, DocPage, DocRef } from '../../generators/docs/types';
 import { getSpec } from '../../src/v1';
 
 const MODEL = generateDocs(getSpec());
@@ -120,8 +120,8 @@ describe('v1 docs generation over the real spec', () => {
     it('lists topLevel entities in the TopLevel section of the root index (nodes and unions)', () => {
         const root = rootContent(MODEL);
         expect(root).toContain('## TopLevel');
-        expect(root).toContain('- [AccountNode](./AccountNode.md)');
-        expect(root).toContain('- [InstructionByteDeltaValue](./InstructionByteDeltaValue.md)');
+        expect(root).toContain('- [`AccountNode`](./AccountNode.md)');
+        expect(root).toContain('- [`InstructionByteDeltaValue`](./InstructionByteDeltaValue.md)');
     });
 
     it('renders the accountNode page with a Data/Children split and the nested-union data link', () => {

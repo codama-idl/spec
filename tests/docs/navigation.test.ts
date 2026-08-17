@@ -1,9 +1,9 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 
+import { buildNavRegistry, categoryGroups } from '../../generators/docs/navigation';
+import type { NavRegistry } from '../../generators/docs/types';
 import { defineCategory } from '../../src/api';
 import type { Spec } from '../../src/api';
-import { buildNavRegistry, categoryGroups } from '../../src/docs/navigation';
-import type { NavRegistry } from '../../src/docs/types';
 import { SPEC, typeCategory } from './__fixtures__/spec';
 
 describe('buildNavRegistry', () => {

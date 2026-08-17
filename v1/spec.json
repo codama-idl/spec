@@ -2019,7 +2019,46 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "A required injected value",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "injectedValueNode({ key: 'decimals' });"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An injected value with a fallback",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "injectedValueNode({ key: 'decimals', fallback: numberValueNode(0) });"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A display value injected from surrounding account state",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "numberTypeNode('u64', 'le', {",
+                                        "    display: amountNumberDisplayNode({",
+                                        "        decimals: injectedValueNode({ key: 'decimals' }),",
+                                        "        unit: injectedValueNode({ key: 'symbol' }),",
+                                        "    }),",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "mapEntryValueNode",
@@ -4215,7 +4254,49 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Create an account field value node from an account name and a field path",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = accountFieldValueNode('mint', 'decimals');"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An argument defaulting to a field of an instruction account",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'transferChecked',",
+                                        "    accounts: [",
+                                        "        instructionAccountNode({",
+                                        "            name: 'mint',",
+                                        "            isWritable: false,",
+                                        "            isSigner: false,",
+                                        "            accountLink: accountLinkNode('mint'),",
+                                        "        }),",
+                                        "        // ...",
+                                        "    ],",
+                                        "    arguments: [",
+                                        "        instructionArgumentNode({",
+                                        "            name: 'decimals',",
+                                        "            type: numberTypeNode('u8'),",
+                                        "            defaultValue: accountFieldValueNode('mint', 'decimals'),",
+                                        "        }),",
+                                        "        // ...",
+                                        "    ],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "accountValueNode",
@@ -6524,54 +6605,29 @@
                     ],
                     "examples": [
                         {
-                            "title": "A live instruction (no status needed)",
+                            "title": "A deprecated status with migration guidance",
                             "code": [
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "instructionNode({",
-                                        "    name: 'transfer',",
-                                        "    accounts: [...],",
-                                        "    arguments: [...],",
-                                        "});"
+                                        "instructionStatusNode('deprecated', 'Use the `transfer` instruction instead. This will be removed in v3.0.0.');"
                                     ]
                                 }
                             ]
                         },
                         {
-                            "title": "A deprecated instruction",
+                            "title": "A status without a message",
                             "code": [
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "instructionNode({",
-                                        "    name: 'oldTransfer',",
-                                        "    status: instructionStatusNode('deprecated', 'Use the `transfer` instruction instead. This will be removed in v3.0.0.'),",
-                                        "    accounts: [...],",
-                                        "    arguments: [...],",
-                                        "});"
+                                        "instructionStatusNode('archived');"
                                     ]
                                 }
                             ]
                         },
                         {
-                            "title": "An archived instruction",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "instructionNode({",
-                                        "    name: 'legacyTransfer',",
-                                        "    status: instructionStatusNode('archived', 'This instruction was removed in v2.0.0. It is kept here for historical parsing.'),",
-                                        "    accounts: [...],",
-                                        "    arguments: [...],",
-                                        "});"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "title": "A draft instruction",
+                            "title": "Attaching a status to an instruction",
                             "code": [
                                 {
                                     "language": "typescript",
@@ -6579,24 +6635,7 @@
                                         "instructionNode({",
                                         "    name: 'experimentalFeature',",
                                         "    status: instructionStatusNode('draft', 'This instruction is under development and may change.'),",
-                                        "    accounts: [...],",
-                                        "    arguments: [...],",
-                                        "});"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "title": "Status without a message",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "instructionNode({",
-                                        "    name: 'someInstruction',",
-                                        "    status: instructionStatusNode('deprecated'),",
-                                        "    accounts: [...],",
-                                        "    arguments: [...],",
+                                        "    // ...",
                                         "});"
                                     ]
                                 }
@@ -6718,7 +6757,47 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "A plugin carrying custom structured data",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "pluginNode('explorerHints', {",
+                                        "    payload: { icon: 'transfer-arrow', priority: 2 },",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A marker plugin without a payload",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "pluginNode('audited');"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An instruction tagged with a plugin",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'transfer',",
+                                        "    plugins: [pluginNode('explorerHints', { payload: { icon: 'transfer-arrow' } })],",
+                                        "    // ...",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "programNode",
@@ -6919,7 +6998,41 @@
                             ]
                         }
                     ],
-                    "examples": []
+                    "examples": [
+                        {
+                            "title": "Providing a constant value to consumers",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "providedNode('decimals', numberValueNode(9));"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A provided value consumed via injection",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    name: 'transferChecked',",
+                                        "    provides: [providedNode('decimals', numberValueNode(9))],",
+                                        "    arguments: [",
+                                        "        instructionArgumentNode({",
+                                        "            name: 'decimals',",
+                                        "            type: numberTypeNode('u8'),",
+                                        "            defaultValue: injectedValueNode({ key: 'decimals' }),",
+                                        "        }),",
+                                        "        // ...",
+                                        "    ],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "kind": "rootNode",

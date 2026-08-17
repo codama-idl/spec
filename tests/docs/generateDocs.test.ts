@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { generateDocs } from '../../src/docs/generateDocs';
-import type { DocModel, DocPage, DocRef } from '../../src/docs/types';
+import { generateDocs } from '../../generators/docs/generateDocs';
+import type { DocModel, DocPage, DocRef } from '../../generators/docs/types';
 import { SPEC } from './__fixtures__/spec';
 
 function findPage(model: DocModel, predicate: (page: DocPage) => boolean): DocPage {
@@ -97,7 +97,8 @@ describe('generateDocs - root index', () => {
     it('lists own-directory categories alphabetically with PascalCased links, topLevel in its own section', () => {
         const content = rootContent();
         expect(content.startsWith('# Codama Spec')).toBe(true);
-        expect(content).toContain(`Version ${SPEC.version}`);
+        expect(content).toContain(`Spec version: ${SPEC.version}`);
+        expect(content).toContain('Pages marked _(abstract)_');
         expect(content).toContain('## Categories');
         // PascalCased link text, alphabetical order (pdaSeed before type)
         expect(content).toContain('[PdaSeed](./pdaSeedNodes/README.md)');
@@ -106,10 +107,10 @@ describe('generateDocs - root index', () => {
         );
         // topLevel extracted to its own section below Categories, entities as a flat list
         expect(content.indexOf('## Categories')).toBeLessThan(content.indexOf('## TopLevel'));
-        expect(content).toContain('- [PdaNode](./PdaNode.md)');
+        expect(content).toContain('- [`PdaNode`](./PdaNode.md)');
     });
     it('lists topLevel unions in the TopLevel section too, not just nodes (root index == Navigation)', () => {
-        expect(rootContent()).toContain('- [HelperUnion](./HelperUnion.md)');
+        expect(rootContent()).toContain('- [`HelperUnion`](./HelperUnion.md)');
     });
 });
 

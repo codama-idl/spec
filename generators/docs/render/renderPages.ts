@@ -10,18 +10,26 @@ import type {
     NodeSpec,
     Spec,
     UnionSpec,
-} from '../../api';
+} from '../../../src/api';
 import { categoryGroups, hasOwnDirectory } from '../navigation';
-import { displayName, refName } from '../ref';
-import type { CategoryGroup, DocPage, DocRef, ListItem, MarkupRenderer, NavRegistry } from '../types';
-import { BLOCK_SEPARATOR, GROUP_TITLES, ROOT_DESCRIPTION, ROOT_TITLE } from './constants';
+import { refName } from '../ref';
+import type {
+    CategoryGroup,
+    CategoryGroupItem,
+    DocPage,
+    DocRef,
+    ListItem,
+    MarkupRenderer,
+    NavRegistry,
+} from '../types';
+import { BLOCK_SEPARATOR, GROUP_TITLES, ROOT_DESCRIPTION, ROOT_LEGEND, ROOT_TITLE } from './constants';
 import { isDocChild, linkedEntity, renderType } from './renderType';
 
 /** Shared context threaded through every page renderer. `link` resolves a relative href between two pages. */
 export interface RenderCtx {
-    markup: MarkupRenderer;
-    registry: NavRegistry;
-    link: (from: DocRef, to: DocRef) => string;
+    readonly markup: MarkupRenderer;
+    readonly registry: NavRegistry;
+    readonly link: (from: DocRef, to: DocRef) => string;
 }
 
 /** Binds a page as the link source, so renderers resolve hrefs by target ref alone. */
@@ -172,10 +180,9 @@ function renderGroup(group: CategoryGroup, markup: MarkupRenderer, linkTo: (r: D
     if (!group.items.length) {
         return undefined;
     }
-    const sorted = [...group.items].sort((a, b) => refName(a.ref).localeCompare(refName(b.ref)));
     const lines = markup.list(
         'bulleted',
-        sorted.map(({ ref, docs }) => withBlurb(linkedEntity(ref, markup, linkTo), docs, markup)),
+        sortedByRefName(group.items).map(({ ref, docs }) => withBlurb(linkedEntity(ref, markup, linkTo), docs, markup)),
     );
     return `${markup.heading(2, GROUP_TITLES[group.kind])}${BLOCK_SEPARATOR}${lines}`;
 }
@@ -226,7 +233,9 @@ export function renderRootIndexPage(spec: Spec, ctx: RenderCtx): DocPage {
         // description
         markup.paragraph(ROOT_DESCRIPTION),
         // version
-        markup.paragraph(`Version ${spec.version}`),
+        markup.paragraph(`Spec version: ${spec.version}`),
+        // legend for the (abstract)/(recursive) heading suffixes
+        markup.paragraph(markup.prose(ROOT_LEGEND)),
         // body: linked categories
         `${markup.heading(2, 'Categories')}${BLOCK_SEPARATOR}${markup.list('bulleted', categories)}`,
         // body: one section per root-level category (topLevel)
@@ -243,8 +252,8 @@ export function renderRootIndexPage(spec: Spec, ctx: RenderCtx): DocPage {
 function renderRootCategorySection(category: CategorySpec, ctx: RenderCtx, linkTo: (r: DocRef) => string): string {
     const { markup } = ctx;
     const entities = categoryGroups(category)
-        .flatMap(group => [...group.items].sort((a, b) => refName(a.ref).localeCompare(refName(b.ref))))
-        .map(({ ref, docs }) => withBlurb(markup.link(displayName(ref), linkTo(ref)), docs, markup));
+        .flatMap(group => sortedByRefName(group.items))
+        .map(({ ref, docs }) => withBlurb(linkedEntity(ref, markup, linkTo), docs, markup));
     const parts: (string | undefined)[] = [
         // section heading: PascalCased category name (e.g. topLevel -> TopLevel)
         markup.heading(2, pascalCase(category.name)),
@@ -254,6 +263,11 @@ function renderRootCategorySection(category: CategorySpec, ctx: RenderCtx, linkT
         markup.list('bulleted', entities),
     ];
     return parts.filter(Boolean).join(BLOCK_SEPARATOR);
+}
+
+/** Category-group items in alphabetical listing order, as shown on index pages. */
+function sortedByRefName(items: readonly CategoryGroupItem[]): CategoryGroupItem[] {
+    return [...items].sort((a, b) => refName(a.ref).localeCompare(refName(b.ref)));
 }
 
 /** One Type-column cell: the rendered type, plus an ` _(optional)_` suffix when the attribute is optional. */

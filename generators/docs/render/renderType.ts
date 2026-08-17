@@ -1,5 +1,5 @@
-import { isChildAttribute } from '../../api';
-import type { TypeExpr } from '../../api';
+import { isChildAttribute } from '../../../src/api';
+import type { TypeExpr } from '../../../src/api';
 import { displayName } from '../ref';
 import type { DocRef, MarkupRenderer } from '../types';
 
