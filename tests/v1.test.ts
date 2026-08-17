@@ -1,11 +1,18 @@
 import { describe, expect, it } from 'vitest';
 
+import pkg from '../package.json';
 import { getEnumeration, getNode, getSpec, getUnion, isChildAttribute, SPEC_VERSION } from '../src/v1';
 
 describe('v1 spec — composition', () => {
     it('exposes a SPEC_VERSION matching the assembled spec', () => {
-        expect(SPEC_VERSION).toMatch(/^\d+\.\d+\.\d+$/);
+        // semver with an optional prerelease tag (e.g. 1.9.0-rc.0 while in changesets pre mode)
+        expect(SPEC_VERSION).toMatch(/^\d+\.\d+\.\d+(-[\w.]+)?$/);
         expect(getSpec().version).toBe(SPEC_VERSION);
+    });
+
+    it('keeps SPEC_VERSION in lockstep with the package version', () => {
+        // `pnpm release:version` syncs the two in the release commit; they must never drift elsewhere.
+        expect(SPEC_VERSION).toBe(pkg.version);
     });
 
     it('returns the same Spec instance on every call (memoised)', () => {

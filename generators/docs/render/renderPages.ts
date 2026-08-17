@@ -22,7 +22,7 @@ import type {
     MarkupRenderer,
     NavRegistry,
 } from '../types';
-import { BLOCK_SEPARATOR, GROUP_TITLES, ROOT_DESCRIPTION, ROOT_LEGEND, ROOT_TITLE } from './constants';
+import { BLOCK_SEPARATOR, GROUP_TITLES, ROOT_DESCRIPTION, ROOT_TITLE } from './constants';
 import { isDocChild, linkedEntity, renderType } from './renderType';
 
 /** Shared context threaded through every page renderer. `link` resolves a relative href between two pages. */
@@ -235,7 +235,11 @@ export function renderRootIndexPage(spec: Spec, ctx: RenderCtx): DocPage {
         // version
         markup.paragraph(`Spec version: ${spec.version}`),
         // legend for the (abstract)/(recursive) heading suffixes
-        markup.paragraph(markup.prose(ROOT_LEGEND)),
+        markup.paragraph(
+            `Pages marked ${markup.italic('(abstract)')} document unions: sets of nodes that can be used ` +
+                `interchangeably. Pages marked ${markup.italic('(recursive)')} document nested unions: wrapper ` +
+                `nodes that may nest before reaching a base type.`,
+        ),
         // body: linked categories
         `${markup.heading(2, 'Categories')}${BLOCK_SEPARATOR}${markup.list('bulleted', categories)}`,
         // body: one section per root-level category (topLevel)
@@ -279,7 +283,7 @@ function typeCell(attribute: AttributeSpec, markup: MarkupRenderer, linkTo: (ref
 /**
  * The short blurb for a table cell or list line - the first doc paragraph only, '' when there are none.
  * Only `docs[0]` is used on purpose: tables and lists want a one-line summary, so other paragraphs are dropped.
- * The full multi-paragraph docs still render on the entity's own page via `renderSpecDocs`.
+ * The full docs still appear on the entity's own page, space-joined into one paragraph by `renderSpecDocs`.
  */
 function getFirstDoc(docs: readonly string[] | undefined, markup: MarkupRenderer): string {
     return docs?.[0] ? markup.prose(docs[0]) : '';

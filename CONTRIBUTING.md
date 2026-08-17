@@ -101,6 +101,17 @@ Releases are automated for `@codama/spec`:
 You don't need to bump versions or edit `CHANGELOG.md` manually — both are
 derived from the changeset files.
 
+### Versioning
+
+The package version in `package.json` is the single source of truth, bumped by
+changesets at release time. The spec version (`SPEC_VERSION` in
+`src/v1/version.ts`, embedded in `v1/spec.json` and the generated docs) always
+mirrors it: the Release package PR runs `pnpm release:version`, which calls
+`changeset version`, syncs `src/v1/version.ts` via
+`scripts/sync-spec-version.ts`, and regenerates the `v1/` artifacts — all in
+the same commit. Never edit `SPEC_VERSION` by hand; a unit test fails if it
+drifts from the package version.
+
 ## Code style
 
 - TypeScript and JavaScript are linted with [Oxlint](https://oxc.rs/docs/guide/usage/linter)

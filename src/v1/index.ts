@@ -37,11 +37,10 @@ import { providedNode } from './nodes/ProvidedNode';
 import { rootNode } from './nodes/RootNode';
 import { ALL_TYPE_NODE_UNIONS, ALL_TYPE_NODES } from './nodes/typeNodes';
 import { ALL_VALUE_NODE_UNIONS, ALL_VALUE_NODES } from './nodes/valueNodes';
+import { SPEC_VERSION } from './version';
 
 export * from '../api/public';
-
-/** The version string of the v1 spec. */
-export const SPEC_VERSION = '1.8.0';
+export { SPEC_VERSION } from './version';
 
 const TYPE_CATEGORY = defineCategory('type', {
     docs: ['Type nodes — the building blocks of every value shape.'],

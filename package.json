@@ -69,6 +69,7 @@
         "generate": "pnpm build && tsx generators/index.ts",
         "lint": "oxlint && oxfmt --check .",
         "lint:fix": "oxlint --fix && oxfmt .",
+        "release:version": "changeset version && tsx scripts/sync-spec-version.ts && pnpm generate",
         "test": "pnpm test:types && pnpm test:unit",
         "test:types": "tsc --noEmit",
         "test:unit": "vitest run"
@@ -98,8 +99,5 @@
             "esbuild",
             "unrs-resolver"
         ]
-    },
-    "codama": {
-        "spec": "1.6.0"
     }
 }
