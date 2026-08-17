@@ -1,5 +1,5 @@
 import type { Spec } from '../api';
-import { relativeMdxLink } from './links';
+import { relativePageLink } from './links';
 import { buildNavRegistry, hasOwnDirectory } from './navigation';
 import {
     markdownRenderer,
@@ -17,7 +17,7 @@ import type { DocModel, DocPage, DocRef } from './types';
 export function generateDocs(spec: Spec): DocModel {
     const registry = buildNavRegistry(spec);
     function link(from: DocRef, to: DocRef): string {
-        return relativeMdxLink(registry.lookup(from), registry.lookup(to));
+        return relativePageLink(registry.lookup(from), registry.lookup(to));
     }
     const ctx: RenderCtx = { markup: markdownRenderer, registry, link };
 

@@ -41,8 +41,8 @@ describe('generateDocs - node pages (local + relative)', () => {
         expect(content).toContain('### Data');
         expect(content).toContain('`"constantPdaSeedNode"`');
         expect(content).toContain('### Children');
-        expect(content).toContain('[`TypeNode`](../typeNodes/TypeNode.mdx)');
-        expect(content).toContain('[`ConstantPdaSeedValue`](./ConstantPdaSeedValue.mdx)');
+        expect(content).toContain('[`TypeNode`](../typeNodes/TypeNode.md)');
+        expect(content).toContain('[`ConstantPdaSeedValue`](./ConstantPdaSeedValue.md)');
     });
     it('marks optional attributes and carries no trailing newline', () => {
         const content = nodePage(model, 'pdaNode').content;
@@ -62,7 +62,7 @@ describe('generateDocs - non-node page types', () => {
         const content = pageOfKind(model, 'union', 'typeNode').content;
         expect(content.startsWith('# TypeNode (abstract)')).toBe(true);
         expect(content).toContain('One of the following:');
-        expect(content).toContain('- [`NumberTypeNode`](./NumberTypeNode.mdx)');
+        expect(content).toContain('- [`NumberTypeNode`](./NumberTypeNode.md)');
     });
     it('nestedUnion page: Base + Wrappers', () => {
         const content = pageOfKind(model, 'nestedUnion', 'nestedTypeNode').content;
@@ -79,7 +79,7 @@ describe('generateDocs - non-node page types', () => {
         const content = pageOfKind(model, 'categoryIndex', 'pdaSeed').content;
         expect(content.startsWith('# PdaSeed')).toBe(true);
         expect(content).toContain('## Nodes');
-        expect(content).toContain('- [`ConstantPdaSeedNode`](./ConstantPdaSeedNode.mdx)');
+        expect(content).toContain('- [`ConstantPdaSeedNode`](./ConstantPdaSeedNode.md)');
     });
     it('emits no category index for topLevel', () => {
         expect(model.pages.some(page => page.ref.kind === 'categoryIndex' && page.ref.category === 'topLevel')).toBe(
@@ -100,16 +100,16 @@ describe('generateDocs - root index', () => {
         expect(content).toContain(`Version ${SPEC.version}`);
         expect(content).toContain('## Categories');
         // PascalCased link text, alphabetical order (pdaSeed before type)
-        expect(content).toContain('[PdaSeed](./pdaSeedNodes/index.mdx)');
-        expect(content.indexOf('](./pdaSeedNodes/index.mdx)')).toBeLessThan(
-            content.indexOf('](./typeNodes/index.mdx)'),
+        expect(content).toContain('[PdaSeed](./pdaSeedNodes/README.md)');
+        expect(content.indexOf('](./pdaSeedNodes/README.md)')).toBeLessThan(
+            content.indexOf('](./typeNodes/README.md)'),
         );
         // topLevel extracted to its own section below Categories, entities as a flat list
         expect(content.indexOf('## Categories')).toBeLessThan(content.indexOf('## TopLevel'));
-        expect(content).toContain('- [PdaNode](./PdaNode.mdx)');
+        expect(content).toContain('- [PdaNode](./PdaNode.md)');
     });
     it('lists topLevel unions in the TopLevel section too, not just nodes (root index == Navigation)', () => {
-        expect(rootContent()).toContain('- [HelperUnion](./HelperUnion.mdx)');
+        expect(rootContent()).toContain('- [HelperUnion](./HelperUnion.md)');
     });
 });
 

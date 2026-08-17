@@ -103,10 +103,10 @@ describe('v1 docs generation over the real spec', () => {
             const dir = page.pathSegments.slice(0, -1);
             for (const match of page.content.matchAll(linkPattern)) {
                 const href = match[1];
-                if (!href.endsWith('.mdx')) {
+                if (!href.endsWith('.md')) {
                     continue;
                 }
-                const target = resolveRelative(dir, href.slice(0, -'.mdx'.length));
+                const target = resolveRelative(dir, href.slice(0, -'.md'.length));
                 expect(pagePaths.has(target), `broken link ${href} in ${page.pathSegments.join('/')}`).toBe(true);
             }
         }
@@ -120,8 +120,8 @@ describe('v1 docs generation over the real spec', () => {
     it('lists topLevel entities in the TopLevel section of the root index (nodes and unions)', () => {
         const root = rootContent(MODEL);
         expect(root).toContain('## TopLevel');
-        expect(root).toContain('- [AccountNode](./AccountNode.mdx)');
-        expect(root).toContain('- [InstructionByteDeltaValue](./InstructionByteDeltaValue.mdx)');
+        expect(root).toContain('- [AccountNode](./AccountNode.md)');
+        expect(root).toContain('- [InstructionByteDeltaValue](./InstructionByteDeltaValue.md)');
     });
 
     it('renders the accountNode page with a Data/Children split and the nested-union data link', () => {

@@ -1,12 +1,10 @@
 /**
  * `docs` generator.
  *
- * Runs the docs generator over the v1 spec, then writes the emitted mdx tree to
- * `v1/docs/` (plain page bodies, relative `.mdx` links, `index` basenames). CI re-runs this and fails if
- * the result differs from what is committed, keeping the docs artifact in lockstep with the spec source.
- *
- * The same model also feeds the Fumadocs app tree under `docs/content/spec/<major>/`, which adds YAML
- * frontmatter per page plus the `meta.json` sidecars the sidebar needs.
+ * Runs the docs generator over the v1 spec, then writes the emitted markdown tree to `v1/docs/`
+ * (GitHub-flavoured pages, relative `.md` links, `README` landing pages per folder). CI re-runs this
+ * and fails if the result differs from what is committed, keeping the docs artifact in lockstep with
+ * the spec source.
  */
 
 import path from 'node:path';
@@ -23,7 +21,7 @@ import {
     writeRenderMap,
 } from '@codama/fragments';
 
-import { type DocModel, generateDocs } from '../../src/docs';
+import { type DocModel, generateDocs, PAGE_EXTENSION } from '../../src/docs';
 import { getSpec } from '../../src/v1';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -34,7 +32,7 @@ function getDocsRenderMap(model: DocModel): RenderMap<BaseFragment> {
     const entries: Record<Path, BaseFragment> = {};
     for (const page of model.pages) {
         // core `content` carries no trailing newline; add one when writing the file
-        entries[`${page.pathSegments.join('/')}.mdx`] = { content: `${page.content}\n` };
+        entries[`${page.pathSegments.join('/')}${PAGE_EXTENSION}`] = { content: `${page.content}\n` };
     }
     return createRenderMap(entries);
 }

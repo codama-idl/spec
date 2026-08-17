@@ -17,7 +17,7 @@ import type { CategoryGroup, DocPage, DocRef, ListItem, MarkupRenderer, NavRegis
 import { BLOCK_SEPARATOR, GROUP_TITLES, ROOT_DESCRIPTION, ROOT_TITLE } from './constants';
 import { isDocChild, linkedEntity, renderType } from './renderType';
 
-/** Shared context threaded through every page renderer. `link` resolves a relative `.mdx` href between two pages. */
+/** Shared context threaded through every page renderer. `link` resolves a relative href between two pages. */
 export interface RenderCtx {
     markup: MarkupRenderer;
     registry: NavRegistry;
@@ -38,7 +38,11 @@ export function renderNodePage(node: NodeSpec, ctx: RenderCtx): DocPage {
     const dataRows: string[][] = [[markup.code('kind'), markup.code(`"${node.kind}"`), 'The node discriminator.']];
     const childRows: string[][] = [];
     for (const attribute of node.attributes) {
-        const row = [markup.code(attribute.name), typeCell(attribute, markup, linkTo), getFirstDoc(attribute.docs)];
+        const row = [
+            markup.code(attribute.name),
+            typeCell(attribute, markup, linkTo),
+            getFirstDoc(attribute.docs, markup),
+        ];
         if (isDocChild(attribute.type)) {
             childRows.push(row);
         } else {
@@ -82,7 +86,7 @@ function renderExample(example: DocExample, markup: MarkupRenderer): string | un
     if (!example.code.length) return undefined;
     const parts: (string | undefined)[] = [
         // header
-        markup.heading(3, example.title),
+        markup.heading(3, markup.prose(example.title)),
         // description
         renderSpecDocs(example.docs, markup),
         // code blocks
@@ -146,7 +150,7 @@ export function renderEnumPage(enumeration: EnumerationSpec, ctx: RenderCtx): Do
     const ref: DocRef = { kind: 'enumeration', name: enumeration.name };
     const variants = markup.list(
         'bulleted',
-        enumeration.variants.map(variant => withBlurb(markup.code(variant.name), variant.docs)),
+        enumeration.variants.map(variant => withBlurb(markup.code(variant.name), variant.docs, markup)),
     );
     const parts: (string | undefined)[] = [
         // header
@@ -171,7 +175,7 @@ function renderGroup(group: CategoryGroup, markup: MarkupRenderer, linkTo: (r: D
     const sorted = [...group.items].sort((a, b) => refName(a.ref).localeCompare(refName(b.ref)));
     const lines = markup.list(
         'bulleted',
-        sorted.map(({ ref, docs }) => withBlurb(linkedEntity(ref, markup, linkTo), docs)),
+        sorted.map(({ ref, docs }) => withBlurb(linkedEntity(ref, markup, linkTo), docs, markup)),
     );
     return `${markup.heading(2, GROUP_TITLES[group.kind])}${BLOCK_SEPARATOR}${lines}`;
 }
@@ -208,6 +212,7 @@ export function renderRootIndexPage(spec: Spec, ctx: RenderCtx): DocPage {
             withBlurb(
                 markup.link(pascalCase(category.name), linkTo({ kind: 'categoryIndex', category: category.name })),
                 category.docs,
+                markup,
             ),
         );
     // root-level categories (no own directory, e.g. topLevel) get their own section below
@@ -239,7 +244,7 @@ function renderRootCategorySection(category: CategorySpec, ctx: RenderCtx, linkT
     const { markup } = ctx;
     const entities = categoryGroups(category)
         .flatMap(group => [...group.items].sort((a, b) => refName(a.ref).localeCompare(refName(b.ref))))
-        .map(({ ref, docs }) => withBlurb(markup.link(displayName(ref), linkTo(ref)), docs));
+        .map(({ ref, docs }) => withBlurb(markup.link(displayName(ref), linkTo(ref)), docs, markup));
     const parts: (string | undefined)[] = [
         // section heading: PascalCased category name (e.g. topLevel -> TopLevel)
         markup.heading(2, pascalCase(category.name)),
@@ -262,16 +267,17 @@ function typeCell(attribute: AttributeSpec, markup: MarkupRenderer, linkTo: (ref
  * Only `docs[0]` is used on purpose: tables and lists want a one-line summary, so other paragraphs are dropped.
  * The full multi-paragraph docs still render on the entity's own page via `renderSpecDocs`.
  */
-function getFirstDoc(docs?: readonly string[]): string {
-    return docs?.[0] ?? '';
+function getFirstDoc(docs: readonly string[] | undefined, markup: MarkupRenderer): string {
+    return docs?.[0] ? markup.prose(docs[0]) : '';
 }
 
 /** Appends a ` - <first doc paragraph>` suffix to a label (see `getFirstDoc`), or the bare label when there are none. */
-function withBlurb(label: string, docs?: readonly string[]): string {
-    return docs?.[0] ? `${label} - ${docs[0]}` : label;
+function withBlurb(label: string, docs: readonly string[] | undefined, markup: MarkupRenderer): string {
+    const blurb = getFirstDoc(docs, markup);
+    return blurb ? `${label} - ${blurb}` : label;
 }
 
 /** Renders a spec `docs` field (a list of prose paragraphs) as a single space-joined paragraph, '' when empty. */
 function renderSpecDocs(docs: readonly string[] | undefined, markup: MarkupRenderer): string {
-    return docs?.length ? markup.paragraph(docs.join(' ')) : '';
+    return docs?.length ? markup.paragraph(markup.prose(docs.join(' '))) : '';
 }

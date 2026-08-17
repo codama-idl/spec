@@ -14,8 +14,8 @@ export function renderType(t: TypeExpr, markup: MarkupRenderer, linkTo: (r: DocR
             return linkedEntity({ kind: 'enumeration', name: t.name }, markup, linkTo);
         case 'nestedUnion':
             return (
-                // `<` opens JSX in mdx so it must be escaped; the closing `>` is harmless and stays literal
-                `${linkedEntity({ kind: 'nestedUnion', name: t.alias }, markup, linkTo)}${markup.escapeChar('<')}` +
+                // the `<` is literal text, so `prose` lets stricter renderers escape it; `>` is inert everywhere
+                `${linkedEntity({ kind: 'nestedUnion', name: t.alias }, markup, linkTo)}${markup.prose('<')}` +
                 `${linkedEntity({ kind: 'node', name: t.name }, markup, linkTo)}>`
             );
         case 'anyNode':
