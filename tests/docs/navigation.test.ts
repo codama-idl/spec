@@ -45,8 +45,8 @@ describe('buildNavRegistry', () => {
         expect(() => registry.lookup({ kind: 'node', name: 'nope' })).toThrow('Unresolved DocRef: node:nope');
     });
     it('registers every entity + non-topLevel index + root', () => {
-        // 9 entities + 3 non-topLevel category indexes (type, pdaSeed, shared) + 1 rootIndex
-        expect(registry.entries).toHaveLength(13);
+        // 10 entities + 3 non-topLevel category indexes (type, pdaSeed, shared) + 1 rootIndex
+        expect(registry.entries).toHaveLength(14);
         for (const entry of registry.entries) {
             expect(registry.lookup(entry.ref)).toBe(entry);
         }
