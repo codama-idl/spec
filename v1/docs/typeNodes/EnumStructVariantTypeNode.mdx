@@ -1,0 +1,20 @@
+# EnumStructVariantTypeNode
+
+A variant of an enum that carries a struct payload (named fields).
+
+## Attributes
+
+### Data
+
+| Attribute       | Type                          | Description                                                                                          |
+| --------------- | ----------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `kind`          | `"enumStructVariantTypeNode"` | The node discriminator.                                                                              |
+| `name`          | `CamelCaseString`             | The name of the variant.                                                                             |
+| `discriminator` | `u32` _(optional)_            | Explicit discriminator value. When omitted, the discriminator is inferred from the variant position. |
+
+### Children
+
+| Attribute | Type                                                                                | Description                                               |
+| --------- | ----------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| `struct`  | [`NestedTypeNode`](./NestedTypeNode.mdx)\<[`StructTypeNode`](./StructTypeNode.mdx)> | The struct of named fields carried by the variant.        |
+| `display` | [`EnumVariantDisplayNode`](../displayNodes/EnumVariantDisplayNode.mdx) _(optional)_ | Display metadata describing how the variant is presented. |

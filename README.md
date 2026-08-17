@@ -8,7 +8,7 @@ Codama is a standard for describing on-chain Solana programs as a graph of typed
 
 - **The spec.** A machine-readable description of every node in the Codama node graph, authored in TypeScript under `src/` and emitted as `v1/spec.json`. Future Codama majors will land alongside as `v2/spec.json`, `v3/spec.json`, …
 - **The meta-model API.** Authoring helpers (`defineNode`, `attribute`, primitives, compounds, …) exposed at `@codama/spec/api` for hand-authoring specs and test fixtures.
-- **Internal codegen.** Generators under `generators/` produce the public artifacts that mirror each spec major (`v<n>/spec.json`, `v<n>/schema.json`, `v<n>/docs/`). They are not exported from the `@codama/spec` package; they exist as internal tooling for this repo.
+- **Internal codegen.** Generators under `generators/` produce the public artifacts that mirror each spec major (`v<n>/spec.json`, `v<n>/schema.json`, `v<n>/docs/`). They are not exported from the `@codama/spec` package; they exist as internal tooling for this repo. The docs generator lives at `src/docs/` and is internal too - it turns a `Spec` into markdown pages to emit `v<n>/docs/`, and is not part of the published surface.
 
 Reference implementations (TypeScript node types, node factories, visitors, validators, renderers, the CLI) live in [codama-idl/codama](https://github.com/codama-idl/codama) and consume the published `@codama/spec` package. The Rust reference implementation lives in [codama-idl/codama-rs](https://github.com/codama-idl/codama-rs).
 
@@ -74,7 +74,7 @@ generators/                # internal codegen orchestrator + per-target generato
   index.ts                 # runs every registered generator sequentially
   json-spec/               # emits v<n>/spec.json
   json-schema/             # emits v<n>/schema.json (stub)
-  docs/                    # emits v<n>/docs/ (stub)
+  docs/                    # emits v<n>/docs/ (uses the internal src/docs generator)
 v1/                        # generated artifacts mirroring the @codama/spec/v1 surface
   spec.json
   schema.json

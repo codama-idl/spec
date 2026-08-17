@@ -1,0 +1,20 @@
+# PdaNode
+
+A program-derived address: its name, optional program ID override, and the seeds used to derive it.
+
+## Attributes
+
+### Data
+
+| Attribute   | Type                    | Description                                                                                             |
+| ----------- | ----------------------- | ------------------------------------------------------------------------------------------------------- |
+| `kind`      | `"pdaNode"`             | The node discriminator.                                                                                 |
+| `name`      | `CamelCaseString`       | The name of the PDA.                                                                                    |
+| `docs`      | `string[]` _(optional)_ | Markdown documentation for the PDA.                                                                     |
+| `programId` | `Address` _(optional)_  | The base58-encoded program ID used to derive the PDA. When omitted, the surrounding program is assumed. |
+
+### Children
+
+| Attribute | Type                                              | Description                                 |
+| --------- | ------------------------------------------------- | ------------------------------------------- |
+| `seeds`   | [`PdaSeedNode`](./pdaSeedNodes/PdaSeedNode.mdx)[] | The seeds used to derive the PDA, in order. |
