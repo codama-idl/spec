@@ -1,9 +1,6 @@
-import type { DocRef, DocRefKey } from './types';
+import { pascalCase } from '@codama/fragments';
 
-/** Uppercases the first character only. Inputs are lowerCamelCase identifiers, so this yields PascalCase. */
-export function pascalCase(s: string): string {
-    return s.charAt(0).toUpperCase() + s.slice(1);
-}
+import type { DocRef, DocRefKey } from './types';
 
 /** The pascal-cased display name for a ref (e.g. 'typeNode' -> 'TypeNode'). */
 export function displayName(ref: DocRef): string {

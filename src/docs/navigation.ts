@@ -1,5 +1,7 @@
+import { pascalCase } from '@codama/fragments';
+
 import type { CategorySpec, Spec } from '../api';
-import { docRefKey, pascalCase, refName } from './ref';
+import { docRefKey, refName } from './ref';
 import type { CategoryGroup, DocRef, DocRefKey, NavEntry, NavRegistry } from './types';
 
 /** Index page basename - Fumadocs treats a folder's `index` file as its landing page, served at the folder URL. */
