@@ -1,5 +1,11 @@
 # @codama/spec
 
+## 1.9.1
+
+### Patch Changes
+
+- [#81](https://github.com/codama-idl/spec/pull/81) [`c34d1b6`](https://github.com/codama-idl/spec/commit/c34d1b6b16252c9ec73e2c8b41f532f0be2d6dc6) Thanks [@lorisleiva](https://github.com/lorisleiva)! - Enrich the node documentation with semantics that previously lived only in the hand-written codama-js docs: strategy walkthroughs with buffer diagrams for the pre/post offset type nodes (including corrected `preOffset` strategy semantics), serialisation caveats and defaults across instruction, type, value, count, and contextual-value nodes, the identity/payer distinction, and the original node diagrams. Documentation `docs` fields are now treated as markdown lines - codified by the new `Docs` type on `@codama/spec/api` - and attribute tables render every doc line instead of just the first.
+
 ## 1.9.0
 
 ### Minor Changes
