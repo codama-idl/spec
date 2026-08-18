@@ -14,12 +14,12 @@
  *     the parent union and each nested union.
  */
 
-import type { TypeExpr, UnionMember, UnionSpec } from './types';
+import type { Docs, TypeExpr, UnionMember, UnionSpec } from './types';
 
 export type UnionMemberInput = TypeExpr | string;
 
 export interface DefineUnionOptions {
-    readonly docs?: readonly string[];
+    readonly docs?: Docs;
     readonly members: readonly UnionMemberInput[];
 }
 

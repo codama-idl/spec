@@ -15,11 +15,10 @@
  */
 
 import type { DocExamples } from './example';
-import type { AttributeSpec, NodeSpec } from './types';
+import type { AttributeSpec, Docs, NodeSpec } from './types';
 
 export interface DefineNodeOptions {
-    /** Free-form prose paragraphs describing this node. */
-    readonly docs?: readonly string[];
+    readonly docs?: Docs;
     /**
      * Attributes of the node, in declaration order. Construct each entry
      * via `attribute(...)` or `optionalAttribute(...)`.

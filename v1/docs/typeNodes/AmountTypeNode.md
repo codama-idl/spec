@@ -1,6 +1,7 @@
 # AmountTypeNode
 
-Wraps a number type to provide additional context such as decimal places and a unit. Useful for amounts representing financial values.
+Wraps a number type to provide additional context such as decimal places and a unit.
+Useful for amounts representing financial values.
 
 ## Attributes
 

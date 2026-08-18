@@ -6,10 +6,10 @@
  * carried through to language-native member documentation.
  */
 
-import type { EnumerationSpec, EnumerationVariantSpec } from './types';
+import type { Docs, EnumerationSpec, EnumerationVariantSpec } from './types';
 
 export interface VariantOptions {
-    readonly docs?: readonly string[];
+    readonly docs?: Docs;
 }
 
 /** Construct a single enumeration variant. */
@@ -21,7 +21,7 @@ export function variant(name: string, options: VariantOptions = {}): Enumeration
 }
 
 export interface DefineEnumerationOptions {
-    readonly docs?: readonly string[];
+    readonly docs?: Docs;
     readonly variants: readonly EnumerationVariantSpec[];
 }
 

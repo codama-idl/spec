@@ -46,6 +46,8 @@
  * ```
  */
 
+import type { Docs } from './types';
+
 /** Languages the spec ships example snippets for. */
 export type CodeLanguage = 'typescript' | 'rust';
 
@@ -61,7 +63,8 @@ export interface CodeBlock {
  */
 export interface DocExample {
     readonly title: string;
-    readonly docs?: readonly string[];
+    /** Documentation lines shown under the example title. */
+    readonly docs?: Docs;
     readonly code: readonly CodeBlock[];
 }
 
@@ -70,8 +73,8 @@ export type DocExamples = readonly DocExample[];
 
 /** Options for `example()`. */
 export interface ExampleOptions {
-    /** Free-form prose paragraphs shown under the example title. */
-    readonly docs?: readonly string[];
+    /** Documentation lines shown under the example title. */
+    readonly docs?: Docs;
 }
 
 /**

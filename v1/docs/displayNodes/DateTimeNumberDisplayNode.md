@@ -1,6 +1,7 @@
 # DateTimeNumberDisplayNode
 
-Display metadata that presents a number as a point in time. The underlying value counts ticks since the Unix epoch; `ticksPerSecond` is the divisor that converts those ticks back to seconds.
+Display metadata that presents a number as a point in time.
+The underlying value counts ticks since the Unix epoch; `ticksPerSecond` is the divisor that converts those ticks back to seconds.
 
 ## Attributes
 

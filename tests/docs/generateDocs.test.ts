@@ -44,6 +44,21 @@ describe('generateDocs - node pages (local + relative)', () => {
         expect(content).toContain('[`TypeNode`](../typeNodes/TypeNode.md)');
         expect(content).toContain('[`ConstantPdaSeedValue`](./ConstantPdaSeedValue.md)');
     });
+    it('joins docs entries as lines - blank entries break paragraphs, fences stay contiguous', () => {
+        const content = nodePage(model, 'constantPdaSeedNode').content;
+        // one entry per line: the fence renders with no injected blank lines, '' entries become
+        // paragraph breaks, and the callout lines stay adjacent
+        expect(content).toContain(
+            'A constant seed.\n\n' +
+                'For example:\n\n```ts\nconstantPdaSeedNode("hello");\n```\n\n' +
+                '> [!IMPORTANT]\n> The seed must be constant.',
+        );
+    });
+    it('uses only the first docs line for index blurbs', () => {
+        const content = pageOfKind(model, 'categoryIndex', 'pdaSeed').content;
+        expect(content).toContain('- [`ConstantPdaSeedNode`](./ConstantPdaSeedNode.md) - A constant seed.');
+        expect(content).not.toContain('```ts');
+    });
     it('marks optional attributes and carries no trailing newline', () => {
         const content = nodePage(model, 'pdaNode').content;
         expect(content).toContain('_(optional)_');

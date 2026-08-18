@@ -33,7 +33,21 @@ const numberTypeNode = defineNode('numberTypeNode', {
 const typeNode = defineUnion('typeNode', { members: [node('numberTypeNode')] });
 const nestedTypeNode = defineNestedUnion('nestedTypeNode', { base: union('typeNode'), wrappers: ['numberTypeNode'] });
 // A node with both a union child (typeNode) and a node child (constantPdaSeedValue) plus plain data.
+// Its docs follow the line convention: one entry per line, blank entries separating paragraphs,
+// with a fenced snippet and a callout to exercise multi-line markdown constructs.
 const constantPdaSeedNode = defineNode('constantPdaSeedNode', {
+    docs: [
+        'A constant seed.',
+        '',
+        'For example:',
+        '',
+        '```ts',
+        'constantPdaSeedNode("hello");',
+        '```',
+        '',
+        '> [!IMPORTANT]',
+        '> The seed must be constant.',
+    ],
     attributes: [
         attribute('value', string()),
         attribute('type', union('typeNode')),

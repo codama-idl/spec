@@ -5,11 +5,10 @@
  * The returned value IS the encoded form; `defineNode` consumes them as-is.
  */
 
-import type { AttributeSpec, TypeExpr } from './types';
+import type { AttributeSpec, Docs, TypeExpr } from './types';
 
 export interface AttributeOptions {
-    /** Free-form prose paragraphs describing this attribute. */
-    readonly docs?: readonly string[];
+    readonly docs?: Docs;
     /** When `true`, the attribute may be absent in encoded values. */
     readonly optional?: boolean;
 }

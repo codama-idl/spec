@@ -281,9 +281,9 @@ function typeCell(attribute: AttributeSpec, markup: MarkupRenderer, linkTo: (ref
 }
 
 /**
- * The short blurb for a table cell or list line - the first doc paragraph only, '' when there are none.
- * Only `docs[0]` is used on purpose: tables and lists want a one-line summary, so other paragraphs are dropped.
- * The full docs still appear on the entity's own page, space-joined into one paragraph by `renderSpecDocs`.
+ * The short blurb for a table cell or list line - the first doc line only, '' when there are none.
+ * Only `docs[0]` is used on purpose: tables and lists want a one-line summary, so other lines are dropped.
+ * The full docs still appear on the entity's own page, line-joined, via `renderSpecDocs`.
  */
 function getFirstDoc(docs: readonly string[] | undefined, markup: MarkupRenderer): string {
     return docs?.[0] ? markup.prose(docs[0]) : '';
@@ -295,7 +295,12 @@ function withBlurb(label: string, docs: readonly string[] | undefined, markup: M
     return blurb ? `${label} - ${blurb}` : label;
 }
 
-/** Renders a spec `docs` field (a list of prose paragraphs) as a single space-joined paragraph, '' when empty. */
+/**
+ * Renders a spec `docs` field, '' when empty.
+ * Entries are lines of authored markdown, joined with a newline: blank entries separate
+ * paragraphs, and multi-line constructs (fenced snippets, callouts, images) are authored
+ * one line per entry - the same convention as example `code()` content.
+ */
 function renderSpecDocs(docs: readonly string[] | undefined, markup: MarkupRenderer): string {
-    return docs?.length ? markup.paragraph(markup.prose(docs.join(' '))) : '';
+    return docs?.length ? markup.paragraph(markup.prose(docs.join('\n'))) : '';
 }
