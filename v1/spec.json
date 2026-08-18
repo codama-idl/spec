@@ -11,7 +11,7 @@
                     "kind": "amountTypeNode",
                     "docs": [
                         "Wraps a number type to provide additional context such as decimal places and a unit.",
-                        "Useful for amounts representing financial values."
+                        "Particularly useful for representing financial values as integers, since floating-point numbers are notoriously unsafe for that purpose."
                     ],
                     "attributes": [
                         {
@@ -106,6 +106,9 @@
                         },
                         {
                             "title": "u32 prefixed array of u8 numbers",
+                            "docs": [
+                                "![Diagram](https://github.com/codama-idl/codama/assets/3642397/1bbd3ecb-e06a-42fa-94a7-74c9302286e6)"
+                            ],
                             "code": [
                                 {
                                     "language": "typescript",
@@ -122,7 +125,8 @@
                 {
                     "kind": "booleanTypeNode",
                     "docs": [
-                        "A boolean serialised as a numeric value. The wrapped number type determines the byte width."
+                        "A boolean serialised as a numeric value. The wrapped number type determines the byte width.",
+                        "A decoded number of `1` yields `true`; any other value yields `false`."
                     ],
                     "attributes": [
                         {
@@ -257,7 +261,7 @@
                             },
                             "optional": true,
                             "docs": [
-                                "Explicit discriminator value. When omitted, the discriminator is inferred from the variant position."
+                                "Explicit discriminator value. When omitted, the discriminator is the index of the variant in the enum, starting at 0."
                             ]
                         },
                         {
@@ -310,7 +314,7 @@
                             },
                             "optional": true,
                             "docs": [
-                                "Explicit discriminator value. When omitted, the discriminator is inferred from the variant position."
+                                "Explicit discriminator value. When omitted, the discriminator is the index of the variant in the enum, starting at 0."
                             ]
                         },
                         {
@@ -380,7 +384,7 @@
                             },
                             "optional": true,
                             "docs": [
-                                "Explicit discriminator value. When omitted, the discriminator is inferred from the variant position."
+                                "Explicit discriminator value. When omitted, the discriminator is the index of the variant in the enum, starting at 0."
                             ]
                         },
                         {
@@ -447,7 +451,8 @@
                                 "name": "numberTypeNode"
                             },
                             "docs": [
-                                "The numeric type used to serialise the discriminator."
+                                "The numeric type used to serialise the discriminator.",
+                                "The discriminator prepends the serialised variant payload to identify which variant was selected. By default it is the index of the variant (starting at 0), unless the variant provides its own custom discriminator value."
                             ]
                         }
                     ],
@@ -550,7 +555,8 @@
                 {
                     "kind": "hiddenPrefixTypeNode",
                     "docs": [
-                        "Prefixes another type with a list of constant values that are written and read but not surfaced as fields to consumers."
+                        "Prefixes another type with a list of constant values that are written and read but not surfaced as fields to consumers.",
+                        "When decoding, the prefixed constants are consumed and checked against their expected values before being discarded."
                     ],
                     "attributes": [
                         {
@@ -624,7 +630,8 @@
                 {
                     "kind": "hiddenSuffixTypeNode",
                     "docs": [
-                        "Suffixes another type with a list of constant values that are written and read but not surfaced as fields to consumers."
+                        "Suffixes another type with a list of constant values that are written and read but not surfaced as fields to consumers.",
+                        "When decoding, the suffixed constants are consumed and checked against their expected values before being discarded."
                     ],
                     "attributes": [
                         {
@@ -699,7 +706,8 @@
                     "kind": "mapTypeNode",
                     "docs": [
                         "A keyed map.",
-                        "The key and value types are described by their respective type nodes; the entry count is determined by a count strategy."
+                        "The key and value types are described by their respective type nodes; the entry count is determined by a count strategy.",
+                        "Entries are serialised one after the other, each key immediately followed by its value — e.g. key A, value A, key B, value B."
                     ],
                     "attributes": [
                         {
@@ -805,6 +813,9 @@
                     "examples": [
                         {
                             "title": "Encoding `u32` integers",
+                            "docs": [
+                                "![Diagram](https://github.com/codama-idl/codama/assets/3642397/4bb1ae23-c69f-4c9f-a7ec-8f971d061667)"
+                            ],
                             "code": [
                                 {
                                     "language": "typescript",
@@ -820,6 +831,9 @@
                         },
                         {
                             "title": "Encoding `f32` big-endian decimal numbers",
+                            "docs": [
+                                "![Diagram](https://github.com/codama-idl/codama/assets/3642397/d9cbfd3c-b8a2-4c13-a8a8-a11e7ed5d422)"
+                            ],
                             "code": [
                                 {
                                     "language": "typescript",
@@ -835,6 +849,9 @@
                         },
                         {
                             "title": "Encoding `shortU16` integers",
+                            "docs": [
+                                "![Diagram](https://github.com/codama-idl/codama/assets/3642397/73e12166-cdaa-4fca-ae2a-67937f8b130e)"
+                            ],
                             "code": [
                                 {
                                     "language": "typescript",
@@ -863,7 +880,8 @@
                             },
                             "optional": true,
                             "docs": [
-                                "When `true`, the absent variant still occupies the byte size of the present variant (zero-padded). Defaults to `false`."
+                                "When `true`, the absent variant still occupies the byte size of the present variant (zero-padded). Defaults to `false`.",
+                                "Must only be set to `true` when the `item` type is of fixed size."
                             ]
                         },
                         {
@@ -884,7 +902,8 @@
                                 "name": "numberTypeNode"
                             },
                             "docs": [
-                                "The numeric type used as the presence flag."
+                                "The numeric type used as the presence flag.",
+                                "A prefix value of `1` means the item is present and follows the prefix; a value of `0` means the item is absent and nothing further is serialised."
                             ]
                         }
                     ],
@@ -922,7 +941,72 @@
                 {
                     "kind": "postOffsetTypeNode",
                     "docs": [
-                        "After serialising the wrapped type, advance the cursor by `offset` bytes interpreted via the chosen strategy."
+                        "After serialising the wrapped type, advance the cursor by `offset` bytes interpreted via the chosen strategy.",
+                        "",
+                        "Since the offset is applied _after_ the wrapped type runs, this node is useful to move the cursor around once the wrapped type has been processed. See `preOffsetTypeNode` for the opposite behaviour.",
+                        "",
+                        "The strategies below are illustrated against the following buffer: the `99` byte represents the encoded value of the wrapped type and the `FF` byte represents the next bytes to be encoded after it, in order to show the _post_ cursor position.",
+                        "",
+                        "```",
+                        "0x00000099FF000000;",
+                        "        | └-- Initial post-offset",
+                        "        └-- Pre-offset",
+                        "```",
+                        "",
+                        "**`relative`** — the cursor is moved to the right by the provided offset. A negative offset moves it to the left instead.",
+                        "",
+                        "```",
+                        "offset = 2",
+                        "0x000000990000FF00;",
+                        "              └-- Post-offset",
+                        "",
+                        "offset = -2",
+                        "0x0000FF9900000000;",
+                        "      └-- Post-offset",
+                        "```",
+                        "",
+                        "**`absolute`** — the cursor is moved to an absolute position in the buffer. A negative offset moves it backwards from the end of the buffer.",
+                        "",
+                        "```",
+                        "offset = 0",
+                        "0xFF00009900000000;",
+                        "  └-- Post-offset",
+                        "",
+                        "offset = -2",
+                        "0x000000990000FF00;",
+                        "              └-- Post-offset",
+                        "```",
+                        "",
+                        "**`padded`** — the cursor is moved to the right by the provided offset **and the buffer size is increased** by the offset amount, allowing padding bytes to be added. Reciprocally, a negative offset moves the cursor to the left and decreases the buffer size.",
+                        "",
+                        "```",
+                        "offset = 2",
+                        "0x000000990000FF000000; <- Size = 10 (initially 8)",
+                        "              └-- Post-offset",
+                        "",
+                        "offset = -2",
+                        "0x0000FF990000; <- Size = 6 (initially 8)",
+                        "      └-- Post-offset",
+                        "```",
+                        "",
+                        "**`preOffset`** — the cursor is moved to the right of the pre-offset — i.e. where the wrapped type started — by the provided offset. A negative offset moves it to the left of the pre-offset instead.",
+                        "",
+                        "```",
+                        "offset = 2",
+                        "0x0000009900FF0000;",
+                        "        |   └-- Post-offset = Pre-offset + 2",
+                        "        └-- Pre-offset",
+                        "",
+                        "offset = -2",
+                        "0x00FF009900000000;",
+                        "    |   └-- Pre-offset",
+                        "    └-- Post-offset = Pre-offset - 2",
+                        "```",
+                        "",
+                        "> [!IMPORTANT]",
+                        "> Some type nodes affect the buffer that is available to us: depending on where we are in the type tree, we may not have access to the entire buffer.",
+                        "> For instance, inside a `fixedSizeTypeNode`, the buffer is truncated or padded to match the provided fixed size once the wrapped content has been serialised — we are essentially \"boxed\" into a sub-buffer, and that sub-buffer is the one affected by the `absolute` strategy.",
+                        "> The type nodes that create sub-buffers are: `fixedSizeTypeNode`, `sentinelTypeNode`, and `sizePrefixTypeNode`."
                     ],
                     "attributes": [
                         {
@@ -1011,7 +1095,57 @@
                 {
                     "kind": "preOffsetTypeNode",
                     "docs": [
-                        "Before serialising the wrapped type, advance the cursor by `offset` bytes interpreted via the chosen strategy."
+                        "Before serialising the wrapped type, advance the cursor by `offset` bytes interpreted via the chosen strategy.",
+                        "",
+                        "Since the offset is applied _before_ the wrapped type runs, this node is useful to move the encoded value of the wrapped type itself. See `postOffsetTypeNode` for the opposite behaviour.",
+                        "",
+                        "The strategies below are illustrated against the following buffer: the `99` byte represents some previously encoded value for reference and the `FF` byte represents the encoded value of the wrapped type, which moves as its pre-offset changes.",
+                        "",
+                        "```",
+                        "0x00000099FF000000;",
+                        "          └-- Initial pre-offset",
+                        "```",
+                        "",
+                        "**`relative`** — the cursor is moved to the right by the provided offset. A negative offset moves it to the left instead.",
+                        "",
+                        "```",
+                        "offset = 2",
+                        "0x000000990000FF00;",
+                        "              └-- Pre-offset",
+                        "",
+                        "offset = -2",
+                        "0x0000FF9900000000;",
+                        "      └-- Pre-offset",
+                        "```",
+                        "",
+                        "**`absolute`** — the cursor is moved to an absolute position in the buffer. A negative offset moves it backwards from the end of the buffer.",
+                        "",
+                        "```",
+                        "offset = 0",
+                        "0xFF00009900000000;",
+                        "  └-- Pre-offset",
+                        "",
+                        "offset = -2",
+                        "0x000000990000FF00;",
+                        "              └-- Pre-offset",
+                        "```",
+                        "",
+                        "**`padded`** — the cursor is moved to the right by the provided offset **and the buffer size is increased** by the offset amount, allowing padding bytes to be added. Reciprocally, a negative offset moves the cursor to the left and decreases the buffer size.",
+                        "",
+                        "```",
+                        "offset = 2",
+                        "0x000000990000FF000000; <- Size = 10 (initially 8)",
+                        "              └-- Pre-offset",
+                        "",
+                        "offset = -2",
+                        "0x0000FF990000; <- Size = 6 (initially 8)",
+                        "      └-- Pre-offset",
+                        "```",
+                        "",
+                        "> [!IMPORTANT]",
+                        "> Some type nodes affect the buffer that is available to us: depending on where we are in the type tree, we may not have access to the entire buffer.",
+                        "> For instance, inside a `fixedSizeTypeNode`, the buffer is truncated or padded to match the provided fixed size once the wrapped content has been serialised — we are essentially \"boxed\" into a sub-buffer, and that sub-buffer is the one affected by the `absolute` strategy.",
+                        "> The type nodes that create sub-buffers are: `fixedSizeTypeNode`, `sentinelTypeNode`, and `sizePrefixTypeNode`."
                     ],
                     "attributes": [
                         {
@@ -1154,7 +1288,12 @@
                 {
                     "kind": "sentinelTypeNode",
                     "docs": [
-                        "Wraps another type and delimits it with a constant sentinel value written immediately after the wrapped type."
+                        "Wraps another type and delimits it with a constant sentinel value written immediately after the wrapped type.",
+                        "",
+                        "When decoding, the wrapped type is decoded until the sentinel value is encountered, at which point decoding stops and the sentinel is discarded.",
+                        "",
+                        "> [!IMPORTANT]",
+                        "> For this node to work, the sentinel value must never occur within the encoded bytes of the wrapped type."
                     ],
                     "attributes": [
                         {
@@ -1240,7 +1379,8 @@
                 {
                     "kind": "sizePrefixTypeNode",
                     "docs": [
-                        "Wraps another type with a numeric prefix indicating the byte length of the wrapped type."
+                        "Wraps another type with a numeric prefix indicating the byte length of the wrapped type.",
+                        "When decoding, the size is read first and determines how many bytes the wrapped type may consume."
                     ],
                     "attributes": [
                         {
@@ -1285,7 +1425,8 @@
                 {
                     "kind": "solAmountTypeNode",
                     "docs": [
-                        "A SOL amount expressed in lamports under the wrapped numeric type."
+                        "A SOL amount expressed in lamports under the wrapped numeric type.",
+                        "Equivalent to an `amountTypeNode` with 9 decimals and `SOL` as the unit."
                     ],
                     "attributes": [
                         {
@@ -1540,7 +1681,7 @@
                                 "name": "typeNode"
                             },
                             "docs": [
-                                "The type carried by the option when present."
+                                "The type carried by the option when present. Must be of fixed size."
                             ]
                         },
                         {
@@ -1755,7 +1896,8 @@
                     "name": "nestedTypeNode",
                     "docs": [
                         "A type, possibly wrapped in zero-or-more size, offset, sentinel, or hidden prefix/suffix modifiers.",
-                        "The wrapping is recursive: each modifier wraps another `nestedTypeNode<T>` until the inner `T` is reached."
+                        "The wrapping is recursive: each modifier wraps another `nestedTypeNode<T>` until the inner `T` is reached.",
+                        "For example, a `nestedTypeNode<stringTypeNode>` can be fulfilled by a plain `stringTypeNode`, by a `fixedSizeTypeNode` wrapping a `stringTypeNode`, or by any deeper nesting such as `hiddenPrefixTypeNode<preOffsetTypeNode<fixedSizeTypeNode<stringTypeNode>>>`."
                     ],
                     "base": {
                         "kind": "union",
@@ -1922,6 +2064,34 @@
                                     ]
                                 }
                             ]
+                        },
+                        {
+                            "title": "A UTF-8 string constant",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "constantValueNodeFromString('utf8', 'Hello');",
+                                        "",
+                                        "// Equivalent to:",
+                                        "constantValueNode(stringTypeNode('utf8'), stringValueNode('Hello'));"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A base16 bytes constant",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "constantValueNodeFromBytes('base16', 'FF99CC');",
+                                        "",
+                                        "// Equivalent to:",
+                                        "constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'FF99CC'));"
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 },
@@ -1948,7 +2118,8 @@
                                 "name": "definedTypeLinkNode"
                             },
                             "docs": [
-                                "A link to the defined enum type the value belongs to."
+                                "A link to the defined enum type the value belongs to.",
+                                "The linked defined type must contain an `enumTypeNode`."
                             ]
                         },
                         {
@@ -2047,7 +2218,8 @@
                 {
                     "kind": "mapEntryValueNode",
                     "docs": [
-                        "A single (key, value) pair inside a `mapValueNode`."
+                        "A single (key, value) pair inside a `mapValueNode`.",
+                        "For example, the map `{ total: 42 }` has one entry whose key is the string `\"total\"` and whose value is the number `42`."
                     ],
                     "attributes": [
                         {
@@ -2126,7 +2298,8 @@
                 {
                     "kind": "noneValueNode",
                     "docs": [
-                        "The \"absent\" value for an optional type."
+                        "The \"absent\" value for an optional type.",
+                        "For instance, this can be set as the default value of a field whose type is an `optionTypeNode`."
                     ],
                     "attributes": [],
                     "examples": [
@@ -2178,7 +2351,7 @@
                 {
                     "kind": "publicKeyValueNode",
                     "docs": [
-                        "A concrete public key, with an optional symbolic identifier for the address."
+                        "A concrete 32-byte public key, with an optional symbolic identifier for the address."
                     ],
                     "attributes": [
                         {
@@ -2253,7 +2426,8 @@
                 {
                     "kind": "someValueNode",
                     "docs": [
-                        "The \"present\" value for an optional type, wrapping a concrete value node."
+                        "The \"present\" value for an optional type, wrapping a concrete value node.",
+                        "For instance, this can be set as the default value of a field whose type is an `optionTypeNode`."
                     ],
                     "attributes": [
                         {
@@ -2683,7 +2857,8 @@
                             },
                             "optional": true,
                             "docs": [
-                                "The instruction the referenced account belongs to. When omitted, the surrounding instruction is assumed."
+                                "The instruction the referenced account belongs to. When omitted, the surrounding instruction is assumed.",
+                                "The instruction link may itself point to a different program if needed."
                             ]
                         },
                         {
@@ -2735,7 +2910,8 @@
                             },
                             "optional": true,
                             "docs": [
-                                "The instruction the referenced argument belongs to. When omitted, the surrounding instruction is assumed."
+                                "The instruction the referenced argument belongs to. When omitted, the surrounding instruction is assumed.",
+                                "The instruction link may itself point to a different program if needed."
                             ]
                         },
                         {
@@ -2979,6 +3155,17 @@
                     ],
                     "examples": [
                         {
+                            "title": "Create a constant PDA seed node from a type and a value",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = constantPdaSeedNode(numberTypeNode('u32'), numberValueNode(42));"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
                             "title": "A PDA node with a UTF-8 constant seed",
                             "code": [
                                 {
@@ -2987,7 +3174,10 @@
                                         "pdaNode({",
                                         "    name: 'tickets',",
                                         "    seeds: [constantPdaSeedNodeFromString('utf8', 'tickets')],",
-                                        "});"
+                                        "});",
+                                        "",
+                                        "// The seed above is equivalent to:",
+                                        "constantPdaSeedNode(stringTypeNode('utf8'), stringValueNode('tickets'));"
                                     ]
                                 }
                             ]
@@ -3118,7 +3308,8 @@
                 {
                     "kind": "fixedCountNode",
                     "docs": [
-                        "A count strategy that fixes the number of items at a constant value."
+                        "A count strategy that fixes the number of items at a constant value.",
+                        "This enables nodes such as `arrayTypeNode` to represent collections of a fixed length."
                     ],
                     "attributes": [
                         {
@@ -3160,7 +3351,8 @@
                 {
                     "kind": "prefixedCountNode",
                     "docs": [
-                        "A count strategy where the number of items is read from a numeric prefix."
+                        "A count strategy where the number of items is read from a numeric prefix.",
+                        "This enables nodes such as `arrayTypeNode` to represent collections whose length is stored as a prefix."
                     ],
                     "attributes": [
                         {
@@ -3203,7 +3395,9 @@
                 {
                     "kind": "remainderCountNode",
                     "docs": [
-                        "A count strategy where items are read until the buffer is exhausted."
+                        "A count strategy where items are read until the buffer is exhausted.",
+                        "When encoding, items are serialised as-is and the total count is never stored; when decoding, items are read one by one until the end of the buffer.",
+                        "This strategy is therefore only meaningful for the last variable-size region of a buffer."
                     ],
                     "attributes": [],
                     "examples": [
@@ -3359,7 +3553,7 @@
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the discriminating field."
+                                "The name of the discriminating field — a `structFieldTypeNode` of the account data or an argument of the instruction."
                             ]
                         },
                         {
@@ -4422,7 +4616,7 @@
                             "optional": true,
                             "docs": [
                                 "When present, the condition result is compared for equality against this value.",
-                                "Otherwise the result is treated as a boolean."
+                                "When omitted, the condition passes if the referenced account or argument exists in the current context, regardless of its value."
                             ]
                         },
                         {
@@ -4433,7 +4627,7 @@
                             },
                             "optional": true,
                             "docs": [
-                                "The value used when the condition resolves truthy (or matches `value`)."
+                                "The value used when the condition passes — i.e. it matches `value` or, without a `value`, exists."
                             ]
                         },
                         {
@@ -4444,7 +4638,7 @@
                             },
                             "optional": true,
                             "docs": [
-                                "The value used when the condition resolves falsy (or does not match `value`)."
+                                "The value used when the condition fails — i.e. it does not match `value` or, without a `value`, does not exist."
                             ]
                         }
                     ],
@@ -4508,7 +4702,9 @@
                 {
                     "kind": "identityValueNode",
                     "docs": [
-                        "Refers to the wallet identity providing the instruction context."
+                        "Refers to the wallet identity providing the instruction context — the main wallet that should own things.",
+                        "For instance, in a web application the identity would be the connected wallet; in a terminal, the wallet identified by `solana address`.",
+                        "A similar node exists for the main wallet that should pay for things — `payerValueNode`. In practice the identity and the payer are often the same, but offering the distinction can be useful should they differ."
                     ],
                     "attributes": [],
                     "examples": [
@@ -4550,7 +4746,9 @@
                 {
                     "kind": "payerValueNode",
                     "docs": [
-                        "Refers to the wallet paying for the surrounding transaction."
+                        "Refers to the wallet paying for the surrounding transaction — the main wallet that should pay for things, such as rent for account storage.",
+                        "For instance, in a web application the payer would be the connected wallet; in a terminal, the wallet identified by `solana address`.",
+                        "A similar node exists for the main wallet that should own things — `identityValueNode`. In practice the identity and the payer are often the same, but offering the distinction can be useful should they differ."
                     ],
                     "attributes": [],
                     "examples": [
@@ -4602,7 +4800,7 @@
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the seed being filled in."
+                                "The name of the seed being filled in — a `variablePdaSeedNode` of the PDA definition."
                             ]
                         },
                         {
@@ -4728,7 +4926,7 @@
                 {
                     "kind": "programIdValueNode",
                     "docs": [
-                        "Refers to the program ID of the surrounding instruction."
+                        "Refers to the program ID of the surrounding instruction — that is, the address of the `programNode` this node descends from."
                     ],
                     "attributes": [],
                     "examples": [
@@ -4749,7 +4947,8 @@
                     "kind": "resolverValueNode",
                     "docs": [
                         "A custom resolver: a named function provided by the consumer that produces a value.",
-                        "May optionally depend on other accounts and arguments resolved at instruction-build time."
+                        "May optionally depend on other accounts and arguments resolved at instruction-build time.",
+                        "This node acts as a fallback for any value or logic that cannot easily be described by the other nodes — renderers treat resolvers as functions that can be injected into the generated code."
                     ],
                     "attributes": [
                         {
@@ -4759,7 +4958,8 @@
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the resolver function."
+                                "A unique name for the resolver.",
+                                "This is typically the name of the function that renderers will invoke."
                             ]
                         },
                         {
@@ -5187,7 +5387,7 @@
                         {
                             "name": "shortU16",
                             "docs": [
-                                "Solana compact-u16 encoding: a variable-length unsigned integer occupying 1 to 3 bytes."
+                                "Solana compact-u16 encoding: a variable-length unsigned integer occupying 1 to 3 bytes. Values up to `0x7f` are stored as-is in a single byte; above that, the top bit of each byte is set and the remaining value continues in the next byte, with the third byte — when needed — using all 8 bits."
                             ]
                         },
                         {
@@ -5251,30 +5451,31 @@
                         {
                             "name": "absolute",
                             "docs": [
-                                "Move the cursor to the absolute byte position given by the offset."
+                                "Move the cursor to the absolute byte position given by the offset; a negative offset counts backwards from the end of the buffer."
                             ]
                         },
                         {
                             "name": "padded",
                             "docs": [
-                                "Pad with zero bytes from the current cursor up to the offset bytes ahead."
+                                "Move the cursor like `relative` while growing the buffer by the offset amount; a negative offset moves the cursor backwards and shrinks the buffer."
                             ]
                         },
                         {
                             "name": "preOffset",
                             "docs": [
-                                "Restore the cursor to where it was before the wrapped type ran (cancelling its pre-offset)."
+                                "Move the cursor by the offset bytes relative to the pre-offset — where the wrapped type started — rather than where it ended; a negative offset moves it to the left of that position."
                             ]
                         },
                         {
                             "name": "relative",
                             "docs": [
-                                "Advance the cursor by the offset bytes relative to its current position."
+                                "Advance the cursor by the offset bytes relative to its current position; a negative offset moves it backwards."
                             ]
                         }
                     ],
                     "docs": [
-                        "How a post-offset modifier interprets its offset value after serialising the wrapped type."
+                        "How a post-offset modifier interprets its offset value after serialising the wrapped type.",
+                        "See `postOffsetTypeNode` for an illustrated walkthrough of each strategy."
                     ]
                 },
                 {
@@ -5283,24 +5484,25 @@
                         {
                             "name": "absolute",
                             "docs": [
-                                "Move the cursor to the absolute byte position given by the offset."
+                                "Move the cursor to the absolute byte position given by the offset; a negative offset counts backwards from the end of the buffer."
                             ]
                         },
                         {
                             "name": "padded",
                             "docs": [
-                                "Pad with zero bytes from the current cursor up to the offset bytes ahead."
+                                "Move the cursor like `relative` while growing the buffer by the offset amount; a negative offset moves the cursor backwards and shrinks the buffer."
                             ]
                         },
                         {
                             "name": "relative",
                             "docs": [
-                                "Advance the cursor by the offset bytes relative to its current position."
+                                "Advance the cursor by the offset bytes relative to its current position; a negative offset moves it backwards."
                             ]
                         }
                     ],
                     "docs": [
-                        "How a pre-offset modifier interprets its offset value before serialising the wrapped type."
+                        "How a pre-offset modifier interprets its offset value before serialising the wrapped type.",
+                        "See `preOffsetTypeNode` for an illustrated walkthrough of each strategy."
                     ]
                 },
                 {
@@ -5335,7 +5537,9 @@
                 {
                     "kind": "accountNode",
                     "docs": [
-                        "An on-chain account: its name, data structure, optional fixed size, optional PDA, and optional discriminators."
+                        "An on-chain account: its name, data structure, optional fixed size, optional PDA, and optional discriminators.",
+                        "",
+                        "![Diagram](https://github.com/codama-idl/codama/assets/3642397/77974dad-212e-49b1-8e41-5d466c273a02)"
                     ],
                     "attributes": [
                         {
@@ -5377,7 +5581,8 @@
                                 "name": "structTypeNode"
                             },
                             "docs": [
-                                "The struct describing the account data."
+                                "The struct describing the account data.",
+                                "It must be a struct so its fields can be referenced by other nodes — e.g. `accountFieldValueNode`."
                             ]
                         },
                         {
@@ -5547,7 +5752,9 @@
                 {
                     "kind": "definedTypeNode",
                     "docs": [
-                        "A reusable named type that can be referenced by `definedTypeLinkNode` from elsewhere in the IDL."
+                        "A reusable named type that can be referenced by `definedTypeLinkNode` from elsewhere in the IDL.",
+                        "",
+                        "![Diagram](https://github.com/codama-idl/codama/assets/3642397/6049cf77-9a70-4915-8276-dd571d2f8828)"
                     ],
                     "attributes": [
                         {
@@ -5605,7 +5812,9 @@
                 {
                     "kind": "errorNode",
                     "docs": [
-                        "A program error — a numeric code paired with a name and human-readable message."
+                        "A program error — a numeric code paired with a name and human-readable message.",
+                        "",
+                        "![Diagram](https://github.com/codama-idl/codama/assets/3642397/0bde98ea-0327-404b-bf38-137d105826b0)"
                     ],
                     "attributes": [
                         {
@@ -5761,7 +5970,9 @@
                 {
                     "kind": "instructionAccountNode",
                     "docs": [
-                        "An account participating in an instruction, with its name, signing/writability flags, and an optional default value."
+                        "An account participating in an instruction, with its name, signing/writability flags, and an optional default value.",
+                        "",
+                        "![Diagram](https://github.com/codama-idl/codama/assets/3642397/4656a08b-2f89-49c2-b428-5378cb1a0b9e)"
                     ],
                     "attributes": [
                         {
@@ -5805,7 +6016,8 @@
                             },
                             "optional": true,
                             "docs": [
-                                "Whether the account slot may be omitted by callers."
+                                "Whether the account slot may be omitted by callers.",
+                                "When `true`, absent accounts are handled according to the `optionalAccountStrategy` attribute of the surrounding `instructionNode`. Defaults to `false`."
                             ]
                         },
                         {
@@ -5892,7 +6104,10 @@
                 {
                     "kind": "instructionArgumentNode",
                     "docs": [
-                        "A named argument of an instruction, with its type and an optional default value."
+                        "A named argument of an instruction, with its type and an optional default value.",
+                        "Serialised next to each other, the arguments of an instruction form its data.",
+                        "",
+                        "![Diagram](https://github.com/codama-idl/codama/assets/3642397/7e2def82-949a-4663-bdc3-ac599d39d2d2)"
                     ],
                     "attributes": [
                         {
@@ -5913,7 +6128,8 @@
                             },
                             "optional": true,
                             "docs": [
-                                "How a configured default value is exposed in generated APIs. Required when `defaultValue` is set."
+                                "How a configured default value is exposed in generated APIs.",
+                                "Only relevant when `defaultValue` is set; when absent, `optional` is assumed."
                             ]
                         },
                         {
@@ -5996,7 +6212,8 @@
                 {
                     "kind": "instructionByteDeltaNode",
                     "docs": [
-                        "A byte-size delta applied when computing rent or buffer size — typically used by instructions that resize accounts."
+                        "A byte-size delta applied when computing rent or buffer size — typically used by instructions that resize accounts.",
+                        "For instance, if an instruction creates a new account of 42 bytes, this node can carry that information, enabling clients to allocate the right amount of lamports to cover the cost of executing the instruction."
                     ],
                     "attributes": [
                         {
@@ -6005,7 +6222,8 @@
                                 "kind": "boolean"
                             },
                             "docs": [
-                                "Whether the delta includes the account header overhead."
+                                "Whether the delta includes the account header overhead — i.e. 128 bytes.",
+                                "Defaults to `false` when the value is a `resolverValueNode` and `true` otherwise."
                             ]
                         },
                         {
@@ -6068,7 +6286,9 @@
                 {
                     "kind": "instructionNode",
                     "docs": [
-                        "A program instruction: its accounts, arguments, byte-delta hints, discriminators, optional status, and optional sub-instructions."
+                        "A program instruction: its accounts, arguments, byte-delta hints, discriminators, optional status, and optional sub-instructions.",
+                        "",
+                        "![Diagram](https://github.com/codama-idl/codama/assets/3642397/0d8edced-cfa4-4500-b80c-ebc56181a338)"
                     ],
                     "attributes": [
                         {
@@ -6099,7 +6319,8 @@
                             },
                             "optional": true,
                             "docs": [
-                                "How absent optional accounts are represented when serialising the instruction."
+                                "How absent optional accounts are represented when serialising the instruction.",
+                                "When absent, `programId` is assumed."
                             ]
                         },
                         {
@@ -6139,7 +6360,8 @@
                             },
                             "optional": true,
                             "docs": [
-                                "Additional arguments exposed in the generated client API but not serialised on the wire."
+                                "Additional arguments exposed in the generated client API but not serialised on the wire.",
+                                "Typically useful for feeding the default values of other arguments or accounts."
                             ]
                         },
                         {
@@ -6167,7 +6389,8 @@
                             },
                             "optional": true,
                             "docs": [
-                                "Byte-size adjustments applied when computing rent or buffer size — for instructions that resize accounts."
+                                "Byte-size adjustments applied when computing rent or buffer size — for instructions that resize accounts.",
+                                "All deltas are added together, unless their `subtract` attribute is set."
                             ]
                         },
                         {
@@ -6207,7 +6430,7 @@
                             },
                             "optional": true,
                             "docs": [
-                                "Inner instructions invoked through CPI as part of executing this instruction."
+                                "Nested instructions that split this instruction into distinct scenarios — e.g. one sub-instruction per version of the instruction."
                             ]
                         },
                         {
@@ -6453,7 +6676,7 @@
                             },
                             "optional": true,
                             "docs": [
-                                "Whether the remaining-accounts tail may be empty."
+                                "Whether the remaining-accounts tail may be empty. Defaults to `false`."
                             ]
                         },
                         {
@@ -6469,7 +6692,7 @@
                             "optional": true,
                             "docs": [
                                 "Whether each remaining account must sign the transaction.",
-                                "The literal `\"either\"` indicates a slot that may or may not sign depending on context."
+                                "The literal `\"either\"` indicates that each account may or may not be a signer, independently of the others. Defaults to `false`."
                             ]
                         },
                         {
@@ -6563,7 +6786,8 @@
                 {
                     "kind": "instructionStatusNode",
                     "docs": [
-                        "The lifecycle stage of an instruction (draft, live, deprecated, archived) with an optional accompanying message."
+                        "The lifecycle stage of an instruction (draft, live, deprecated, archived) with an optional accompanying message.",
+                        "An instruction without a status is considered live — a status node is typically only attached to signal another stage."
                     ],
                     "attributes": [
                         {
@@ -6630,7 +6854,9 @@
                 {
                     "kind": "pdaNode",
                     "docs": [
-                        "A program-derived address: its name, optional program ID override, and the seeds used to derive it."
+                        "A program-derived address: its name, optional program ID override, and the seeds used to derive it.",
+                        "",
+                        "![Diagram](https://github.com/codama-idl/codama/assets/3642397/4f7c9718-1ffa-4f2c-aa45-71b3ce204219)"
                     ],
                     "attributes": [
                         {
@@ -6786,7 +7012,9 @@
                 {
                     "kind": "programNode",
                     "docs": [
-                        "A Solana program: its identity, version, accounts, instructions, defined types, PDAs, events, errors, and constants."
+                        "A Solana program: its identity, version, accounts, instructions, defined types, PDAs, events, errors, and constants.",
+                        "",
+                        "![Diagram](https://github.com/codama-idl/codama/assets/3642397/37ec38ea-66df-4c08-81c3-822ef4388580)"
                     ],
                     "attributes": [
                         {
@@ -7022,7 +7250,9 @@
                     "kind": "rootNode",
                     "docs": [
                         "The root of a Codama IDL document.",
-                        "Pairs a primary program with any number of additional programs and tags the document with the spec version."
+                        "Pairs a primary program with any number of additional programs and tags the document with the spec version.",
+                        "",
+                        "![Diagram](https://github.com/codama-idl/codama/assets/3642397/96c43c75-5925-4b6b-a1e0-8b8c61317cfe)"
                     ],
                     "attributes": [
                         {
@@ -7032,7 +7262,8 @@
                                 "value": "codama"
                             },
                             "docs": [
-                                "A literal marker identifying the document as a Codama IDL."
+                                "A literal marker identifying the document as a Codama IDL.",
+                                "This allows other communities to fork the Codama standard under a different marker."
                             ]
                         },
                         {
@@ -7126,7 +7357,8 @@
                         }
                     ],
                     "docs": [
-                        "The value forms accepted by an `instructionByteDeltaNode`."
+                        "The value forms accepted by an `instructionByteDeltaNode`.",
+                        "An `accountLinkNode` uses the size of the linked account; an `argumentValueNode` uses the value of the referenced instruction argument; a `numberValueNode` uses that explicit number; and a `resolverValueNode` acts as a fallback for more complex values."
                     ]
                 },
                 {
@@ -7142,7 +7374,8 @@
                         }
                     ],
                     "docs": [
-                        "The value forms accepted by an `instructionRemainingAccountsNode`."
+                        "The value forms accepted by an `instructionRemainingAccountsNode`.",
+                        "An `argumentValueNode` represents the array of accounts as a new argument of the provided name; a `resolverValueNode` acts as a fallback for more complex scenarios."
                     ]
                 }
             ],

@@ -9,7 +9,7 @@ export const enumEmptyVariantTypeNode = defineNode('enumEmptyVariantTypeNode', {
         }),
         optionalAttribute('discriminator', u32(), {
             docs: [
-                'Explicit discriminator value. When omitted, the discriminator is inferred from the variant position.',
+                'Explicit discriminator value. When omitted, the discriminator is the index of the variant in the enum, starting at 0.',
             ],
         }),
         optionalAttribute('display', node('enumVariantDisplayNode'), {

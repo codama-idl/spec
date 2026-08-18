@@ -5,10 +5,14 @@ export const resolverValueNode = defineNode('resolverValueNode', {
     docs: [
         'A custom resolver: a named function provided by the consumer that produces a value.',
         'May optionally depend on other accounts and arguments resolved at instruction-build time.',
+        'This node acts as a fallback for any value or logic that cannot easily be described by the other nodes — renderers treat resolvers as functions that can be injected into the generated code.',
     ],
     attributes: [
         attribute('name', stringIdentifier(), {
-            docs: ['The name of the resolver function.'],
+            docs: [
+                'A unique name for the resolver.',
+                'This is typically the name of the function that renderers will invoke.',
+            ],
         }),
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the resolver.'],

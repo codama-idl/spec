@@ -13,14 +13,16 @@ export const conditionalValueNode = defineNode('conditionalValueNode', {
         optionalAttribute('value', union('valueNode'), {
             docs: [
                 'When present, the condition result is compared for equality against this value.',
-                'Otherwise the result is treated as a boolean.',
+                'When omitted, the condition passes if the referenced account or argument exists in the current context, regardless of its value.',
             ],
         }),
         optionalAttribute('ifTrue', union('instructionInputValueNode'), {
-            docs: ['The value used when the condition resolves truthy (or matches `value`).'],
+            docs: ['The value used when the condition passes — i.e. it matches `value` or, without a `value`, exists.'],
         }),
         optionalAttribute('ifFalse', union('instructionInputValueNode'), {
-            docs: ['The value used when the condition resolves falsy (or does not match `value`).'],
+            docs: [
+                'The value used when the condition fails — i.e. it does not match `value` or, without a `value`, does not exist.',
+            ],
         }),
     ],
     examples,

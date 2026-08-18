@@ -24,3 +24,21 @@ A typed constant: a type node paired with a concrete value node.
 ```typescript
 const node = constantValueNode(numberTypeNode('u32'), numberValueNode(42));
 ```
+
+### A UTF-8 string constant
+
+```typescript
+constantValueNodeFromString('utf8', 'Hello');
+
+// Equivalent to:
+constantValueNode(stringTypeNode('utf8'), stringValueNode('Hello'));
+```
+
+### A base16 bytes constant
+
+```typescript
+constantValueNodeFromBytes('base16', 'FF99CC');
+
+// Equivalent to:
+constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'FF99CC'));
+```

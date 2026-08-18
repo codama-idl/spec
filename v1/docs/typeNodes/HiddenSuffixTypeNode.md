@@ -1,6 +1,7 @@
 # HiddenSuffixTypeNode
 
 Suffixes another type with a list of constant values that are written and read but not surfaced as fields to consumers.
+When decoding, the suffixed constants are consumed and checked against their expected values before being discarded.
 
 ## Attributes
 

@@ -15,6 +15,8 @@ import { examples } from './ProgramNode.examples';
 export const programNode = defineNode('programNode', {
     docs: [
         'A Solana program: its identity, version, accounts, instructions, defined types, PDAs, events, errors, and constants.',
+        '',
+        '![Diagram](https://github.com/codama-idl/codama/assets/3642397/37ec38ea-66df-4c08-81c3-822ef4388580)',
     ],
     attributes: [
         attribute('name', stringIdentifier(), {

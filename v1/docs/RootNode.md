@@ -3,15 +3,17 @@
 The root of a Codama IDL document.
 Pairs a primary program with any number of additional programs and tags the document with the spec version.
 
+![Diagram](https://github.com/codama-idl/codama/assets/3642397/96c43c75-5925-4b6b-a1e0-8b8c61317cfe)
+
 ## Attributes
 
 ### Data
 
-| Attribute  | Type           | Description                                                |
-| ---------- | -------------- | ---------------------------------------------------------- |
-| `kind`     | `"rootNode"`   | The node discriminator.                                    |
-| `standard` | `"codama"`     | A literal marker identifying the document as a Codama IDL. |
-| `version`  | `SemverString` | The Codama spec version this document conforms to.         |
+| Attribute  | Type           | Description                                                                                                                                    |
+| ---------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `kind`     | `"rootNode"`   | The node discriminator.                                                                                                                        |
+| `standard` | `"codama"`     | A literal marker identifying the document as a Codama IDL. This allows other communities to fork the Codama standard under a different marker. |
+| `version`  | `SemverString` | The Codama spec version this document conforms to.                                                                                             |
 
 ### Children
 

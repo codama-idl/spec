@@ -6,10 +6,10 @@ Display metadata for an instruction account: its label in the fallback list and 
 
 ### Data
 
-| Attribute | Type                              | Description                                                 |
-| --------- | --------------------------------- | ----------------------------------------------------------- |
-| `kind`    | `"instructionAccountDisplayNode"` | The node discriminator.                                     |
-| `label`   | `string` _(optional)_             | An override label shown in the fallback list (e.g. `"To"`). |
+| Attribute | Type                              | Description                                                                                                                |
+| --------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `kind`    | `"instructionAccountDisplayNode"` | The node discriminator.                                                                                                    |
+| `label`   | `string` _(optional)_             | An override label shown in the fallback list (e.g. `"To"`). When absent, renderers derive a label from the account `name`. |
 
 ### Children
 

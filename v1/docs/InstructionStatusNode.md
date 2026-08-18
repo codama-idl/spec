@@ -1,6 +1,7 @@
 # InstructionStatusNode
 
 The lifecycle stage of an instruction (draft, live, deprecated, archived) with an optional accompanying message.
+An instruction without a status is considered live — a status node is typically only attached to signal another stage.
 
 ## Attributes
 

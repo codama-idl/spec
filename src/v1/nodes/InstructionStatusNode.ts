@@ -4,6 +4,7 @@ import { examples } from './InstructionStatusNode.examples';
 export const instructionStatusNode = defineNode('instructionStatusNode', {
     docs: [
         'The lifecycle stage of an instruction (draft, live, deprecated, archived) with an optional accompanying message.',
+        'An instruction without a status is considered live — a status node is typically only attached to signal another stage.',
     ],
     attributes: [
         attribute('lifecycle', enumeration('instructionLifecycle'), {

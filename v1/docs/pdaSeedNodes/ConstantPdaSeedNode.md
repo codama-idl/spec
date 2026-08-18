@@ -19,6 +19,12 @@ A PDA seed with a constant value (e.g. a UTF-8 string or a fixed byte sequence).
 
 ## Examples
 
+### Create a constant PDA seed node from a type and a value
+
+```typescript
+const node = constantPdaSeedNode(numberTypeNode('u32'), numberValueNode(42));
+```
+
 ### A PDA node with a UTF-8 constant seed
 
 ```typescript
@@ -26,4 +32,7 @@ pdaNode({
     name: 'tickets',
     seeds: [constantPdaSeedNodeFromString('utf8', 'tickets')],
 });
+
+// The seed above is equivalent to:
+constantPdaSeedNode(stringTypeNode('utf8'), stringValueNode('tickets'));
 ```

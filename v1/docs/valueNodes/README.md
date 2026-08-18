@@ -14,7 +14,7 @@ Value nodes — concrete values whose shape is described by a type node.
 - [`MapValueNode`](./MapValueNode.md) - A concrete map value: a list of (key, value) entries.
 - [`NoneValueNode`](./NoneValueNode.md) - The "absent" value for an optional type.
 - [`NumberValueNode`](./NumberValueNode.md) - A concrete numeric value.
-- [`PublicKeyValueNode`](./PublicKeyValueNode.md) - A concrete public key, with an optional symbolic identifier for the address.
+- [`PublicKeyValueNode`](./PublicKeyValueNode.md) - A concrete 32-byte public key, with an optional symbolic identifier for the address.
 - [`SetValueNode`](./SetValueNode.md) - A concrete set value: a list of unique value nodes.
 - [`SomeValueNode`](./SomeValueNode.md) - The "present" value for an optional type, wrapping a concrete value node.
 - [`StringValueNode`](./StringValueNode.md) - A concrete string value.

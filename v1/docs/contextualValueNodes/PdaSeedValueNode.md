@@ -6,10 +6,10 @@ Pairs a PDA seed name with the value to substitute when deriving the PDA.
 
 ### Data
 
-| Attribute | Type                 | Description                           |
-| --------- | -------------------- | ------------------------------------- |
-| `kind`    | `"pdaSeedValueNode"` | The node discriminator.               |
-| `name`    | `CamelCaseString`    | The name of the seed being filled in. |
+| Attribute | Type                 | Description                                                                           |
+| --------- | -------------------- | ------------------------------------------------------------------------------------- |
+| `kind`    | `"pdaSeedValueNode"` | The node discriminator.                                                               |
+| `name`    | `CamelCaseString`    | The name of the seed being filled in — a `variablePdaSeedNode` of the PDA definition. |
 
 ### Children
 

@@ -1,6 +1,6 @@
 # PublicKeyValueNode
 
-A concrete public key, with an optional symbolic identifier for the address.
+A concrete 32-byte public key, with an optional symbolic identifier for the address.
 
 ## Attributes
 

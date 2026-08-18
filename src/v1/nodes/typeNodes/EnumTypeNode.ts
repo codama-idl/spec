@@ -8,7 +8,10 @@ export const enumTypeNode = defineNode('enumTypeNode', {
             docs: ['The variants of the enum, in declaration order.'],
         }),
         attribute('size', nestedUnion('nestedTypeNode', 'numberTypeNode'), {
-            docs: ['The numeric type used to serialise the discriminator.'],
+            docs: [
+                'The numeric type used to serialise the discriminator.',
+                'The discriminator prepends the serialised variant payload to identify which variant was selected. By default it is the index of the variant (starting at 0), unless the variant provides its own custom discriminator value.',
+            ],
         }),
     ],
     examples,

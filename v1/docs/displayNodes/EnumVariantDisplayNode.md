@@ -6,11 +6,11 @@ Display metadata for an enum variant: its label and whether to hide its inner pa
 
 ### Data
 
-| Attribute       | Type                       | Description                                                                |
-| --------------- | -------------------------- | -------------------------------------------------------------------------- |
-| `kind`          | `"enumVariantDisplayNode"` | The node discriminator.                                                    |
-| `label`         | `string` _(optional)_      | An override label shown for the variant (e.g. `"Buy"`).                    |
-| `skipInnerData` | `boolean` _(optional)_     | When `true`, the variant's payload is hidden — only the label is rendered. |
+| Attribute       | Type                       | Description                                                                                                                                                                   |
+| --------------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `kind`          | `"enumVariantDisplayNode"` | The node discriminator.                                                                                                                                                       |
+| `label`         | `string` _(optional)_      | An override label shown for the variant (e.g. `"Buy"`). When absent, renderers derive a label from the variant `name`.                                                        |
+| `skipInnerData` | `boolean` _(optional)_     | When `true`, the variant's payload is hidden — only the label is rendered. Useful for tuple payloads that have no per-field handle, or when the payload is purely structural. |
 
 ## Examples
 

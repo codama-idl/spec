@@ -1,6 +1,7 @@
 # SizePrefixTypeNode
 
 Wraps another type with a numeric prefix indicating the byte length of the wrapped type.
+When decoding, the size is read first and determines how many bytes the wrapped type may consume.
 
 ## Attributes
 

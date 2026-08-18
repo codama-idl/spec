@@ -1,6 +1,7 @@
 # MapEntryValueNode
 
 A single (key, value) pair inside a `mapValueNode`.
+For example, the map `{ total: 42 }` has one entry whose key is the string `"total"` and whose value is the number `42`.
 
 ## Attributes
 

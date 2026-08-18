@@ -7,11 +7,11 @@ The string's wire encoding is carried by `stringTypeNode.encoding`; this node on
 
 ### Data
 
-| Attribute    | Type                  | Description                                                                             |
-| ------------ | --------------------- | --------------------------------------------------------------------------------------- |
-| `kind`       | `"stringDisplayNode"` | The node discriminator.                                                                 |
-| `sliceStart` | `u64` _(optional)_    | The start index of the displayed slice, inclusive. Defaults to the start of the string. |
-| `sliceEnd`   | `u64` _(optional)_    | The end index of the displayed slice, exclusive. Defaults to the end of the string.     |
+| Attribute    | Type                  | Description                                                                                                                              |
+| ------------ | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `kind`       | `"stringDisplayNode"` | The node discriminator.                                                                                                                  |
+| `sliceStart` | `u64` _(optional)_    | The start index of the displayed slice, inclusive. Defaults to the start of the string. Indices apply to the decoded character sequence. |
+| `sliceEnd`   | `u64` _(optional)_    | The end index of the displayed slice, exclusive. Defaults to the end of the string. Indices apply to the decoded character sequence.     |
 
 ## Examples
 

@@ -4,7 +4,7 @@ import { examples } from './AmountTypeNode.examples';
 export const amountTypeNode = defineNode('amountTypeNode', {
     docs: [
         'Wraps a number type to provide additional context such as decimal places and a unit.',
-        'Useful for amounts representing financial values.',
+        'Particularly useful for representing financial values as integers, since floating-point numbers are notoriously unsafe for that purpose.',
     ],
     attributes: [
         attribute('decimals', u32(), {

@@ -1,6 +1,9 @@
 # InstructionArgumentNode
 
 A named argument of an instruction, with its type and an optional default value.
+Serialised next to each other, the arguments of an instruction form its data.
+
+![Diagram](https://github.com/codama-idl/codama/assets/3642397/7e2def82-949a-4663-bdc3-ac599d39d2d2)
 
 ## Attributes
 
@@ -14,12 +17,12 @@ A named argument of an instruction, with its type and an optional default value.
 
 ### Children
 
-| Attribute              | Type                                                                                            | Description                                                                                       |
-| ---------------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `defaultValueStrategy` | [`DefaultValueStrategy`](./sharedNodes/DefaultValueStrategy.md) _(optional)_                    | How a configured default value is exposed in generated APIs. Required when `defaultValue` is set. |
-| `type`                 | [`TypeNode`](./typeNodes/TypeNode.md)                                                           | The type of the argument.                                                                         |
-| `defaultValue`         | [`InstructionInputValueNode`](./contextualValueNodes/InstructionInputValueNode.md) _(optional)_ | A default value used when the argument is omitted by callers.                                     |
-| `display`              | [`StructFieldDisplayNode`](./displayNodes/StructFieldDisplayNode.md) _(optional)_               | Display metadata describing how the argument is presented.                                        |
+| Attribute              | Type                                                                                            | Description                                                                                                                                |
+| ---------------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `defaultValueStrategy` | [`DefaultValueStrategy`](./sharedNodes/DefaultValueStrategy.md) _(optional)_                    | How a configured default value is exposed in generated APIs. Only relevant when `defaultValue` is set; when absent, `optional` is assumed. |
+| `type`                 | [`TypeNode`](./typeNodes/TypeNode.md)                                                           | The type of the argument.                                                                                                                  |
+| `defaultValue`         | [`InstructionInputValueNode`](./contextualValueNodes/InstructionInputValueNode.md) _(optional)_ | A default value used when the argument is omitted by callers.                                                                              |
+| `display`              | [`StructFieldDisplayNode`](./displayNodes/StructFieldDisplayNode.md) _(optional)_               | Display metadata describing how the argument is presented.                                                                                 |
 
 ## Examples
 

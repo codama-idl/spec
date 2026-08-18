@@ -54,6 +54,10 @@ describe('generateDocs - node pages (local + relative)', () => {
                 '> [!IMPORTANT]\n> The seed must be constant.',
         );
     });
+    it('joins all attribute doc lines into the table Description cell', () => {
+        const content = nodePage(model, 'constantPdaSeedNode').content;
+        expect(content).toContain('The seed value. Must be constant.');
+    });
     it('uses only the first docs line for index blurbs', () => {
         const content = pageOfKind(model, 'categoryIndex', 'pdaSeed').content;
         expect(content).toContain('- [`ConstantPdaSeedNode`](./ConstantPdaSeedNode.md) - A constant seed.');

@@ -11,7 +11,7 @@ The wire format of a numeric serialization.
 - `i32` - Signed 32-bit integer.
 - `i64` - Signed 64-bit integer.
 - `i128` - Signed 128-bit integer.
-- `shortU16` - Solana compact-u16 encoding: a variable-length unsigned integer occupying 1 to 3 bytes.
+- `shortU16` - Solana compact-u16 encoding: a variable-length unsigned integer occupying 1 to 3 bytes. Values up to `0x7f` are stored as-is in a single byte; above that, the top bit of each byte is set and the remaining value continues in the next byte, with the third byte — when needed — using all 8 bits.
 - `u8` - Unsigned 8-bit integer.
 - `u16` - Unsigned 16-bit integer.
 - `u32` - Unsigned 32-bit integer.

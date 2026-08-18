@@ -14,6 +14,8 @@ import { examples } from './InstructionAccountNode.examples';
 export const instructionAccountNode = defineNode('instructionAccountNode', {
     docs: [
         'An account participating in an instruction, with its name, signing/writability flags, and an optional default value.',
+        '',
+        '![Diagram](https://github.com/codama-idl/codama/assets/3642397/4656a08b-2f89-49c2-b428-5378cb1a0b9e)',
     ],
     attributes: [
         attribute('name', stringIdentifier(), {
@@ -29,7 +31,10 @@ export const instructionAccountNode = defineNode('instructionAccountNode', {
             ],
         }),
         optionalAttribute('isOptional', boolean(), {
-            docs: ['Whether the account slot may be omitted by callers.'],
+            docs: [
+                'Whether the account slot may be omitted by callers.',
+                'When `true`, absent accounts are handled according to the `optionalAccountStrategy` attribute of the surrounding `instructionNode`. Defaults to `false`.',
+            ],
         }),
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the account slot.'],

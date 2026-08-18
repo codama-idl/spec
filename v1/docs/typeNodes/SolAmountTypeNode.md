@@ -1,6 +1,7 @@
 # SolAmountTypeNode
 
 A SOL amount expressed in lamports under the wrapped numeric type.
+Equivalent to an `amountTypeNode` with 9 decimals and `SOL` as the unit.
 
 ## Attributes
 
