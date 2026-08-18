@@ -65,6 +65,15 @@ In other words, an absent array and an empty array are semantically identical: b
 
 The `attribute` vs `optionalAttribute` distinction therefore has **no effect on how arrays serialise** — it only documents intent and governs the optionality of non-array attributes. Should a future attribute genuinely need to distinguish "absent" from "empty", model it explicitly (e.g. an optional attribute wrapping the array) rather than relying on a bare array's presence.
 
+### Attributes serialise in declaration order
+
+Each node declares its attributes as an ordered array in `defineNode(...)`, and that order is authored deliberately: **static data first, child nodes and arrays last**. For example, `kind`, `name`, `docs` and other scalars precede large child collections such as `accounts`, `instructions` or `fields`.
+
+- **On write**, generators MUST emit a node's attributes in this declaration order (with the implicit `kind` discriminator first). They MUST NOT re-serialise through a key-sorting structure — notably `serde_json::Value`, whose object type is a `BTreeMap` and therefore sorts keys alphabetically, pushing scalars like `name` after the child arrays.
+- **On read**, attribute order carries no semantics; consumers MUST NOT depend on it.
+
+Preserving declaration order keeps encoded IDLs readable: the identifying scalars of a node (`kind`, `name`, …) appear before its potentially large children, so a node's identity is legible at a glance even in a deeply nested document.
+
 ## Repository layout
 
 ```
