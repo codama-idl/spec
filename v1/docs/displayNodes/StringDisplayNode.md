@@ -1,6 +1,7 @@
 # StringDisplayNode
 
-Display metadata for a string value. The string's wire encoding is carried by `stringTypeNode.encoding`; this node only addresses presentation.
+Display metadata for a string value.
+The string's wire encoding is carried by `stringTypeNode.encoding`; this node only addresses presentation.
 
 ## Attributes
 

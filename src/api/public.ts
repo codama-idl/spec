@@ -11,6 +11,7 @@ export type { CodeBlock, CodeLanguage, DocExample, DocExamples } from './example
 export type {
     AttributeSpec,
     CategorySpec,
+    Docs,
     EnumerationSpec,
     EnumerationVariantSpec,
     FloatWidth,

@@ -8,10 +8,10 @@
  * strings; the spec doesn't constrain them.
  */
 
-import type { CategorySpec, EnumerationSpec, NestedUnionSpec, NodeSpec, UnionSpec } from './types';
+import type { CategorySpec, Docs, EnumerationSpec, NestedUnionSpec, NodeSpec, UnionSpec } from './types';
 
 export interface DefineCategoryOptions {
-    readonly docs?: readonly string[];
+    readonly docs?: Docs;
     readonly nodes?: readonly NodeSpec[];
     readonly unions?: readonly UnionSpec[];
     readonly enumerations?: readonly EnumerationSpec[];

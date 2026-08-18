@@ -1,6 +1,7 @@
 # ResolverValueNode
 
-A custom resolver: a named function provided by the consumer that produces a value. May optionally depend on other accounts and arguments resolved at instruction-build time.
+A custom resolver: a named function provided by the consumer that produces a value.
+May optionally depend on other accounts and arguments resolved at instruction-build time.
 
 ## Attributes
 

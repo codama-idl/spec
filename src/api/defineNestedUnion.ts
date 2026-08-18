@@ -12,10 +12,10 @@
  * an instance of this alias from an attribute.
  */
 
-import type { NestedUnionSpec, TypeExpr } from './types';
+import type { Docs, NestedUnionSpec, TypeExpr } from './types';
 
 export interface DefineNestedUnionOptions {
-    readonly docs?: readonly string[];
+    readonly docs?: Docs;
     /**
      * The base type the recursion bottoms out in. Codegen renders this
      * as the alias's type-parameter constraint and as the final union arm.

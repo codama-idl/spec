@@ -89,20 +89,35 @@ export type TypeExpr =
     | { readonly kind: 'tuple'; readonly items: readonly TypeExpr[] }
     | { readonly kind: 'union'; readonly name: string };
 
+/**
+ * Documentation for a spec entity, as lines of markdown.
+ * Works like the `Docs` type on IDL nodes (generated from the `docs` `TypeExpr`).
+ *
+ * Each entry is one line; renderers join them with a newline. This keeps
+ * multi-line docs readable line-by-line in the serialised `spec.json`,
+ * mirroring the example `code()` content convention. Conventions:
+ *
+ * - The first line is a self-contained one-line summary — documentation
+ *   tables and lists display it on its own.
+ * - A blank (`''`) entry separates paragraphs.
+ * - Multi-line markdown constructs (fenced code snippets, callouts such as
+ *   `> [!NOTE]`, images) are authored one line per entry.
+ */
+export type Docs = readonly string[];
+
 /** A named attribute of a node — a single field in its data shape. */
 export interface AttributeSpec {
     readonly name: string;
     readonly type: TypeExpr;
     /** When `true`, the attribute may be absent in encoded values. */
     readonly optional?: boolean;
-    /** Free-form prose paragraphs describing this attribute. */
-    readonly docs?: readonly string[];
+    readonly docs?: Docs;
 }
 
 /** A node specification: kind, optional docs, attributes, examples. */
 export interface NodeSpec {
     readonly kind: string;
-    readonly docs?: readonly string[];
+    readonly docs?: Docs;
     readonly attributes: readonly AttributeSpec[];
     /** Worked documentation examples for this node - see `DocExample`. */
     readonly examples: DocExamples;
@@ -117,20 +132,20 @@ export type UnionMember =
 export interface UnionSpec {
     readonly name: string;
     readonly members: readonly UnionMember[];
-    readonly docs?: readonly string[];
+    readonly docs?: Docs;
 }
 
 /** A single variant of an enumeration. */
 export interface EnumerationVariantSpec {
     readonly name: string;
-    readonly docs?: readonly string[];
+    readonly docs?: Docs;
 }
 
 /** A named enumeration — a closed set of named variants. */
 export interface EnumerationSpec {
     readonly name: string;
     readonly variants: readonly EnumerationVariantSpec[];
-    readonly docs?: readonly string[];
+    readonly docs?: Docs;
 }
 
 /**
@@ -147,7 +162,7 @@ export interface EnumerationSpec {
 export interface NestedUnionSpec {
     /** The alias name emitted by codegen (e.g. `'nestedTypeNode'`). */
     readonly name: string;
-    readonly docs?: readonly string[];
+    readonly docs?: Docs;
     /**
      * The base type the recursion bottoms out in. Codegen renders this as
      * the alias's type-parameter constraint and as the final union arm.
@@ -174,7 +189,7 @@ export interface NestedUnionSpec {
  */
 export interface CategorySpec {
     readonly name: string;
-    readonly docs?: readonly string[];
+    readonly docs?: Docs;
     readonly nodes: readonly NodeSpec[];
     readonly unions: readonly UnionSpec[];
     readonly enumerations: readonly EnumerationSpec[];

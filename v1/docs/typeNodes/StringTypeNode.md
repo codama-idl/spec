@@ -1,6 +1,8 @@
 # StringTypeNode
 
-A string value. The encoding describes how its bytes are written. The byte length is determined by an enclosing wrapper such as `sizePrefixTypeNode` or `fixedSizeTypeNode`.
+A string value.
+The encoding describes how its bytes are written.
+The byte length is determined by an enclosing wrapper such as `sizePrefixTypeNode` or `fixedSizeTypeNode`.
 
 ## Attributes
 

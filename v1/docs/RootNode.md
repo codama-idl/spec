@@ -1,6 +1,7 @@
 # RootNode
 
-The root of a Codama IDL document. Pairs a primary program with any number of additional programs and tags the document with the spec version.
+The root of a Codama IDL document.
+Pairs a primary program with any number of additional programs and tags the document with the spec version.
 
 ## Attributes
 
