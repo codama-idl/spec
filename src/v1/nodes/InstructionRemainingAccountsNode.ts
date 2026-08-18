@@ -5,12 +5,12 @@ export const instructionRemainingAccountsNode = defineNode('instructionRemaining
     docs: ['A "remaining accounts" slot in an instruction — a variable-length tail of accounts derived from a value.'],
     attributes: [
         optionalAttribute('isOptional', boolean(), {
-            docs: ['Whether the remaining-accounts tail may be empty.'],
+            docs: ['Whether the remaining-accounts tail may be empty. Defaults to `false`.'],
         }),
         optionalAttribute('isSigner', literalUnion(true, false, 'either'), {
             docs: [
                 'Whether each remaining account must sign the transaction.',
-                'The literal `"either"` indicates a slot that may or may not sign depending on context.',
+                'The literal `"either"` indicates that each account may or may not be a signer, independently of the others. Defaults to `false`.',
             ],
         }),
         optionalAttribute('isWritable', boolean(), {

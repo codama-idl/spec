@@ -13,12 +13,12 @@ The condition resolves to a value at instruction time; that result selects betwe
 
 ### Children
 
-| Attribute   | Type                                                                       | Description                                                                     |
-| ----------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `condition` | [`ConditionalValueCondition`](./ConditionalValueCondition.md)              | The value whose evaluation drives the branch.                                   |
-| `value`     | [`ValueNode`](../valueNodes/ValueNode.md) _(optional)_                     | When present, the condition result is compared for equality against this value. |
-| `ifTrue`    | [`InstructionInputValueNode`](./InstructionInputValueNode.md) _(optional)_ | The value used when the condition resolves truthy (or matches `value`).         |
-| `ifFalse`   | [`InstructionInputValueNode`](./InstructionInputValueNode.md) _(optional)_ | The value used when the condition resolves falsy (or does not match `value`).   |
+| Attribute   | Type                                                                       | Description                                                                                                                                                                                                      |
+| ----------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `condition` | [`ConditionalValueCondition`](./ConditionalValueCondition.md)              | The value whose evaluation drives the branch.                                                                                                                                                                    |
+| `value`     | [`ValueNode`](../valueNodes/ValueNode.md) _(optional)_                     | When present, the condition result is compared for equality against this value. When omitted, the condition passes if the referenced account or argument exists in the current context, regardless of its value. |
+| `ifTrue`    | [`InstructionInputValueNode`](./InstructionInputValueNode.md) _(optional)_ | The value used when the condition passes — i.e. it matches `value` or, without a `value`, exists.                                                                                                                |
+| `ifFalse`   | [`InstructionInputValueNode`](./InstructionInputValueNode.md) _(optional)_ | The value used when the condition fails — i.e. it does not match `value` or, without a `value`, does not exist.                                                                                                  |
 
 ## Examples
 

@@ -8,7 +8,10 @@ export const enumValueNode = defineNode('enumValueNode', {
             docs: ['The name of the selected variant.'],
         }),
         attribute('enum', node('definedTypeLinkNode'), {
-            docs: ['A link to the defined enum type the value belongs to.'],
+            docs: [
+                'A link to the defined enum type the value belongs to.',
+                'The linked defined type must contain an `enumTypeNode`.',
+            ],
         }),
         optionalAttribute('value', union('enumValuePayload'), {
             docs: [

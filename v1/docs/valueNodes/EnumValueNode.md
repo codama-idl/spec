@@ -13,10 +13,10 @@ A concrete value of a defined enum: a variant identifier plus an optional payloa
 
 ### Children
 
-| Attribute | Type                                                         | Description                                                                                   |
-| --------- | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
-| `enum`    | [`DefinedTypeLinkNode`](../linkNodes/DefinedTypeLinkNode.md) | A link to the defined enum type the value belongs to.                                         |
-| `value`   | [`EnumValuePayload`](./EnumValuePayload.md) _(optional)_     | The variant payload — a struct value for struct variants or a tuple value for tuple variants. |
+| Attribute | Type                                                         | Description                                                                                                              |
+| --------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `enum`    | [`DefinedTypeLinkNode`](../linkNodes/DefinedTypeLinkNode.md) | A link to the defined enum type the value belongs to. The linked defined type must contain an `enumTypeNode`.            |
+| `value`   | [`EnumValuePayload`](./EnumValuePayload.md) _(optional)_     | The variant payload — a struct value for struct variants or a tuple value for tuple variants. Omitted for unit variants. |
 
 ## Examples
 

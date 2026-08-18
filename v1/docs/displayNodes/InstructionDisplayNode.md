@@ -7,11 +7,11 @@ Either form may be absent; presentation strategy is left to the renderer.
 
 ### Data
 
-| Attribute            | Type                       | Description                                                                                    |
-| -------------------- | -------------------------- | ---------------------------------------------------------------------------------------------- |
-| `kind`               | `"instructionDisplayNode"` | The node discriminator.                                                                        |
-| `intent`             | `string` _(optional)_      | A short imperative label describing what the instruction does (e.g. `"Transfer"`).             |
-| `interpolatedIntent` | `string` _(optional)_      | A sentence template that composes the instruction into prose with `${root.path}` placeholders. |
+| Attribute            | Type                       | Description                                                                                                                                                                                                                                                                                                                                                                                                    |
+| -------------------- | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `kind`               | `"instructionDisplayNode"` | The node discriminator.                                                                                                                                                                                                                                                                                                                                                                                        |
+| `intent`             | `string` _(optional)_      | A short imperative label describing what the instruction does (e.g. `"Transfer"`).                                                                                                                                                                                                                                                                                                                             |
+| `interpolatedIntent` | `string` _(optional)_      | A sentence template that composes the instruction into prose with `${root.path}` placeholders. Roots are `data.` (an instruction argument) and `accounts.` (an instruction account); the path is flat after the root (e.g. `${data.amount}`, `${accounts.destination}`). A placeholder renders through its referent's own presentation; the `skip` rule governs the fallback list only and never the sentence. |
 
 ## Examples
 

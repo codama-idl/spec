@@ -13,9 +13,9 @@ A reference to an argument of another instruction.
 
 ### Children
 
-| Attribute     | Type                                                           | Description                                                                                               |
-| ------------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `instruction` | [`InstructionLinkNode`](./InstructionLinkNode.md) _(optional)_ | The instruction the referenced argument belongs to. When omitted, the surrounding instruction is assumed. |
+| Attribute     | Type                                                           | Description                                                                                                                                                                       |
+| ------------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `instruction` | [`InstructionLinkNode`](./InstructionLinkNode.md) _(optional)_ | The instruction the referenced argument belongs to. When omitted, the surrounding instruction is assumed. The instruction link may itself point to a different program if needed. |
 
 ## Examples
 

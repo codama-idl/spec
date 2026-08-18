@@ -6,13 +6,13 @@ A "remaining accounts" slot in an instruction — a variable-length tail of acco
 
 ### Data
 
-| Attribute    | Type                                     | Description                                                  |
-| ------------ | ---------------------------------------- | ------------------------------------------------------------ |
-| `kind`       | `"instructionRemainingAccountsNode"`     | The node discriminator.                                      |
-| `isOptional` | `boolean` _(optional)_                   | Whether the remaining-accounts tail may be empty.            |
-| `isSigner`   | `true \| false \| "either"` _(optional)_ | Whether each remaining account must sign the transaction.    |
-| `isWritable` | `boolean` _(optional)_                   | Whether the instruction may write to each remaining account. |
-| `docs`       | `string[]` _(optional)_                  | Markdown documentation for the remaining-accounts slot.      |
+| Attribute    | Type                                     | Description                                                                                                                                                                                |
+| ------------ | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `kind`       | `"instructionRemainingAccountsNode"`     | The node discriminator.                                                                                                                                                                    |
+| `isOptional` | `boolean` _(optional)_                   | Whether the remaining-accounts tail may be empty. Defaults to `false`.                                                                                                                     |
+| `isSigner`   | `true \| false \| "either"` _(optional)_ | Whether each remaining account must sign the transaction. The literal `"either"` indicates that each account may or may not be a signer, independently of the others. Defaults to `false`. |
+| `isWritable` | `boolean` _(optional)_                   | Whether the instruction may write to each remaining account.                                                                                                                               |
+| `docs`       | `string[]` _(optional)_                  | Markdown documentation for the remaining-accounts slot.                                                                                                                                    |
 
 ### Children
 

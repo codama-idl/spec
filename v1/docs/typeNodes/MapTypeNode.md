@@ -2,6 +2,7 @@
 
 A keyed map.
 The key and value types are described by their respective type nodes; the entry count is determined by a count strategy.
+Entries are serialised one after the other, each key immediately followed by its value — e.g. key A, value A, key B, value B.
 
 ## Attributes
 

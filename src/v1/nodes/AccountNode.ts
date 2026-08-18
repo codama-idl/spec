@@ -15,6 +15,8 @@ import { examples } from './AccountNode.examples';
 export const accountNode = defineNode('accountNode', {
     docs: [
         'An on-chain account: its name, data structure, optional fixed size, optional PDA, and optional discriminators.',
+        '',
+        '![Diagram](https://github.com/codama-idl/codama/assets/3642397/77974dad-212e-49b1-8e41-5d466c273a02)',
     ],
     attributes: [
         attribute('name', stringIdentifier(), {
@@ -27,7 +29,10 @@ export const accountNode = defineNode('accountNode', {
             docs: ['Markdown documentation for the account.'],
         }),
         attribute('data', nestedUnion('nestedTypeNode', 'structTypeNode'), {
-            docs: ['The struct describing the account data.'],
+            docs: [
+                'The struct describing the account data.',
+                'It must be a struct so its fields can be referenced by other nodes — e.g. `accountFieldValueNode`.',
+            ],
         }),
         optionalAttribute('pda', node('pdaLinkNode'), {
             docs: ['A link to the PDA the account is derived from, if applicable.'],

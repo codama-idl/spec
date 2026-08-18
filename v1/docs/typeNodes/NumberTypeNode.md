@@ -22,6 +22,8 @@ A numeric type with a fixed wire format and byte order.
 
 ### Encoding `u32` integers
 
+![Diagram](https://github.com/codama-idl/codama/assets/3642397/4bb1ae23-c69f-4c9f-a7ec-8f971d061667)
+
 ```typescript
 numberTypeNode('u32');
 
@@ -32,6 +34,8 @@ numberTypeNode('u32');
 
 ### Encoding `f32` big-endian decimal numbers
 
+![Diagram](https://github.com/codama-idl/codama/assets/3642397/d9cbfd3c-b8a2-4c13-a8a8-a11e7ed5d422)
+
 ```typescript
 numberTypeNode('f32', 'be');
 
@@ -41,6 +45,8 @@ numberTypeNode('f32', 'be');
 ```
 
 ### Encoding `shortU16` integers
+
+![Diagram](https://github.com/codama-idl/codama/assets/3642397/73e12166-cdaa-4fca-ae2a-67937f8b130e)
 
 ```typescript
 numberTypeNode('shortU16');

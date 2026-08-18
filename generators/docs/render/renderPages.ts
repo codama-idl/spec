@@ -46,11 +46,7 @@ export function renderNodePage(node: NodeSpec, ctx: RenderCtx): DocPage {
     const dataRows: string[][] = [[markup.code('kind'), markup.code(`"${node.kind}"`), 'The node discriminator.']];
     const childRows: string[][] = [];
     for (const attribute of node.attributes) {
-        const row = [
-            markup.code(attribute.name),
-            typeCell(attribute, markup, linkTo),
-            getFirstDoc(attribute.docs, markup),
-        ];
+        const row = [markup.code(attribute.name), typeCell(attribute, markup, linkTo), cellDoc(attribute.docs, markup)];
         if (isDocChild(attribute.type)) {
             childRows.push(row);
         } else {
@@ -281,12 +277,22 @@ function typeCell(attribute: AttributeSpec, markup: MarkupRenderer, linkTo: (ref
 }
 
 /**
- * The short blurb for a table cell or list line - the first doc line only, '' when there are none.
- * Only `docs[0]` is used on purpose: tables and lists want a one-line summary, so other lines are dropped.
+ * The short blurb for a list line - the first doc line only, '' when there are none.
+ * Only `docs[0]` is used on purpose: lists want a one-line summary, so other lines are dropped.
  * The full docs still appear on the entity's own page, line-joined, via `renderSpecDocs`.
  */
 function getFirstDoc(docs: readonly string[] | undefined, markup: MarkupRenderer): string {
     return docs?.[0] ? markup.prose(docs[0]) : '';
+}
+
+/**
+ * A table Description cell: every doc line joined into one cell-safe string.
+ * Table cells cannot hold line breaks, so blank separator entries are dropped and the
+ * remaining lines are joined with spaces. Attribute docs should therefore stay at the
+ * sentence level - block constructs (fences, callouts) belong in node-level docs.
+ */
+function cellDoc(docs: readonly string[] | undefined, markup: MarkupRenderer): string {
+    return docs?.length ? markup.prose(docs.filter(line => line !== '').join(' ')) : '';
 }
 
 /** Appends a ` - <first doc paragraph>` suffix to a label (see `getFirstDoc`), or the bare label when there are none. */

@@ -2,7 +2,7 @@ import { address, attribute, defineNode, optionalAttribute, stringIdentifier } f
 import { examples } from './PublicKeyValueNode.examples';
 
 export const publicKeyValueNode = defineNode('publicKeyValueNode', {
-    docs: ['A concrete public key, with an optional symbolic identifier for the address.'],
+    docs: ['A concrete 32-byte public key, with an optional symbolic identifier for the address.'],
     attributes: [
         attribute('publicKey', address(), {
             docs: ['The base58-encoded public key.'],

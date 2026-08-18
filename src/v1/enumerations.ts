@@ -28,7 +28,9 @@ export const numberFormat = defineEnumeration('numberFormat', {
         variant('i64', { docs: ['Signed 64-bit integer.'] }),
         variant('i128', { docs: ['Signed 128-bit integer.'] }),
         variant('shortU16', {
-            docs: ['Solana compact-u16 encoding: a variable-length unsigned integer occupying 1 to 3 bytes.'],
+            docs: [
+                'Solana compact-u16 encoding: a variable-length unsigned integer occupying 1 to 3 bytes. Values up to `0x7f` are stored as-is in a single byte; above that, the top bit of each byte is set and the remaining value continues in the next byte, with the third byte — when needed — using all 8 bits.',
+            ],
         }),
         variant('u8', { docs: ['Unsigned 8-bit integer.'] }),
         variant('u16', { docs: ['Unsigned 16-bit integer.'] }),
@@ -114,34 +116,54 @@ export const optionalAccountStrategy = defineEnumeration('optionalAccountStrateg
 });
 
 export const preOffsetStrategy = defineEnumeration('preOffsetStrategy', {
-    docs: ['How a pre-offset modifier interprets its offset value before serialising the wrapped type.'],
+    docs: [
+        'How a pre-offset modifier interprets its offset value before serialising the wrapped type.',
+        'See `preOffsetTypeNode` for an illustrated walkthrough of each strategy.',
+    ],
     variants: [
         variant('absolute', {
-            docs: ['Move the cursor to the absolute byte position given by the offset.'],
+            docs: [
+                'Move the cursor to the absolute byte position given by the offset; a negative offset counts backwards from the end of the buffer.',
+            ],
         }),
         variant('padded', {
-            docs: ['Pad with zero bytes from the current cursor up to the offset bytes ahead.'],
+            docs: [
+                'Move the cursor like `relative` while growing the buffer by the offset amount; a negative offset moves the cursor backwards and shrinks the buffer.',
+            ],
         }),
         variant('relative', {
-            docs: ['Advance the cursor by the offset bytes relative to its current position.'],
+            docs: [
+                'Advance the cursor by the offset bytes relative to its current position; a negative offset moves it backwards.',
+            ],
         }),
     ],
 });
 
 export const postOffsetStrategy = defineEnumeration('postOffsetStrategy', {
-    docs: ['How a post-offset modifier interprets its offset value after serialising the wrapped type.'],
+    docs: [
+        'How a post-offset modifier interprets its offset value after serialising the wrapped type.',
+        'See `postOffsetTypeNode` for an illustrated walkthrough of each strategy.',
+    ],
     variants: [
         variant('absolute', {
-            docs: ['Move the cursor to the absolute byte position given by the offset.'],
+            docs: [
+                'Move the cursor to the absolute byte position given by the offset; a negative offset counts backwards from the end of the buffer.',
+            ],
         }),
         variant('padded', {
-            docs: ['Pad with zero bytes from the current cursor up to the offset bytes ahead.'],
+            docs: [
+                'Move the cursor like `relative` while growing the buffer by the offset amount; a negative offset moves the cursor backwards and shrinks the buffer.',
+            ],
         }),
         variant('preOffset', {
-            docs: ['Restore the cursor to where it was before the wrapped type ran (cancelling its pre-offset).'],
+            docs: [
+                'Move the cursor by the offset bytes relative to the pre-offset — where the wrapped type started — rather than where it ended; a negative offset moves it to the left of that position.',
+            ],
         }),
         variant('relative', {
-            docs: ['Advance the cursor by the offset bytes relative to its current position.'],
+            docs: [
+                'Advance the cursor by the offset bytes relative to its current position; a negative offset moves it backwards.',
+            ],
         }),
     ],
 });

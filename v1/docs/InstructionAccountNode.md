@@ -2,26 +2,28 @@
 
 An account participating in an instruction, with its name, signing/writability flags, and an optional default value.
 
+![Diagram](https://github.com/codama-idl/codama/assets/3642397/4656a08b-2f89-49c2-b428-5378cb1a0b9e)
+
 ## Attributes
 
 ### Data
 
-| Attribute    | Type                        | Description                                         |
-| ------------ | --------------------------- | --------------------------------------------------- |
-| `kind`       | `"instructionAccountNode"`  | The node discriminator.                             |
-| `name`       | `CamelCaseString`           | The name of the account.                            |
-| `isWritable` | `boolean`                   | Whether the instruction may write to the account.   |
-| `isSigner`   | `true \| false \| "either"` | Whether the account must sign the transaction.      |
-| `isOptional` | `boolean` _(optional)_      | Whether the account slot may be omitted by callers. |
-| `docs`       | `string[]` _(optional)_     | Markdown documentation for the account slot.        |
+| Attribute    | Type                        | Description                                                                                                                                                                                                  |
+| ------------ | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `kind`       | `"instructionAccountNode"`  | The node discriminator.                                                                                                                                                                                      |
+| `name`       | `CamelCaseString`           | The name of the account.                                                                                                                                                                                     |
+| `isWritable` | `boolean`                   | Whether the instruction may write to the account.                                                                                                                                                            |
+| `isSigner`   | `true \| false \| "either"` | Whether the account must sign the transaction. The literal `"either"` indicates a slot that may or may not sign depending on context.                                                                        |
+| `isOptional` | `boolean` _(optional)_      | Whether the account slot may be omitted by callers. When `true`, absent accounts are handled according to the `optionalAccountStrategy` attribute of the surrounding `instructionNode`. Defaults to `false`. |
+| `docs`       | `string[]` _(optional)_     | Markdown documentation for the account slot.                                                                                                                                                                 |
 
 ### Children
 
-| Attribute      | Type                                                                                            | Description                                                                                                                      |
-| -------------- | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `defaultValue` | [`InstructionInputValueNode`](./contextualValueNodes/InstructionInputValueNode.md) _(optional)_ | A default value used to fill the slot when the caller does not provide one.                                                      |
-| `accountLink`  | [`AccountLinkNode`](./linkNodes/AccountLinkNode.md) _(optional)_                                | A reference to the account's data layout. Required for consumers (e.g. `accountFieldValueNode`) to read fields from the account. |
-| `display`      | [`InstructionAccountDisplayNode`](./displayNodes/InstructionAccountDisplayNode.md) _(optional)_ | Display metadata describing how the account is presented.                                                                        |
+| Attribute      | Type                                                                                            | Description                                                                                                                                                                                                                         |
+| -------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `defaultValue` | [`InstructionInputValueNode`](./contextualValueNodes/InstructionInputValueNode.md) _(optional)_ | A default value used to fill the slot when the caller does not provide one.                                                                                                                                                         |
+| `accountLink`  | [`AccountLinkNode`](./linkNodes/AccountLinkNode.md) _(optional)_                                | A reference to the account's data layout. Required for consumers (e.g. `accountFieldValueNode`) to read fields from the account. The link's optional `program` allows cross-program references via the root's `additionalPrograms`. |
+| `display`      | [`InstructionAccountDisplayNode`](./displayNodes/InstructionAccountDisplayNode.md) _(optional)_ | Display metadata describing how the account is presented.                                                                                                                                                                           |
 
 ## Examples
 

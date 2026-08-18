@@ -7,6 +7,7 @@ export const instructionAccountLinkNode = defineNode('instructionAccountLinkNode
         optionalAttribute('instruction', node('instructionLinkNode'), {
             docs: [
                 'The instruction the referenced account belongs to. When omitted, the surrounding instruction is assumed.',
+                'The instruction link may itself point to a different program if needed.',
             ],
         }),
         attribute('name', stringIdentifier(), {

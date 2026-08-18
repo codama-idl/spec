@@ -10,4 +10,28 @@ const node = constantValueNode(numberTypeNode('u32'), numberValueNode(42));
 `,
         ),
     ),
+    example(
+        'A UTF-8 string constant',
+        code(
+            'typescript',
+            `
+constantValueNodeFromString('utf8', 'Hello');
+
+// Equivalent to:
+constantValueNode(stringTypeNode('utf8'), stringValueNode('Hello'));
+`,
+        ),
+    ),
+    example(
+        'A base16 bytes constant',
+        code(
+            'typescript',
+            `
+constantValueNodeFromBytes('base16', 'FF99CC');
+
+// Equivalent to:
+constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'FF99CC'));
+`,
+        ),
+    ),
 ];

@@ -6,11 +6,11 @@ A variant of an enum that carries a struct payload (named fields).
 
 ### Data
 
-| Attribute       | Type                          | Description                                                                                          |
-| --------------- | ----------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `kind`          | `"enumStructVariantTypeNode"` | The node discriminator.                                                                              |
-| `name`          | `CamelCaseString`             | The name of the variant.                                                                             |
-| `discriminator` | `u32` _(optional)_            | Explicit discriminator value. When omitted, the discriminator is inferred from the variant position. |
+| Attribute       | Type                          | Description                                                                                                           |
+| --------------- | ----------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `kind`          | `"enumStructVariantTypeNode"` | The node discriminator.                                                                                               |
+| `name`          | `CamelCaseString`             | The name of the variant.                                                                                              |
+| `discriminator` | `u32` _(optional)_            | Explicit discriminator value. When omitted, the discriminator is the index of the variant in the enum, starting at 0. |
 
 ### Children
 

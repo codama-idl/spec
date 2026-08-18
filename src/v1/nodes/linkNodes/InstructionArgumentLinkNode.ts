@@ -7,6 +7,7 @@ export const instructionArgumentLinkNode = defineNode('instructionArgumentLinkNo
         optionalAttribute('instruction', node('instructionLinkNode'), {
             docs: [
                 'The instruction the referenced argument belongs to. When omitted, the surrounding instruction is assumed.',
+                'The instruction link may itself point to a different program if needed.',
             ],
         }),
         attribute('name', stringIdentifier(), {

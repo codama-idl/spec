@@ -49,7 +49,8 @@ const constantPdaSeedNode = defineNode('constantPdaSeedNode', {
         '> The seed must be constant.',
     ],
     attributes: [
-        attribute('value', string()),
+        // two doc lines to exercise full-docs table cells
+        attribute('value', string(), { docs: ['The seed value.', 'Must be constant.'] }),
         attribute('type', union('typeNode')),
         attribute('constant', node('constantPdaSeedValue')),
     ],

@@ -2,13 +2,21 @@ import { attribute, defineNode, docs, enumeration, node, optionalAttribute, stri
 import { examples } from './InstructionArgumentNode.examples';
 
 export const instructionArgumentNode = defineNode('instructionArgumentNode', {
-    docs: ['A named argument of an instruction, with its type and an optional default value.'],
+    docs: [
+        'A named argument of an instruction, with its type and an optional default value.',
+        'Serialised next to each other, the arguments of an instruction form its data.',
+        '',
+        '![Diagram](https://github.com/codama-idl/codama/assets/3642397/7e2def82-949a-4663-bdc3-ac599d39d2d2)',
+    ],
     attributes: [
         attribute('name', stringIdentifier(), {
             docs: ['The name of the argument.'],
         }),
         optionalAttribute('defaultValueStrategy', enumeration('defaultValueStrategy'), {
-            docs: ['How a configured default value is exposed in generated APIs. Required when `defaultValue` is set.'],
+            docs: [
+                'How a configured default value is exposed in generated APIs.',
+                'Only relevant when `defaultValue` is set; when absent, `optional` is assumed.',
+            ],
         }),
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the argument.'],

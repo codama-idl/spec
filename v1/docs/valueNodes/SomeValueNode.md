@@ -1,6 +1,7 @@
 # SomeValueNode
 
 The "present" value for an optional type, wrapping a concrete value node.
+For instance, this can be set as the default value of a field whose type is an `optionTypeNode`.
 
 ## Attributes
 
