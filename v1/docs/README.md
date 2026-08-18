@@ -2,7 +2,7 @@
 
 The canonical Codama node specification.
 
-Spec version: 1.8.0
+Spec version: 1.9.0
 
 Pages marked _(abstract)_ document unions: sets of nodes that can be used interchangeably. Pages marked _(recursive)_ document nested unions: wrapper nodes that may nest before reaching a base type.
 
