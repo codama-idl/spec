@@ -7,3 +7,17 @@ updates:
       time: '01:00'
       timezone: America/Los_Angeles
     open-pull-requests-limit: 10
+    groups:
+      # The changesets CLI and changelog plugin release in lockstep,
+      # so bump them together.
+      changesets:
+        patterns:
+          - '@changesets/*'
+      # The oxc toolchain versions often need to move together to keep
+      # lint and format rules consistent.
+      oxc:
+        patterns:
+          - 'oxlint'
+          - 'oxfmt'
+          - 'oxlint-tsgolint'
+          - '@solana-config/oxc'
