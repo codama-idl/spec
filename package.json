@@ -1,6 +1,6 @@
 {
     "name": "@codama/spec",
-    "version": "1.9.1",
+    "version": "1.9.2",
     "description": "The canonical Codama node specification and meta-model",
     "keywords": [
         "codama",

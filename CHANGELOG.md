@@ -1,5 +1,11 @@
 # @codama/spec
 
+## 1.9.2
+
+### Patch Changes
+
+- [#91](https://github.com/codama-idl/spec/pull/91) [`ccafbc7`](https://github.com/codama-idl/spec/commit/ccafbc764b2f6d5dc66f3f88f72b0170f0825311) Thanks [@lorisleiva](https://github.com/lorisleiva)! - Reword node and API documentation to say "IDL" instead of "document", matching the terminology used across Codama.
+
 ## 1.9.1
 
 ### Patch Changes
