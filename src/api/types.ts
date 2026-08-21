@@ -54,7 +54,7 @@ export type TypeExpr =
     | { readonly kind: 'array'; readonly of: TypeExpr }
     | { readonly kind: 'boolean' }
     /**
-     * A pinned reference to the spec version of the surrounding document.
+     * A pinned reference to the spec version of the surrounding IDL.
      * In TS this resolves to a literal string type; codegen for other
      * languages may emit a constant matching the spec version.
      */

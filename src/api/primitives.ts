@@ -41,7 +41,7 @@ export function stringVersion(): TypeExpr {
 /**
  * The version string of the surrounding Codama spec. Treat as a brand on
  * top of `stringVersion()` — the value is always pinned to the spec
- * version of the IDL document. Codegen targets typically emit a literal
+ * version of the IDL. Codegen targets typically emit a literal
  * type or a constant.
  */
 export function codamaVersion(): TypeExpr {
