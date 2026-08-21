@@ -37,6 +37,6 @@ Top-level nodes and helper unions — the entry points of any Codama IDL.
 - [`PluginNode`](./PluginNode.md) - Attaches named, plugin-specific data to a node.
 - [`ProgramNode`](./ProgramNode.md) - A Solana program: its identity, version, accounts, instructions, defined types, PDAs, events, errors, and constants.
 - [`ProvidedNode`](./ProvidedNode.md) - Exposes a node under a name so consumers in the surrounding scope can resolve it by that key.
-- [`RootNode`](./RootNode.md) - The root of a Codama IDL document.
+- [`RootNode`](./RootNode.md) - The root of a Codama IDL.
 - [`InstructionByteDeltaValue`](./InstructionByteDeltaValue.md) - The value forms accepted by an `instructionByteDeltaNode`.
 - [`InstructionRemainingAccountsValue`](./InstructionRemainingAccountsValue.md) - The value forms accepted by an `instructionRemainingAccountsNode`.

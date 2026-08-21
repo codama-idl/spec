@@ -58,7 +58,7 @@ const myNode = defineNode('myNode', {
 
 Every array attribute of a node — whether declared with `attribute(...)` or `optionalAttribute(...)` — follows a single serialisation convention:
 
-- **On write**, an empty array is omitted from the encoded document. Codegen targets never emit `"myArray": []`.
+- **On write**, an empty array is omitted from the encoded IDL. Codegen targets never emit `"myArray": []`.
 - **On read**, a missing array attribute defaults to the empty array. Consumers MUST normalise an absent array to `[]` rather than treating it as a distinct state.
 
 In other words, an absent array and an empty array are semantically identical: both mean "no items". This keeps encoded IDLs small (relevant because they are often uploaded on-chain) and makes adding or omitting an array attribute a non-breaking change.
@@ -72,7 +72,7 @@ Each node declares its attributes as an ordered array in `defineNode(...)`, and 
 - **On write**, generators MUST emit a node's attributes in this declaration order (with the implicit `kind` discriminator first). They MUST NOT re-serialise through a key-sorting structure — notably `serde_json::Value`, whose object type is a `BTreeMap` and therefore sorts keys alphabetically, pushing scalars like `name` after the child arrays.
 - **On read**, attribute order carries no semantics; consumers MUST NOT depend on it.
 
-Preserving declaration order keeps encoded IDLs readable: the identifying scalars of a node (`kind`, `name`, …) appear before its potentially large children, so a node's identity is legible at a glance even in a deeply nested document.
+Preserving declaration order keeps encoded IDLs readable: the identifying scalars of a node (`kind`, `name`, …) appear before its potentially large children, so a node's identity is legible at a glance even in a deeply nested IDL.
 
 ## Repository layout
 
