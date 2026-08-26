@@ -49,11 +49,6 @@ Pick the bump level (`patch` / `minor` / `major`), write a short user-facing
 summary, and commit the resulting `.changeset/*.md` alongside your code.
 [`.changeset/README.md`](./.changeset/README.md) covers the day-to-day flow.
 
-The repo is currently in **release-candidate mode** under the `rc` tag (see
-`.changeset/pre.json`). Every `pnpm changeset version` produces a
-`1.6.0-rc.N` version. To cut the stable release run
-`pnpm changeset pre exit` and then `pnpm changeset version`.
-
 ### Choosing a bump level
 
 Use semver intent:
@@ -89,9 +84,9 @@ Codegen targets must respect this when emitting reader and writer code.
 
 ## Releasing
 
-Releases are automated for `@codama/spec`:
+Patch and minor releases are automated for `@codama/spec`:
 
-1. Merging your PR (with a changeset) into `main` triggers the
+1. Merging your PR (with a changeset) into the default branch triggers the
    [`Main` workflow](./.github/workflows/main.yml).
 2. The workflow either opens a "Release package" PR (when changesets are
    pending) or publishes any unreleased versions to npm.
@@ -100,6 +95,12 @@ Releases are automated for `@codama/spec`:
 
 You don't need to bump versions or edit `CHANGELOG.md` manually — both are
 derived from the changeset files.
+
+**Major releases** follow the ecosystem-wide process described in
+[`RELEASING.md`](./RELEASING.md), which is the canonical release document for
+every repository in the `codama-idl` organisation (branch model, npm dist-tag
+conventions, release candidates, the bake window, and the cross-repo release
+train).
 
 ### Versioning
 
