@@ -42,7 +42,7 @@ Each `N.x` branch is configured once, at birth, and never reconfigured until it 
 | Release-version env in `.github/workflows/main.yml` (cosmetic, used in release commit/PR titles) | `N.x`                                                           |
 | Publish dist-tag                                                                                 | default (`latest`) until superseded; ` --tag release-N.x` after |
 
-The **default branch is always the branch that owns `latest`**, and it only ever moves forward, once per major, at promote time. Release workflows trigger on `push: branches: ['*.x']`, and branch protection uses a `*.x` wildcard rule. Pre-1.0 repos keep `main` until their first stable major, then rename it to `1.x`; the `release-tools` repo keeps `main` permanently (it is tooling, not a versioned line).
+The **default branch is always the branch that owns `latest`**, and it only ever moves forward, once per major, at promote time. Release workflows trigger on `push: branches: ['[0-9]+.x']`, and branch protection uses a `*.x` wildcard rule. The trigger pattern is deliberately numeric: a looser glob like `'*.x'` also matches working branches ending in `.x`, causing pushes of those branches to run the release job. Pre-1.0 repos keep `main` until their first stable major, then rename it to `1.x`; the `release-tools` repo keeps `main` permanently (it is tooling, not a versioned line).
 
 > [!WARNING]
 > Branches never reconverge: no merges or rebases across majors, in either direction. Changes travel between them only as cherry-picks (see [porting changes](#porting-changes-between-majors)).
