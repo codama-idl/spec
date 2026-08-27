@@ -1,5 +1,11 @@
 # @codama/spec
 
+## 2.0.0-rc.0
+
+### Major Changes
+
+- [#105](https://github.com/codama-idl/spec/pull/105) [`ca0e36e`](https://github.com/codama-idl/spec/commit/ca0e36e87c879ad0f02a6c3df0f852a080068707) Thanks [@lorisleiva](https://github.com/lorisleiva)! - Start Codama IDL v2. This is the beginning of the v2 line of the Codama standard; release candidates publish under the `rc` dist-tag while the spec evolves.
+
 ## 1.9.2
 
 ### Patch Changes
