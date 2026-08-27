@@ -6,24 +6,24 @@ Day-to-day releases (patches and minors) are fully automated by [changesets](htt
 
 ## The big picture
 
-There is no `main` branch. Each repo has **one branch per major** (`1.x`, `2.x`, …), and a new major goes through three phases — cut, bake, promote:
-
-Horizontal lines are **git branches**; downward forks are **npm publishes**, written `npm <version> @<dist-tag>`; the vertical markers are the three **phases**:
+`main` is permanent and always hosts the bleeding edge. Each released major gets an `N.x` branch (`1.x`, `2.x`, …), cut from `main` when work on the next major starts. A new major goes through three phases — cut, bake, promote:
 
 ```
-phase:              CUT                        BAKE                      PROMOTE
-                     │                          │                           │
-branch 1.x ━━━━━━━━━━┾━━━━━━━━━━━━━━━━━━━━━━━━━━┾━━━━━━━━━━━━━━━━━━━━━━━━━━━┾━━━━━━━━━━━━━▶
-(default branch)     │     │                    │      │                    │     │
-                     │     └▶ npm 1.9.3 @latest │      └▶ npm 1.10.0 @latest│     └▶ npm 1.10.1 @release-1.x
-                     │                          │                           │
-branch 2.x           └━━━━━━┯━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━┯━━━━━━━━━━━━━━━━┿━━━━━┯━━━━━━━▶
-(default from        forked │                   │          │                │     │
- promote onwards)    from   └▶ npm 2.0.0-rc.0 @rc          └▶ npm 2.0.0 @next     └▶ npm 2.0.1 @latest
-                     1.x
+phase:                    CUT                         BAKE                   PROMOTE
+                           │                            │                        │
+branch main ━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━▶
+(bleeding edge, forever)   │    │                       │        │               │      │
+                           │    └▶ npm 2.0.0-rc.0 @rc   │        └▶ npm 2.0.0 @next     └▶ npm 2.0.1 @latest
+                           │                            │                        │
+branch 1.x                 └━━━━┯━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━┯━━━━━━━━━━━━━━━━━┿━━━━━┯━━━━━━━━▶
+(stable v1)                     │                       │      │                 │     │
+                                └▶ npm 1.9.3 @latest           └▶ npm 1.10.0 @latest   └▶ npm 1.10.1 @release-1.x
+
+DEFAULT BRANCH:  ══ main ══╡                                                     ╞══ main ══▶
+                           ╞═════════════════ 1.x (stable docs) ════════════════╡
 ```
 
-Note how `1.x` keeps shipping stable releases to `latest` right through the bake, and only switches to `release-1.x` at promote time — the exact moment `2.x` takes over `latest` and the default-branch role.
+Horizontal lines are **git branches**; downward forks are **npm publishes**, written `npm <version> @<dist-tag>`; the vertical markers are the three **phases**. Note how `1.x` keeps shipping stable releases to `latest` right through the bake, and only switches to `release-1.x` at promote time — the exact moment `main` takes back `latest` and the default-branch role.
 
 Two invariants make this safe for the ecosystem:
 
@@ -34,27 +34,28 @@ Major numbers are **per-repo and independent**: `@codama/renderers-rust` v4 may 
 
 ## Branches
 
-Each `N.x` branch is configured once, at birth, and never reconfigured until it is superseded:
+| Branch             | Role                                                                                                                                                                                               |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `main`             | Permanent. Always the bleeding edge: the current major in steady state, the next major while a transition is in flight. Publishes to `latest` in steady state, to `rc`/`next` during a transition. |
+| `N.x` (e.g. `1.x`) | Maintenance branch for major N, cut from `main` when work on N+1 starts, kept forever. Publishes to `latest` while N is the stable major, to `release-N.x` once superseded.                        |
 
-| Setting                                                                                          | Value                                                           |
-| ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------- |
-| `.changeset/config.json` → `baseBranch`                                                          | `"N.x"`                                                         |
-| Release-version env in `.github/workflows/main.yml` (cosmetic, used in release commit/PR titles) | `N.x`                                                           |
-| Publish dist-tag                                                                                 | default (`latest`) until superseded; ` --tag release-N.x` after |
+`main` is permanent for a reason: it is the one branch name that survives major transitions, so every clone, fork, script and contributor habit keeps pointing at the bleeding edge across eras. Maintenance branches never change role after promote; only their publish tag does.
 
-The **default branch is always the branch that owns `latest`**, and it only ever moves forward, once per major, at promote time. Release workflows trigger on `push: branches: ['[0-9]+.x']`, and branch protection uses a `*.x` wildcard rule. The trigger pattern is deliberately numeric: a looser glob like `'*.x'` also matches working branches ending in `.x`, causing pushes of those branches to run the release job. Pre-1.0 repos keep `main` until their first stable major, then rename it to `1.x`; the `release-tools` repo keeps `main` permanently (it is tooling, not a versioned line).
+The **default branch is `main`, except during a transition** (from cut until promote), when the latest stable `N.x` becomes the default so that visitors, forks and drive-by PRs land on released code and its documentation rather than work in progress.
+
+Release workflows trigger on `push: branches: [main, '[0-9]+.x']`, and branch protection covers `main` plus a `*.x` wildcard rule. The trigger pattern for maintenance branches is deliberately numeric: a looser glob like `'*.x'` also matches working branches ending in `.x`, causing pushes of those branches to run the release job. Pre-1.0 repos need nothing special: their first maintenance branch simply appears at their first cut.
 
 > [!WARNING]
-> Branches never reconverge: no merges or rebases across majors, in either direction. Changes travel between them only as cherry-picks (see [porting changes](#porting-changes-between-majors)).
+> Once cut, `main` and `N.x` never reconverge: no merges or rebases across majors, in either direction. Changes travel between them only as cherry-picks (see [porting changes](#porting-changes-between-majors)).
 
 ## npm dist-tags
 
-| Tag           | Meaning                                                                                                                                                                               |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `latest`      | The current stable major. What `npm install` gives you. Owned by the default branch.                                                                                                  |
-| `release-N.x` | The maintenance line of superseded major N (e.g. `release-1.x`).                                                                                                                      |
-| `rc`          | Release candidates of the next major, published from the freshly cut branch in changesets [pre-release mode](https://github.com/changesets/changesets/blob/main/docs/prereleases.md). |
-| `next`        | The next major during the bake window: final versions, published for early adopters, not yet `latest`.                                                                                |
+| Tag           | Meaning                                                                                                                                                               |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `latest`      | The current stable major. What `npm install` gives you.                                                                                                               |
+| `release-N.x` | The maintenance line of superseded major N (e.g. `release-1.x`).                                                                                                      |
+| `rc`          | Release candidates of the next major, published from `main` in changesets [pre-release mode](https://github.com/changesets/changesets/blob/main/docs/prereleases.md). |
+| `next`        | The next major during the bake window: final versions, published for early adopters, not yet `latest`.                                                                |
 
 > [!NOTE]
 > npm rejects dist-tag names that parse as semver ranges, which rules out simpler names like `v1` or `1.x`. Hence `release-1.x`.
@@ -67,23 +68,23 @@ Steps marked 🤖 are automated by the [`cut`, `bake` and `promote` workflows](#
 
 ### 1. Cut
 
-Run once, when work on major N+1 starts. `N.x` and the default branch are **not touched**.
+Run once, when work on major N+1 starts and `main` still holds major N.
 
-- [ ] 🤖 Create the `(N+1).x` branch from the tip of `N.x`.
-- [ ] 🤖 On `(N+1).x`, in a single birth commit:
-    - set `"baseBranch": "(N+1).x"` in `.changeset/config.json`;
-    - set the release-version env in `.github/workflows/main.yml` to `(N+1).x`;
+- [ ] 🤖 Create the `N.x` branch from the tip of `main`. It inherits everything correct (publish tag `latest`, release-version env `N.x`); its single birth adjustment is setting `"baseBranch": "N.x"` in `.changeset/config.json`.
+- [ ] 🤖 On `main`, in a single PR:
+    - set the release-version env in `.github/workflows/main.yml` (cosmetic, used in release commit/PR titles) to `(N+1).x`;
     - enter pre-release mode: `pnpm changeset pre enter rc` (commits `.changeset/pre.json`);
     - seed the major changeset (covering **all** public packages in a monorepo, see [the same-major invariant](#monorepos-the-same-major-invariant)).
+- [ ] 🤖 Set `N.x` as the repository's default branch for the duration of the transition.
 - [ ] Open the [tracking issue](#the-tracking-issue) for major N+1.
 
-From birth, `(N+1).x` can never publish to `latest`: pre-release mode forces the `rc` dist-tag, so every merged release PR ships a `(N+1).0.0-rc.n` for downstream repos to develop against. Meanwhile `N.x` remains the default branch and keeps publishing stable releases to `latest` as usual; [port](#porting-changes-between-majors) them forward.
+From here, `main` can never publish to `latest`: pre-release mode forces the `rc` dist-tag, so every merged release PR ships a `(N+1).0.0-rc.n` for downstream repos to develop against. Meanwhile `N.x` keeps publishing stable releases to `latest` as usual; [port](#porting-changes-between-majors) them across.
 
 ### 2. Bake
 
 Run when N+1 is feature-complete and the coordinated [release train](#the-release-train) is ready to ship. The goal: real, final versions exist so integrators (explorers, wallets, indexers) can migrate on their own terms, while `npm install` keeps giving everyone the previous stable major.
 
-- [ ] 🤖 On `(N+1).x`, in a single PR: exit pre-release mode (`pnpm changeset pre exit`) and append ` --tag next` to the publish script.
+- [ ] 🤖 On `main`, in a single PR: exit pre-release mode (`pnpm changeset pre exit`) and append ` --tag next` to the publish script.
 - [ ] Merge the release PR: `(N+1).0.0` publishes under `next`.
 - [ ] Announce the bake and its intended duration. Default: **six weeks**, extended by judgement based on the adoption checklist in the tracking issue.
 - [ ] Patches found during the bake follow the normal changesets flow and publish under `next`.
@@ -94,15 +95,15 @@ Run when the bake is complete. This is the only phase that touches `latest`, and
 
 - [ ] 🤖 On `N.x`, one commit: append ` --tag release-N.x` to the publish script.
 - [ ] 🤖 For each published package: `npm dist-tag add <package>@<current-next-version> latest`, then `npm dist-tag rm <package> next`.
-- [ ] 🤖 On `(N+1).x`, one commit: remove ` --tag next` from the publish script.
-- [ ] 🤖 Set `(N+1).x` as the repository's default branch.
-- [ ] Audit `git log --oneline (N+1).x..N.x` for unported commits: each must be forward-ported or recorded as deliberately dropped in the tracking issue (the new major ships as a superset of the old one's final state).
+- [ ] 🤖 On `main`, one commit: remove ` --tag next` from the publish script.
+- [ ] 🤖 Set `main` as the repository's default branch again.
+- [ ] Audit `git log --oneline main..N.x` for unported commits: each must be forward-ported or recorded as deliberately dropped in the tracking issue (the new major ships as a superset of the old one's final state).
 - [ ] Mark the corresponding GitHub release as the latest release.
 - [ ] Announce, and close the tracking issue.
 
 ## Porting changes between majors
 
-- A change lands first on the branch where it applies most directly; when it affects multiple live majors, land it on the **default branch** first, then port it.
+- A change lands first on the branch where it applies most directly; when it affects multiple live majors, land it on the **default branch** first (`N.x` during a transition, `main` in steady state), then port it.
 - Port with `git cherry-pick -x` on a fresh branch and an ordinary PR against the target branch. The `-x` trailer is what makes the promote-phase audit greppable, and the `.changeset/*.md` file travels inside the commit so each branch versions and publishes independently.
 - If the pick conflicts beyond repair, reimplement the change natively on the target branch and link the original PR: a port is about the behaviour, not the patch.
 
@@ -123,7 +124,7 @@ A new **spec** major drives a coordinated wave through the ecosystem, in depende
 
 1. **spec** runs its cut first: the standard must stabilise before implementations chase it.
 2. **codama** freezes the outgoing major's node types (via its `@codama/spec-v1`-style aliased pin), adds the `upgradeVNToVN+1` step to the append-only chain in `@codama/upgrade`, and points its living pin at the spec rc. **codama-rs** mirrors this in Rust.
-3. **Renderers and the CLI** run their own cuts (their own `(N+1).x` branches, at their own major numbers) to consume the new codama major.
+3. **Renderers and the CLI** run their own cuts (their own `N.x` maintenance branches, at their own major numbers) to consume the new codama major.
 4. All repos bake together, so integrators migrate against one coherent set of `next` versions.
 5. The promote is coordinated: spec first, the rest in the same window. One announcement covers the wave.
 
@@ -138,7 +139,7 @@ crates.io has no dist-tags, so the bake works differently:
 
 ## Monorepos: the same-major invariant
 
-In the `codama` monorepo, **every public package shares the same major version**, equal to the branch major (and to the spec major it supports). "Codama v1" therefore means something across the whole package suite, and no `@codama/*` package ever surprises downstream with an independent major.
+In the `codama` monorepo, **every public package shares the same major version**, equal to the major it supports in the spec. "Codama v1" therefore means something across the whole package suite, and no `@codama/*` package ever surprises downstream with an independent major.
 
 The consequences:
 
@@ -158,7 +159,7 @@ Each major transition gets one tracking issue in the repo that drives it (the sp
 
 [`codama-idl/release-tools`](https://github.com/codama-idl/release-tools) hosts the shared automation:
 
-- **`cut`**, **`bake`** and **`promote`** reusable workflows, called from thin `workflow_dispatch` wrappers in each repo, automating the 🤖 steps of the three phases.
-- A dependency-free **`postversion` guard** hooked into each repo's changesets `version-script`. After `changeset version`, it asserts that a major crossing happens only on a freshly cut branch (never on the default branch), that the branch name matches the new major, and — in monorepos — that all public package majors stay equal. Violations fail the release PR loudly, and any script rewrites appear as reviewable diffs in it.
+- **`cut`**, **`bake`** and **`promote`** reusable workflows, called from thin `workflow_dispatch` wrappers in each repo, automating the 🤖 steps of the three phases (including the default-branch flips at cut and promote).
+- A dependency-free **`postversion` guard** hooked into each repo's changesets `version-script`. After `changeset version`, it asserts that a major crossing happens only on `main` with the corresponding `N.x` maintenance branch already cut, and — in monorepos — that all public package majors stay equal. Violations fail the release PR loudly, and any script rewrites appear as reviewable diffs in it.
 
 Until a repo adopts release-tools, run the 🤖 steps by hand, in the order listed.
