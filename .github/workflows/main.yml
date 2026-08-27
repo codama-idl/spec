@@ -2,9 +2,9 @@ name: Main
 
 on:
   pull_request:
-    branches: ['[0-9]+.x']
+    branches: [main, '[0-9]+.x']
   push:
-    branches: ['[0-9]+.x']
+    branches: [main, '[0-9]+.x']
 
 concurrency:
   group: main-${{ github.workflow }}-${{ github.ref }}
