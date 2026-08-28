@@ -69,16 +69,17 @@ Dispatch once, when work on major N+1 starts and `main` still holds major N. The
 - creates the `N.x` branch from the tip of `main`, with a single birth commit setting `"baseBranch": "N.x"` in `.changeset/config.json` (everything else — publish tag `latest`, release-version env `N.x` — is inherited correct);
 - commits to `main`: the release-version env moves to `(N+1).x`, pre-release mode is entered (`changeset pre enter rc`), and the major changeset is seeded (covering **all** public packages in a monorepo, see [the same-major invariant](#monorepos-the-same-major-invariant));
 - sets `N.x` as the repository's default branch;
-- opens the [tracking issue](#the-tracking-issue).
+- opens the [tracking issue](#the-tracking-issue) and, in the repo driving the transition, the **announcement thread** in the [spec repository's Discussions](https://github.com/codama-idl/spec/discussions) (Announcements category, via the `announce` input) — the single, subscribable channel for the whole wave, cross-linked with the tracking issue. Pin it manually (the API cannot).
 
 From here, `main` can never publish to `latest`: pre-release mode forces the `rc` dist-tag, so every merged release PR ships a `(N+1).0.0-rc.n` for downstream repos to develop against. Meanwhile `N.x` keeps publishing stable releases to `latest` as usual; [port](#porting-changes-between-majors) them across.
 
 ### 2. Candidacy
 
-The window between cut and promote. Release candidates ship freely as changesets land, until the maintainers **declare a candidate** — the formal signal that validation can start. The declaration is:
+The window between cut and promote. Release candidates ship freely as changesets land, until the maintainers **declare a candidate** — the formal signal that validation can start. The declaration lives on the **announcement thread** opened at cut time (one thread per wave, never one per repo), using the template embedded in the thread body as a hidden comment:
 
-- a comment on the tracking issue naming the exact **candidate set** — a matrix of repos and versions for a [release-train](#the-release-train) wave (e.g. spec `2.0.0-rc.8`, codama `2.0.0-rc.5`, renderers-rust `4.0.0-rc.2`), or a single version for an independent major — plus the **earliest promote date** (default: six weeks out);
-- one announcement in the [spec repository's Discussions](https://github.com/codama-idl/spec/discussions) (Announcements category) linking that comment — one post per wave, never one per repo.
+- **edit the post** to prepend the declaration — the exact **candidate set** (a matrix of repos and versions for a [release-train](#the-release-train) wave, e.g. spec `2.0.0-rc.8`, codama `2.0.0-rc.5`, renderers-rust `4.0.0-rc.2`; a single version for an independent major) plus the **earliest promote date** (default: six weeks out) — so late arrivals see the current state first;
+- **post the same block as a comment**, because only comments notify subscribers (body = state, comment = event);
+- update the tracking issue's dates table.
 
 From declaration until promote, the branch is **frozen except for fixes**: new features wait and become (N+1).1.0 minors after promote. A fix that turns out to be breaking ships as a new rc and re-declares the candidate; whether the clock restarts is a judgement call recorded on the tracking issue. Integrators (explorers, wallets, indexers) validate against the candidate and report on the announcement thread, feeding the adoption checklist that gates the promote.
 
@@ -149,7 +150,7 @@ The consequences:
 Each major transition gets one tracking issue in the repo that drives it (the spec repo for spec-driven waves). Keep it lightweight and skimmable — headline status up top, checklists tucked into collapsible `<details>` sections. It should contain:
 
 - the cut/candidacy/promote checklists, ticked as they complete across repos;
-- the **candidate declaration** (set + earliest promote date) once made;
+- a link to the announcement thread, where the candidate declaration lives once made;
 - an **ecosystem adoption checklist**: the known downstream integrators and their validation status, which gates the promote;
 - dates: cut, first rc, declaration, promote.
 
