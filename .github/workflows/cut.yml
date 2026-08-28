@@ -1,0 +1,26 @@
+name: Cut
+
+on:
+  workflow_dispatch:
+    inputs:
+      tracking-issue:
+        description: 'Open a transition tracking issue'
+        type: boolean
+        default: true
+      announce:
+        description: 'Open the announcement thread in Discussions'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  issues: write
+  discussions: write
+
+jobs:
+  cut:
+    uses: codama-idl/release-tools/.github/workflows/cut.yml@v1
+    with:
+      tracking-issue: ${{ inputs.tracking-issue }}
+      announce: ${{ inputs.announce }}
+    secrets: inherit
