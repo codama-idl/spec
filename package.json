@@ -69,7 +69,8 @@
         "generate": "pnpm build && tsx generators/index.ts",
         "lint": "oxlint && oxfmt --check .",
         "lint:fix": "oxlint --fix && oxfmt .",
-        "release:version": "changeset version && tsx scripts/sync-spec-version.ts && pnpm generate",
+        "release:version": "changeset version && tsx scripts/sync-spec-version.ts && pnpm generate && release-tools postversion",
+        "release:publish": "changeset publish",
         "test": "pnpm test:types && pnpm test:unit",
         "test:types": "tsc --noEmit",
         "test:unit": "vitest run"
@@ -78,6 +79,7 @@
         "@changesets/changelog-github": "^1.0.0",
         "@changesets/cli": "^3.0.0",
         "@codama/fragments": "^0.1.3",
+        "@codama/release-tools": "github:codama-idl/release-tools#v1.0.0",
         "@solana-config/oxc": "^0.1.1",
         "@types/node": "^26",
         "markdown-table": "3.0.4",
