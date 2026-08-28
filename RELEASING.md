@@ -69,7 +69,7 @@ Dispatch once, when work on major N+1 starts and `main` still holds major N. The
 - creates the `N.x` branch from the tip of `main`, with a single birth commit setting `"baseBranch": "N.x"` in `.changeset/config.json` (everything else — publish tag `latest`, release-version env `N.x` — is inherited correct);
 - commits to `main`: the release-version env moves to `(N+1).x`, pre-release mode is entered (`changeset pre enter rc`), and the major changeset is seeded (covering **all** public packages in a monorepo, see [the same-major invariant](#monorepos-the-same-major-invariant));
 - sets `N.x` as the repository's default branch;
-- opens the [tracking issue](#the-tracking-issue) and, in the repo driving the transition, the **announcement thread** in the [spec repository's Discussions](https://github.com/codama-idl/spec/discussions) (Announcements category, via the `announce` input) — the single, subscribable channel for the whole wave, cross-linked with the tracking issue. Pin it manually (the API cannot).
+- opens the [tracking issue](#the-tracking-issue) and, in the repo driving the transition, the **announcement thread** (via the `announce` input) — the single, subscribable channel for the whole wave, cross-linked with the tracking issue. Whichever repository drives the transition, the thread always lives in the ecosystem's announcement hub — the [spec repository's Discussions](https://github.com/codama-idl/spec/discussions) (Announcements category) — and its copy names the driving repository. Pin it manually (the API cannot).
 
 From here, `main` can never publish to `latest`: pre-release mode forces the `rc` dist-tag, so every merged release PR ships a `(N+1).0.0-rc.n` for downstream repos to develop against. Meanwhile `N.x` keeps publishing stable releases to `latest` as usual; [port](#porting-changes-between-majors) them across.
 
@@ -99,7 +99,7 @@ Then the humans finish:
 
 ### Fast-track majors
 
-A repo whose new major does **not** stem from a spec major (e.g. a renderer breaking its own options API) may skip the candidacy: dispatch cut, then promote, back to back. The invariants still hold — every major crossing has a freshly cut `N.x` behind it, and the guard enforces this — so there is deliberately **no** bare-changeset shortcut for majors. Whether such a release warrants a Discussions announcement is a judgement call.
+A repo whose new major does **not** stem from a spec major (e.g. a renderer breaking its own options API) may skip the candidacy: dispatch cut, then promote, back to back. The invariants still hold — every major crossing has a freshly cut `N.x` behind it, and the guard enforces this — so there is deliberately **no** bare-changeset shortcut for majors. Skipping is for majors with little ecosystem impact; an independent major that integrators must adapt to (e.g. breaking behaviour changes in the `dynamic-*` packages) runs the **full candidacy** instead — cut with `announce: true`, declare a candidate, validate, promote — exactly like a spec-driven wave, just with a different driving repository.
 
 ## Porting changes between majors
 
@@ -137,7 +137,7 @@ crates.io has no dist-tags, and with the candidacy model none are needed: the sa
 
 ## Monorepos: the same-major invariant
 
-In the `codama` monorepo, **every public package shares the same major version**, equal to the major it supports in the spec. "Codama v1" therefore means something across the whole package suite, and no `@codama/*` package ever surprises downstream with an independent major.
+In the `codama` monorepo, **every public package shares the same major version** — one era per monorepo, so "Codama v1" means something across the whole package suite and no `@codama/*` package ever surprises downstream with an independent major. That shared major currently coincides with the spec major it supports; this is a convenience, not a rule — a codama-only major (no spec change) is legitimate and follows the [fast-track or full-candidacy path](#fast-track-majors) like any other independent major.
 
 The consequences:
 
