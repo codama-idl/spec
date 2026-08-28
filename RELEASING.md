@@ -40,7 +40,7 @@ Major numbers are **per-repo and independent**: `@codama/renderers-rust` v4 may 
 
 The **default branch is `main`, except during a transition** (from cut until promote), when the latest stable `N.x` becomes the default so that visitors, forks and drive-by PRs land on released code and its documentation rather than work in progress.
 
-Release workflows trigger on `push: branches: [main, '[0-9]+.x']`. The maintenance pattern is deliberately numeric: a looser glob like `'*.x'` also matches working branches ending in `.x`, causing pushes of those branches to run the release job. Branch protection is managed **as code**: the canonical ruleset lives in [`codama-idl/release-tools`](https://github.com/codama-idl/release-tools) (`ruleset.json`) and is applied to every repository by its `sync-rulesets` workflow.
+Release workflows trigger on `push: branches: [main, '[0-9]+.x']`. The maintenance pattern is deliberately numeric: a looser glob like `'*.x'` also matches working branches ending in `.x`, causing pushes of those branches to run the release job. Branch protection is managed **as code**: the canonical ruleset lives in [`codama-idl/release-tools`](https://github.com/codama-idl/release-tools) (`ruleset.json`) and is applied to every repository by its `sync-policies` workflow.
 
 > [!WARNING]
 > Once cut, `main` and `N.x` never reconverge: no merges or rebases across majors, in either direction. Changes travel between them only as cherry-picks (see [porting changes](#porting-changes-between-majors)).
@@ -159,6 +159,6 @@ Each major transition gets one tracking issue in the repo that drives it (the sp
 
 - **`cut`** and **`promote`** reusable workflows, called from thin `workflow_dispatch` wrappers in each repo. They perform every mechanical step — branch creation, the tool-generated commits on `main` and `N.x`, and the default-branch flips — using GitHub App tokens scoped down per step (the admin-capable token exists only for the flip step, and direct commits rely on the app's ruleset bypass).
 - A dependency-free **`postversion` guard** hooked into each repo's changesets `version-script`. After `changeset version`, it asserts that a **stable** major crossing happens only on `main` with the corresponding `N.x` maintenance branch already cut, that rc crossings happen only in pre-release mode, and — in monorepos — that all public package majors stay equal. Violations fail the release PR loudly.
-- The canonical **`ruleset.json`** branch-protection policy and the **`sync-rulesets`** workflow that applies it to every repository in the organisation.
+- The canonical repository policies — **`ruleset.json`** (branch protection) and **`repo-settings.json`** (merge methods, squash defaults, auto-merge) — and the **`sync-policies`** workflow that applies them to every repository in the organisation.
 
 Until a repo adopts release-tools, run the equivalent steps by hand, in the order listed in [the lifecycle](#the-lifecycle-of-a-new-major).
