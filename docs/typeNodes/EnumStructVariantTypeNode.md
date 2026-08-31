@@ -14,10 +14,11 @@ A variant of an enum that carries a struct payload (named fields).
 
 ### Children
 
-| Attribute | Type                                                                               | Description                                               |
-| --------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------- |
-| `struct`  | [`NestedTypeNode`](./NestedTypeNode.md)<[`StructTypeNode`](./StructTypeNode.md)>   | The struct of named fields carried by the variant.        |
-| `display` | [`EnumVariantDisplayNode`](../displayNodes/EnumVariantDisplayNode.md) _(optional)_ | Display metadata describing how the variant is presented. |
+| Attribute | Type                                                                               | Description                                                                                                                           |
+| --------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `struct`  | [`NestedTypeNode`](./NestedTypeNode.md)<[`StructTypeNode`](./StructTypeNode.md)>   | The struct of named fields carried by the variant.                                                                                    |
+| `display` | [`EnumVariantDisplayNode`](../displayNodes/EnumVariantDisplayNode.md) _(optional)_ | Display metadata describing how the variant is presented.                                                                             |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_                                    | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

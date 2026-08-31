@@ -13,9 +13,10 @@ A reference to a defined type — possibly in a different program.
 
 ### Children
 
-| Attribute | Type                                                   | Description                                                                                      |
-| --------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| `program` | [`ProgramLinkNode`](./ProgramLinkNode.md) _(optional)_ | The program the referenced type is defined in. When omitted, the surrounding program is assumed. |
+| Attribute | Type                                                   | Description                                                                                                                           |
+| --------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `program` | [`ProgramLinkNode`](./ProgramLinkNode.md) _(optional)_ | The program the referenced type is defined in. When omitted, the surrounding program is assumed.                                      |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_        | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

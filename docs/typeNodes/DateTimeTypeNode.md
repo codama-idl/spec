@@ -12,9 +12,10 @@ A timestamp encoded as a number, typically seconds since the Unix epoch. The wra
 
 ### Children
 
-| Attribute | Type                                                                             | Description                                       |
-| --------- | -------------------------------------------------------------------------------- | ------------------------------------------------- |
-| `number`  | [`NestedTypeNode`](./NestedTypeNode.md)<[`NumberTypeNode`](./NumberTypeNode.md)> | The numeric type used to serialise the timestamp. |
+| Attribute | Type                                                                             | Description                                                                                                                           |
+| --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `number`  | [`NestedTypeNode`](./NestedTypeNode.md)<[`NumberTypeNode`](./NumberTypeNode.md)> | The numeric type used to serialise the timestamp.                                                                                     |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_                                  | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

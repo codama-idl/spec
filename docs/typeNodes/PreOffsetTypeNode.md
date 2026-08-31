@@ -63,10 +63,11 @@ offset = -2
 
 ### Children
 
-| Attribute  | Type                                                       | Description                                                     |
-| ---------- | ---------------------------------------------------------- | --------------------------------------------------------------- |
-| `strategy` | [`PreOffsetStrategy`](../sharedNodes/PreOffsetStrategy.md) | How the `offset` value is interpreted.                          |
-| `type`     | [`TypeNode`](./TypeNode.md)                                | The wrapped type whose serialisation is preceded by the offset. |
+| Attribute  | Type                                                       | Description                                                                                                                           |
+| ---------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `strategy` | [`PreOffsetStrategy`](../sharedNodes/PreOffsetStrategy.md) | How the `offset` value is interpreted.                                                                                                |
+| `type`     | [`TypeNode`](./TypeNode.md)                                | The wrapped type whose serialisation is preceded by the offset.                                                                       |
+| `plugins`  | [`PluginNode`](../PluginNode.md)[] _(optional)_            | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

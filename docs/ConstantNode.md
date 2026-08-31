@@ -14,10 +14,11 @@ A named constant exposed by the program: a typed value associated with a name.
 
 ### Children
 
-| Attribute | Type                                     | Description                         |
-| --------- | ---------------------------------------- | ----------------------------------- |
-| `type`    | [`TypeNode`](./typeNodes/TypeNode.md)    | The type of the constant.           |
-| `value`   | [`ValueNode`](./valueNodes/ValueNode.md) | The concrete value of the constant. |
+| Attribute | Type                                           | Description                                                                                                                           |
+| --------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`    | [`TypeNode`](./typeNodes/TypeNode.md)          | The type of the constant.                                                                                                             |
+| `value`   | [`ValueNode`](./valueNodes/ValueNode.md)       | The concrete value of the constant.                                                                                                   |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

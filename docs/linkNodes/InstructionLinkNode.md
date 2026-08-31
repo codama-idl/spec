@@ -13,9 +13,10 @@ A reference to an instruction defined elsewhere — possibly in a different prog
 
 ### Children
 
-| Attribute | Type                                                   | Description                                                                                          |
-| --------- | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
-| `program` | [`ProgramLinkNode`](./ProgramLinkNode.md) _(optional)_ | The program the referenced instruction belongs to. When omitted, the surrounding program is assumed. |
+| Attribute | Type                                                   | Description                                                                                                                           |
+| --------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `program` | [`ProgramLinkNode`](./ProgramLinkNode.md) _(optional)_ | The program the referenced instruction belongs to. When omitted, the surrounding program is assumed.                                  |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_        | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

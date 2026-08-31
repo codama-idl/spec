@@ -23,6 +23,7 @@ Serialised next to each other, the arguments of an instruction form its data.
 | `type`                 | [`TypeNode`](./typeNodes/TypeNode.md)                                                           | The type of the argument.                                                                                                                  |
 | `defaultValue`         | [`InstructionInputValueNode`](./contextualValueNodes/InstructionInputValueNode.md) _(optional)_ | A default value used when the argument is omitted by callers.                                                                              |
 | `display`              | [`StructFieldDisplayNode`](./displayNodes/StructFieldDisplayNode.md) _(optional)_               | Display metadata describing how the argument is presented.                                                                                 |
+| `plugins`              | [`PluginNode`](./PluginNode.md)[] _(optional)_                                                  | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata.      |
 
 ## Examples
 

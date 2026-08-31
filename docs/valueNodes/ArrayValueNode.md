@@ -12,9 +12,10 @@ A concrete array value: a list of value nodes.
 
 ### Children
 
-| Attribute | Type                            | Description                       |
-| --------- | ------------------------------- | --------------------------------- |
-| `items`   | [`ValueNode`](./ValueNode.md)[] | The items of the array, in order. |
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `items`   | [`ValueNode`](./ValueNode.md)[]                 | The items of the array, in order.                                                                                                     |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

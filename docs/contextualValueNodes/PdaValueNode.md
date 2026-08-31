@@ -12,11 +12,12 @@ Resolves to a PDA derived from a list of seed values.
 
 ### Children
 
-| Attribute   | Type                                                       | Description                                                                              |
-| ----------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `pda`       | [`PdaValuePda`](./PdaValuePda.md)                          | The PDA being derived — either a link to a defined PDA or an inline `pdaNode`.           |
-| `seeds`     | [`PdaSeedValueNode`](./PdaSeedValueNode.md)[]              | The seed values used to derive the PDA, paired with their seed names.                    |
-| `programId` | [`PdaValueProgramId`](./PdaValueProgramId.md) _(optional)_ | The program ID used to derive the PDA. When omitted, the PDA’s declared program is used. |
+| Attribute   | Type                                                       | Description                                                                                                                           |
+| ----------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `pda`       | [`PdaValuePda`](./PdaValuePda.md)                          | The PDA being derived — either a link to a defined PDA or an inline `pdaNode`.                                                        |
+| `seeds`     | [`PdaSeedValueNode`](./PdaSeedValueNode.md)[]              | The seed values used to derive the PDA, paired with their seed names.                                                                 |
+| `programId` | [`PdaValueProgramId`](./PdaValueProgramId.md) _(optional)_ | The program ID used to derive the PDA. When omitted, the PDA’s declared program is used.                                              |
+| `plugins`   | [`PluginNode`](../PluginNode.md)[] _(optional)_            | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

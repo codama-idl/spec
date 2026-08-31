@@ -12,9 +12,10 @@ A concrete set value: a list of unique value nodes.
 
 ### Children
 
-| Attribute | Type                            | Description           |
-| --------- | ------------------------------- | --------------------- |
-| `items`   | [`ValueNode`](./ValueNode.md)[] | The items of the set. |
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `items`   | [`ValueNode`](./ValueNode.md)[]                 | The items of the set.                                                                                                                 |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

@@ -16,10 +16,11 @@ A "remaining accounts" slot in an instruction — a variable-length tail of acco
 
 ### Children
 
-| Attribute | Type                                                                                            | Description                                                                           |
-| --------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `value`   | [`InstructionRemainingAccountsValue`](./InstructionRemainingAccountsValue.md)                   | The source of the remaining-accounts list — a referenced argument or a resolver.      |
-| `display` | [`InstructionAccountDisplayNode`](./displayNodes/InstructionAccountDisplayNode.md) _(optional)_ | Display metadata describing how the remaining-accounts group is presented as a whole. |
+| Attribute | Type                                                                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`   | [`InstructionRemainingAccountsValue`](./InstructionRemainingAccountsValue.md)                   | The source of the remaining-accounts list — a referenced argument or a resolver.                                                      |
+| `display` | [`InstructionAccountDisplayNode`](./displayNodes/InstructionAccountDisplayNode.md) _(optional)_ | Display metadata describing how the remaining-accounts group is presented as a whole.                                                 |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_                                                  | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

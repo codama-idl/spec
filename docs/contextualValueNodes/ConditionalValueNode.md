@@ -19,6 +19,7 @@ The condition resolves to a value at instruction time; that result selects betwe
 | `value`     | [`ValueNode`](../valueNodes/ValueNode.md) _(optional)_                     | When present, the condition result is compared for equality against this value. When omitted, the condition passes if the referenced account or argument exists in the current context, regardless of its value. |
 | `ifTrue`    | [`InstructionInputValueNode`](./InstructionInputValueNode.md) _(optional)_ | The value used when the condition passes — i.e. it matches `value` or, without a `value`, exists.                                                                                                                |
 | `ifFalse`   | [`InstructionInputValueNode`](./InstructionInputValueNode.md) _(optional)_ | The value used when the condition fails — i.e. it does not match `value` or, without a `value`, does not exist.                                                                                                  |
+| `plugins`   | [`PluginNode`](../PluginNode.md)[] _(optional)_                            | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata.                                                                            |
 
 ## Examples
 

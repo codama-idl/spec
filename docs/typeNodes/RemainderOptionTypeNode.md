@@ -12,9 +12,10 @@ A value that may be present or absent. Presence is signalled by whether any byte
 
 ### Children
 
-| Attribute | Type                        | Description                                  |
-| --------- | --------------------------- | -------------------------------------------- |
-| `item`    | [`TypeNode`](./TypeNode.md) | The type carried by the option when present. |
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `item`    | [`TypeNode`](./TypeNode.md)                     | The type carried by the option when present.                                                                                          |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

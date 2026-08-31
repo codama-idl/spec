@@ -13,9 +13,10 @@ A named field of a `structValueNode`.
 
 ### Children
 
-| Attribute | Type                          | Description                      |
-| --------- | ----------------------------- | -------------------------------- |
-| `value`   | [`ValueNode`](./ValueNode.md) | The concrete value of the field. |
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`   | [`ValueNode`](./ValueNode.md)                   | The concrete value of the field.                                                                                                      |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

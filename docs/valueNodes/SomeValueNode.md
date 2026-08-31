@@ -13,9 +13,10 @@ For instance, this can be set as the default value of a field whose type is an `
 
 ### Children
 
-| Attribute | Type                          | Description        |
-| --------- | ----------------------------- | ------------------ |
-| `value`   | [`ValueNode`](./ValueNode.md) | The wrapped value. |
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`   | [`ValueNode`](./ValueNode.md)                   | The wrapped value.                                                                                                                    |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

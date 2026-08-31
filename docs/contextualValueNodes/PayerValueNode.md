@@ -12,6 +12,12 @@ A similar node exists for the main wallet that should own things — `identityVa
 | --------- | ------------------ | ----------------------- |
 | `kind`    | `"payerValueNode"` | The node discriminator. |
 
+### Children
+
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Create a payer value node

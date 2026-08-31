@@ -7,6 +7,7 @@
 
 export * from './attribute';
 export * from './compounds';
+export * from './defineBase';
 export * from './defineCategory';
 export * from './defineEnumeration';
 export * from './defineNestedUnion';

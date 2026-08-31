@@ -17,10 +17,11 @@ Pairs a primary program with any number of additional programs and tags the IDL 
 
 ### Children
 
-| Attribute            | Type                                | Description                                            |
-| -------------------- | ----------------------------------- | ------------------------------------------------------ |
-| `program`            | [`ProgramNode`](./ProgramNode.md)   | The primary program described by the IDL.              |
-| `additionalPrograms` | [`ProgramNode`](./ProgramNode.md)[] | Additional programs referenced by the primary program. |
+| Attribute            | Type                                           | Description                                                                                                                           |
+| -------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `program`            | [`ProgramNode`](./ProgramNode.md)              | The primary program described by the IDL.                                                                                             |
+| `additionalPrograms` | [`ProgramNode`](./ProgramNode.md)[]            | Additional programs referenced by the primary program.                                                                                |
+| `plugins`            | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

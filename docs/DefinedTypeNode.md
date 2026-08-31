@@ -16,9 +16,10 @@ A reusable named type that can be referenced by `definedTypeLinkNode` from elsew
 
 ### Children
 
-| Attribute | Type                                  | Description          |
-| --------- | ------------------------------------- | -------------------- |
-| `type`    | [`TypeNode`](./typeNodes/TypeNode.md) | The type definition. |
+| Attribute | Type                                           | Description                                                                                                                           |
+| --------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`    | [`TypeNode`](./typeNodes/TypeNode.md)          | The type definition.                                                                                                                  |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

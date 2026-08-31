@@ -11,6 +11,12 @@ Refers to a named argument of the surrounding instruction.
 | `kind`    | `"argumentValueNode"` | The node discriminator.              |
 | `name`    | `CamelCaseString`     | The name of the referenced argument. |
 
+### Children
+
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Create an argument value node from an argument name

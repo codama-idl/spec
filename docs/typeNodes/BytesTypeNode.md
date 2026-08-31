@@ -10,6 +10,12 @@ A raw sequence of bytes. Typically used inside a fixed-size, size-prefixed, or s
 | --------- | ----------------- | ----------------------- |
 | `kind`    | `"bytesTypeNode"` | The node discriminator. |
 
+### Children
+
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Create a bytes type node

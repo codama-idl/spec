@@ -17,10 +17,11 @@ When decoding, the wrapped type is decoded until the sentinel value is encounter
 
 ### Children
 
-| Attribute  | Type                                                      | Description                                                                    |
-| ---------- | --------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| `type`     | [`TypeNode`](./TypeNode.md)                               | The wrapped type whose extent is delimited by the sentinel.                    |
-| `sentinel` | [`ConstantValueNode`](../valueNodes/ConstantValueNode.md) | The constant value written immediately after the wrapped type to mark its end. |
+| Attribute  | Type                                                      | Description                                                                                                                           |
+| ---------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`     | [`TypeNode`](./TypeNode.md)                               | The wrapped type whose extent is delimited by the sentinel.                                                                           |
+| `sentinel` | [`ConstantValueNode`](../valueNodes/ConstantValueNode.md) | The constant value written immediately after the wrapped type to mark its end.                                                        |
+| `plugins`  | [`PluginNode`](../PluginNode.md)[] _(optional)_           | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

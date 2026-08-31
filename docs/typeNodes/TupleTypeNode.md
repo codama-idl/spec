@@ -12,9 +12,10 @@ A heterogeneous fixed-length sequence in which each positional slot has its own 
 
 ### Children
 
-| Attribute | Type                          | Description                                 |
-| --------- | ----------------------------- | ------------------------------------------- |
-| `items`   | [`TypeNode`](./TypeNode.md)[] | The type of each positional slot, in order. |
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `items`   | [`TypeNode`](./TypeNode.md)[]                   | The type of each positional slot, in order.                                                                                           |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

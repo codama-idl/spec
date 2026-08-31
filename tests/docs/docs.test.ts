@@ -125,6 +125,21 @@ describe('docs generation over the real spec', () => {
         expect(root).toContain('- [`InstructionByteDeltaValue`](./InstructionByteDeltaValue.md)');
     });
 
+    it('renders the base attributes on the root index and at the end of every node page attribute tables', () => {
+        const root = rootContent(MODEL);
+        expect(root).toContain('## Base attributes');
+        expect(root).toContain('`plugins`');
+
+        for (const page of MODEL.pages) {
+            if (page.ref.kind !== 'node') continue;
+            const where = `node page ${page.pathSegments.join('/')}`;
+            // plugins is child-classified, so every node page has a Children table ending with it
+            expect(page.content, `${where} should render the plugins base attribute`).toContain('`plugins`');
+            const lastRow = page.content.split('## Examples')[0].trimEnd().split('\n').at(-1)!;
+            expect(lastRow, `${where} should list plugins as the last attribute row`).toContain('`plugins`');
+        }
+    });
+
     it('renders the accountNode page with a Data/Children split and the nested-union data link', () => {
         const content = pageOf(MODEL, 'node', 'accountNode').content;
         expect(content.startsWith('# AccountNode')).toBe(true);

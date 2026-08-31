@@ -11,6 +11,12 @@ A concrete boolean value.
 | `kind`    | `"booleanValueNode"` | The node discriminator. |
 | `boolean` | `boolean`            | The boolean value.      |
 
+### Children
+
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Create a boolean value node from a boolean

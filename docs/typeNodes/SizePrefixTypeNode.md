@@ -13,10 +13,11 @@ When decoding, the size is read first and determines how many bytes the wrapped 
 
 ### Children
 
-| Attribute | Type                                                                             | Description                                                   |
-| --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| `type`    | [`TypeNode`](./TypeNode.md)                                                      | The wrapped type whose serialisation is preceded by its size. |
-| `prefix`  | [`NestedTypeNode`](./NestedTypeNode.md)<[`NumberTypeNode`](./NumberTypeNode.md)> | The numeric type used as the size prefix.                     |
+| Attribute | Type                                                                             | Description                                                                                                                           |
+| --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`    | [`TypeNode`](./TypeNode.md)                                                      | The wrapped type whose serialisation is preceded by its size.                                                                         |
+| `prefix`  | [`NestedTypeNode`](./NestedTypeNode.md)<[`NumberTypeNode`](./NumberTypeNode.md)> | The numeric type used as the size prefix.                                                                                             |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_                                  | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

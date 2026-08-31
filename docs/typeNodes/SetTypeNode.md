@@ -12,10 +12,11 @@ A unique-valued collection. The item type is defined by `item`; the size is dete
 
 ### Children
 
-| Attribute | Type                                      | Description                                         |
-| --------- | ----------------------------------------- | --------------------------------------------------- |
-| `item`    | [`TypeNode`](./TypeNode.md)               | The type of each item in the set.                   |
-| `count`   | [`CountNode`](../countNodes/CountNode.md) | The strategy used to determine the number of items. |
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `item`    | [`TypeNode`](./TypeNode.md)                     | The type of each item in the set.                                                                                                     |
+| `count`   | [`CountNode`](../countNodes/CountNode.md)       | The strategy used to determine the number of items.                                                                                   |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

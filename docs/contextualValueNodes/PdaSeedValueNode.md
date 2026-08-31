@@ -13,9 +13,10 @@ Pairs a PDA seed name with the value to substitute when deriving the PDA.
 
 ### Children
 
-| Attribute | Type                                          | Description                           |
-| --------- | --------------------------------------------- | ------------------------------------- |
-| `value`   | [`PdaSeedValueValue`](./PdaSeedValueValue.md) | The value to substitute for the seed. |
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`   | [`PdaSeedValueValue`](./PdaSeedValueValue.md)   | The value to substitute for the seed.                                                                                                 |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

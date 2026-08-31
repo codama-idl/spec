@@ -15,9 +15,10 @@ Resolution is a per-context property: a value with the same key may resolve in o
 
 ### Children
 
-| Attribute  | Type                                       | Description                                                                                                                                          |
-| ---------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fallback` | [`ValueNode`](./ValueNode.md) _(optional)_ | A value used when no provider supplies the key. When absent, the key is required: a provider must supply it for the surrounding context to be valid. |
+| Attribute  | Type                                            | Description                                                                                                                                          |
+| ---------- | ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fallback` | [`ValueNode`](./ValueNode.md) _(optional)_      | A value used when no provider supplies the key. When absent, the key is required: a provider must supply it for the surrounding context to be valid. |
+| `plugins`  | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata.                |
 
 ## Examples
 

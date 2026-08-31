@@ -14,11 +14,12 @@ Entries are serialised one after the other, each key immediately followed by its
 
 ### Children
 
-| Attribute | Type                                      | Description                                           |
-| --------- | ----------------------------------------- | ----------------------------------------------------- |
-| `key`     | [`TypeNode`](./TypeNode.md)               | The type of each entry key.                           |
-| `value`   | [`TypeNode`](./TypeNode.md)               | The type of each entry value.                         |
-| `count`   | [`CountNode`](../countNodes/CountNode.md) | The strategy used to determine the number of entries. |
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `key`     | [`TypeNode`](./TypeNode.md)                     | The type of each entry key.                                                                                                           |
+| `value`   | [`TypeNode`](./TypeNode.md)                     | The type of each entry value.                                                                                                         |
+| `count`   | [`CountNode`](../countNodes/CountNode.md)       | The strategy used to determine the number of entries.                                                                                 |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

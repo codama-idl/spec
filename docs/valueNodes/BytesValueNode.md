@@ -13,9 +13,10 @@ A concrete bytes value, encoded as text in the chosen encoding.
 
 ### Children
 
-| Attribute  | Type                                               | Description                                       |
-| ---------- | -------------------------------------------------- | ------------------------------------------------- |
-| `encoding` | [`BytesEncoding`](../sharedNodes/BytesEncoding.md) | The encoding used to represent the bytes as text. |
+| Attribute  | Type                                               | Description                                                                                                                           |
+| ---------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `encoding` | [`BytesEncoding`](../sharedNodes/BytesEncoding.md) | The encoding used to represent the bytes as text.                                                                                     |
+| `plugins`  | [`PluginNode`](../PluginNode.md)[] _(optional)_    | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

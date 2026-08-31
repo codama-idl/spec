@@ -30,6 +30,8 @@ export interface RenderCtx {
     readonly markup: MarkupRenderer;
     readonly registry: NavRegistry;
     readonly link: (from: DocRef, to: DocRef) => string;
+    /** Attributes shared by every node (the spec's base), rendered on each node page and the root page. */
+    readonly base: readonly AttributeSpec[];
 }
 
 /** Binds a page as the link source, so renderers resolve hrefs by target ref alone. */
@@ -42,10 +44,12 @@ export function renderNodePage(node: NodeSpec, ctx: RenderCtx): DocPage {
     const ref: DocRef = { kind: 'node', name: node.kind };
     const linkTo = linkFrom(ctx, ref);
 
-    // classify: synthesized `kind` row first, then each attribute into Data or Children (declaration order)
+    // classify: synthesized `kind` row first, then each attribute into Data or Children (declaration order).
+    // Base attributes go through the same classification but always trail their table, mirroring the
+    // serialise-last convention — so the table order matches the wire order.
     const dataRows: string[][] = [[markup.code('kind'), markup.code(`"${node.kind}"`), 'The node discriminator.']];
     const childRows: string[][] = [];
-    for (const attribute of node.attributes) {
+    for (const attribute of [...node.attributes, ...ctx.base]) {
         const row = [markup.code(attribute.name), typeCell(attribute, markup, linkTo), cellDoc(attribute.docs, markup)];
         if (isDocChild(attribute.type)) {
             childRows.push(row);
@@ -244,6 +248,8 @@ export function renderRootIndexPage(spec: Spec, ctx: RenderCtx): DocPage {
                 `interchangeably. Pages marked ${markup.italic('(recursive)')} document nested unions: wrapper ` +
                 `nodes that may nest before reaching a base type.`,
         ),
+        // base attributes shared by every node (omitted when the spec declares none)
+        renderBaseSection(spec, ctx, linkTo),
         // body: linked categories
         `${markup.heading(2, 'Categories')}${BLOCK_SEPARATOR}${markup.list('bulleted', categories)}`,
         // body: one section per root-level category (topLevel)
@@ -254,6 +260,23 @@ export function renderRootIndexPage(spec: Spec, ctx: RenderCtx): DocPage {
         pathSegments: ctx.registry.lookup(ref).pathSegments,
         content: parts.filter(Boolean).join(BLOCK_SEPARATOR),
     };
+}
+
+/** The root page's "Base attributes" section: the attributes every node carries, serialised last. */
+function renderBaseSection(spec: Spec, ctx: RenderCtx, linkTo: (r: DocRef) => string): string | undefined {
+    const { markup } = ctx;
+    if (!spec.base || spec.base.attributes.length === 0) return undefined;
+    const rows = spec.base.attributes.map(attribute => [
+        markup.code(attribute.name),
+        typeCell(attribute, markup, linkTo),
+        cellDoc(attribute.docs, markup),
+    ]);
+    const parts: (string | undefined)[] = [
+        markup.heading(2, 'Base attributes'),
+        renderSpecDocs(spec.base.docs, markup),
+        markup.table(['Attribute', 'Type', 'Description'], rows),
+    ];
+    return parts.filter(Boolean).join(BLOCK_SEPARATOR);
 }
 
 /** A root-level category (no own directory, e.g. topLevel) as its own section: heading, docs, entity list. */

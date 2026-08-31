@@ -19,7 +19,7 @@ export function generateDocs(spec: Spec): DocModel {
     function link(from: DocRef, to: DocRef): string {
         return relativePageLink(registry.lookup(from), registry.lookup(to));
     }
-    const ctx: RenderCtx = { markup: markdownRenderer, registry, link };
+    const ctx: RenderCtx = { markup: markdownRenderer, registry, link, base: spec.base?.attributes ?? [] };
 
     const pages: DocPage[] = [];
     for (const category of spec.categories) {

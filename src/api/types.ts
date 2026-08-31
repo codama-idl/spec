@@ -176,6 +176,20 @@ export interface NestedUnionSpec {
 }
 
 /**
+ * Attributes shared by every node of a spec — its "base node" shape.
+ *
+ * Codegen targets append these after each node's declared attributes (and
+ * after the implicit `kind` discriminator), so base attributes always
+ * serialise last. They may also emit a shared `BaseNode` interface that
+ * every generated node type extends. Base attribute names must not collide
+ * with any node's declared attributes — `validate` enforces this.
+ */
+export interface BaseSpec {
+    readonly attributes: readonly AttributeSpec[];
+    readonly docs?: Docs;
+}
+
+/**
  * A category groups together a coherent set of nodes, unions,
  * enumerations, and nested unions. The category name doubles as a
  * filing hint for codegen targets that organise output by category
@@ -199,5 +213,7 @@ export interface CategorySpec {
 /** The full Codama spec for a single Codama major version. */
 export interface Spec {
     readonly version: string;
+    /** Attributes shared by every node — absent when the spec declares none. */
+    readonly base?: BaseSpec;
     readonly categories: readonly CategorySpec[];
 }

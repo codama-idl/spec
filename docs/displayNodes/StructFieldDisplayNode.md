@@ -16,9 +16,10 @@ Value presentation is carried by the member's type; this node only addresses nam
 
 ### Children
 
-| Attribute | Type                                                        | Description                                                                             |
-| --------- | ----------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `skip`    | [`DisplaySkip`](../sharedNodes/DisplaySkip.md) _(optional)_ | Whether the member is shown in the fallback list. Defaults to `"never"` (always shown). |
+| Attribute | Type                                                        | Description                                                                                                                           |
+| --------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `skip`    | [`DisplaySkip`](../sharedNodes/DisplaySkip.md) _(optional)_ | Whether the member is shown in the fallback list. Defaults to `"never"` (always shown).                                               |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_             | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

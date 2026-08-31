@@ -479,14 +479,27 @@ describe('spec — pluginNode shape', () => {
     });
 });
 
-describe('spec — instructionNode.plugins', () => {
-    it('declares an optional array of pluginNode', () => {
-        const n = getNode('instructionNode')!;
-        const plugins = n.attributes.find(a => a.name === 'plugins')!;
-        expect(plugins).toBeDefined();
+describe('spec — base attributes', () => {
+    it('declares plugins as the only base attribute, an optional array of pluginNode', () => {
+        const base = getSpec().base!;
+        expect(base).toBeDefined();
+        expect(base.attributes.map(a => a.name)).toEqual(['plugins']);
+
+        const plugins = base.attributes[0];
         expect(plugins.optional).toBe(true);
         expect(plugins.type).toEqual({ kind: 'array', of: { kind: 'node', name: 'pluginNode' } });
         expect(isChildAttribute(plugins.type)).toBe(true);
+    });
+
+    it('no node declares a plugins attribute locally — the base attribute is universal', () => {
+        for (const category of getSpec().categories) {
+            for (const n of category.nodes) {
+                expect(
+                    n.attributes.some(a => a.name === 'plugins'),
+                    `node "${n.kind}" should not declare plugins locally`,
+                ).toBe(false);
+            }
+        }
     });
 });
 

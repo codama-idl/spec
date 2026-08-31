@@ -14,9 +14,10 @@ A PDA seed whose value is provided at derivation time, identified by name.
 
 ### Children
 
-| Attribute | Type                                   | Description                          |
-| --------- | -------------------------------------- | ------------------------------------ |
-| `type`    | [`TypeNode`](../typeNodes/TypeNode.md) | The expected type of the seed value. |
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`    | [`TypeNode`](../typeNodes/TypeNode.md)          | The expected type of the seed value.                                                                                                  |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 
