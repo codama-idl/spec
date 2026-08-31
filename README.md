@@ -6,9 +6,11 @@ The canonical Codama node specification.
 
 Codama is a standard for describing on-chain Solana programs as a graph of typed nodes (accounts, instructions, types, …). This repository contains:
 
-- **The spec.** A machine-readable description of every node in the Codama node graph, authored in TypeScript under `src/` and emitted as `v1/spec.json`. Future Codama majors will land alongside as `v2/spec.json`, `v3/spec.json`, …
+- **The spec.** A machine-readable description of every node in the Codama node graph, authored in TypeScript under `src/spec/` and emitted as `spec.json`.
 - **The meta-model API.** Authoring helpers (`defineNode`, `attribute`, primitives, compounds, …) exposed at `@codama/spec/api` for hand-authoring specs and test fixtures.
-- **Internal codegen.** Generators under `generators/` produce the public artifacts that mirror each spec major (`v<n>/spec.json`, `v<n>/schema.json`, `v<n>/docs/`). They are not exported from the `@codama/spec` package; they exist as internal tooling for this repo.
+- **Internal codegen.** Generators under `generators/` produce the public artifacts (`spec.json`, `schema.json`, `docs/`). They are not exported from the `@codama/spec` package; they exist as internal tooling for this repo.
+
+Each release line hosts exactly one spec major: this branch carries the current major, and previous majors live on their own maintenance branches (e.g. [`1.x`](https://github.com/codama-idl/spec/tree/1.x)) and publish as their own npm versions (e.g. `@codama/spec@^1`). See [RELEASING.md](./RELEASING.md).
 
 Reference implementations (TypeScript node types, node factories, visitors, validators, renderers, the CLI) live in [codama-idl/codama](https://github.com/codama-idl/codama) and consume the published `@codama/spec` package. The Rust reference implementation lives in [codama-idl/codama-rs](https://github.com/codama-idl/codama-rs).
 
@@ -21,20 +23,19 @@ pnpm add @codama/spec
 
 ## Quickstart
 
-`@codama/spec` exposes three entrypoints:
+`@codama/spec` exposes two entrypoints:
 
-- `@codama/spec` — the latest stable major's public surface. Re-exports `@codama/spec/v1` today; will track future majors.
-- `@codama/spec/v1` — the v1 spec data, accessors (`getSpec`, `getNode`, `getUnion`, `getEnumeration`), and the version-agnostic types (`NodeSpec`, `UnionSpec`, …).
+- `@codama/spec` — the spec data of this release line's major: accessors (`getSpec`, `getNode`, `getUnion`, `getEnumeration`), the `SPEC_VERSION` constant, and the version-agnostic types (`NodeSpec`, `UnionSpec`, …).
 - `@codama/spec/api` — the meta-model authoring API (`defineNode`, `attribute`, primitives, compounds, …) for hand-authoring specs and test fixtures.
 
 ### Read the spec
 
 ```ts
-import { getSpec, getNode, SPEC_VERSION } from '@codama/spec/v1';
+import { getSpec, getNode, SPEC_VERSION } from '@codama/spec';
 
 const spec = getSpec();
-console.log(spec.version); // → '1.8.0'
-console.log(SPEC_VERSION); // → '1.8.0'
+console.log(spec.version); // → '2.0.0'
+console.log(SPEC_VERSION); // → '2.0.0'
 
 const account = getNode('accountNode');
 console.log(account?.attributes.map(a => a.name));
@@ -78,16 +79,17 @@ Preserving declaration order keeps encoded IDLs readable: the identifying scalar
 
 ```
 src/                       # package source (the @codama/spec public surface)
+  api/                     # the meta-model authoring API (@codama/spec/api)
+  spec/                    # the current major's spec content (re-exported by the root)
 tests/                     # package tests
 generators/                # internal codegen orchestrator + per-target generators
   index.ts                 # runs every registered generator sequentially
-  json-spec/               # emits v<n>/spec.json
-  json-schema/             # emits v<n>/schema.json (stub)
-  docs/                    # renders the spec as markdown and emits v<n>/docs/
-v1/                        # generated artifacts mirroring the @codama/spec/v1 surface
-  spec.json
-  schema.json
-  docs/
+  json-spec/               # emits spec.json
+  json-schema/             # emits schema.json (stub)
+  docs/                    # renders the spec as markdown and emits docs/
+spec.json                  # generated: the encoded spec
+schema.json                # generated: JSON Schema (stub)
+docs/                      # generated: browsable markdown docs
 .changeset/                # release intent files (managed by @changesets/cli)
 ```
 

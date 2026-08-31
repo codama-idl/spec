@@ -3,7 +3,7 @@
  *
  *  - `standaloneValueNode`           every value node usable as a top-level value, including
  *                                    `injectedValueNode` (a value resolved at presentation time).
- *  - `valueNode`                     the composable form (alias for `standaloneValueNode` in v1).
+ *  - `valueNode`                     the composable form (alias for `standaloneValueNode`).
  *  - `registeredValueNode`           every value-shaped node, including container variants like
  *                                    `mapEntryValueNode` and `structFieldValueNode`.
  *  - `enumValuePayload`              the inline `structValueNode | tupleValueNode` union used

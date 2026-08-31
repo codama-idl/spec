@@ -1,5 +1,5 @@
 /**
- * Nested-union recursive aliases declared by the v1 spec.
+ * Nested-union recursive aliases declared by the spec.
  *
  * Today there's only one — `nestedTypeNode<T>` — used by attributes like
  * `accountNode.data` (which holds a `structTypeNode` possibly wrapped in

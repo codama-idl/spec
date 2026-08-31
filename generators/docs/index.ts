@@ -1,10 +1,11 @@
 /**
  * `docs` generator.
  *
- * Runs the docs generator over the v1 spec, then writes the emitted markdown tree to `v1/docs/`
+ * Runs the docs generator over the spec, then writes the emitted markdown tree to `docs/`
  * (GitHub-flavoured pages, relative `.md` links, `README` landing pages per folder). CI re-runs this
  * and fails if the result differs from what is committed, keeping the docs artifact in lockstep with
- * the spec source.
+ * the spec source. Previous majors' docs live on their own maintenance branches; the root landing
+ * page links to them (see `PREVIOUS_MAJOR_DOCS`).
  */
 
 import path from 'node:path';
@@ -21,7 +22,7 @@ import {
     writeRenderMap,
 } from '@codama/fragments';
 
-import { getSpec } from '../../src/v1';
+import { getSpec } from '../../src/spec';
 import { PAGE_EXTENSION } from './constants';
 import { generateDocs } from './generateDocs';
 import type { DocModel } from './types';
@@ -43,8 +44,8 @@ export function generate(): void {
     const model = generateDocs(getSpec());
     const docsMap = getDocsRenderMap(model);
 
-    const outDir = joinPath(REPO_ROOT, 'v1', 'docs');
+    const outDir = joinPath(REPO_ROOT, 'docs');
     deleteDirectory(outDir);
     writeRenderMap(docsMap, outDir);
-    process.stdout.write(`wrote ${docsMap.size} docs files to v1/docs\n`);
+    process.stdout.write(`wrote ${docsMap.size} docs files to docs/\n`);
 }

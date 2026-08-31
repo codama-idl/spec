@@ -6,5 +6,5 @@
  * the same commit as the package bump. See "Versioning" in CONTRIBUTING.md.
  */
 
-/** The version string of the v1 spec - always equal to the package version. */
+/** The version string of the spec - always equal to the package version. */
 export const SPEC_VERSION = '1.9.2';

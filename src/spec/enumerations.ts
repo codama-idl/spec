@@ -1,5 +1,5 @@
 /**
- * Named enumerations for the Codama v1 spec.
+ * Named enumerations for the Codama spec.
  *
  * Anywhere a node attribute would otherwise be an inline string-literal union
  * (e.g. `endian: 'be' | 'le'`), the union is lifted to a named enumeration

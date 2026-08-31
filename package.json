@@ -20,8 +20,7 @@
     "files": [
         "./dist/types",
         "./dist/index.*",
-        "./dist/api.*",
-        "./dist/v1.*"
+        "./dist/api.*"
     ],
     "type": "commonjs",
     "sideEffects": false,
@@ -49,17 +48,6 @@
             "node": {
                 "import": "./dist/api.node.mjs",
                 "require": "./dist/api.node.cjs"
-            }
-        },
-        "./v1": {
-            "types": "./dist/types/v1/index.d.ts",
-            "browser": {
-                "import": "./dist/v1.browser.mjs",
-                "require": "./dist/v1.browser.cjs"
-            },
-            "node": {
-                "import": "./dist/v1.node.mjs",
-                "require": "./dist/v1.node.cjs"
             }
         }
     },
