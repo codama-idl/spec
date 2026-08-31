@@ -21,10 +21,10 @@ pnpm test
 
 See the [README](./README.md) for a top-level tour. The short version:
 
-- `src/` — package source (the `@codama/spec` public surface, including the meta-model API and the latest-major spec data).
+- `src/` — package source (the `@codama/spec` public surface: the meta-model API under `src/api/` and this line's spec content under `src/spec/`).
 - `tests/` — package tests.
-- `generators/` — internal codegen orchestrator and per-target generators. Not exported from the package; produces the `v<n>/` artifacts.
-- `v1/` — generated artifacts mirroring the `@codama/spec/v1` surface (`spec.json`, `schema.json`, `docs/`). Treat as machine output; edit the spec or the generators, not these files.
+- `generators/` — internal codegen orchestrator and per-target generators. Not exported from the package; produces the generated artifacts.
+- `spec.json`, `schema.json`, `docs/` — generated artifacts mirroring the `@codama/spec` surface. Treat as machine output; edit the spec or the generators, not these files.
 - `.changeset/` — release intent files managed by [`@changesets/cli`](https://github.com/changesets/changesets).
 
 ## Making changes
@@ -106,10 +106,10 @@ train).
 
 The package version in `package.json` is the single source of truth, bumped by
 changesets at release time. The spec version (`SPEC_VERSION` in
-`src/v1/version.ts`, embedded in `v1/spec.json` and the generated docs) always
+`src/spec/version.ts`, embedded in `spec.json` and the generated docs) always
 mirrors it: the Release package PR runs `pnpm release:version`, which calls
-`changeset version`, syncs `src/v1/version.ts` via
-`scripts/sync-spec-version.ts`, and regenerates the `v1/` artifacts — all in
+`changeset version`, syncs `src/spec/version.ts` via
+`scripts/sync-spec-version.ts`, and regenerates the artifacts — all in
 the same commit. Never edit `SPEC_VERSION` by hand; a unit test fails if it
 drifts from the package version.
 
@@ -120,8 +120,9 @@ drifts from the package version.
   [`@solana-config/oxc`](https://www.npmjs.com/package/@solana-config/oxc) as
   the shared base. `pnpm lint` runs both (with type-aware rules enabled);
   `pnpm lint:fix` applies their autofixes.
-- Generated files under `v1/` are committed but treated as machine output —
-  edit the spec or the generators, not the generated files.
+- Generated files (`spec.json`, `schema.json`, `docs/`) are committed but
+  treated as machine output — edit the spec or the generators, not the
+  generated files.
 
 ## Reporting issues
 

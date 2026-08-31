@@ -1,9 +1,10 @@
 /**
- * `@codama/spec/v1` — public surface for Codama v1 spec consumers.
+ * `src/spec` — the spec content of this release line's Codama major,
+ * re-exported by the `@codama/spec` package root.
  *
  * Re-exports the version-agnostic types and utilities from the meta-model's
- * public barrel, plus the v1-specific accessors (`getSpec`, `getNode`,
- * `getUnion`, `getEnumeration`) and the `SPEC_VERSION` constant.
+ * public barrel, plus the spec accessors (`getSpec`, `getNode`, `getUnion`,
+ * `getEnumeration`) and the `SPEC_VERSION` constant.
  *
  * Authoring helpers (`defineNode`, primitives, …) are NOT re-exported.
  */
@@ -137,7 +138,7 @@ const ALL_CATEGORIES: readonly CategorySpec[] = [
 let cached: Spec | undefined;
 
 /**
- * Returns the assembled and validated v1 spec. The first call performs
+ * Returns the assembled and validated spec. The first call performs
  * validation; subsequent calls return the cached value by reference.
  *
  * Throws an `Error` if the spec is internally inconsistent — refs that don't
@@ -151,7 +152,7 @@ export function getSpec(): Spec {
     };
     const errors = validate(built);
     if (errors.length > 0) {
-        throw new Error(`Invalid Codama v1 spec:\n${errors.map(e => `  - ${e}`).join('\n')}`);
+        throw new Error(`Invalid Codama spec:\n${errors.map(e => `  - ${e}`).join('\n')}`);
     }
     cached = built;
     return cached;

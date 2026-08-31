@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
 
 import pkg from '../package.json';
-import { getEnumeration, getNode, getSpec, getUnion, isChildAttribute, SPEC_VERSION } from '../src/v1';
+import { getEnumeration, getNode, getSpec, getUnion, isChildAttribute, SPEC_VERSION } from '../src/spec';
 
-describe('v1 spec — composition', () => {
+describe('spec — composition', () => {
     it('exposes a SPEC_VERSION matching the assembled spec', () => {
         // semver with an optional prerelease tag (e.g. 1.9.0-rc.0 while in changesets pre mode)
         expect(SPEC_VERSION).toMatch(/^\d+\.\d+\.\d+(-[\w.]+)?$/);
@@ -25,7 +25,7 @@ describe('v1 spec — composition', () => {
     });
 });
 
-describe('v1 spec — coverage smoke checks', () => {
+describe('spec — coverage smoke checks', () => {
     it('declares every node category', () => {
         for (const kind of [
             // type nodes
@@ -119,7 +119,7 @@ describe('v1 spec — coverage smoke checks', () => {
     });
 });
 
-describe('v1 spec — accountNode shape', () => {
+describe('spec — accountNode shape', () => {
     it('matches the encoded shape exactly', () => {
         const account = getNode('accountNode')!;
         const attrNames = account.attributes.map(a => a.name);
@@ -150,7 +150,7 @@ describe('v1 spec — accountNode shape', () => {
     });
 });
 
-describe('v1 spec — typeNode union composition', () => {
+describe('spec — typeNode union composition', () => {
     it('preserves the nested-union structure', () => {
         const typeNode = getUnion('typeNode')!;
         expect(typeNode.members).toContainEqual({ kind: 'union', name: 'standaloneTypeNode' });
@@ -158,18 +158,18 @@ describe('v1 spec — typeNode union composition', () => {
     });
 });
 
-describe('v1 spec — programNode shape', () => {
+describe('spec — programNode shape', () => {
     it('exposes publicKey as an address type', () => {
         const program = getNode('programNode')!;
         const publicKey = program.attributes.find(a => a.name === 'publicKey')!;
         expect(publicKey.type).toEqual({ kind: 'address' });
     });
 
-    it('keeps every vec-of-children attribute required in v1', () => {
-        // v1 keeps these arrays required so existing codegen targets (JS,
+    it('keeps every vec-of-children attribute required', () => {
+        // These arrays stay required so existing codegen targets (JS,
         // Rust) don't have to special-case the "empty array vs. absent"
         // distinction. The optional encoding may return in a future spec
-        // major.
+        // change.
         const program = getNode('programNode')!;
         for (const name of ['accounts', 'instructions', 'definedTypes', 'pdas', 'events', 'errors', 'constants']) {
             const a = program.attributes.find(attr => attr.name === name);
@@ -179,7 +179,7 @@ describe('v1 spec — programNode shape', () => {
     });
 });
 
-describe('v1 spec — publicKeyValueNode shape', () => {
+describe('spec — publicKeyValueNode shape', () => {
     it('exposes publicKey as an address type', () => {
         const node = getNode('publicKeyValueNode')!;
         const publicKey = node.attributes.find(a => a.name === 'publicKey')!;
@@ -187,7 +187,7 @@ describe('v1 spec — publicKeyValueNode shape', () => {
     });
 });
 
-describe('v1 spec — pdaNode shape', () => {
+describe('spec — pdaNode shape', () => {
     it('exposes programId as an address type', () => {
         const node = getNode('pdaNode')!;
         const programId = node.attributes.find(a => a.name === 'programId')!;
@@ -195,7 +195,7 @@ describe('v1 spec — pdaNode shape', () => {
     });
 });
 
-describe('v1 spec — enumerations carry per-variant docs', () => {
+describe('spec — enumerations carry per-variant docs', () => {
     it('every variant of every enumeration has docs', () => {
         for (const c of getSpec().categories) {
             for (const e of c.enumerations) {
@@ -207,7 +207,7 @@ describe('v1 spec — enumerations carry per-variant docs', () => {
     });
 });
 
-describe('v1 spec — displaySkip enumeration', () => {
+describe('spec — displaySkip enumeration', () => {
     it('declares the three variants the display layer documents', () => {
         const e = getEnumeration('displaySkip')!;
         expect(e.variants.map(v => v.name)).toEqual(['always', 'never', 'whenInjected']);
@@ -218,7 +218,7 @@ describe('v1 spec — displaySkip enumeration', () => {
     });
 });
 
-describe('v1 spec — display node shapes', () => {
+describe('spec — display node shapes', () => {
     it('instructionDisplayNode shape', () => {
         const n = getNode('instructionDisplayNode')!;
         expect(n.attributes.map(a => a.name)).toEqual(['intent', 'interpolatedIntent']);
@@ -303,7 +303,7 @@ describe('v1 spec — display node shapes', () => {
     });
 });
 
-describe('v1 spec — display attribute on host nodes', () => {
+describe('spec — display attribute on host nodes', () => {
     const nodeHosts: ReadonlyArray<readonly [string, string]> = [
         ['instructionNode', 'instructionDisplayNode'],
         ['instructionAccountNode', 'instructionAccountDisplayNode'],
@@ -341,7 +341,7 @@ describe('v1 spec — display attribute on host nodes', () => {
     }
 });
 
-describe('v1 spec — registeredDisplayNode union', () => {
+describe('spec — registeredDisplayNode union', () => {
     it('includes every display node', () => {
         const u = getUnion('registeredDisplayNode')!;
         for (const kind of [
@@ -364,7 +364,7 @@ describe('v1 spec — registeredDisplayNode union', () => {
     });
 });
 
-describe('v1 spec — numberDisplayNode union', () => {
+describe('spec — numberDisplayNode union', () => {
     it('lists the three number presentation forms', () => {
         const u = getUnion('numberDisplayNode')!;
         expect(u.members).toEqual([
@@ -375,7 +375,7 @@ describe('v1 spec — numberDisplayNode union', () => {
     });
 });
 
-describe('v1 spec — injectedValueNode shape', () => {
+describe('spec — injectedValueNode shape', () => {
     it('matches the encoded shape exactly', () => {
         const n = getNode('injectedValueNode')!;
         expect(n.attributes.map(a => a.name)).toEqual(['key', 'fallback']);
@@ -389,7 +389,7 @@ describe('v1 spec — injectedValueNode shape', () => {
     });
 });
 
-describe('v1 spec — injectable value unions', () => {
+describe('spec — injectable value unions', () => {
     it('injectableNumberValueNode pairs numberValueNode with injectedValueNode', () => {
         const u = getUnion('injectableNumberValueNode')!;
         expect(u.members).toEqual([
@@ -419,7 +419,7 @@ describe('v1 spec — injectable value unions', () => {
     });
 });
 
-describe('v1 spec — accountFieldValueNode shape', () => {
+describe('spec — accountFieldValueNode shape', () => {
     it('matches the encoded shape exactly', () => {
         const n = getNode('accountFieldValueNode')!;
         expect(n.attributes.map(a => a.name)).toEqual(['account', 'path']);
@@ -437,7 +437,7 @@ describe('v1 spec — accountFieldValueNode shape', () => {
     });
 });
 
-describe('v1 spec — providedNode shape', () => {
+describe('spec — providedNode shape', () => {
     it('matches the encoded shape exactly', () => {
         const n = getNode('providedNode')!;
         expect(n.attributes.map(a => a.name)).toEqual(['name', 'node']);
@@ -451,7 +451,7 @@ describe('v1 spec — providedNode shape', () => {
     });
 });
 
-describe('v1 spec — instructionNode.provides', () => {
+describe('spec — instructionNode.provides', () => {
     it('declares an optional array of providedNode', () => {
         const n = getNode('instructionNode')!;
         const provides = n.attributes.find(a => a.name === 'provides')!;
@@ -462,7 +462,7 @@ describe('v1 spec — instructionNode.provides', () => {
     });
 });
 
-describe('v1 spec — pluginNode shape', () => {
+describe('spec — pluginNode shape', () => {
     it('matches the encoded shape exactly', () => {
         const n = getNode('pluginNode')!;
         expect(n.attributes.map(a => a.name)).toEqual(['name', 'payload']);
@@ -479,7 +479,7 @@ describe('v1 spec — pluginNode shape', () => {
     });
 });
 
-describe('v1 spec — instructionNode.plugins', () => {
+describe('spec — instructionNode.plugins', () => {
     it('declares an optional array of pluginNode', () => {
         const n = getNode('instructionNode')!;
         const plugins = n.attributes.find(a => a.name === 'plugins')!;
@@ -490,7 +490,7 @@ describe('v1 spec — instructionNode.plugins', () => {
     });
 });
 
-describe('v1 spec — instructionAccountNode.accountLink', () => {
+describe('spec — instructionAccountNode.accountLink', () => {
     it('declares an optional accountLinkNode reference', () => {
         const n = getNode('instructionAccountNode')!;
         const link = n.attributes.find(a => a.name === 'accountLink')!;
@@ -501,7 +501,7 @@ describe('v1 spec — instructionAccountNode.accountLink', () => {
     });
 });
 
-describe('v1 spec — JSON round-trip', () => {
+describe('spec — JSON round-trip', () => {
     it('produces stable JSON', () => {
         const a = JSON.stringify(getSpec());
         const b = JSON.stringify(getSpec());

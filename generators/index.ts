@@ -3,8 +3,10 @@
  *
  * Runs every registered generator sequentially. Each generator exposes
  * a `generate()` function (sync or async) from its `index.ts`, owns its
- * target output paths, and writes to a versioned subfolder
- * (`v1/...`, future `v2/...`, …) at the repo root.
+ * target output paths, and writes its artifacts (`spec.json`, `schema.json`,
+ * `docs/`) at the repo root. Each release line hosts exactly one spec major,
+ * so the artifacts are unversioned; previous majors live on their own
+ * maintenance branches.
  *
  * Adding a new generator: drop a folder under `generators/`, export a
  * `generate()` from its `index.ts`, then register it in the `GENERATORS`

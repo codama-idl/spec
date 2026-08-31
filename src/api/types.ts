@@ -2,8 +2,8 @@
  * Public types describing the shape of a Codama spec.
  *
  * These types are version-agnostic — the same shape describes a Codama v1
- * spec, a v2 spec, etc. Versioned content (concrete nodes, enumerations,
- * unions, categories) lives under `src/v<n>/`. The first half of
+ * spec, a v2 spec, etc. The current major's content (concrete nodes,
+ * enumerations, unions, categories) lives under `src/spec/`. The first half of
  * this file declares the type-expression vocabulary; the second half
  * declares the spec-content shape (attributes, nodes, unions,
  * enumerations, nested unions, categories).

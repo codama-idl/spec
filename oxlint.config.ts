@@ -3,7 +3,10 @@ const solanaConfig = require('@solana-config/oxc/oxlint');
 
 const ignorePatterns = [
     '**/dist/',
-    'v[0-9]*/**',
+    // generated artifacts (machine output)
+    'spec.json',
+    'schema.json',
+    'docs/**',
     '.changeset/**',
     'CHANGELOG.md',
     'pnpm-lock.yaml',

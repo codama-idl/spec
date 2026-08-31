@@ -22,7 +22,7 @@ import type {
     MarkupRenderer,
     NavRegistry,
 } from '../types';
-import { BLOCK_SEPARATOR, GROUP_TITLES, ROOT_DESCRIPTION, ROOT_TITLE } from './constants';
+import { BLOCK_SEPARATOR, GROUP_TITLES, PREVIOUS_MAJOR_DOCS, ROOT_DESCRIPTION, ROOT_TITLE } from './constants';
 import { isDocChild, linkedEntity, renderType } from './renderType';
 
 /** Shared context threaded through every page renderer. `link` resolves a relative href between two pages. */
@@ -202,6 +202,14 @@ export function renderCategoryIndexPage(category: CategorySpec, ctx: RenderCtx):
     };
 }
 
+/** The root page's version line: the current spec version, plus links to the docs of previous majors. */
+function specVersionLine(version: string, markup: MarkupRenderer): string {
+    const current = `Spec version: ${version}`;
+    if (PREVIOUS_MAJOR_DOCS.length === 0) return current;
+    const others = PREVIOUS_MAJOR_DOCS.map(major => markup.link(major.label, major.url)).join(', ');
+    return `${current} · Other majors: ${others}`;
+}
+
 export function renderRootIndexPage(spec: Spec, ctx: RenderCtx): DocPage {
     const { markup } = ctx;
     const ref: DocRef = { kind: 'rootIndex' };
@@ -228,8 +236,8 @@ export function renderRootIndexPage(spec: Spec, ctx: RenderCtx): DocPage {
         markup.heading(1, ROOT_TITLE),
         // description
         markup.paragraph(ROOT_DESCRIPTION),
-        // version
-        markup.paragraph(`Spec version: ${spec.version}`),
+        // version, with a switcher to the docs of previous majors (hosted on their maintenance branches)
+        markup.paragraph(specVersionLine(spec.version, markup)),
         // legend for the (abstract)/(recursive) heading suffixes
         markup.paragraph(
             `Pages marked ${markup.italic('(abstract)')} document unions: sets of nodes that can be used ` +

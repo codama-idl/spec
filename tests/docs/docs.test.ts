@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import { generateDocs } from '../../generators/docs/generateDocs';
 import type { DocModel, DocPage, DocRef } from '../../generators/docs/types';
-import { getSpec } from '../../src/v1';
+import { getSpec } from '../../src/spec';
 
 const MODEL = generateDocs(getSpec());
 
@@ -17,7 +17,7 @@ function pageOf(model: DocModel, kind: DocRef['kind'], name: string): DocPage {
         return 'name' in candidate.ref && candidate.ref.name === name;
     });
     if (!page) {
-        throw new Error(`v1 docs test: no ${kind} page for "${name}"`);
+        throw new Error(`docs test: no ${kind} page for "${name}"`);
     }
     return page;
 }
@@ -25,7 +25,7 @@ function pageOf(model: DocModel, kind: DocRef['kind'], name: string): DocPage {
 function rootContent(model: DocModel): string {
     const page = model.pages.find(candidate => candidate.ref.kind === 'rootIndex');
     if (!page) {
-        throw new Error('v1 docs test: no root index page');
+        throw new Error('docs test: no root index page');
     }
     return page.content;
 }
@@ -51,7 +51,7 @@ function resolveRelative(dirSegments: readonly string[], relNoExt: string): stri
     return parts.join('/');
 }
 
-describe('v1 docs generation over the real spec', () => {
+describe('docs generation over the real spec', () => {
     it('renders every entity without an unresolved link and with unique paths', () => {
         const paths = MODEL.pages.map(page => page.pathSegments.join('/'));
         expect(new Set(paths).size).toBe(paths.length);
@@ -103,7 +103,8 @@ describe('v1 docs generation over the real spec', () => {
             const dir = page.pathSegments.slice(0, -1);
             for (const match of page.content.matchAll(linkPattern)) {
                 const href = match[1];
-                if (!href.endsWith('.md')) {
+                // Absolute URLs (e.g. the root page's links to previous majors' docs) are not emitted pages.
+                if (!href.endsWith('.md') || /^https?:\/\//.test(href)) {
                     continue;
                 }
                 const target = resolveRelative(dir, href.slice(0, -'.md'.length));

@@ -12,7 +12,6 @@ type BuildOptions = {
 const ENTRY: Record<string, string> = {
     api: './src/api/index.ts',
     index: './src/index.ts',
-    v1: './src/v1/index.ts',
 };
 
 function getBuildConfig({ format, platform }: BuildOptions): TsupConfig {
@@ -41,7 +40,7 @@ function getBuildConfig({ format, platform }: BuildOptions): TsupConfig {
         },
         platform: platform === 'node' ? 'node' : 'browser',
         sourcemap: true,
-        // Multi-entry ESM builds (`index` + `v1` + `api`) trigger tsup's
+        // Multi-entry ESM builds (`index` + `api`) trigger tsup's
         // automatic code splitting by default, which lifts shared modules
         // into hashed `chunk-*.mjs` files. Those chunks are not listed in
         // `package.json#files`, so the published tarball ships entrypoints

@@ -1,9 +1,9 @@
 /**
- * Syncs `SPEC_VERSION` (src/v1/version.ts) with the `version` field of package.json.
+ * Syncs `SPEC_VERSION` (src/spec/version.ts) with the `version` field of package.json.
  *
  * Run by the release flow (`pnpm release:version`) right after `changeset version`, so the
  * spec version lands in the same commit as the package bump. `pnpm generate` then refreshes
- * the `v1/` artifacts that embed the version. A unit test asserts the two values never drift.
+ * the generated artifacts that embed the version. A unit test asserts the two values never drift.
  */
 
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -12,7 +12,7 @@ import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const VERSION_FILE = path.join(REPO_ROOT, 'src', 'v1', 'version.ts');
+const VERSION_FILE = path.join(REPO_ROOT, 'src', 'spec', 'version.ts');
 
 const { version } = JSON.parse(readFileSync(path.join(REPO_ROOT, 'package.json'), 'utf8')) as { version: string };
 const content = readFileSync(VERSION_FILE, 'utf8');
