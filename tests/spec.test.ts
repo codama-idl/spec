@@ -126,7 +126,7 @@ describe('spec — accountNode shape', () => {
         expect(attrNames).toEqual(['name', 'size', 'docs', 'data', 'pda', 'discriminators']);
 
         const data = account.attributes.find(a => a.name === 'data')!;
-        expect(data.type).toEqual({ alias: 'nestedTypeNode', kind: 'nestedUnion', name: 'structTypeNode' });
+        expect(data.type).toEqual({ kind: 'node', name: 'structTypeNode' });
         expect(data.optional).toBeUndefined();
         expect(isChildAttribute(data.type)).toBe(true);
 
@@ -151,10 +151,61 @@ describe('spec — accountNode shape', () => {
 });
 
 describe('spec — typeNode union composition', () => {
-    it('preserves the nested-union structure', () => {
+    it('preserves the union-of-union structure', () => {
         const typeNode = getUnion('typeNode')!;
         expect(typeNode.members).toContainEqual({ kind: 'union', name: 'standaloneTypeNode' });
         expect(typeNode.members).toContainEqual({ kind: 'node', name: 'definedTypeLinkNode' });
+    });
+
+    it('gives every typeNode union member a trailing transforms attribute, and no other node', () => {
+        const spec = getSpec();
+        const standalone = getUnion('standaloneTypeNode')!;
+        const typeNodeKinds = new Set([
+            ...standalone.members.flatMap(m => (m.kind === 'node' ? [m.name] : [])),
+            'definedTypeLinkNode',
+        ]);
+        expect(typeNodeKinds.size).toBeGreaterThan(0);
+        for (const category of spec.categories) {
+            for (const n of category.nodes) {
+                const transforms = n.attributes.find(a => a.name === 'transforms');
+                if (typeNodeKinds.has(n.kind)) {
+                    expect(transforms, `node "${n.kind}" should declare transforms`).toBeDefined();
+                    expect(transforms!.optional).toBe(true);
+                    expect(transforms!.type).toEqual({ kind: 'array', of: { kind: 'union', name: 'transformNode' } });
+                    expect(
+                        n.attributes.at(-1)!.name,
+                        `transforms should be the last declared attribute of "${n.kind}"`,
+                    ).toBe('transforms');
+                } else {
+                    expect(transforms, `node "${n.kind}" should not declare transforms`).toBeUndefined();
+                }
+            }
+        }
+    });
+
+    it('declares the seven transform nodes and no wrapper type nodes', () => {
+        const transformNode = getUnion('transformNode')!;
+        expect(transformNode.members.map(m => m.name).sort()).toEqual([
+            'fixedSizeTransformNode',
+            'hiddenPrefixTransformNode',
+            'hiddenSuffixTransformNode',
+            'postOffsetTransformNode',
+            'preOffsetTransformNode',
+            'sentinelTransformNode',
+            'sizePrefixTransformNode',
+        ]);
+        for (const wrapper of [
+            'fixedSizeTypeNode',
+            'hiddenPrefixTypeNode',
+            'hiddenSuffixTypeNode',
+            'postOffsetTypeNode',
+            'preOffsetTypeNode',
+            'sentinelTypeNode',
+            'sizePrefixTypeNode',
+        ]) {
+            expect(getNode(wrapper), `wrapper "${wrapper}" should no longer exist`).toBeUndefined();
+        }
+        expect(getSpec().categories.every(c => c.nestedUnions.length === 0)).toBe(true);
     });
 });
 

@@ -16,7 +16,7 @@ const node = mapTypeNode(publicKeyTypeNode(), numberTypeNode('u32'), prefixedCou
             'typescript',
             `
 mapTypeNode(
-    fixedSizeTypeNode(stringTypeNode('utf8'), 1), // Key: Single UTF-8 character.
+    stringTypeNode('utf8', { transforms: [fixedSizeTransformNode(1)] }), // Key: Single UTF-8 character.
     numberTypeNode('u16'), // Value: 16-bit unsigned integer.
     prefixedCountNode(numberTypeNode('u8')), // Count: map length is prefixed with a u8.
 );

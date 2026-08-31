@@ -14,12 +14,13 @@ Entries are serialised one after the other, each key immediately followed by its
 
 ### Children
 
-| Attribute | Type                                            | Description                                                                                                                           |
-| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `key`     | [`TypeNode`](./TypeNode.md)                     | The type of each entry key.                                                                                                           |
-| `value`   | [`TypeNode`](./TypeNode.md)                     | The type of each entry value.                                                                                                         |
-| `count`   | [`CountNode`](../countNodes/CountNode.md)       | The strategy used to determine the number of entries.                                                                                 |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute    | Type                                                                 | Description                                                                                                                           |
+| ------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `key`        | [`TypeNode`](./TypeNode.md)                                          | The type of each entry key.                                                                                                           |
+| `value`      | [`TypeNode`](./TypeNode.md)                                          | The type of each entry value.                                                                                                         |
+| `count`      | [`CountNode`](../countNodes/CountNode.md)                            | The strategy used to determine the number of entries.                                                                                 |
+| `transforms` | [`TransformNode`](../transformNodes/TransformNode.md)[] _(optional)_ | Transforms applied to the serialisation of this type, in order — the first is the innermost.                                          |
+| `plugins`    | [`PluginNode`](../PluginNode.md)[] _(optional)_                      | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 
@@ -33,7 +34,7 @@ const node = mapTypeNode(publicKeyTypeNode(), numberTypeNode('u32'), prefixedCou
 
 ```typescript
 mapTypeNode(
-    fixedSizeTypeNode(stringTypeNode('utf8'), 1), // Key: Single UTF-8 character.
+    stringTypeNode('utf8', { transforms: [fixedSizeTransformNode(1)] }), // Key: Single UTF-8 character.
     numberTypeNode('u16'), // Value: 16-bit unsigned integer.
     prefixedCountNode(numberTypeNode('u8')), // Count: map length is prefixed with a u8.
 );

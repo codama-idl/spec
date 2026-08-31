@@ -1,13 +1,13 @@
-import { attribute, defineNode, enumeration, i64, union } from '../../../api';
-import { examples } from './PreOffsetTypeNode.examples';
+import { attribute, byteOffset, defineNode, enumeration } from '../../../api';
+import { examples } from './PreOffsetTransformNode.examples';
 
-export const preOffsetTypeNode = defineNode('preOffsetTypeNode', {
+export const preOffsetTransformNode = defineNode('preOffsetTransformNode', {
     docs: [
-        'Before serialising the wrapped type, advance the cursor by `offset` bytes interpreted via the chosen strategy.',
+        'Before serialising the transformed type, advance the cursor by `offset` bytes interpreted via the chosen strategy.',
         '',
-        'Since the offset is applied _before_ the wrapped type runs, this node is useful to move the encoded value of the wrapped type itself. See `postOffsetTypeNode` for the opposite behaviour.',
+        'Since the offset is applied _before_ the transformed type runs, this transform is useful to move the encoded value of the transformed type itself. See `postOffsetTransformNode` for the opposite behaviour.',
         '',
-        'The strategies below are illustrated against the following buffer: the `99` byte represents some previously encoded value for reference and the `FF` byte represents the encoded value of the wrapped type, which moves as its pre-offset changes.',
+        'The strategies below are illustrated against the following buffer: the `99` byte represents some previously encoded value for reference and the `FF` byte represents the encoded value of the transformed type, which moves as its pre-offset changes.',
         '',
         '```',
         '0x00000099FF000000;',
@@ -51,19 +51,16 @@ export const preOffsetTypeNode = defineNode('preOffsetTypeNode', {
         '```',
         '',
         '> [!IMPORTANT]',
-        '> Some type nodes affect the buffer that is available to us: depending on where we are in the type tree, we may not have access to the entire buffer.',
-        '> For instance, inside a `fixedSizeTypeNode`, the buffer is truncated or padded to match the provided fixed size once the wrapped content has been serialised — we are essentially "boxed" into a sub-buffer, and that sub-buffer is the one affected by the `absolute` strategy.',
-        '> The type nodes that create sub-buffers are: `fixedSizeTypeNode`, `sentinelTypeNode`, and `sizePrefixTypeNode`.',
+        '> Some transforms affect the buffer that is available to us: depending on where we are in the type tree, we may not have access to the entire buffer.',
+        '> For instance, under a `fixedSizeTransformNode`, the buffer is truncated or padded to match the provided fixed size once the transformed content has been serialised — we are essentially "boxed" into a sub-buffer, and that sub-buffer is the one affected by the `absolute` strategy.',
+        '> The transforms that create sub-buffers are: `fixedSizeTransformNode`, `sentinelTransformNode`, and `sizePrefixTransformNode`.',
     ],
     attributes: [
-        attribute('offset', i64(), {
-            docs: ['The signed byte offset to apply before the wrapped type runs.'],
+        attribute('offset', byteOffset(), {
+            docs: ['The signed byte offset to apply before the transformed type runs.'],
         }),
         attribute('strategy', enumeration('preOffsetStrategy'), {
             docs: ['How the `offset` value is interpreted.'],
-        }),
-        attribute('type', union('typeNode'), {
-            docs: ['The wrapped type whose serialisation is preceded by the offset.'],
         }),
     ],
     examples,

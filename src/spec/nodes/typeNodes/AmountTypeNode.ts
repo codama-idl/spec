@@ -1,4 +1,5 @@
-import { attribute, defineNode, nestedUnion, optionalAttribute, string, u32 } from '../../../api';
+import { attribute, defineNode, node, optionalAttribute, string, u32 } from '../../../api';
+import { transformsAttribute } from '../transformNodes';
 import { examples } from './AmountTypeNode.examples';
 
 export const amountTypeNode = defineNode('amountTypeNode', {
@@ -9,16 +10,17 @@ export const amountTypeNode = defineNode('amountTypeNode', {
     attributes: [
         attribute('decimals', u32(), {
             docs: [
-                'The number of decimal places the wrapped integer carries.',
+                'The number of decimal places the inner integer carries.',
                 'For example, an integer value of 12345 with 2 decimal places represents 123.45.',
             ],
         }),
         optionalAttribute('unit', string(), {
             docs: ['The unit of the amount — e.g. "USD" or "%".'],
         }),
-        attribute('number', nestedUnion('nestedTypeNode', 'numberTypeNode'), {
+        attribute('number', node('numberTypeNode'), {
             docs: ['The number type the amount wraps.'],
         }),
+        transformsAttribute(),
     ],
     examples,
 });

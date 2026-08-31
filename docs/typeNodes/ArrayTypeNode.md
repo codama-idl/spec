@@ -12,11 +12,12 @@ A homogeneous list of items. The item type is defined by `item`; the length is d
 
 ### Children
 
-| Attribute | Type                                            | Description                                                                                                                           |
-| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `item`    | [`TypeNode`](./TypeNode.md)                     | The type of each item in the array.                                                                                                   |
-| `count`   | [`CountNode`](../countNodes/CountNode.md)       | The strategy used to determine the number of items.                                                                                   |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute    | Type                                                                 | Description                                                                                                                           |
+| ------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `item`       | [`TypeNode`](./TypeNode.md)                                          | The type of each item in the array.                                                                                                   |
+| `count`      | [`CountNode`](../countNodes/CountNode.md)                            | The strategy used to determine the number of items.                                                                                   |
+| `transforms` | [`TransformNode`](../transformNodes/TransformNode.md)[] _(optional)_ | Transforms applied to the serialisation of this type, in order — the first is the innermost.                                          |
+| `plugins`    | [`PluginNode`](../PluginNode.md)[] _(optional)_                      | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

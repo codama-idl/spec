@@ -4,7 +4,7 @@ The canonical Codama node specification.
 
 Spec version: 1.9.2 · Other majors: [v1](https://github.com/codama-idl/spec/blob/1.x/v1/docs/README.md)
 
-Pages marked _(abstract)_ document unions: sets of nodes that can be used interchangeably. Pages marked _(recursive)_ document nested unions: wrapper nodes that may nest before reaching a base type.
+Pages marked _(abstract)_ document unions: sets of nodes that can be used interchangeably.
 
 ## Base attributes
 
@@ -24,6 +24,7 @@ Codegen targets append them after each node's declared attributes, so they alway
 - [Link](./linkNodes/README.md) - Link nodes — references to other named entities (programs, PDAs, accounts, …).
 - [PdaSeed](./pdaSeedNodes/README.md) - PDA-seed nodes — the constants and variables a program uses to derive PDAs.
 - [Shared](./sharedNodes/README.md) - Shared enumerations referenced from multiple node categories.
+- [Transform](./transformNodes/README.md) - Transform nodes — modifiers applied to the serialisation of the type node that carries them.
 - [Type](./typeNodes/README.md) - Type nodes — the building blocks of every value shape.
 - [Value](./valueNodes/README.md) - Value nodes — concrete values whose shape is described by a type node.
 

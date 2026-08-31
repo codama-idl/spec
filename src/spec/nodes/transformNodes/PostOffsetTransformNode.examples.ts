@@ -2,31 +2,31 @@ import { code, example, type DocExamples } from '../../../api';
 
 export const examples: DocExamples = [
     example(
-        'A relative pre-offset (the default strategy)',
+        'A relative post-offset (the default strategy)',
         code(
             'typescript',
             `
-preOffsetTypeNode(numberTypeNode('u32'), 2);
+numberTypeNode('u32', { transforms: [postOffsetTransformNode(2)] });
 `,
         ),
     ),
     example(
-        'An absolute pre-offset',
+        'An absolute post-offset from the end of the buffer',
         code(
             'typescript',
             `
-preOffsetTypeNode(numberTypeNode('u32'), -2, 'absolute');
+numberTypeNode('u32', { transforms: [postOffsetTransformNode(-2, 'absolute')] });
 `,
         ),
     ),
     example(
-        'A left-padded u32 number',
+        'A right-padded u32 number',
         code(
             'typescript',
             `
-preOffsetTypeNode(numberTypeNode('u32'), 4, 'padded');
+numberTypeNode('u32', { transforms: [postOffsetTransformNode(4, 'padded')] });
 
-// 42 => 0x000000002A000000
+// 42 => 0x2A00000000000000
 `,
         ),
     ),
@@ -35,7 +35,7 @@ preOffsetTypeNode(numberTypeNode('u32'), 4, 'padded');
         code(
             'typescript',
             `
-tupleTypeNode([numberTypeNode('u32'), preOffsetTypeNode(numberTypeNode('u16'), -2)]);
+tupleTypeNode([numberTypeNode('u32', { transforms: [postOffsetTransformNode(-2)] }), numberTypeNode('u16')]);
 
 // [1, 2]           => 0x01000200
 // [0xFFFFFFFF, 42] => 0xFFFF2A00

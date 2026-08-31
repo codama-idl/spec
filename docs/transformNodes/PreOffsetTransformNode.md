@@ -1,10 +1,10 @@
-# PreOffsetTypeNode
+# PreOffsetTransformNode
 
-Before serialising the wrapped type, advance the cursor by `offset` bytes interpreted via the chosen strategy.
+Before serialising the transformed type, advance the cursor by `offset` bytes interpreted via the chosen strategy.
 
-Since the offset is applied _before_ the wrapped type runs, this node is useful to move the encoded value of the wrapped type itself. See `postOffsetTypeNode` for the opposite behaviour.
+Since the offset is applied _before_ the transformed type runs, this transform is useful to move the encoded value of the transformed type itself. See `postOffsetTransformNode` for the opposite behaviour.
 
-The strategies below are illustrated against the following buffer: the `99` byte represents some previously encoded value for reference and the `FF` byte represents the encoded value of the wrapped type, which moves as its pre-offset changes.
+The strategies below are illustrated against the following buffer: the `99` byte represents some previously encoded value for reference and the `FF` byte represents the encoded value of the transformed type, which moves as its pre-offset changes.
 
 ```
 0x00000099FF000000;
@@ -48,25 +48,24 @@ offset = -2
 ```
 
 > [!IMPORTANT]
-> Some type nodes affect the buffer that is available to us: depending on where we are in the type tree, we may not have access to the entire buffer.
-> For instance, inside a `fixedSizeTypeNode`, the buffer is truncated or padded to match the provided fixed size once the wrapped content has been serialised — we are essentially "boxed" into a sub-buffer, and that sub-buffer is the one affected by the `absolute` strategy.
-> The type nodes that create sub-buffers are: `fixedSizeTypeNode`, `sentinelTypeNode`, and `sizePrefixTypeNode`.
+> Some transforms affect the buffer that is available to us: depending on where we are in the type tree, we may not have access to the entire buffer.
+> For instance, under a `fixedSizeTransformNode`, the buffer is truncated or padded to match the provided fixed size once the transformed content has been serialised — we are essentially "boxed" into a sub-buffer, and that sub-buffer is the one affected by the `absolute` strategy.
+> The transforms that create sub-buffers are: `fixedSizeTransformNode`, `sentinelTransformNode`, and `sizePrefixTransformNode`.
 
 ## Attributes
 
 ### Data
 
-| Attribute | Type                  | Description                                                   |
-| --------- | --------------------- | ------------------------------------------------------------- |
-| `kind`    | `"preOffsetTypeNode"` | The node discriminator.                                       |
-| `offset`  | `i64`                 | The signed byte offset to apply before the wrapped type runs. |
+| Attribute | Type                       | Description                                                       |
+| --------- | -------------------------- | ----------------------------------------------------------------- |
+| `kind`    | `"preOffsetTransformNode"` | The node discriminator.                                           |
+| `offset`  | `i64`                      | The signed byte offset to apply before the transformed type runs. |
 
 ### Children
 
 | Attribute  | Type                                                       | Description                                                                                                                           |
 | ---------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `strategy` | [`PreOffsetStrategy`](../sharedNodes/PreOffsetStrategy.md) | How the `offset` value is interpreted.                                                                                                |
-| `type`     | [`TypeNode`](./TypeNode.md)                                | The wrapped type whose serialisation is preceded by the offset.                                                                       |
 | `plugins`  | [`PluginNode`](../PluginNode.md)[] _(optional)_            | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
@@ -74,19 +73,19 @@ offset = -2
 ### A relative pre-offset (the default strategy)
 
 ```typescript
-preOffsetTypeNode(numberTypeNode('u32'), 2);
+numberTypeNode('u32', { transforms: [preOffsetTransformNode(2)] });
 ```
 
 ### An absolute pre-offset
 
 ```typescript
-preOffsetTypeNode(numberTypeNode('u32'), -2, 'absolute');
+numberTypeNode('u32', { transforms: [preOffsetTransformNode(-2, 'absolute')] });
 ```
 
 ### A left-padded u32 number
 
 ```typescript
-preOffsetTypeNode(numberTypeNode('u32'), 4, 'padded');
+numberTypeNode('u32', { transforms: [preOffsetTransformNode(4, 'padded')] });
 
 // 42 => 0x000000002A000000
 ```
@@ -94,7 +93,7 @@ preOffsetTypeNode(numberTypeNode('u32'), 4, 'padded');
 ### A u32 number overwritten by a u16 number
 
 ```typescript
-tupleTypeNode([numberTypeNode('u32'), preOffsetTypeNode(numberTypeNode('u16'), -2)]);
+tupleTypeNode([numberTypeNode('u32'), numberTypeNode('u16', { transforms: [preOffsetTransformNode(-2)] })]);
 
 // [1, 2]           => 0x01000200
 // [0xFFFFFFFF, 42] => 0xFFFF2A00

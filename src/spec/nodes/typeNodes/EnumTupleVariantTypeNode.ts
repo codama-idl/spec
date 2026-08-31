@@ -1,4 +1,4 @@
-import { attribute, defineNode, nestedUnion, node, optionalAttribute, stringIdentifier, u32 } from '../../../api';
+import { attribute, defineNode, node, optionalAttribute, stringIdentifier, u32 } from '../../../api';
 import { examples } from './EnumTupleVariantTypeNode.examples';
 
 export const enumTupleVariantTypeNode = defineNode('enumTupleVariantTypeNode', {
@@ -12,7 +12,7 @@ export const enumTupleVariantTypeNode = defineNode('enumTupleVariantTypeNode', {
                 'Explicit discriminator value. When omitted, the discriminator is the index of the variant in the enum, starting at 0.',
             ],
         }),
-        attribute('tuple', nestedUnion('nestedTypeNode', 'tupleTypeNode'), {
+        attribute('tuple', node('tupleTypeNode'), {
             docs: ['The tuple of positional fields carried by the variant.'],
         }),
         optionalAttribute('display', node('enumVariantDisplayNode'), {

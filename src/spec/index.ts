@@ -12,7 +12,6 @@
 import type { CategorySpec, EnumerationSpec, NodeSpec, Spec, UnionSpec } from '../api';
 import { array, defineBase, defineCategory, node, optionalAttribute, validate } from '../api';
 import { ALL_ENUMERATIONS } from './enumerations';
-import { nestedTypeNode } from './nestedUnions';
 import { accountNode } from './nodes/AccountNode';
 import { constantNode } from './nodes/ConstantNode';
 import { ALL_CONTEXTUAL_VALUE_NODE_UNIONS, ALL_CONTEXTUAL_VALUE_NODES } from './nodes/contextualValueNodes';
@@ -36,6 +35,7 @@ import { pluginNode } from './nodes/PluginNode';
 import { programNode } from './nodes/ProgramNode';
 import { providedNode } from './nodes/ProvidedNode';
 import { rootNode } from './nodes/RootNode';
+import { ALL_TRANSFORM_NODE_UNIONS, ALL_TRANSFORM_NODES } from './nodes/transformNodes';
 import { ALL_TYPE_NODE_UNIONS, ALL_TYPE_NODES } from './nodes/typeNodes';
 import { ALL_VALUE_NODE_UNIONS, ALL_VALUE_NODES } from './nodes/valueNodes';
 import { SPEC_VERSION } from './version';
@@ -60,9 +60,17 @@ const BASE = defineBase({
 
 const TYPE_CATEGORY = defineCategory('type', {
     docs: ['Type nodes — the building blocks of every value shape.'],
-    nestedUnions: [nestedTypeNode],
     nodes: [...ALL_TYPE_NODES],
     unions: [...ALL_TYPE_NODE_UNIONS],
+});
+
+const TRANSFORM_CATEGORY = defineCategory('transform', {
+    docs: [
+        'Transform nodes — modifiers applied to the serialisation of the type node that carries them.',
+        'Every type node has an optional `transforms` array; transforms apply in array order, the first being the innermost.',
+    ],
+    nodes: [...ALL_TRANSFORM_NODES],
+    unions: [...ALL_TRANSFORM_NODE_UNIONS],
 });
 
 const VALUE_CATEGORY = defineCategory('value', {
@@ -139,6 +147,7 @@ const TOP_LEVEL_CATEGORY = defineCategory('topLevel', {
 
 const ALL_CATEGORIES: readonly CategorySpec[] = [
     TYPE_CATEGORY,
+    TRANSFORM_CATEGORY,
     VALUE_CATEGORY,
     LINK_CATEGORY,
     PDA_SEED_CATEGORY,

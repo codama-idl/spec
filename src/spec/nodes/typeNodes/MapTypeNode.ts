@@ -1,4 +1,5 @@
 import { attribute, defineNode, union } from '../../../api';
+import { transformsAttribute } from '../transformNodes';
 import { examples } from './MapTypeNode.examples';
 
 export const mapTypeNode = defineNode('mapTypeNode', {
@@ -17,6 +18,7 @@ export const mapTypeNode = defineNode('mapTypeNode', {
         attribute('count', union('countNode'), {
             docs: ['The strategy used to determine the number of entries.'],
         }),
+        transformsAttribute(),
     ],
     examples,
 });

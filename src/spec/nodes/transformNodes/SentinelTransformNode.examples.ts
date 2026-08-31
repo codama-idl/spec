@@ -6,7 +6,9 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-sentinelTypeNode(stringTypeNode('utf8'), constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ff')));
+stringTypeNode('utf8', {
+    transforms: [sentinelTransformNode(constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ff')))],
+});
 
 // Hello => 0x48656C6C6FFF
 `,

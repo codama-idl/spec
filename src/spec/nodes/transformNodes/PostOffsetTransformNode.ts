@@ -1,13 +1,13 @@
-import { attribute, defineNode, enumeration, i64, union } from '../../../api';
-import { examples } from './PostOffsetTypeNode.examples';
+import { attribute, byteOffset, defineNode, enumeration } from '../../../api';
+import { examples } from './PostOffsetTransformNode.examples';
 
-export const postOffsetTypeNode = defineNode('postOffsetTypeNode', {
+export const postOffsetTransformNode = defineNode('postOffsetTransformNode', {
     docs: [
-        'After serialising the wrapped type, advance the cursor by `offset` bytes interpreted via the chosen strategy.',
+        'After serialising the transformed type, advance the cursor by `offset` bytes interpreted via the chosen strategy.',
         '',
-        'Since the offset is applied _after_ the wrapped type runs, this node is useful to move the cursor around once the wrapped type has been processed. See `preOffsetTypeNode` for the opposite behaviour.',
+        'Since the offset is applied _after_ the transformed type runs, this transform is useful to move the cursor around once the transformed type has been processed. See `preOffsetTransformNode` for the opposite behaviour.',
         '',
-        'The strategies below are illustrated against the following buffer: the `99` byte represents the encoded value of the wrapped type and the `FF` byte represents the next bytes to be encoded after it, in order to show the _post_ cursor position.',
+        'The strategies below are illustrated against the following buffer: the `99` byte represents the encoded value of the transformed type and the `FF` byte represents the next bytes to be encoded after it, in order to show the _post_ cursor position.',
         '',
         '```',
         '0x00000099FF000000;',
@@ -51,7 +51,7 @@ export const postOffsetTypeNode = defineNode('postOffsetTypeNode', {
         '      └-- Post-offset',
         '```',
         '',
-        '**`preOffset`** — the cursor is moved to the right of the pre-offset — i.e. where the wrapped type started — by the provided offset. A negative offset moves it to the left of the pre-offset instead.',
+        '**`preOffset`** — the cursor is moved to the right of the pre-offset — i.e. where the transformed type started — by the provided offset. A negative offset moves it to the left of the pre-offset instead.',
         '',
         '```',
         'offset = 2',
@@ -66,19 +66,16 @@ export const postOffsetTypeNode = defineNode('postOffsetTypeNode', {
         '```',
         '',
         '> [!IMPORTANT]',
-        '> Some type nodes affect the buffer that is available to us: depending on where we are in the type tree, we may not have access to the entire buffer.',
-        '> For instance, inside a `fixedSizeTypeNode`, the buffer is truncated or padded to match the provided fixed size once the wrapped content has been serialised — we are essentially "boxed" into a sub-buffer, and that sub-buffer is the one affected by the `absolute` strategy.',
-        '> The type nodes that create sub-buffers are: `fixedSizeTypeNode`, `sentinelTypeNode`, and `sizePrefixTypeNode`.',
+        '> Some transforms affect the buffer that is available to us: depending on where we are in the type tree, we may not have access to the entire buffer.',
+        '> For instance, under a `fixedSizeTransformNode`, the buffer is truncated or padded to match the provided fixed size once the transformed content has been serialised — we are essentially "boxed" into a sub-buffer, and that sub-buffer is the one affected by the `absolute` strategy.',
+        '> The transforms that create sub-buffers are: `fixedSizeTransformNode`, `sentinelTransformNode`, and `sizePrefixTransformNode`.',
     ],
     attributes: [
-        attribute('offset', i64(), {
-            docs: ['The signed byte offset to apply after the wrapped type runs.'],
+        attribute('offset', byteOffset(), {
+            docs: ['The signed byte offset to apply after the transformed type runs.'],
         }),
         attribute('strategy', enumeration('postOffsetStrategy'), {
             docs: ['How the `offset` value is interpreted.'],
-        }),
-        attribute('type', union('typeNode'), {
-            docs: ['The wrapped type whose serialisation is followed by the offset.'],
         }),
     ],
     examples,

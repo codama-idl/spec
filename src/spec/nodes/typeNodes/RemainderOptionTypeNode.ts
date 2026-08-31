@@ -1,4 +1,5 @@
 import { attribute, defineNode, union } from '../../../api';
+import { transformsAttribute } from '../transformNodes';
 import { examples } from './RemainderOptionTypeNode.examples';
 
 export const remainderOptionTypeNode = defineNode('remainderOptionTypeNode', {
@@ -9,6 +10,7 @@ export const remainderOptionTypeNode = defineNode('remainderOptionTypeNode', {
         attribute('item', union('typeNode'), {
             docs: ['The type carried by the option when present.'],
         }),
+        transformsAttribute(),
     ],
     examples,
 });

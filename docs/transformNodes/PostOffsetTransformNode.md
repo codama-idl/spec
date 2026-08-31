@@ -1,10 +1,10 @@
-# PostOffsetTypeNode
+# PostOffsetTransformNode
 
-After serialising the wrapped type, advance the cursor by `offset` bytes interpreted via the chosen strategy.
+After serialising the transformed type, advance the cursor by `offset` bytes interpreted via the chosen strategy.
 
-Since the offset is applied _after_ the wrapped type runs, this node is useful to move the cursor around once the wrapped type has been processed. See `preOffsetTypeNode` for the opposite behaviour.
+Since the offset is applied _after_ the transformed type runs, this transform is useful to move the cursor around once the transformed type has been processed. See `preOffsetTransformNode` for the opposite behaviour.
 
-The strategies below are illustrated against the following buffer: the `99` byte represents the encoded value of the wrapped type and the `FF` byte represents the next bytes to be encoded after it, in order to show the _post_ cursor position.
+The strategies below are illustrated against the following buffer: the `99` byte represents the encoded value of the transformed type and the `FF` byte represents the next bytes to be encoded after it, in order to show the _post_ cursor position.
 
 ```
 0x00000099FF000000;
@@ -48,7 +48,7 @@ offset = -2
       └-- Post-offset
 ```
 
-**`preOffset`** — the cursor is moved to the right of the pre-offset — i.e. where the wrapped type started — by the provided offset. A negative offset moves it to the left of the pre-offset instead.
+**`preOffset`** — the cursor is moved to the right of the pre-offset — i.e. where the transformed type started — by the provided offset. A negative offset moves it to the left of the pre-offset instead.
 
 ```
 offset = 2
@@ -63,25 +63,24 @@ offset = -2
 ```
 
 > [!IMPORTANT]
-> Some type nodes affect the buffer that is available to us: depending on where we are in the type tree, we may not have access to the entire buffer.
-> For instance, inside a `fixedSizeTypeNode`, the buffer is truncated or padded to match the provided fixed size once the wrapped content has been serialised — we are essentially "boxed" into a sub-buffer, and that sub-buffer is the one affected by the `absolute` strategy.
-> The type nodes that create sub-buffers are: `fixedSizeTypeNode`, `sentinelTypeNode`, and `sizePrefixTypeNode`.
+> Some transforms affect the buffer that is available to us: depending on where we are in the type tree, we may not have access to the entire buffer.
+> For instance, under a `fixedSizeTransformNode`, the buffer is truncated or padded to match the provided fixed size once the transformed content has been serialised — we are essentially "boxed" into a sub-buffer, and that sub-buffer is the one affected by the `absolute` strategy.
+> The transforms that create sub-buffers are: `fixedSizeTransformNode`, `sentinelTransformNode`, and `sizePrefixTransformNode`.
 
 ## Attributes
 
 ### Data
 
-| Attribute | Type                   | Description                                                  |
-| --------- | ---------------------- | ------------------------------------------------------------ |
-| `kind`    | `"postOffsetTypeNode"` | The node discriminator.                                      |
-| `offset`  | `i64`                  | The signed byte offset to apply after the wrapped type runs. |
+| Attribute | Type                        | Description                                                      |
+| --------- | --------------------------- | ---------------------------------------------------------------- |
+| `kind`    | `"postOffsetTransformNode"` | The node discriminator.                                          |
+| `offset`  | `i64`                       | The signed byte offset to apply after the transformed type runs. |
 
 ### Children
 
 | Attribute  | Type                                                         | Description                                                                                                                           |
 | ---------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `strategy` | [`PostOffsetStrategy`](../sharedNodes/PostOffsetStrategy.md) | How the `offset` value is interpreted.                                                                                                |
-| `type`     | [`TypeNode`](./TypeNode.md)                                  | The wrapped type whose serialisation is followed by the offset.                                                                       |
 | `plugins`  | [`PluginNode`](../PluginNode.md)[] _(optional)_              | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
@@ -89,19 +88,19 @@ offset = -2
 ### A relative post-offset (the default strategy)
 
 ```typescript
-postOffsetTypeNode(numberTypeNode('u32'), 2);
+numberTypeNode('u32', { transforms: [postOffsetTransformNode(2)] });
 ```
 
 ### An absolute post-offset from the end of the buffer
 
 ```typescript
-postOffsetTypeNode(numberTypeNode('u32'), -2, 'absolute');
+numberTypeNode('u32', { transforms: [postOffsetTransformNode(-2, 'absolute')] });
 ```
 
 ### A right-padded u32 number
 
 ```typescript
-postOffsetTypeNode(numberTypeNode('u32'), 4, 'padded');
+numberTypeNode('u32', { transforms: [postOffsetTransformNode(4, 'padded')] });
 
 // 42 => 0x2A00000000000000
 ```
@@ -109,7 +108,7 @@ postOffsetTypeNode(numberTypeNode('u32'), 4, 'padded');
 ### A u32 number overwritten by a u16 number
 
 ```typescript
-tupleTypeNode([postOffsetTypeNode(numberTypeNode('u32'), -2), numberTypeNode('u16')]);
+tupleTypeNode([numberTypeNode('u32', { transforms: [postOffsetTransformNode(-2)] }), numberTypeNode('u16')]);
 
 // [1, 2]           => 0x01000200
 // [0xFFFFFFFF, 42] => 0xFFFF2A00

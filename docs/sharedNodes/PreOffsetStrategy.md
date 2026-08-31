@@ -1,7 +1,7 @@
 # PreOffsetStrategy
 
-How a pre-offset modifier interprets its offset value before serialising the wrapped type.
-See `preOffsetTypeNode` for an illustrated walkthrough of each strategy.
+How a pre-offset transform interprets its offset value before serialising the transformed type.
+See `preOffsetTransformNode` for an illustrated walkthrough of each strategy.
 
 ## Variants
 

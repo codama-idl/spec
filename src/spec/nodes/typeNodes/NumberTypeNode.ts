@@ -1,4 +1,5 @@
 import { attribute, defineNode, enumeration, optionalAttribute, union } from '../../../api';
+import { transformsAttribute } from '../transformNodes';
 import { examples } from './NumberTypeNode.examples';
 
 export const numberTypeNode = defineNode('numberTypeNode', {
@@ -13,6 +14,7 @@ export const numberTypeNode = defineNode('numberTypeNode', {
         optionalAttribute('display', union('numberDisplayNode'), {
             docs: ['Display metadata describing how the number is presented.'],
         }),
+        transformsAttribute(),
     ],
     examples,
 });

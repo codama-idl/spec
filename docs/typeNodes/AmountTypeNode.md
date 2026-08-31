@@ -7,18 +7,19 @@ Particularly useful for representing financial values as integers, since floatin
 
 ### Data
 
-| Attribute  | Type                  | Description                                                                                                                               |
-| ---------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `kind`     | `"amountTypeNode"`    | The node discriminator.                                                                                                                   |
-| `decimals` | `u32`                 | The number of decimal places the wrapped integer carries. For example, an integer value of 12345 with 2 decimal places represents 123.45. |
-| `unit`     | `string` _(optional)_ | The unit of the amount — e.g. "USD" or "%".                                                                                               |
+| Attribute  | Type                  | Description                                                                                                                             |
+| ---------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `kind`     | `"amountTypeNode"`    | The node discriminator.                                                                                                                 |
+| `decimals` | `u32`                 | The number of decimal places the inner integer carries. For example, an integer value of 12345 with 2 decimal places represents 123.45. |
+| `unit`     | `string` _(optional)_ | The unit of the amount — e.g. "USD" or "%".                                                                                             |
 
 ### Children
 
-| Attribute | Type                                                                             | Description                                                                                                                           |
-| --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `number`  | [`NestedTypeNode`](./NestedTypeNode.md)<[`NumberTypeNode`](./NumberTypeNode.md)> | The number type the amount wraps.                                                                                                     |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_                                  | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute    | Type                                                                 | Description                                                                                                                           |
+| ------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `number`     | [`NumberTypeNode`](./NumberTypeNode.md)                              | The number type the amount wraps.                                                                                                     |
+| `transforms` | [`TransformNode`](../transformNodes/TransformNode.md)[] _(optional)_ | Transforms applied to the serialisation of this type, in order — the first is the innermost.                                          |
+| `plugins`    | [`PluginNode`](../PluginNode.md)[] _(optional)_                      | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

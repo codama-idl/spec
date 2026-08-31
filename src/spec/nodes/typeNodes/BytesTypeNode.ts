@@ -1,10 +1,11 @@
 import { defineNode } from '../../../api';
+import { transformsAttribute } from '../transformNodes';
 import { examples } from './BytesTypeNode.examples';
 
 export const bytesTypeNode = defineNode('bytesTypeNode', {
     docs: [
-        'A raw sequence of bytes. Typically used inside a fixed-size, size-prefixed, or sentinel-terminated wrapper.',
+        'A raw sequence of bytes. Typically carries a fixed-size, size-prefix, or sentinel transform to bound its extent.',
     ],
-    attributes: [],
+    attributes: [transformsAttribute()],
     examples,
 });
