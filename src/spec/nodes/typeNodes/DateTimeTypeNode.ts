@@ -1,14 +1,16 @@
-import { attribute, defineNode, nestedUnion } from '../../../api';
+import { attribute, defineNode, node } from '../../../api';
+import { transformsAttribute } from '../transformNodes';
 import { examples } from './DateTimeTypeNode.examples';
 
 export const dateTimeTypeNode = defineNode('dateTimeTypeNode', {
     docs: [
-        'A timestamp encoded as a number, typically seconds since the Unix epoch. The wrapped number type determines the byte width.',
+        'A timestamp encoded as a number, typically seconds since the Unix epoch. The inner number type determines the byte width.',
     ],
     attributes: [
-        attribute('number', nestedUnion('nestedTypeNode', 'numberTypeNode'), {
+        attribute('number', node('numberTypeNode'), {
             docs: ['The numeric type used to serialise the timestamp.'],
         }),
+        transformsAttribute(),
     ],
     examples,
 });

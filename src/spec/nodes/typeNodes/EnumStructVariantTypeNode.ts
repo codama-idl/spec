@@ -1,4 +1,4 @@
-import { attribute, defineNode, nestedUnion, node, optionalAttribute, stringIdentifier, u32 } from '../../../api';
+import { attribute, defineNode, node, optionalAttribute, stringIdentifier, u32 } from '../../../api';
 import { examples } from './EnumStructVariantTypeNode.examples';
 
 export const enumStructVariantTypeNode = defineNode('enumStructVariantTypeNode', {
@@ -12,7 +12,7 @@ export const enumStructVariantTypeNode = defineNode('enumStructVariantTypeNode',
                 'Explicit discriminator value. When omitted, the discriminator is the index of the variant in the enum, starting at 0.',
             ],
         }),
-        attribute('struct', nestedUnion('nestedTypeNode', 'structTypeNode'), {
+        attribute('struct', node('structTypeNode'), {
             docs: ['The struct of named fields carried by the variant.'],
         }),
         optionalAttribute('display', node('enumVariantDisplayNode'), {

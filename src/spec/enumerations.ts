@@ -117,8 +117,8 @@ export const optionalAccountStrategy = defineEnumeration('optionalAccountStrateg
 
 export const preOffsetStrategy = defineEnumeration('preOffsetStrategy', {
     docs: [
-        'How a pre-offset modifier interprets its offset value before serialising the wrapped type.',
-        'See `preOffsetTypeNode` for an illustrated walkthrough of each strategy.',
+        'How a pre-offset transform interprets its offset value before serialising the transformed type.',
+        'See `preOffsetTransformNode` for an illustrated walkthrough of each strategy.',
     ],
     variants: [
         variant('absolute', {
@@ -141,8 +141,8 @@ export const preOffsetStrategy = defineEnumeration('preOffsetStrategy', {
 
 export const postOffsetStrategy = defineEnumeration('postOffsetStrategy', {
     docs: [
-        'How a post-offset modifier interprets its offset value after serialising the wrapped type.',
-        'See `postOffsetTypeNode` for an illustrated walkthrough of each strategy.',
+        'How a post-offset transform interprets its offset value after serialising the transformed type.',
+        'See `postOffsetTransformNode` for an illustrated walkthrough of each strategy.',
     ],
     variants: [
         variant('absolute', {
@@ -157,7 +157,7 @@ export const postOffsetStrategy = defineEnumeration('postOffsetStrategy', {
         }),
         variant('preOffset', {
             docs: [
-                'Move the cursor by the offset bytes relative to the pre-offset — where the wrapped type started — rather than where it ended; a negative offset moves it to the left of that position.',
+                'Move the cursor by the offset bytes relative to the pre-offset — where the transformed type started — rather than where it ended; a negative offset moves it to the left of that position.',
             ],
         }),
         variant('relative', {

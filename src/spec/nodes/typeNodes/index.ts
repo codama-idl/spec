@@ -7,19 +7,12 @@ import { enumEmptyVariantTypeNode } from './EnumEmptyVariantTypeNode';
 import { enumStructVariantTypeNode } from './EnumStructVariantTypeNode';
 import { enumTupleVariantTypeNode } from './EnumTupleVariantTypeNode';
 import { enumTypeNode } from './EnumTypeNode';
-import { fixedSizeTypeNode } from './FixedSizeTypeNode';
-import { hiddenPrefixTypeNode } from './HiddenPrefixTypeNode';
-import { hiddenSuffixTypeNode } from './HiddenSuffixTypeNode';
 import { mapTypeNode } from './MapTypeNode';
 import { numberTypeNode } from './NumberTypeNode';
 import { optionTypeNode } from './OptionTypeNode';
-import { postOffsetTypeNode } from './PostOffsetTypeNode';
-import { preOffsetTypeNode } from './PreOffsetTypeNode';
 import { publicKeyTypeNode } from './PublicKeyTypeNode';
 import { remainderOptionTypeNode } from './RemainderOptionTypeNode';
-import { sentinelTypeNode } from './SentinelTypeNode';
 import { setTypeNode } from './SetTypeNode';
-import { sizePrefixTypeNode } from './SizePrefixTypeNode';
 import { solAmountTypeNode } from './SolAmountTypeNode';
 import { stringTypeNode } from './StringTypeNode';
 import { structFieldTypeNode } from './StructFieldTypeNode';
@@ -38,19 +31,12 @@ export const ALL_TYPE_NODES = [
     enumStructVariantTypeNode,
     enumTupleVariantTypeNode,
     enumTypeNode,
-    fixedSizeTypeNode,
-    hiddenPrefixTypeNode,
-    hiddenSuffixTypeNode,
     mapTypeNode,
     numberTypeNode,
     optionTypeNode,
-    postOffsetTypeNode,
-    preOffsetTypeNode,
     publicKeyTypeNode,
     remainderOptionTypeNode,
-    sentinelTypeNode,
     setTypeNode,
-    sizePrefixTypeNode,
     solAmountTypeNode,
     stringTypeNode,
     structFieldTypeNode,

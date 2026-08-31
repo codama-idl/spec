@@ -23,12 +23,16 @@ eventNode({
             `
 eventNode({
     name: 'transferEvent',
-    data: hiddenPrefixTypeNode(structTypeNode([structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') })]), [
-        constantValueNode(fixedSizeTypeNode(bytesTypeNode(), 8), bytesValueNode('base16', '0102030405060708')),
-    ]),
+    data: structTypeNode([structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') })], {
+        transforms: [
+            hiddenPrefixTransformNode([
+                constantValueNode(bytesTypeNode({ transforms: [fixedSizeTransformNode(8)] }), bytesValueNode('base16', '0102030405060708')),
+            ]),
+        ],
+    }),
     discriminators: [
         constantDiscriminatorNode(
-            constantValueNode(fixedSizeTypeNode(bytesTypeNode(), 8), bytesValueNode('base16', '0102030405060708')),
+            constantValueNode(bytesTypeNode({ transforms: [fixedSizeTransformNode(8)] }), bytesValueNode('base16', '0102030405060708')),
         ),
     ],
 });

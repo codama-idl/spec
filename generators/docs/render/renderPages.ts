@@ -242,11 +242,15 @@ export function renderRootIndexPage(spec: Spec, ctx: RenderCtx): DocPage {
         markup.paragraph(ROOT_DESCRIPTION),
         // version, with a switcher to the docs of previous majors (hosted on their maintenance branches)
         markup.paragraph(specVersionLine(spec.version, markup)),
-        // legend for the (abstract)/(recursive) heading suffixes
+        // legend for the (abstract)/(recursive) heading suffixes; the recursive sentence only
+        // renders when the spec actually declares nested unions
         markup.paragraph(
             `Pages marked ${markup.italic('(abstract)')} document unions: sets of nodes that can be used ` +
-                `interchangeably. Pages marked ${markup.italic('(recursive)')} document nested unions: wrapper ` +
-                `nodes that may nest before reaching a base type.`,
+                `interchangeably.` +
+                (spec.categories.some(category => category.nestedUnions.length > 0)
+                    ? ` Pages marked ${markup.italic('(recursive)')} document nested unions: wrapper ` +
+                      `nodes that may nest before reaching a base type.`
+                    : ''),
         ),
         // base attributes shared by every node (omitted when the spec declares none)
         renderBaseSection(spec, ctx, linkTo),

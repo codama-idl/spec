@@ -7,7 +7,7 @@ export const examples: DocExamples = [
             'typescript',
             `
 structTypeNode([
-    structFieldTypeNode({ name: 'name', type: fixedSizeTypeNode(stringTypeNode('utf8'), 10) }),
+    structFieldTypeNode({ name: 'name', type: stringTypeNode('utf8', { transforms: [fixedSizeTransformNode(10)] }) }),
     structFieldTypeNode({ name: 'age', type: numberTypeNode('u8') }),
 ]);
 

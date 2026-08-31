@@ -1,4 +1,5 @@
 import { array, attribute, defineNode, node } from '../../../api';
+import { transformsAttribute } from '../transformNodes';
 import { examples } from './StructTypeNode.examples';
 
 export const structTypeNode = defineNode('structTypeNode', {
@@ -9,6 +10,7 @@ export const structTypeNode = defineNode('structTypeNode', {
         attribute('fields', array(node('structFieldTypeNode')), {
             docs: ['The fields of the struct, in declaration order.'],
         }),
+        transformsAttribute(),
     ],
     examples,
 });

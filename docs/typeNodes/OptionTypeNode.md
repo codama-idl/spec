@@ -13,11 +13,12 @@ A value that may be present or absent (Some/None), with an explicit numeric pref
 
 ### Children
 
-| Attribute | Type                                                                             | Description                                                                                                                                                                                    |
-| --------- | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `item`    | [`TypeNode`](./TypeNode.md)                                                      | The type carried by the option when present.                                                                                                                                                   |
-| `prefix`  | [`NestedTypeNode`](./NestedTypeNode.md)<[`NumberTypeNode`](./NumberTypeNode.md)> | The numeric type used as the presence flag. A prefix value of `1` means the item is present and follows the prefix; a value of `0` means the item is absent and nothing further is serialised. |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_                                  | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata.                                                          |
+| Attribute    | Type                                                                 | Description                                                                                                                                                                                    |
+| ------------ | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `item`       | [`TypeNode`](./TypeNode.md)                                          | The type carried by the option when present.                                                                                                                                                   |
+| `prefix`     | [`NumberTypeNode`](./NumberTypeNode.md)                              | The numeric type used as the presence flag. A prefix value of `1` means the item is present and follows the prefix; a value of `0` means the item is absent and nothing further is serialised. |
+| `transforms` | [`TransformNode`](../transformNodes/TransformNode.md)[] _(optional)_ | Transforms applied to the serialisation of this type, in order — the first is the innermost.                                                                                                   |
+| `plugins`    | [`PluginNode`](../PluginNode.md)[] _(optional)_                      | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata.                                                          |
 
 ## Examples
 

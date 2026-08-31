@@ -1,11 +1,12 @@
 import { attribute, defineNode, enumeration, node, optionalAttribute } from '../../../api';
+import { transformsAttribute } from '../transformNodes';
 import { examples } from './StringTypeNode.examples';
 
 export const stringTypeNode = defineNode('stringTypeNode', {
     docs: [
         'A string value.',
         'The encoding describes how its bytes are written.',
-        'The byte length is determined by an enclosing wrapper such as `sizePrefixTypeNode` or `fixedSizeTypeNode`.',
+        'The byte length is determined by a transform such as `sizePrefixTransformNode` or `fixedSizeTransformNode`.',
     ],
     attributes: [
         attribute('encoding', enumeration('bytesEncoding'), {
@@ -14,6 +15,7 @@ export const stringTypeNode = defineNode('stringTypeNode', {
         optionalAttribute('display', node('stringDisplayNode'), {
             docs: ['Display metadata describing how the string is presented.'],
         }),
+        transformsAttribute(),
     ],
     examples,
 });

@@ -1,4 +1,5 @@
 import { attribute, defineNode, node, optionalAttribute, stringIdentifier } from '../../../api';
+import { transformsAttribute } from '../transformNodes';
 import { examples } from './DefinedTypeLinkNode.examples';
 
 export const definedTypeLinkNode = defineNode('definedTypeLinkNode', {
@@ -10,6 +11,7 @@ export const definedTypeLinkNode = defineNode('definedTypeLinkNode', {
         attribute('name', stringIdentifier(), {
             docs: ['The name of the referenced defined type.'],
         }),
+        transformsAttribute(),
     ],
     examples,
 });

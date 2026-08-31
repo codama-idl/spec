@@ -1,4 +1,5 @@
 import { attribute, defineNode, union } from '../../../api';
+import { transformsAttribute } from '../transformNodes';
 import { examples } from './SetTypeNode.examples';
 
 export const setTypeNode = defineNode('setTypeNode', {
@@ -12,6 +13,7 @@ export const setTypeNode = defineNode('setTypeNode', {
         attribute('count', union('countNode'), {
             docs: ['The strategy used to determine the number of items.'],
         }),
+        transformsAttribute(),
     ],
     examples,
 });

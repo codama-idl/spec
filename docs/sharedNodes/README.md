@@ -11,6 +11,6 @@ Shared enumerations referenced from multiple node categories.
 - [`InstructionLifecycle`](./InstructionLifecycle.md) - The lifecycle stage of an instruction.
 - [`NumberFormat`](./NumberFormat.md) - The wire format of a numeric serialization.
 - [`OptionalAccountStrategy`](./OptionalAccountStrategy.md) - How an absent optional account is represented when serialising an instruction.
-- [`PostOffsetStrategy`](./PostOffsetStrategy.md) - How a post-offset modifier interprets its offset value after serialising the wrapped type.
-- [`PreOffsetStrategy`](./PreOffsetStrategy.md) - How a pre-offset modifier interprets its offset value before serialising the wrapped type.
+- [`PostOffsetStrategy`](./PostOffsetStrategy.md) - How a post-offset transform interprets its offset value after serialising the transformed type.
+- [`PreOffsetStrategy`](./PreOffsetStrategy.md) - How a pre-offset transform interprets its offset value before serialising the transformed type.
 - [`ProgramOrigin`](./ProgramOrigin.md) - The toolchain that originally generated a program description.

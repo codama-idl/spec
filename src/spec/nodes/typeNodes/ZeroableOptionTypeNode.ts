@@ -1,4 +1,5 @@
 import { attribute, defineNode, node, optionalAttribute, union } from '../../../api';
+import { transformsAttribute } from '../transformNodes';
 import { examples } from './ZeroableOptionTypeNode.examples';
 
 export const zeroableOptionTypeNode = defineNode('zeroableOptionTypeNode', {
@@ -12,6 +13,7 @@ export const zeroableOptionTypeNode = defineNode('zeroableOptionTypeNode', {
                 'The constant value that signals absence. When omitted, the all-zero byte pattern of the item type is used.',
             ],
         }),
+        transformsAttribute(),
     ],
     examples,
 });

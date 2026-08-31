@@ -12,12 +12,13 @@ A numeric type with a fixed wire format and byte order.
 
 ### Children
 
-| Attribute | Type                                                                     | Description                                                                                                                           |
-| --------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `format`  | [`NumberFormat`](../sharedNodes/NumberFormat.md)                         | The wire format used to serialise the number.                                                                                         |
-| `endian`  | [`Endianness`](../sharedNodes/Endianness.md)                             | The byte order used to serialise the number.                                                                                          |
-| `display` | [`NumberDisplayNode`](../displayNodes/NumberDisplayNode.md) _(optional)_ | Display metadata describing how the number is presented.                                                                              |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_                          | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute    | Type                                                                     | Description                                                                                                                           |
+| ------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `format`     | [`NumberFormat`](../sharedNodes/NumberFormat.md)                         | The wire format used to serialise the number.                                                                                         |
+| `endian`     | [`Endianness`](../sharedNodes/Endianness.md)                             | The byte order used to serialise the number.                                                                                          |
+| `display`    | [`NumberDisplayNode`](../displayNodes/NumberDisplayNode.md) _(optional)_ | Display metadata describing how the number is presented.                                                                              |
+| `transforms` | [`TransformNode`](../transformNodes/TransformNode.md)[] _(optional)_     | Transforms applied to the serialisation of this type, in order — the first is the innermost.                                          |
+| `plugins`    | [`PluginNode`](../PluginNode.md)[] _(optional)_                          | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

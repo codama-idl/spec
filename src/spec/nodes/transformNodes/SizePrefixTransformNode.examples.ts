@@ -6,7 +6,7 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-sizePrefixTypeNode(stringTypeNode('utf8'), numberTypeNode('u16'));
+stringTypeNode('utf8', { transforms: [sizePrefixTransformNode(numberTypeNode('u16'))] });
 
 // ""      => 0x0000
 // "Hello" => 0x050048656C6C6F

@@ -1,4 +1,5 @@
 import { array, attribute, defineNode, union } from '../../../api';
+import { transformsAttribute } from '../transformNodes';
 import { examples } from './TupleTypeNode.examples';
 
 export const tupleTypeNode = defineNode('tupleTypeNode', {
@@ -7,6 +8,7 @@ export const tupleTypeNode = defineNode('tupleTypeNode', {
         attribute('items', array(union('typeNode')), {
             docs: ['The type of each positional slot, in order.'],
         }),
+        transformsAttribute(),
     ],
     examples,
 });

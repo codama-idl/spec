@@ -1,4 +1,4 @@
-import { attribute, defineNode, nestedUnion } from '../../../api';
+import { attribute, defineNode, node } from '../../../api';
 import { examples } from './PrefixedCountNode.examples';
 
 export const prefixedCountNode = defineNode('prefixedCountNode', {
@@ -7,7 +7,7 @@ export const prefixedCountNode = defineNode('prefixedCountNode', {
         'This enables nodes such as `arrayTypeNode` to represent collections whose length is stored as a prefix.',
     ],
     attributes: [
-        attribute('prefix', nestedUnion('nestedTypeNode', 'numberTypeNode'), {
+        attribute('prefix', node('numberTypeNode'), {
             docs: ['The numeric type used as the count prefix.'],
         }),
     ],

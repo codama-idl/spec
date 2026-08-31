@@ -1,4 +1,5 @@
-import { attribute, boolean, defineNode, nestedUnion, optionalAttribute, union } from '../../../api';
+import { attribute, boolean, defineNode, node, optionalAttribute, union } from '../../../api';
+import { transformsAttribute } from '../transformNodes';
 import { examples } from './OptionTypeNode.examples';
 
 export const optionTypeNode = defineNode('optionTypeNode', {
@@ -13,12 +14,13 @@ export const optionTypeNode = defineNode('optionTypeNode', {
         attribute('item', union('typeNode'), {
             docs: ['The type carried by the option when present.'],
         }),
-        attribute('prefix', nestedUnion('nestedTypeNode', 'numberTypeNode'), {
+        attribute('prefix', node('numberTypeNode'), {
             docs: [
                 'The numeric type used as the presence flag.',
                 'A prefix value of `1` means the item is present and follows the prefix; a value of `0` means the item is absent and nothing further is serialised.',
             ],
         }),
+        transformsAttribute(),
     ],
     examples,
 });

@@ -40,7 +40,7 @@ instructionNode({
     arguments: [
         instructionArgumentNode({
             name: 'discriminator',
-            type: fixedSizeTypeNode(bytesTypeNode(), 8),
+            type: bytesTypeNode({ transforms: [fixedSizeTransformNode(8)] }),
             defaultValue: bytesValueNode('base16', '0011223344556677'),
             defaultValueStrategy: 'omitted',
         }),

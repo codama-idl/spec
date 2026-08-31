@@ -1,6 +1,6 @@
 # BooleanTypeNode
 
-A boolean serialised as a numeric value. The wrapped number type determines the byte width.
+A boolean serialised as a numeric value. The inner number type determines the byte width.
 A decoded number of `1` yields `true`; any other value yields `false`.
 
 ## Attributes
@@ -13,10 +13,11 @@ A decoded number of `1` yields `true`; any other value yields `false`.
 
 ### Children
 
-| Attribute | Type                                                                             | Description                                                                                                                           |
-| --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `size`    | [`NestedTypeNode`](./NestedTypeNode.md)<[`NumberTypeNode`](./NumberTypeNode.md)> | The numeric type used to serialise the boolean.                                                                                       |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_                                  | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute    | Type                                                                 | Description                                                                                                                           |
+| ------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `size`       | [`NumberTypeNode`](./NumberTypeNode.md)                              | The numeric type used to serialise the boolean.                                                                                       |
+| `transforms` | [`TransformNode`](../transformNodes/TransformNode.md)[] _(optional)_ | Transforms applied to the serialisation of this type, in order — the first is the innermost.                                          |
+| `plugins`    | [`PluginNode`](../PluginNode.md)[] _(optional)_                      | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

@@ -44,7 +44,7 @@
                                 "width": "u32"
                             },
                             "docs": [
-                                "The number of decimal places the wrapped integer carries.",
+                                "The number of decimal places the inner integer carries.",
                                 "For example, an integer value of 12345 with 2 decimal places represents 123.45."
                             ]
                         },
@@ -61,12 +61,25 @@
                         {
                             "name": "number",
                             "type": {
-                                "kind": "nestedUnion",
-                                "alias": "nestedTypeNode",
+                                "kind": "node",
                                 "name": "numberTypeNode"
                             },
                             "docs": [
                                 "The number type the amount wraps."
+                            ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
                             ]
                         }
                     ],
@@ -113,6 +126,20 @@
                             "docs": [
                                 "The strategy used to determine the number of items."
                             ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
+                            ]
                         }
                     ],
                     "examples": [
@@ -148,19 +175,32 @@
                 {
                     "kind": "booleanTypeNode",
                     "docs": [
-                        "A boolean serialised as a numeric value. The wrapped number type determines the byte width.",
+                        "A boolean serialised as a numeric value. The inner number type determines the byte width.",
                         "A decoded number of `1` yields `true`; any other value yields `false`."
                     ],
                     "attributes": [
                         {
                             "name": "size",
                             "type": {
-                                "kind": "nestedUnion",
-                                "alias": "nestedTypeNode",
+                                "kind": "node",
                                 "name": "numberTypeNode"
                             },
                             "docs": [
                                 "The numeric type used to serialise the boolean."
+                            ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
                             ]
                         }
                     ],
@@ -198,9 +238,24 @@
                 {
                     "kind": "bytesTypeNode",
                     "docs": [
-                        "A raw sequence of bytes. Typically used inside a fixed-size, size-prefixed, or sentinel-terminated wrapper."
+                        "A raw sequence of bytes. Typically carries a fixed-size, size-prefix, or sentinel transform to bound its extent."
                     ],
-                    "attributes": [],
+                    "attributes": [
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
+                            ]
+                        }
+                    ],
                     "examples": [
                         {
                             "title": "Create a bytes type node",
@@ -218,18 +273,31 @@
                 {
                     "kind": "dateTimeTypeNode",
                     "docs": [
-                        "A timestamp encoded as a number, typically seconds since the Unix epoch. The wrapped number type determines the byte width."
+                        "A timestamp encoded as a number, typically seconds since the Unix epoch. The inner number type determines the byte width."
                     ],
                     "attributes": [
                         {
                             "name": "number",
                             "type": {
-                                "kind": "nestedUnion",
-                                "alias": "nestedTypeNode",
+                                "kind": "node",
                                 "name": "numberTypeNode"
                             },
                             "docs": [
                                 "The numeric type used to serialise the timestamp."
+                            ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
                             ]
                         }
                     ],
@@ -343,8 +411,7 @@
                         {
                             "name": "struct",
                             "type": {
-                                "kind": "nestedUnion",
-                                "alias": "nestedTypeNode",
+                                "kind": "node",
                                 "name": "structTypeNode"
                             },
                             "docs": [
@@ -413,8 +480,7 @@
                         {
                             "name": "tuple",
                             "type": {
-                                "kind": "nestedUnion",
-                                "alias": "nestedTypeNode",
+                                "kind": "node",
                                 "name": "tupleTypeNode"
                             },
                             "docs": [
@@ -469,13 +535,26 @@
                         {
                             "name": "size",
                             "type": {
-                                "kind": "nestedUnion",
-                                "alias": "nestedTypeNode",
+                                "kind": "node",
                                 "name": "numberTypeNode"
                             },
                             "docs": [
                                 "The numeric type used to serialise the discriminator.",
                                 "The discriminator prepends the serialised variant payload to identify which variant was selected. By default it is the index of the variant (starting at 0), unless the variant provides its own custom discriminator value."
+                            ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
                             ]
                         }
                     ],
@@ -501,224 +580,6 @@
                                         "// Flip                => 0x00",
                                         "// Rotate (42)         => 0x012A000000",
                                         "// Move { x: 1, y: 2 } => 0x0201000200"
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "kind": "fixedSizeTypeNode",
-                    "docs": [
-                        "Wraps another type and asserts a fixed total byte size. Padding or truncation is applied as needed."
-                    ],
-                    "attributes": [
-                        {
-                            "name": "size",
-                            "type": {
-                                "kind": "integer",
-                                "width": "u64"
-                            },
-                            "docs": [
-                                "The total byte size the wrapped type must occupy."
-                            ]
-                        },
-                        {
-                            "name": "type",
-                            "type": {
-                                "kind": "union",
-                                "name": "typeNode"
-                            },
-                            "docs": [
-                                "The wrapped type whose serialisation is constrained."
-                            ]
-                        }
-                    ],
-                    "examples": [
-                        {
-                            "title": "Create a fixed size type node from a type node and a byte length",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "const node = fixedSizeTypeNode(stringTypeNode('utf8'), 32);"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "title": "Fixed UTF-8 strings",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "fixedSizeTypeNode(stringTypeNode('utf8'), 10);",
-                                        "",
-                                        "// Hello => 0x48656C6C6F0000000000"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "title": "Fixed byte arrays",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "fixedSizeTypeNode(bytesTypeNode(), 4);",
-                                        "",
-                                        "// [1, 2]          => 0x01020000",
-                                        "// [1, 2, 3, 4, 5] => 0x01020304"
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "kind": "hiddenPrefixTypeNode",
-                    "docs": [
-                        "Prefixes another type with a list of constant values that are written and read but not surfaced as fields to consumers.",
-                        "When decoding, the prefixed constants are consumed and checked against their expected values before being discarded."
-                    ],
-                    "attributes": [
-                        {
-                            "name": "type",
-                            "type": {
-                                "kind": "union",
-                                "name": "typeNode"
-                            },
-                            "docs": [
-                                "The wrapped type whose serialisation is preceded by the hidden prefix."
-                            ]
-                        },
-                        {
-                            "name": "prefix",
-                            "type": {
-                                "kind": "array",
-                                "of": {
-                                    "kind": "node",
-                                    "name": "constantValueNode"
-                                }
-                            },
-                            "docs": [
-                                "The constant values written before the wrapped type, in order."
-                            ]
-                        }
-                    ],
-                    "examples": [
-                        {
-                            "title": "Create a hidden prefix type node from a type node and constant value nodes",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "const node = hiddenPrefixTypeNode(numberTypeNode('u32'), [",
-                                        "    constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffff')),",
-                                        "]);"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "title": "A number prefixed with 0xFFFF",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "hiddenPrefixTypeNode(numberTypeNode('u32'), [constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffff'))]);",
-                                        "",
-                                        "// 42 => 0xFFFF2A000000"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "title": "A fixed UTF-8 string prefixed with \"Hello\"",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "hiddenPrefixTypeNode(fixedSizeTypeNode(stringTypeNode('utf8'), 10), [",
-                                        "    constantValueNode(stringTypeNode('utf8'), stringValueNode('Hello')),",
-                                        "]);",
-                                        "",
-                                        "// World => 0x48656C6C6F576F726C640000000000"
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "kind": "hiddenSuffixTypeNode",
-                    "docs": [
-                        "Suffixes another type with a list of constant values that are written and read but not surfaced as fields to consumers.",
-                        "When decoding, the suffixed constants are consumed and checked against their expected values before being discarded."
-                    ],
-                    "attributes": [
-                        {
-                            "name": "type",
-                            "type": {
-                                "kind": "union",
-                                "name": "typeNode"
-                            },
-                            "docs": [
-                                "The wrapped type whose serialisation is followed by the hidden suffix."
-                            ]
-                        },
-                        {
-                            "name": "suffix",
-                            "type": {
-                                "kind": "array",
-                                "of": {
-                                    "kind": "node",
-                                    "name": "constantValueNode"
-                                }
-                            },
-                            "docs": [
-                                "The constant values written after the wrapped type, in order."
-                            ]
-                        }
-                    ],
-                    "examples": [
-                        {
-                            "title": "Create a hidden suffix type node from a type node and constant value nodes",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "const node = hiddenSuffixTypeNode(numberTypeNode('u32'), [",
-                                        "    constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffff')),",
-                                        "]);"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "title": "A number suffixed with 0xFFFF",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "hiddenSuffixTypeNode(numberTypeNode('u32'), [constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffff'))]);",
-                                        "",
-                                        "// 42 => 0x2A000000FFFF"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "title": "A fixed UTF-8 string suffixed with \"Hello\"",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "hiddenSuffixTypeNode(fixedSizeTypeNode(stringTypeNode('utf8'), 10), [",
-                                        "    constantValueNode(stringTypeNode('utf8'), stringValueNode('Hello')),",
-                                        "]);",
-                                        "",
-                                        "// World => 0x576F726C64000000000048656c6c6F"
                                     ]
                                 }
                             ]
@@ -762,6 +623,20 @@
                             "docs": [
                                 "The strategy used to determine the number of entries."
                             ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
+                            ]
                         }
                     ],
                     "examples": [
@@ -783,7 +658,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "mapTypeNode(",
-                                        "    fixedSizeTypeNode(stringTypeNode('utf8'), 1), // Key: Single UTF-8 character.",
+                                        "    stringTypeNode('utf8', { transforms: [fixedSizeTransformNode(1)] }), // Key: Single UTF-8 character.",
                                         "    numberTypeNode('u16'), // Value: 16-bit unsigned integer.",
                                         "    prefixedCountNode(numberTypeNode('u8')), // Count: map length is prefixed with a u8.",
                                         ");",
@@ -830,6 +705,20 @@
                             "optional": true,
                             "docs": [
                                 "Display metadata describing how the number is presented."
+                            ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
                             ]
                         }
                     ],
@@ -920,13 +809,26 @@
                         {
                             "name": "prefix",
                             "type": {
-                                "kind": "nestedUnion",
-                                "alias": "nestedTypeNode",
+                                "kind": "node",
                                 "name": "numberTypeNode"
                             },
                             "docs": [
                                 "The numeric type used as the presence flag.",
                                 "A prefix value of `1` means the item is present and follows the prefix; a value of `0` means the item is absent and nothing further is serialised."
+                            ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
                             ]
                         }
                     ],
@@ -962,304 +864,26 @@
                     ]
                 },
                 {
-                    "kind": "postOffsetTypeNode",
-                    "docs": [
-                        "After serialising the wrapped type, advance the cursor by `offset` bytes interpreted via the chosen strategy.",
-                        "",
-                        "Since the offset is applied _after_ the wrapped type runs, this node is useful to move the cursor around once the wrapped type has been processed. See `preOffsetTypeNode` for the opposite behaviour.",
-                        "",
-                        "The strategies below are illustrated against the following buffer: the `99` byte represents the encoded value of the wrapped type and the `FF` byte represents the next bytes to be encoded after it, in order to show the _post_ cursor position.",
-                        "",
-                        "```",
-                        "0x00000099FF000000;",
-                        "        | └-- Initial post-offset",
-                        "        └-- Pre-offset",
-                        "```",
-                        "",
-                        "**`relative`** — the cursor is moved to the right by the provided offset. A negative offset moves it to the left instead.",
-                        "",
-                        "```",
-                        "offset = 2",
-                        "0x000000990000FF00;",
-                        "              └-- Post-offset",
-                        "",
-                        "offset = -2",
-                        "0x0000FF9900000000;",
-                        "      └-- Post-offset",
-                        "```",
-                        "",
-                        "**`absolute`** — the cursor is moved to an absolute position in the buffer. A negative offset moves it backwards from the end of the buffer.",
-                        "",
-                        "```",
-                        "offset = 0",
-                        "0xFF00009900000000;",
-                        "  └-- Post-offset",
-                        "",
-                        "offset = -2",
-                        "0x000000990000FF00;",
-                        "              └-- Post-offset",
-                        "```",
-                        "",
-                        "**`padded`** — the cursor is moved to the right by the provided offset **and the buffer size is increased** by the offset amount, allowing padding bytes to be added. Reciprocally, a negative offset moves the cursor to the left and decreases the buffer size.",
-                        "",
-                        "```",
-                        "offset = 2",
-                        "0x000000990000FF000000; <- Size = 10 (initially 8)",
-                        "              └-- Post-offset",
-                        "",
-                        "offset = -2",
-                        "0x0000FF990000; <- Size = 6 (initially 8)",
-                        "      └-- Post-offset",
-                        "```",
-                        "",
-                        "**`preOffset`** — the cursor is moved to the right of the pre-offset — i.e. where the wrapped type started — by the provided offset. A negative offset moves it to the left of the pre-offset instead.",
-                        "",
-                        "```",
-                        "offset = 2",
-                        "0x0000009900FF0000;",
-                        "        |   └-- Post-offset = Pre-offset + 2",
-                        "        └-- Pre-offset",
-                        "",
-                        "offset = -2",
-                        "0x00FF009900000000;",
-                        "    |   └-- Pre-offset",
-                        "    └-- Post-offset = Pre-offset - 2",
-                        "```",
-                        "",
-                        "> [!IMPORTANT]",
-                        "> Some type nodes affect the buffer that is available to us: depending on where we are in the type tree, we may not have access to the entire buffer.",
-                        "> For instance, inside a `fixedSizeTypeNode`, the buffer is truncated or padded to match the provided fixed size once the wrapped content has been serialised — we are essentially \"boxed\" into a sub-buffer, and that sub-buffer is the one affected by the `absolute` strategy.",
-                        "> The type nodes that create sub-buffers are: `fixedSizeTypeNode`, `sentinelTypeNode`, and `sizePrefixTypeNode`."
-                    ],
-                    "attributes": [
-                        {
-                            "name": "offset",
-                            "type": {
-                                "kind": "integer",
-                                "width": "i64"
-                            },
-                            "docs": [
-                                "The signed byte offset to apply after the wrapped type runs."
-                            ]
-                        },
-                        {
-                            "name": "strategy",
-                            "type": {
-                                "kind": "enumeration",
-                                "name": "postOffsetStrategy"
-                            },
-                            "docs": [
-                                "How the `offset` value is interpreted."
-                            ]
-                        },
-                        {
-                            "name": "type",
-                            "type": {
-                                "kind": "union",
-                                "name": "typeNode"
-                            },
-                            "docs": [
-                                "The wrapped type whose serialisation is followed by the offset."
-                            ]
-                        }
-                    ],
-                    "examples": [
-                        {
-                            "title": "A relative post-offset (the default strategy)",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "postOffsetTypeNode(numberTypeNode('u32'), 2);"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "title": "An absolute post-offset from the end of the buffer",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "postOffsetTypeNode(numberTypeNode('u32'), -2, 'absolute');"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "title": "A right-padded u32 number",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "postOffsetTypeNode(numberTypeNode('u32'), 4, 'padded');",
-                                        "",
-                                        "// 42 => 0x2A00000000000000"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "title": "A u32 number overwritten by a u16 number",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "tupleTypeNode([postOffsetTypeNode(numberTypeNode('u32'), -2), numberTypeNode('u16')]);",
-                                        "",
-                                        "// [1, 2]           => 0x01000200",
-                                        "// [0xFFFFFFFF, 42] => 0xFFFF2A00"
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "kind": "preOffsetTypeNode",
-                    "docs": [
-                        "Before serialising the wrapped type, advance the cursor by `offset` bytes interpreted via the chosen strategy.",
-                        "",
-                        "Since the offset is applied _before_ the wrapped type runs, this node is useful to move the encoded value of the wrapped type itself. See `postOffsetTypeNode` for the opposite behaviour.",
-                        "",
-                        "The strategies below are illustrated against the following buffer: the `99` byte represents some previously encoded value for reference and the `FF` byte represents the encoded value of the wrapped type, which moves as its pre-offset changes.",
-                        "",
-                        "```",
-                        "0x00000099FF000000;",
-                        "          └-- Initial pre-offset",
-                        "```",
-                        "",
-                        "**`relative`** — the cursor is moved to the right by the provided offset. A negative offset moves it to the left instead.",
-                        "",
-                        "```",
-                        "offset = 2",
-                        "0x000000990000FF00;",
-                        "              └-- Pre-offset",
-                        "",
-                        "offset = -2",
-                        "0x0000FF9900000000;",
-                        "      └-- Pre-offset",
-                        "```",
-                        "",
-                        "**`absolute`** — the cursor is moved to an absolute position in the buffer. A negative offset moves it backwards from the end of the buffer.",
-                        "",
-                        "```",
-                        "offset = 0",
-                        "0xFF00009900000000;",
-                        "  └-- Pre-offset",
-                        "",
-                        "offset = -2",
-                        "0x000000990000FF00;",
-                        "              └-- Pre-offset",
-                        "```",
-                        "",
-                        "**`padded`** — the cursor is moved to the right by the provided offset **and the buffer size is increased** by the offset amount, allowing padding bytes to be added. Reciprocally, a negative offset moves the cursor to the left and decreases the buffer size.",
-                        "",
-                        "```",
-                        "offset = 2",
-                        "0x000000990000FF000000; <- Size = 10 (initially 8)",
-                        "              └-- Pre-offset",
-                        "",
-                        "offset = -2",
-                        "0x0000FF990000; <- Size = 6 (initially 8)",
-                        "      └-- Pre-offset",
-                        "```",
-                        "",
-                        "> [!IMPORTANT]",
-                        "> Some type nodes affect the buffer that is available to us: depending on where we are in the type tree, we may not have access to the entire buffer.",
-                        "> For instance, inside a `fixedSizeTypeNode`, the buffer is truncated or padded to match the provided fixed size once the wrapped content has been serialised — we are essentially \"boxed\" into a sub-buffer, and that sub-buffer is the one affected by the `absolute` strategy.",
-                        "> The type nodes that create sub-buffers are: `fixedSizeTypeNode`, `sentinelTypeNode`, and `sizePrefixTypeNode`."
-                    ],
-                    "attributes": [
-                        {
-                            "name": "offset",
-                            "type": {
-                                "kind": "integer",
-                                "width": "i64"
-                            },
-                            "docs": [
-                                "The signed byte offset to apply before the wrapped type runs."
-                            ]
-                        },
-                        {
-                            "name": "strategy",
-                            "type": {
-                                "kind": "enumeration",
-                                "name": "preOffsetStrategy"
-                            },
-                            "docs": [
-                                "How the `offset` value is interpreted."
-                            ]
-                        },
-                        {
-                            "name": "type",
-                            "type": {
-                                "kind": "union",
-                                "name": "typeNode"
-                            },
-                            "docs": [
-                                "The wrapped type whose serialisation is preceded by the offset."
-                            ]
-                        }
-                    ],
-                    "examples": [
-                        {
-                            "title": "A relative pre-offset (the default strategy)",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "preOffsetTypeNode(numberTypeNode('u32'), 2);"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "title": "An absolute pre-offset",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "preOffsetTypeNode(numberTypeNode('u32'), -2, 'absolute');"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "title": "A left-padded u32 number",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "preOffsetTypeNode(numberTypeNode('u32'), 4, 'padded');",
-                                        "",
-                                        "// 42 => 0x000000002A000000"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "title": "A u32 number overwritten by a u16 number",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "tupleTypeNode([numberTypeNode('u32'), preOffsetTypeNode(numberTypeNode('u16'), -2)]);",
-                                        "",
-                                        "// [1, 2]           => 0x01000200",
-                                        "// [0xFFFFFFFF, 42] => 0xFFFF2A00"
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
                     "kind": "publicKeyTypeNode",
                     "docs": [
                         "A 32-byte Solana public key."
                     ],
-                    "attributes": [],
+                    "attributes": [
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
+                            ]
+                        }
+                    ],
                     "examples": [
                         {
                             "title": "Create a public key type node",
@@ -1289,6 +913,20 @@
                             "docs": [
                                 "The type carried by the option when present."
                             ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
+                            ]
                         }
                     ],
                     "examples": [
@@ -1302,54 +940,6 @@
                                         "",
                                         "// None          => 0x",
                                         "// Some(\"Hello\") => 0x48656C6C6F"
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "kind": "sentinelTypeNode",
-                    "docs": [
-                        "Wraps another type and delimits it with a constant sentinel value written immediately after the wrapped type.",
-                        "",
-                        "When decoding, the wrapped type is decoded until the sentinel value is encountered, at which point decoding stops and the sentinel is discarded.",
-                        "",
-                        "> [!IMPORTANT]",
-                        "> For this node to work, the sentinel value must never occur within the encoded bytes of the wrapped type."
-                    ],
-                    "attributes": [
-                        {
-                            "name": "type",
-                            "type": {
-                                "kind": "union",
-                                "name": "typeNode"
-                            },
-                            "docs": [
-                                "The wrapped type whose extent is delimited by the sentinel."
-                            ]
-                        },
-                        {
-                            "name": "sentinel",
-                            "type": {
-                                "kind": "node",
-                                "name": "constantValueNode"
-                            },
-                            "docs": [
-                                "The constant value written immediately after the wrapped type to mark its end."
-                            ]
-                        }
-                    ],
-                    "examples": [
-                        {
-                            "title": "A UTF-8 string terminated by 0xFF",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "sentinelTypeNode(stringTypeNode('utf8'), constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ff')));",
-                                        "",
-                                        "// Hello => 0x48656C6C6FFF"
                                     ]
                                 }
                             ]
@@ -1381,6 +971,20 @@
                             "docs": [
                                 "The strategy used to determine the number of items."
                             ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
+                            ]
                         }
                     ],
                     "examples": [
@@ -1400,67 +1004,34 @@
                     ]
                 },
                 {
-                    "kind": "sizePrefixTypeNode",
-                    "docs": [
-                        "Wraps another type with a numeric prefix indicating the byte length of the wrapped type.",
-                        "When decoding, the size is read first and determines how many bytes the wrapped type may consume."
-                    ],
-                    "attributes": [
-                        {
-                            "name": "type",
-                            "type": {
-                                "kind": "union",
-                                "name": "typeNode"
-                            },
-                            "docs": [
-                                "The wrapped type whose serialisation is preceded by its size."
-                            ]
-                        },
-                        {
-                            "name": "prefix",
-                            "type": {
-                                "kind": "nestedUnion",
-                                "alias": "nestedTypeNode",
-                                "name": "numberTypeNode"
-                            },
-                            "docs": [
-                                "The numeric type used as the size prefix."
-                            ]
-                        }
-                    ],
-                    "examples": [
-                        {
-                            "title": "A UTF-8 string prefixed with a u16 size",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "sizePrefixTypeNode(stringTypeNode('utf8'), numberTypeNode('u16'));",
-                                        "",
-                                        "// \"\"      => 0x0000",
-                                        "// \"Hello\" => 0x050048656C6C6F"
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
                     "kind": "solAmountTypeNode",
                     "docs": [
-                        "A SOL amount expressed in lamports under the wrapped numeric type.",
+                        "A SOL amount expressed in lamports under the inner numeric type.",
                         "Equivalent to an `amountTypeNode` with 9 decimals and `SOL` as the unit."
                     ],
                     "attributes": [
                         {
                             "name": "number",
                             "type": {
-                                "kind": "nestedUnion",
-                                "alias": "nestedTypeNode",
+                                "kind": "node",
                                 "name": "numberTypeNode"
                             },
                             "docs": [
                                 "The numeric type used to serialise the lamport amount."
+                            ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
                             ]
                         }
                     ],
@@ -1486,7 +1057,7 @@
                     "docs": [
                         "A string value.",
                         "The encoding describes how its bytes are written.",
-                        "The byte length is determined by an enclosing wrapper such as `sizePrefixTypeNode` or `fixedSizeTypeNode`."
+                        "The byte length is determined by a transform such as `sizePrefixTransformNode` or `fixedSizeTransformNode`."
                     ],
                     "attributes": [
                         {
@@ -1508,6 +1079,20 @@
                             "optional": true,
                             "docs": [
                                 "Display metadata describing how the string is presented."
+                            ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
                             ]
                         }
                     ],
@@ -1634,6 +1219,20 @@
                             "docs": [
                                 "The fields of the struct, in declaration order."
                             ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
+                            ]
                         }
                     ],
                     "examples": [
@@ -1644,7 +1243,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "structTypeNode([",
-                                        "    structFieldTypeNode({ name: 'name', type: fixedSizeTypeNode(stringTypeNode('utf8'), 10) }),",
+                                        "    structFieldTypeNode({ name: 'name', type: stringTypeNode('utf8', { transforms: [fixedSizeTransformNode(10)] }) }),",
                                         "    structFieldTypeNode({ name: 'age', type: numberTypeNode('u8') }),",
                                         "]);",
                                         "",
@@ -1673,6 +1272,20 @@
                             "docs": [
                                 "The type of each positional slot, in order."
                             ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
+                            ]
                         }
                     ],
                     "examples": [
@@ -1682,7 +1295,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "tupleTypeNode([fixedSizeTypeNode(stringTypeNode('utf8'), 10), numberTypeNode('u8')]);",
+                                        "tupleTypeNode([stringTypeNode('utf8', { transforms: [fixedSizeTransformNode(10)] }), numberTypeNode('u8')]);",
                                         "",
                                         "// (Alice, 42) => 0x416C69636500000000002A"
                                     ]
@@ -1716,6 +1329,20 @@
                             "optional": true,
                             "docs": [
                                 "The constant value that signals absence. When omitted, the all-zero byte pattern of the item type is used."
+                            ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
                             ]
                         }
                     ],
@@ -1781,18 +1408,6 @@
                         },
                         {
                             "kind": "node",
-                            "name": "fixedSizeTypeNode"
-                        },
-                        {
-                            "kind": "node",
-                            "name": "hiddenPrefixTypeNode"
-                        },
-                        {
-                            "kind": "node",
-                            "name": "hiddenSuffixTypeNode"
-                        },
-                        {
-                            "kind": "node",
                             "name": "mapTypeNode"
                         },
                         {
@@ -1805,14 +1420,6 @@
                         },
                         {
                             "kind": "node",
-                            "name": "postOffsetTypeNode"
-                        },
-                        {
-                            "kind": "node",
-                            "name": "preOffsetTypeNode"
-                        },
-                        {
-                            "kind": "node",
                             "name": "publicKeyTypeNode"
                         },
                         {
@@ -1821,15 +1428,7 @@
                         },
                         {
                             "kind": "node",
-                            "name": "sentinelTypeNode"
-                        },
-                        {
-                            "kind": "node",
                             "name": "setTypeNode"
-                        },
-                        {
-                            "kind": "node",
-                            "name": "sizePrefixTypeNode"
                         },
                         {
                             "kind": "node",
@@ -1914,29 +1513,566 @@
                 }
             ],
             "enumerations": [],
-            "nestedUnions": [
+            "nestedUnions": []
+        },
+        {
+            "name": "transform",
+            "docs": [
+                "Transform nodes — modifiers applied to the serialisation of the type node that carries them.",
+                "Every type node has an optional `transforms` array; transforms apply in array order, the first being the innermost."
+            ],
+            "nodes": [
                 {
-                    "name": "nestedTypeNode",
+                    "kind": "fixedSizeTransformNode",
                     "docs": [
-                        "A type, possibly wrapped in zero-or-more size, offset, sentinel, or hidden prefix/suffix modifiers.",
-                        "The wrapping is recursive: each modifier wraps another `nestedTypeNode<T>` until the inner `T` is reached.",
-                        "For example, a `nestedTypeNode<stringTypeNode>` can be fulfilled by a plain `stringTypeNode`, by a `fixedSizeTypeNode` wrapping a `stringTypeNode`, or by any deeper nesting such as `hiddenPrefixTypeNode<preOffsetTypeNode<fixedSizeTypeNode<stringTypeNode>>>`."
+                        "Asserts a fixed total byte size for the transformed type. Padding or truncation is applied as needed."
                     ],
-                    "base": {
-                        "kind": "union",
-                        "name": "typeNode"
-                    },
-                    "wrappers": [
-                        "fixedSizeTypeNode",
-                        "sizePrefixTypeNode",
-                        "preOffsetTypeNode",
-                        "postOffsetTypeNode",
-                        "sentinelTypeNode",
-                        "hiddenPrefixTypeNode",
-                        "hiddenSuffixTypeNode"
+                    "attributes": [
+                        {
+                            "name": "size",
+                            "type": {
+                                "kind": "integer",
+                                "width": "u64"
+                            },
+                            "docs": [
+                                "The total byte size the transformed type must occupy."
+                            ]
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "title": "Fixed UTF-8 strings",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "stringTypeNode('utf8', { transforms: [fixedSizeTransformNode(10)] });",
+                                        "",
+                                        "// Hello => 0x48656C6C6F0000000000"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Fixed byte arrays",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "bytesTypeNode({ transforms: [fixedSizeTransformNode(4)] });",
+                                        "",
+                                        "// [1, 2]          => 0x01020000",
+                                        "// [1, 2, 3, 4, 5] => 0x01020304"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "hiddenPrefixTransformNode",
+                    "docs": [
+                        "Prefixes the transformed type with a list of constant values that are written and read but not surfaced as fields to consumers.",
+                        "When decoding, the prefixed constants are consumed and checked against their expected values before being discarded."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "prefix",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "node",
+                                    "name": "constantValueNode"
+                                }
+                            },
+                            "docs": [
+                                "The constant values written before the transformed type, in order."
+                            ]
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "title": "A number prefixed with 0xFFFF",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "numberTypeNode('u32', {",
+                                        "    transforms: [hiddenPrefixTransformNode([constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffff'))])],",
+                                        "});",
+                                        "",
+                                        "// 42 => 0xFFFF2A000000"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A fixed UTF-8 string prefixed with \"Hello\"",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "stringTypeNode('utf8', {",
+                                        "    transforms: [",
+                                        "        fixedSizeTransformNode(10),",
+                                        "        hiddenPrefixTransformNode([constantValueNode(stringTypeNode('utf8'), stringValueNode('Hello'))]),",
+                                        "    ],",
+                                        "});",
+                                        "",
+                                        "// World => 0x48656C6C6F576F726C640000000000"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "hiddenSuffixTransformNode",
+                    "docs": [
+                        "Suffixes the transformed type with a list of constant values that are written and read but not surfaced as fields to consumers.",
+                        "When decoding, the suffixed constants are consumed and checked against their expected values before being discarded."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "suffix",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "node",
+                                    "name": "constantValueNode"
+                                }
+                            },
+                            "docs": [
+                                "The constant values written after the transformed type, in order."
+                            ]
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "title": "A number suffixed with 0xFFFF",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "numberTypeNode('u32', {",
+                                        "    transforms: [hiddenSuffixTransformNode([constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffff'))])],",
+                                        "});",
+                                        "",
+                                        "// 42 => 0x2A000000FFFF"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A fixed UTF-8 string suffixed with \"Hello\"",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "stringTypeNode('utf8', {",
+                                        "    transforms: [",
+                                        "        fixedSizeTransformNode(10),",
+                                        "        hiddenSuffixTransformNode([constantValueNode(stringTypeNode('utf8'), stringValueNode('Hello'))]),",
+                                        "    ],",
+                                        "});",
+                                        "",
+                                        "// World => 0x576F726C64000000000048656c6c6F"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "postOffsetTransformNode",
+                    "docs": [
+                        "After serialising the transformed type, advance the cursor by `offset` bytes interpreted via the chosen strategy.",
+                        "",
+                        "Since the offset is applied _after_ the transformed type runs, this transform is useful to move the cursor around once the transformed type has been processed. See `preOffsetTransformNode` for the opposite behaviour.",
+                        "",
+                        "The strategies below are illustrated against the following buffer: the `99` byte represents the encoded value of the transformed type and the `FF` byte represents the next bytes to be encoded after it, in order to show the _post_ cursor position.",
+                        "",
+                        "```",
+                        "0x00000099FF000000;",
+                        "        | └-- Initial post-offset",
+                        "        └-- Pre-offset",
+                        "```",
+                        "",
+                        "**`relative`** — the cursor is moved to the right by the provided offset. A negative offset moves it to the left instead.",
+                        "",
+                        "```",
+                        "offset = 2",
+                        "0x000000990000FF00;",
+                        "              └-- Post-offset",
+                        "",
+                        "offset = -2",
+                        "0x0000FF9900000000;",
+                        "      └-- Post-offset",
+                        "```",
+                        "",
+                        "**`absolute`** — the cursor is moved to an absolute position in the buffer. A negative offset moves it backwards from the end of the buffer.",
+                        "",
+                        "```",
+                        "offset = 0",
+                        "0xFF00009900000000;",
+                        "  └-- Post-offset",
+                        "",
+                        "offset = -2",
+                        "0x000000990000FF00;",
+                        "              └-- Post-offset",
+                        "```",
+                        "",
+                        "**`padded`** — the cursor is moved to the right by the provided offset **and the buffer size is increased** by the offset amount, allowing padding bytes to be added. Reciprocally, a negative offset moves the cursor to the left and decreases the buffer size.",
+                        "",
+                        "```",
+                        "offset = 2",
+                        "0x000000990000FF000000; <- Size = 10 (initially 8)",
+                        "              └-- Post-offset",
+                        "",
+                        "offset = -2",
+                        "0x0000FF990000; <- Size = 6 (initially 8)",
+                        "      └-- Post-offset",
+                        "```",
+                        "",
+                        "**`preOffset`** — the cursor is moved to the right of the pre-offset — i.e. where the transformed type started — by the provided offset. A negative offset moves it to the left of the pre-offset instead.",
+                        "",
+                        "```",
+                        "offset = 2",
+                        "0x0000009900FF0000;",
+                        "        |   └-- Post-offset = Pre-offset + 2",
+                        "        └-- Pre-offset",
+                        "",
+                        "offset = -2",
+                        "0x00FF009900000000;",
+                        "    |   └-- Pre-offset",
+                        "    └-- Post-offset = Pre-offset - 2",
+                        "```",
+                        "",
+                        "> [!IMPORTANT]",
+                        "> Some transforms affect the buffer that is available to us: depending on where we are in the type tree, we may not have access to the entire buffer.",
+                        "> For instance, under a `fixedSizeTransformNode`, the buffer is truncated or padded to match the provided fixed size once the transformed content has been serialised — we are essentially \"boxed\" into a sub-buffer, and that sub-buffer is the one affected by the `absolute` strategy.",
+                        "> The transforms that create sub-buffers are: `fixedSizeTransformNode`, `sentinelTransformNode`, and `sizePrefixTransformNode`."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "offset",
+                            "type": {
+                                "kind": "integer",
+                                "width": "i64"
+                            },
+                            "docs": [
+                                "The signed byte offset to apply after the transformed type runs."
+                            ]
+                        },
+                        {
+                            "name": "strategy",
+                            "type": {
+                                "kind": "enumeration",
+                                "name": "postOffsetStrategy"
+                            },
+                            "docs": [
+                                "How the `offset` value is interpreted."
+                            ]
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "title": "A relative post-offset (the default strategy)",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "numberTypeNode('u32', { transforms: [postOffsetTransformNode(2)] });"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An absolute post-offset from the end of the buffer",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "numberTypeNode('u32', { transforms: [postOffsetTransformNode(-2, 'absolute')] });"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A right-padded u32 number",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "numberTypeNode('u32', { transforms: [postOffsetTransformNode(4, 'padded')] });",
+                                        "",
+                                        "// 42 => 0x2A00000000000000"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A u32 number overwritten by a u16 number",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "tupleTypeNode([numberTypeNode('u32', { transforms: [postOffsetTransformNode(-2)] }), numberTypeNode('u16')]);",
+                                        "",
+                                        "// [1, 2]           => 0x01000200",
+                                        "// [0xFFFFFFFF, 42] => 0xFFFF2A00"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "preOffsetTransformNode",
+                    "docs": [
+                        "Before serialising the transformed type, advance the cursor by `offset` bytes interpreted via the chosen strategy.",
+                        "",
+                        "Since the offset is applied _before_ the transformed type runs, this transform is useful to move the encoded value of the transformed type itself. See `postOffsetTransformNode` for the opposite behaviour.",
+                        "",
+                        "The strategies below are illustrated against the following buffer: the `99` byte represents some previously encoded value for reference and the `FF` byte represents the encoded value of the transformed type, which moves as its pre-offset changes.",
+                        "",
+                        "```",
+                        "0x00000099FF000000;",
+                        "          └-- Initial pre-offset",
+                        "```",
+                        "",
+                        "**`relative`** — the cursor is moved to the right by the provided offset. A negative offset moves it to the left instead.",
+                        "",
+                        "```",
+                        "offset = 2",
+                        "0x000000990000FF00;",
+                        "              └-- Pre-offset",
+                        "",
+                        "offset = -2",
+                        "0x0000FF9900000000;",
+                        "      └-- Pre-offset",
+                        "```",
+                        "",
+                        "**`absolute`** — the cursor is moved to an absolute position in the buffer. A negative offset moves it backwards from the end of the buffer.",
+                        "",
+                        "```",
+                        "offset = 0",
+                        "0xFF00009900000000;",
+                        "  └-- Pre-offset",
+                        "",
+                        "offset = -2",
+                        "0x000000990000FF00;",
+                        "              └-- Pre-offset",
+                        "```",
+                        "",
+                        "**`padded`** — the cursor is moved to the right by the provided offset **and the buffer size is increased** by the offset amount, allowing padding bytes to be added. Reciprocally, a negative offset moves the cursor to the left and decreases the buffer size.",
+                        "",
+                        "```",
+                        "offset = 2",
+                        "0x000000990000FF000000; <- Size = 10 (initially 8)",
+                        "              └-- Pre-offset",
+                        "",
+                        "offset = -2",
+                        "0x0000FF990000; <- Size = 6 (initially 8)",
+                        "      └-- Pre-offset",
+                        "```",
+                        "",
+                        "> [!IMPORTANT]",
+                        "> Some transforms affect the buffer that is available to us: depending on where we are in the type tree, we may not have access to the entire buffer.",
+                        "> For instance, under a `fixedSizeTransformNode`, the buffer is truncated or padded to match the provided fixed size once the transformed content has been serialised — we are essentially \"boxed\" into a sub-buffer, and that sub-buffer is the one affected by the `absolute` strategy.",
+                        "> The transforms that create sub-buffers are: `fixedSizeTransformNode`, `sentinelTransformNode`, and `sizePrefixTransformNode`."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "offset",
+                            "type": {
+                                "kind": "integer",
+                                "width": "i64"
+                            },
+                            "docs": [
+                                "The signed byte offset to apply before the transformed type runs."
+                            ]
+                        },
+                        {
+                            "name": "strategy",
+                            "type": {
+                                "kind": "enumeration",
+                                "name": "preOffsetStrategy"
+                            },
+                            "docs": [
+                                "How the `offset` value is interpreted."
+                            ]
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "title": "A relative pre-offset (the default strategy)",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "numberTypeNode('u32', { transforms: [preOffsetTransformNode(2)] });"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An absolute pre-offset",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "numberTypeNode('u32', { transforms: [preOffsetTransformNode(-2, 'absolute')] });"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A left-padded u32 number",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "numberTypeNode('u32', { transforms: [preOffsetTransformNode(4, 'padded')] });",
+                                        "",
+                                        "// 42 => 0x000000002A000000"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A u32 number overwritten by a u16 number",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "tupleTypeNode([numberTypeNode('u32'), numberTypeNode('u16', { transforms: [preOffsetTransformNode(-2)] })]);",
+                                        "",
+                                        "// [1, 2]           => 0x01000200",
+                                        "// [0xFFFFFFFF, 42] => 0xFFFF2A00"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "sentinelTransformNode",
+                    "docs": [
+                        "Delimits the transformed type with a constant sentinel value written immediately after it.",
+                        "",
+                        "When decoding, the transformed type is decoded until the sentinel value is encountered, at which point decoding stops and the sentinel is discarded.",
+                        "",
+                        "> [!IMPORTANT]",
+                        "> For this transform to work, the sentinel value must never occur within the encoded bytes of the transformed type."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "sentinel",
+                            "type": {
+                                "kind": "node",
+                                "name": "constantValueNode"
+                            },
+                            "docs": [
+                                "The constant value written immediately after the transformed type to mark its end."
+                            ]
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "title": "A UTF-8 string terminated by 0xFF",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "stringTypeNode('utf8', {",
+                                        "    transforms: [sentinelTransformNode(constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ff')))],",
+                                        "});",
+                                        "",
+                                        "// Hello => 0x48656C6C6FFF"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "sizePrefixTransformNode",
+                    "docs": [
+                        "Precedes the transformed type with a numeric prefix indicating its byte length.",
+                        "When decoding, the size is read first and determines how many bytes the transformed type may consume."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "prefix",
+                            "type": {
+                                "kind": "node",
+                                "name": "numberTypeNode"
+                            },
+                            "docs": [
+                                "The numeric type used as the size prefix."
+                            ]
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "title": "A UTF-8 string prefixed with a u16 size",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "stringTypeNode('utf8', { transforms: [sizePrefixTransformNode(numberTypeNode('u16'))] });",
+                                        "",
+                                        "// \"\"      => 0x0000",
+                                        "// \"Hello\" => 0x050048656C6C6F"
+                                    ]
+                                }
+                            ]
+                        }
                     ]
                 }
-            ]
+            ],
+            "unions": [
+                {
+                    "name": "transformNode",
+                    "members": [
+                        {
+                            "kind": "node",
+                            "name": "fixedSizeTransformNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "hiddenPrefixTransformNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "hiddenSuffixTransformNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "postOffsetTransformNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "preOffsetTransformNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "sentinelTransformNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "sizePrefixTransformNode"
+                        }
+                    ],
+                    "docs": [
+                        "A modifier applied to the serialisation of the type node that carries it.",
+                        "Every type node has an optional `transforms` array. Transforms apply in array order, the first being the innermost: a `stringTypeNode` with `transforms: [sentinel, fixedSize]` first delimits the string with the sentinel, then fixes the total byte size — exactly the v1 nesting `fixedSizeTypeNode(sentinelTypeNode(stringTypeNode))` read inside-out."
+                    ]
+                }
+            ],
+            "enumerations": [],
+            "nestedUnions": []
         },
         {
             "name": "value",
@@ -2849,6 +2985,20 @@
                             "docs": [
                                 "The name of the referenced defined type."
                             ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
+                            ]
                         }
                     ],
                     "examples": [
@@ -3381,8 +3531,7 @@
                         {
                             "name": "prefix",
                             "type": {
-                                "kind": "nestedUnion",
-                                "alias": "nestedTypeNode",
+                                "kind": "node",
                                 "name": "numberTypeNode"
                             },
                             "docs": [
@@ -3635,7 +3784,7 @@
                                         "    arguments: [",
                                         "        instructionArgumentNode({",
                                         "            name: 'discriminator',",
-                                        "            type: fixedSizeTypeNode(bytesTypeNode(), 8),",
+                                        "            type: bytesTypeNode({ transforms: [fixedSizeTransformNode(8)] }),",
                                         "            defaultValue: bytesValueNode('base16', '0011223344556677'),",
                                         "            defaultValueStrategy: 'omitted',",
                                         "        }),",
@@ -5486,7 +5635,7 @@
                         {
                             "name": "preOffset",
                             "docs": [
-                                "Move the cursor by the offset bytes relative to the pre-offset — where the wrapped type started — rather than where it ended; a negative offset moves it to the left of that position."
+                                "Move the cursor by the offset bytes relative to the pre-offset — where the transformed type started — rather than where it ended; a negative offset moves it to the left of that position."
                             ]
                         },
                         {
@@ -5497,8 +5646,8 @@
                         }
                     ],
                     "docs": [
-                        "How a post-offset modifier interprets its offset value after serialising the wrapped type.",
-                        "See `postOffsetTypeNode` for an illustrated walkthrough of each strategy."
+                        "How a post-offset transform interprets its offset value after serialising the transformed type.",
+                        "See `postOffsetTransformNode` for an illustrated walkthrough of each strategy."
                     ]
                 },
                 {
@@ -5524,8 +5673,8 @@
                         }
                     ],
                     "docs": [
-                        "How a pre-offset modifier interprets its offset value before serialising the wrapped type.",
-                        "See `preOffsetTypeNode` for an illustrated walkthrough of each strategy."
+                        "How a pre-offset transform interprets its offset value before serialising the transformed type.",
+                        "See `preOffsetTransformNode` for an illustrated walkthrough of each strategy."
                     ]
                 },
                 {
@@ -5599,8 +5748,7 @@
                         {
                             "name": "data",
                             "type": {
-                                "kind": "nestedUnion",
-                                "alias": "nestedTypeNode",
+                                "kind": "node",
                                 "name": "structTypeNode"
                             },
                             "docs": [
@@ -5975,12 +6123,16 @@
                                     "content": [
                                         "eventNode({",
                                         "    name: 'transferEvent',",
-                                        "    data: hiddenPrefixTypeNode(structTypeNode([structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') })]), [",
-                                        "        constantValueNode(fixedSizeTypeNode(bytesTypeNode(), 8), bytesValueNode('base16', '0102030405060708')),",
-                                        "    ]),",
+                                        "    data: structTypeNode([structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') })], {",
+                                        "        transforms: [",
+                                        "            hiddenPrefixTransformNode([",
+                                        "                constantValueNode(bytesTypeNode({ transforms: [fixedSizeTransformNode(8)] }), bytesValueNode('base16', '0102030405060708')),",
+                                        "            ]),",
+                                        "        ],",
+                                        "    }),",
                                         "    discriminators: [",
                                         "        constantDiscriminatorNode(",
-                                        "            constantValueNode(fixedSizeTypeNode(bytesTypeNode(), 8), bytesValueNode('base16', '0102030405060708')),",
+                                        "            constantValueNode(bytesTypeNode({ transforms: [fixedSizeTransformNode(8)] }), bytesValueNode('base16', '0102030405060708')),",
                                         "        ),",
                                         "    ],",
                                         "});"

@@ -1,6 +1,6 @@
 # BytesTypeNode
 
-A raw sequence of bytes. Typically used inside a fixed-size, size-prefixed, or sentinel-terminated wrapper.
+A raw sequence of bytes. Typically carries a fixed-size, size-prefix, or sentinel transform to bound its extent.
 
 ## Attributes
 
@@ -12,9 +12,10 @@ A raw sequence of bytes. Typically used inside a fixed-size, size-prefixed, or s
 
 ### Children
 
-| Attribute | Type                                            | Description                                                                                                                           |
-| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute    | Type                                                                 | Description                                                                                                                           |
+| ------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `transforms` | [`TransformNode`](../transformNodes/TransformNode.md)[] _(optional)_ | Transforms applied to the serialisation of this type, in order — the first is the innermost.                                          |
+| `plugins`    | [`PluginNode`](../PluginNode.md)[] _(optional)_                      | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

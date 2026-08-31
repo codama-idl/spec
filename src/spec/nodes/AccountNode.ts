@@ -4,7 +4,6 @@ import {
     byteSize,
     defineNode,
     docs,
-    nestedUnion,
     node,
     optionalAttribute,
     stringIdentifier,
@@ -28,7 +27,7 @@ export const accountNode = defineNode('accountNode', {
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the account.'],
         }),
-        attribute('data', nestedUnion('nestedTypeNode', 'structTypeNode'), {
+        attribute('data', node('structTypeNode'), {
             docs: [
                 'The struct describing the account data.',
                 'It must be a struct so its fields can be referenced by other nodes — e.g. `accountFieldValueNode`.',
