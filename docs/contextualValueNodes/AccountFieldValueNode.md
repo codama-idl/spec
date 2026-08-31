@@ -14,11 +14,11 @@ Resolving the value requires reading the account state at presentation time.
 | `account` | `CamelCaseString`              | The name of the referenced account in the surrounding instruction.                                                 |
 | `path`    | `CamelCaseString` _(optional)_ | The name of the field within the account's decoded data. When absent, the value is the whole decoded account data. |
 
-### Base
+### Children
 
-| Attribute | Type                                            | Description                                                                                                                                                     |
-| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

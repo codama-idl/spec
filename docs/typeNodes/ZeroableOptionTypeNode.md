@@ -12,16 +12,11 @@ An optional value whose absence is signalled by a designated zero value rather t
 
 ### Children
 
-| Attribute   | Type                                                                   | Description                                                                                                |
-| ----------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `item`      | [`TypeNode`](./TypeNode.md)                                            | The type carried by the option when present. Must be of fixed size.                                        |
-| `zeroValue` | [`ConstantValueNode`](../valueNodes/ConstantValueNode.md) _(optional)_ | The constant value that signals absence. When omitted, the all-zero byte pattern of the item type is used. |
-
-### Base
-
-| Attribute | Type                                            | Description                                                                                                                                                     |
-| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute   | Type                                                                   | Description                                                                                                                           |
+| ----------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `item`      | [`TypeNode`](./TypeNode.md)                                            | The type carried by the option when present. Must be of fixed size.                                                                   |
+| `zeroValue` | [`ConstantValueNode`](../valueNodes/ConstantValueNode.md) _(optional)_ | The constant value that signals absence. When omitted, the all-zero byte pattern of the item type is used.                            |
+| `plugins`   | [`PluginNode`](../PluginNode.md)[] _(optional)_                        | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

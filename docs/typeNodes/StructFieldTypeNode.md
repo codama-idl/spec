@@ -14,18 +14,13 @@ A named field within a struct type.
 
 ### Children
 
-| Attribute              | Type                                                                               | Description                                                                                       |
-| ---------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `defaultValueStrategy` | [`DefaultValueStrategy`](../sharedNodes/DefaultValueStrategy.md) _(optional)_      | How a configured default value is exposed in generated APIs. Required when `defaultValue` is set. |
-| `type`                 | [`TypeNode`](./TypeNode.md)                                                        | The type of the field.                                                                            |
-| `defaultValue`         | [`ValueNode`](../valueNodes/ValueNode.md) _(optional)_                             | A default value used when the field is omitted by callers.                                        |
-| `display`              | [`StructFieldDisplayNode`](../displayNodes/StructFieldDisplayNode.md) _(optional)_ | Display metadata describing how the field is presented.                                           |
-
-### Base
-
-| Attribute | Type                                            | Description                                                                                                                                                     |
-| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute              | Type                                                                               | Description                                                                                                                           |
+| ---------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `defaultValueStrategy` | [`DefaultValueStrategy`](../sharedNodes/DefaultValueStrategy.md) _(optional)_      | How a configured default value is exposed in generated APIs. Required when `defaultValue` is set.                                     |
+| `type`                 | [`TypeNode`](./TypeNode.md)                                                        | The type of the field.                                                                                                                |
+| `defaultValue`         | [`ValueNode`](../valueNodes/ValueNode.md) _(optional)_                             | A default value used when the field is omitted by callers.                                                                            |
+| `display`              | [`StructFieldDisplayNode`](../displayNodes/StructFieldDisplayNode.md) _(optional)_ | Display metadata describing how the field is presented.                                                                               |
+| `plugins`              | [`PluginNode`](../PluginNode.md)[] _(optional)_                                    | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

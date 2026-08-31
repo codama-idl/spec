@@ -12,15 +12,10 @@ A composite type made of an ordered list of named fields. Fields are encoded and
 
 ### Children
 
-| Attribute | Type                                                | Description                                     |
-| --------- | --------------------------------------------------- | ----------------------------------------------- |
-| `fields`  | [`StructFieldTypeNode`](./StructFieldTypeNode.md)[] | The fields of the struct, in declaration order. |
-
-### Base
-
-| Attribute | Type                                            | Description                                                                                                                                                     |
-| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                                | Description                                                                                                                           |
+| --------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `fields`  | [`StructFieldTypeNode`](./StructFieldTypeNode.md)[] | The fields of the struct, in declaration order.                                                                                       |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_     | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

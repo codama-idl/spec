@@ -15,15 +15,10 @@ Particularly useful for representing financial values as integers, since floatin
 
 ### Children
 
-| Attribute | Type                                                                             | Description                       |
-| --------- | -------------------------------------------------------------------------------- | --------------------------------- |
-| `number`  | [`NestedTypeNode`](./NestedTypeNode.md)<[`NumberTypeNode`](./NumberTypeNode.md)> | The number type the amount wraps. |
-
-### Base
-
-| Attribute | Type                                            | Description                                                                                                                                                     |
-| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                                                             | Description                                                                                                                           |
+| --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `number`  | [`NestedTypeNode`](./NestedTypeNode.md)<[`NumberTypeNode`](./NumberTypeNode.md)> | The number type the amount wraps.                                                                                                     |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_                                  | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

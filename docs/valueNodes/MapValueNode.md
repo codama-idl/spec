@@ -12,15 +12,10 @@ A concrete map value: a list of (key, value) entries.
 
 ### Children
 
-| Attribute | Type                                            | Description                       |
-| --------- | ----------------------------------------------- | --------------------------------- |
-| `entries` | [`MapEntryValueNode`](./MapEntryValueNode.md)[] | The entries of the map, in order. |
-
-### Base
-
-| Attribute | Type                                            | Description                                                                                                                                                     |
-| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `entries` | [`MapEntryValueNode`](./MapEntryValueNode.md)[] | The entries of the map, in order.                                                                                                     |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

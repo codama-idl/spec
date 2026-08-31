@@ -12,16 +12,11 @@ A typed constant: a type node paired with a concrete value node.
 
 ### Children
 
-| Attribute | Type                                   | Description                         |
-| --------- | -------------------------------------- | ----------------------------------- |
-| `type`    | [`TypeNode`](../typeNodes/TypeNode.md) | The type of the constant.           |
-| `value`   | [`ValueNode`](./ValueNode.md)          | The concrete value of the constant. |
-
-### Base
-
-| Attribute | Type                                            | Description                                                                                                                                                     |
-| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`    | [`TypeNode`](../typeNodes/TypeNode.md)          | The type of the constant.                                                                                                             |
+| `value`   | [`ValueNode`](./ValueNode.md)                   | The concrete value of the constant.                                                                                                   |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

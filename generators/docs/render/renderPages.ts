@@ -44,10 +44,12 @@ export function renderNodePage(node: NodeSpec, ctx: RenderCtx): DocPage {
     const ref: DocRef = { kind: 'node', name: node.kind };
     const linkTo = linkFrom(ctx, ref);
 
-    // classify: synthesized `kind` row first, then each attribute into Data or Children (declaration order)
+    // classify: synthesized `kind` row first, then each attribute into Data or Children (declaration order).
+    // Base attributes go through the same classification but always trail their table, mirroring the
+    // serialise-last convention — so the table order matches the wire order.
     const dataRows: string[][] = [[markup.code('kind'), markup.code(`"${node.kind}"`), 'The node discriminator.']];
     const childRows: string[][] = [];
-    for (const attribute of node.attributes) {
+    for (const attribute of [...node.attributes, ...ctx.base]) {
         const row = [markup.code(attribute.name), typeCell(attribute, markup, linkTo), cellDoc(attribute.docs, markup)];
         if (isDocChild(attribute.type)) {
             childRows.push(row);
@@ -55,13 +57,6 @@ export function renderNodePage(node: NodeSpec, ctx: RenderCtx): DocPage {
             dataRows.push(row);
         }
     }
-
-    // base attributes (shared by every node, serialised last)
-    const baseRows = ctx.base.map(attribute => [
-        markup.code(attribute.name),
-        typeCell(attribute, markup, linkTo),
-        cellDoc(attribute.docs, markup),
-    ]);
 
     const cols = ['Attribute', 'Type', 'Description'];
     const parts: (string | undefined)[] = [
@@ -77,8 +72,6 @@ export function renderNodePage(node: NodeSpec, ctx: RenderCtx): DocPage {
         childRows.length
             ? `${markup.heading(3, 'Children')}${BLOCK_SEPARATOR}${markup.table(cols, childRows)}`
             : undefined,
-        // base table (omitted when the spec declares no base attributes)
-        baseRows.length ? `${markup.heading(3, 'Base')}${BLOCK_SEPARATOR}${markup.table(cols, baseRows)}` : undefined,
         // Examples section
         renderExamples(node.examples, markup),
     ];

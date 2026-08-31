@@ -52,7 +52,7 @@ const BASE = defineBase({
         optionalAttribute('plugins', array(node('pluginNode')), {
             docs: [
                 'Namespaced plugins with custom structured data.',
-                'Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata.',
+                'The universal extension point for renderer-specific or not-yet-standardised metadata.',
             ],
         }),
     ],

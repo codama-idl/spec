@@ -11,9 +11,9 @@ Pages marked _(abstract)_ document unions: sets of nodes that can be used interc
 Attributes shared by every node.
 Codegen targets append them after each node's declared attributes, so they always serialise last.
 
-| Attribute | Type                                           | Description                                                                                                                                                     |
-| --------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                           | Description                                                                                                                           |
+| --------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Categories
 

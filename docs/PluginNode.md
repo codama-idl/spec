@@ -14,11 +14,11 @@ Every node can carry plugins via the `plugins` base attribute.
 | `name`    | `CamelCaseString`   | The unique name identifying the plugin this data belongs to.                                                                   |
 | `payload` | `Json` _(optional)_ | Arbitrary, plugin-specific data. Its shape is defined by the plugin, not by Codama, and is carried through the graph verbatim. |
 
-### Base
+### Children
 
-| Attribute | Type                                           | Description                                                                                                                                                     |
-| --------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                           | Description                                                                                                                           |
+| --------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

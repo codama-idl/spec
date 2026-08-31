@@ -12,15 +12,10 @@ A concrete tuple value: a fixed-length sequence of positional value nodes.
 
 ### Children
 
-| Attribute | Type                            | Description                                  |
-| --------- | ------------------------------- | -------------------------------------------- |
-| `items`   | [`ValueNode`](./ValueNode.md)[] | The positional items of the tuple, in order. |
-
-### Base
-
-| Attribute | Type                                            | Description                                                                                                                                                     |
-| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `items`   | [`ValueNode`](./ValueNode.md)[]                 | The positional items of the tuple, in order.                                                                                          |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

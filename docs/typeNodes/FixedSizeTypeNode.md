@@ -13,15 +13,10 @@ Wraps another type and asserts a fixed total byte size. Padding or truncation is
 
 ### Children
 
-| Attribute | Type                        | Description                                          |
-| --------- | --------------------------- | ---------------------------------------------------- |
-| `type`    | [`TypeNode`](./TypeNode.md) | The wrapped type whose serialisation is constrained. |
-
-### Base
-
-| Attribute | Type                                            | Description                                                                                                                                                     |
-| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`    | [`TypeNode`](./TypeNode.md)                     | The wrapped type whose serialisation is constrained.                                                                                  |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

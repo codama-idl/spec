@@ -13,15 +13,10 @@ Display metadata for an instruction account: its label in the fallback list and 
 
 ### Children
 
-| Attribute | Type                                                        | Description                                                                              |
-| --------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `skip`    | [`DisplaySkip`](../sharedNodes/DisplaySkip.md) _(optional)_ | Whether the account is shown in the fallback list. Defaults to `"never"` (always shown). |
-
-### Base
-
-| Attribute | Type                                            | Description                                                                                                                                                     |
-| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                                        | Description                                                                                                                           |
+| --------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `skip`    | [`DisplaySkip`](../sharedNodes/DisplaySkip.md) _(optional)_ | Whether the account is shown in the fallback list. Defaults to `"never"` (always shown).                                              |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_             | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

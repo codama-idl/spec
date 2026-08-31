@@ -12,11 +12,11 @@ The underlying value counts ticks since the Unix epoch; `ticksPerSecond` is the 
 | `kind`           | `"dateTimeNumberDisplayNode"` | The node discriminator.                                                                                                                                                                |
 | `ticksPerSecond` | `u64` _(optional)_            | How many ticks make one second. Defaults to `1` (the value is already in seconds). Common choices are `1000` (milliseconds), `1000000` (microseconds), and `1000000000` (nanoseconds). |
 
-### Base
+### Children
 
-| Attribute | Type                                            | Description                                                                                                                                                     |
-| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                            | Description                                                                                                                           |
+| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

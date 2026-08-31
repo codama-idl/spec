@@ -29,12 +29,7 @@ A program instruction: its accounts, arguments, byte-delta hints, discriminators
 | `subInstructions`         | [`InstructionNode`](./InstructionNode.md)[] _(optional)_                                   | Nested instructions that split this instruction into distinct scenarios — e.g. one sub-instruction per version of the instruction.                                                                                |
 | `provides`                | [`ProvidedNode`](./ProvidedNode.md)[] _(optional)_                                         | Named nodes exposed to consumers in the surrounding scope. Each entry pairs with an `injectedValueNode` that references it by key, so reusable types can pull contextual values without naming siblings directly. |
 | `display`                 | [`InstructionDisplayNode`](./displayNodes/InstructionDisplayNode.md) _(optional)_          | Display metadata describing how the instruction is presented.                                                                                                                                                     |
-
-### Base
-
-| Attribute | Type                                           | Description                                                                                                                                                     |
-| --------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+| `plugins`                 | [`PluginNode`](./PluginNode.md)[] _(optional)_                                             | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata.                                                                             |
 
 ## Examples
 

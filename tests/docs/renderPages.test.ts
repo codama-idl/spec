@@ -43,7 +43,7 @@ describe('renderNodePage', () => {
         expect(page.content).toContain('`u64`');
     });
 
-    it('renders a Base table when the spec declares base attributes, omits it otherwise', () => {
+    it('appends base attributes to the end of their classified table, mirroring the wire order', () => {
         const node: NodeSpec = {
             kind: 'numberValueNode',
             attributes: [{ name: 'number', type: { kind: 'integer', width: 'u64' } }],
@@ -57,12 +57,14 @@ describe('renderNodePage', () => {
             },
         ];
 
+        // plugins is child-classified, so the Children table materialises even without declared children
         const withBase = renderNodePage(node, makeCtx({ base }));
-        expect(withBase.content).toContain('### Base');
+        expect(withBase.content).toContain('### Children');
         expect(withBase.content).toContain('`plugins`');
 
         const withoutBase = renderNodePage(node, makeCtx());
-        expect(withoutBase.content).not.toContain('### Base');
+        expect(withoutBase.content).not.toContain('### Children');
+        expect(withoutBase.content).not.toContain('`plugins`');
     });
 
     it('escapes pipes from a literalUnion cell so union values do not spawn extra table columns', () => {
