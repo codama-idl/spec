@@ -17,6 +17,12 @@ A homogeneous list of items. The item type is defined by `item`; the length is d
 | `item`    | [`TypeNode`](./TypeNode.md)               | The type of each item in the array.                 |
 | `count`   | [`CountNode`](../countNodes/CountNode.md) | The strategy used to determine the number of items. |
 
+### Base
+
+| Attribute | Type                                            | Description                                                                                                                                                     |
+| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Create an array type node from a type node and a count node

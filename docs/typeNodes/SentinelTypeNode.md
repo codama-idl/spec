@@ -22,6 +22,12 @@ When decoding, the wrapped type is decoded until the sentinel value is encounter
 | `type`     | [`TypeNode`](./TypeNode.md)                               | The wrapped type whose extent is delimited by the sentinel.                    |
 | `sentinel` | [`ConstantValueNode`](../valueNodes/ConstantValueNode.md) | The constant value written immediately after the wrapped type to mark its end. |
 
+### Base
+
+| Attribute | Type                                            | Description                                                                                                                                                     |
+| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### A UTF-8 string terminated by 0xFF

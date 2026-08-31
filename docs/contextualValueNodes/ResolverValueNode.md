@@ -20,6 +20,12 @@ This node acts as a fallback for any value or logic that cannot easily be descri
 | ----------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | `dependsOn` | [`ResolverDependency`](./ResolverDependency.md)[] _(optional)_ | The accounts and arguments the resolver depends on. Used by clients to ensure the dependencies are resolved first. |
 
+### Base
+
+| Attribute | Type                                            | Description                                                                                                                                                     |
+| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Create a resolver value node from a name and options

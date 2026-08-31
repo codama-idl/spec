@@ -17,6 +17,12 @@ This enables nodes such as `arrayTypeNode` to represent collections whose length
 | --------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------ |
 | `prefix`  | [`NestedTypeNode`](../typeNodes/NestedTypeNode.md)<[`NumberTypeNode`](../typeNodes/NumberTypeNode.md)> | The numeric type used as the count prefix. |
 
+### Base
+
+| Attribute | Type                                            | Description                                                                                                                                                     |
+| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Create a prefixed count node from a number node

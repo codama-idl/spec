@@ -17,6 +17,12 @@ Display metadata for an instruction account: its label in the fallback list and 
 | --------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | `skip`    | [`DisplaySkip`](../sharedNodes/DisplaySkip.md) _(optional)_ | Whether the account is shown in the fallback list. Defaults to `"never"` (always shown). |
 
+### Base
+
+| Attribute | Type                                            | Description                                                                                                                                                     |
+| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Relabelling an account in the fallback list

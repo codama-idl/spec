@@ -17,6 +17,12 @@ A PDA seed with a constant value (e.g. a UTF-8 string or a fixed byte sequence).
 | `type`    | [`TypeNode`](../typeNodes/TypeNode.md)              | The type of the seed value.                                                                   |
 | `value`   | [`ConstantPdaSeedValue`](./ConstantPdaSeedValue.md) | The constant value to use as the seed — either a literal value or the program ID placeholder. |
 
+### Base
+
+| Attribute | Type                                            | Description                                                                                                                                                     |
+| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Create a constant PDA seed node from a type and a value

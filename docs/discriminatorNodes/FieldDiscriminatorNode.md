@@ -12,6 +12,12 @@ Identifies a node by the value of a named field at a known byte offset.
 | `name`    | `CamelCaseString`          | The name of the discriminating field — a `structFieldTypeNode` of the account data or an argument of the instruction. |
 | `offset`  | `u64`                      | The byte offset of the field.                                                                                         |
 
+### Base
+
+| Attribute | Type                                            | Description                                                                                                                                                     |
+| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Create a field discriminator node from a field name and an optional offset

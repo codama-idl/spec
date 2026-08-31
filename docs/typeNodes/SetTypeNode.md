@@ -17,6 +17,12 @@ A unique-valued collection. The item type is defined by `item`; the size is dete
 | `item`    | [`TypeNode`](./TypeNode.md)               | The type of each item in the set.                   |
 | `count`   | [`CountNode`](../countNodes/CountNode.md) | The strategy used to determine the number of items. |
 
+### Base
+
+| Attribute | Type                                            | Description                                                                                                                                                     |
+| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### u32 prefixed set of u8 numbers

@@ -10,6 +10,7 @@
 export type { CodeBlock, CodeLanguage, DocExample, DocExamples } from './example';
 export type {
     AttributeSpec,
+    BaseSpec,
     CategorySpec,
     Docs,
     EnumerationSpec,

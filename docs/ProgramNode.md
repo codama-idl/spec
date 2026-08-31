@@ -29,6 +29,12 @@ A Solana program: its identity, version, accounts, instructions, defined types, 
 | `errors`       | [`ErrorNode`](./ErrorNode.md)[]                                | The errors returned by the program.                                        |
 | `constants`    | [`ConstantNode`](./ConstantNode.md)[]                          | The constants exposed by the program.                                      |
 
+### Base
+
+| Attribute | Type                                           | Description                                                                                                                                                     |
+| --------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Create a program node from an input object

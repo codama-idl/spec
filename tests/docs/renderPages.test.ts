@@ -7,7 +7,7 @@ import type { DocRef, NavRegistry } from '../../generators/docs/types';
 import type { EnumerationSpec, NodeSpec } from '../../src/api';
 
 /** A minimal RenderCtx over the real markdown renderer - lookup returns fixed path segments, links resolve to '#'. */
-function makeCtx(): RenderCtx {
+function makeCtx(overrides: Partial<RenderCtx> = {}): RenderCtx {
     const registry: NavRegistry = {
         entries: [],
         lookup: (ref: DocRef) => ({ ref, pathSegments: ['generated', 'page'] }),
@@ -16,6 +16,8 @@ function makeCtx(): RenderCtx {
         markup: markdownRenderer,
         registry,
         link: () => '#',
+        base: [],
+        ...overrides,
     };
 }
 
@@ -39,6 +41,28 @@ describe('renderNodePage', () => {
         expect(page.content).toContain('`kind`');
         expect(page.content).toContain('`"numberValueNode"`');
         expect(page.content).toContain('`u64`');
+    });
+
+    it('renders a Base table when the spec declares base attributes, omits it otherwise', () => {
+        const node: NodeSpec = {
+            kind: 'numberValueNode',
+            attributes: [{ name: 'number', type: { kind: 'integer', width: 'u64' } }],
+            examples: [],
+        };
+        const base = [
+            {
+                name: 'plugins',
+                optional: true as const,
+                type: { kind: 'array', of: { kind: 'node', name: 'pluginNode' } } as const,
+            },
+        ];
+
+        const withBase = renderNodePage(node, makeCtx({ base }));
+        expect(withBase.content).toContain('### Base');
+        expect(withBase.content).toContain('`plugins`');
+
+        const withoutBase = renderNodePage(node, makeCtx());
+        expect(withoutBase.content).not.toContain('### Base');
     });
 
     it('escapes pipes from a literalUnion cell so union values do not spawn extra table columns', () => {

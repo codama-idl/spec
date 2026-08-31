@@ -18,6 +18,12 @@ An instruction without a status is considered live — a status node is typicall
 | ----------- | --------------------------------------------------------------- | -------------------- |
 | `lifecycle` | [`InstructionLifecycle`](./sharedNodes/InstructionLifecycle.md) | The lifecycle stage. |
 
+### Base
+
+| Attribute | Type                                           | Description                                                                                                                                                     |
+| --------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### A deprecated status with migration guidance

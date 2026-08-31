@@ -23,6 +23,12 @@ An on-chain account: its name, data structure, optional fixed size, optional PDA
 | `pda`            | [`PdaLinkNode`](./linkNodes/PdaLinkNode.md) _(optional)_                                             | A link to the PDA the account is derived from, if applicable.                                                                              |
 | `discriminators` | [`DiscriminatorNode`](./discriminatorNodes/DiscriminatorNode.md)[] _(optional)_                      | Discriminators that distinguish this account from others in the program. When multiple are listed, they are combined with a logical AND.   |
 
+### Base
+
+| Attribute | Type                                           | Description                                                                                                                                                     |
+| --------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### A fixed-size account

@@ -18,6 +18,12 @@ Sits inside a host's `provides` list and pairs with `injectedValueNode` on the c
 | --------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `node`    | `anyNode` | The exposed node. The provider is a transparent pipe — any node may be supplied; the family check happens at the injection point against the consumer's expected family. |
 
+### Base
+
+| Attribute | Type                                           | Description                                                                                                                                                     |
+| --------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Providing a constant value to consumers

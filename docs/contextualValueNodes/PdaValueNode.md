@@ -18,6 +18,12 @@ Resolves to a PDA derived from a list of seed values.
 | `seeds`     | [`PdaSeedValueNode`](./PdaSeedValueNode.md)[]              | The seed values used to derive the PDA, paired with their seed names.                    |
 | `programId` | [`PdaValueProgramId`](./PdaValueProgramId.md) _(optional)_ | The program ID used to derive the PDA. When omitted, the PDA’s declared program is used. |
 
+### Base
+
+| Attribute | Type                                            | Description                                                                                                                                                     |
+| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Create a PDA value node from a PDA definition and seed values

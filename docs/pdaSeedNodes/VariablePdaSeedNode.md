@@ -18,6 +18,12 @@ A PDA seed whose value is provided at derivation time, identified by name.
 | --------- | -------------------------------------- | ------------------------------------ |
 | `type`    | [`TypeNode`](../typeNodes/TypeNode.md) | The expected type of the seed value. |
 
+### Base
+
+| Attribute | Type                                            | Description                                                                                                                                                     |
+| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Create a variable PDA seed node from a name and a type node

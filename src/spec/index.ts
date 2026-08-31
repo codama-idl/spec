@@ -10,7 +10,7 @@
  */
 
 import type { CategorySpec, EnumerationSpec, NodeSpec, Spec, UnionSpec } from '../api';
-import { defineCategory, validate } from '../api';
+import { array, defineBase, defineCategory, node, optionalAttribute, validate } from '../api';
 import { ALL_ENUMERATIONS } from './enumerations';
 import { nestedTypeNode } from './nestedUnions';
 import { accountNode } from './nodes/AccountNode';
@@ -42,6 +42,21 @@ import { SPEC_VERSION } from './version';
 
 export * from '../api/public';
 export { SPEC_VERSION } from './version';
+
+const BASE = defineBase({
+    docs: [
+        'Attributes shared by every node.',
+        "Codegen targets append them after each node's declared attributes, so they always serialise last.",
+    ],
+    attributes: [
+        optionalAttribute('plugins', array(node('pluginNode')), {
+            docs: [
+                'Namespaced plugins with custom structured data.',
+                'Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata.',
+            ],
+        }),
+    ],
+});
 
 const TYPE_CATEGORY = defineCategory('type', {
     docs: ['Type nodes — the building blocks of every value shape.'],
@@ -148,6 +163,7 @@ export function getSpec(): Spec {
     if (cached) return cached;
     const built: Spec = {
         version: SPEC_VERSION,
+        base: BASE,
         categories: ALL_CATEGORIES,
     };
     const errors = validate(built);

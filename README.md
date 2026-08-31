@@ -75,6 +75,14 @@ Each node declares its attributes as an ordered array in `defineNode(...)`, and 
 
 Preserving declaration order keeps encoded IDLs readable: the identifying scalars of a node (`kind`, `name`, …) appear before its potentially large children, so a node's identity is legible at a glance even in a deeply nested IDL.
 
+### Base attributes serialise last
+
+The spec may declare **base attributes** (`Spec.base`): attributes shared by every node, declared once via `defineBase(...)` instead of repeated on each node. The current spec declares one — `plugins`, an optional array of `pluginNode`, making every node extensible with namespaced, consumer-defined data.
+
+- **Codegen targets append base attributes after each node's declared attributes**, so they always serialise last (after the implicit `kind` discriminator and the declared attributes). They may also emit a shared `BaseNode` interface that every generated node type extends.
+- Base attribute names never collide with declared attributes — `validate` rejects such specs.
+- The array conventions above apply unchanged: an absent `plugins` array means "no plugins".
+
 ## Repository layout
 
 ```

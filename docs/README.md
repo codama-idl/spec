@@ -6,6 +6,15 @@ Spec version: 1.9.2 · Other majors: [v1](https://github.com/codama-idl/spec/blo
 
 Pages marked _(abstract)_ document unions: sets of nodes that can be used interchangeably. Pages marked _(recursive)_ document nested unions: wrapper nodes that may nest before reaching a base type.
 
+## Base attributes
+
+Attributes shared by every node.
+Codegen targets append them after each node's declared attributes, so they always serialise last.
+
+| Attribute | Type                                           | Description                                                                                                                                                     |
+| --------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Categories
 
 - [ContextualValue](./contextualValueNodes/README.md) - Contextual-value nodes — references resolved at instruction-build time (account values, argument values, …).

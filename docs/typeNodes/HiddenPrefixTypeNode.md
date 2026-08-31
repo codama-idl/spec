@@ -18,6 +18,12 @@ When decoding, the prefixed constants are consumed and checked against their exp
 | `type`    | [`TypeNode`](./TypeNode.md)                                 | The wrapped type whose serialisation is preceded by the hidden prefix. |
 | `prefix`  | [`ConstantValueNode`](../valueNodes/ConstantValueNode.md)[] | The constant values written before the wrapped type, in order.         |
 
+### Base
+
+| Attribute | Type                                            | Description                                                                                                                                                     |
+| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Create a hidden prefix type node from a type node and constant value nodes

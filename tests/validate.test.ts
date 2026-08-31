@@ -5,6 +5,7 @@ import {
     array,
     attribute,
     type CategorySpec,
+    defineBase,
     defineCategory,
     defineEnumeration,
     defineNestedUnion,
@@ -265,6 +266,44 @@ describe('validate — categories', () => {
         });
         const collisions = errors.filter(e => e.includes('"foo"') && e.includes('registered'));
         expect(collisions.length).toBe(1);
+    });
+});
+
+describe('validate — base attributes', () => {
+    const pluginsBase = () => defineBase({ attributes: [optionalAttribute('plugins', array(node('pluginNode')))] });
+
+    it('accepts a base whose references resolve and whose names are free', () => {
+        const errors = validate({
+            ...baseSpec({ nodes: [defineNode('pluginNode', { attributes: [attribute('name', string())] })] }),
+            base: pluginsBase(),
+        });
+        expect(errors).toEqual([]);
+    });
+
+    it('reports a base attribute referencing an undefined node', () => {
+        const errors = validate({ ...baseSpec(), base: pluginsBase() });
+        expect(errors.some(e => e.includes('Base attribute "plugins"') && e.includes('"pluginNode"'))).toBe(true);
+    });
+
+    it('reports a duplicate base attribute', () => {
+        const errors = validate({
+            ...baseSpec(),
+            base: defineBase({ attributes: [attribute('docs', string()), attribute('docs', string())] }),
+        });
+        expect(errors.some(e => e.includes('Base attribute "docs"') && e.includes('more than once'))).toBe(true);
+    });
+
+    it('reports a node attribute colliding with a base attribute', () => {
+        const errors = validate({
+            ...baseSpec({
+                nodes: [
+                    defineNode('pluginNode', { attributes: [attribute('name', string())] }),
+                    defineNode('aNode', { attributes: [attribute('plugins', string())] }),
+                ],
+            }),
+            base: pluginsBase(),
+        });
+        expect(errors.some(e => e.includes('"aNode"') && e.includes('collides with a base attribute'))).toBe(true);
     });
 });
 

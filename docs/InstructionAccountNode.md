@@ -25,6 +25,12 @@ An account participating in an instruction, with its name, signing/writability f
 | `accountLink`  | [`AccountLinkNode`](./linkNodes/AccountLinkNode.md) _(optional)_                                | A reference to the account's data layout. Required for consumers (e.g. `accountFieldValueNode`) to read fields from the account. The link's optional `program` allows cross-program references via the root's `additionalPrograms`. |
 | `display`      | [`InstructionAccountDisplayNode`](./displayNodes/InstructionAccountDisplayNode.md) _(optional)_ | Display metadata describing how the account is presented.                                                                                                                                                                           |
 
+### Base
+
+| Attribute | Type                                           | Description                                                                                                                                                     |
+| --------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### An optional account

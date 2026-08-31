@@ -125,6 +125,19 @@ describe('docs generation over the real spec', () => {
         expect(root).toContain('- [`InstructionByteDeltaValue`](./InstructionByteDeltaValue.md)');
     });
 
+    it('renders the base attributes on the root index and on every node page', () => {
+        const root = rootContent(MODEL);
+        expect(root).toContain('## Base attributes');
+        expect(root).toContain('`plugins`');
+
+        for (const page of MODEL.pages) {
+            if (page.ref.kind !== 'node') continue;
+            expect(page.content, `node page ${page.pathSegments.join('/')} should render the Base table`).toContain(
+                '### Base',
+            );
+        }
+    });
+
     it('renders the accountNode page with a Data/Children split and the nested-union data link', () => {
         const content = pageOf(MODEL, 'node', 'accountNode').content;
         expect(content.startsWith('# AccountNode')).toBe(true);

@@ -13,6 +13,12 @@ The string's wire encoding is carried by `stringTypeNode.encoding`; this node on
 | `sliceStart` | `u64` _(optional)_    | The start index of the displayed slice, inclusive. Defaults to the start of the string. Indices apply to the decoded character sequence. |
 | `sliceEnd`   | `u64` _(optional)_    | The end index of the displayed slice, exclusive. Defaults to the end of the string. Indices apply to the decoded character sequence.     |
 
+### Base
+
+| Attribute | Type                                            | Description                                                                                                                                                     |
+| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Displaying the whole string

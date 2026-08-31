@@ -11,6 +11,12 @@ Identifies a node by its expected total byte size.
 | `kind`    | `"sizeDiscriminatorNode"` | The node discriminator. |
 | `size`    | `u64`                     | The expected byte size. |
 
+### Base
+
+| Attribute | Type                                            | Description                                                                                                                                                     |
+| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Create a size discriminator node from a size

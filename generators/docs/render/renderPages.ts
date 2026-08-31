@@ -30,6 +30,8 @@ export interface RenderCtx {
     readonly markup: MarkupRenderer;
     readonly registry: NavRegistry;
     readonly link: (from: DocRef, to: DocRef) => string;
+    /** Attributes shared by every node (the spec's base), rendered on each node page and the root page. */
+    readonly base: readonly AttributeSpec[];
 }
 
 /** Binds a page as the link source, so renderers resolve hrefs by target ref alone. */
@@ -54,6 +56,13 @@ export function renderNodePage(node: NodeSpec, ctx: RenderCtx): DocPage {
         }
     }
 
+    // base attributes (shared by every node, serialised last)
+    const baseRows = ctx.base.map(attribute => [
+        markup.code(attribute.name),
+        typeCell(attribute, markup, linkTo),
+        cellDoc(attribute.docs, markup),
+    ]);
+
     const cols = ['Attribute', 'Type', 'Description'];
     const parts: (string | undefined)[] = [
         // header
@@ -68,6 +77,8 @@ export function renderNodePage(node: NodeSpec, ctx: RenderCtx): DocPage {
         childRows.length
             ? `${markup.heading(3, 'Children')}${BLOCK_SEPARATOR}${markup.table(cols, childRows)}`
             : undefined,
+        // base table (omitted when the spec declares no base attributes)
+        baseRows.length ? `${markup.heading(3, 'Base')}${BLOCK_SEPARATOR}${markup.table(cols, baseRows)}` : undefined,
         // Examples section
         renderExamples(node.examples, markup),
     ];
@@ -244,6 +255,8 @@ export function renderRootIndexPage(spec: Spec, ctx: RenderCtx): DocPage {
                 `interchangeably. Pages marked ${markup.italic('(recursive)')} document nested unions: wrapper ` +
                 `nodes that may nest before reaching a base type.`,
         ),
+        // base attributes shared by every node (omitted when the spec declares none)
+        renderBaseSection(spec, ctx, linkTo),
         // body: linked categories
         `${markup.heading(2, 'Categories')}${BLOCK_SEPARATOR}${markup.list('bulleted', categories)}`,
         // body: one section per root-level category (topLevel)
@@ -254,6 +267,23 @@ export function renderRootIndexPage(spec: Spec, ctx: RenderCtx): DocPage {
         pathSegments: ctx.registry.lookup(ref).pathSegments,
         content: parts.filter(Boolean).join(BLOCK_SEPARATOR),
     };
+}
+
+/** The root page's "Base attributes" section: the attributes every node carries, serialised last. */
+function renderBaseSection(spec: Spec, ctx: RenderCtx, linkTo: (r: DocRef) => string): string | undefined {
+    const { markup } = ctx;
+    if (!spec.base || spec.base.attributes.length === 0) return undefined;
+    const rows = spec.base.attributes.map(attribute => [
+        markup.code(attribute.name),
+        typeCell(attribute, markup, linkTo),
+        cellDoc(attribute.docs, markup),
+    ]);
+    const parts: (string | undefined)[] = [
+        markup.heading(2, 'Base attributes'),
+        renderSpecDocs(spec.base.docs, markup),
+        markup.table(['Attribute', 'Type', 'Description'], rows),
+    ];
+    return parts.filter(Boolean).join(BLOCK_SEPARATOR);
 }
 
 /** A root-level category (no own directory, e.g. topLevel) as its own section: heading, docs, entity list. */

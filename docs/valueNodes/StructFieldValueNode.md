@@ -17,6 +17,12 @@ A named field of a `structValueNode`.
 | --------- | ----------------------------- | -------------------------------- |
 | `value`   | [`ValueNode`](./ValueNode.md) | The concrete value of the field. |
 
+### Base
+
+| Attribute | Type                                            | Description                                                                                                                                                     |
+| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Create a struct field value node from a name and a value

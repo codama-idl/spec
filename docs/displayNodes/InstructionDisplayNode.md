@@ -13,6 +13,12 @@ Either form may be absent; presentation strategy is left to the renderer.
 | `intent`             | `string` _(optional)_      | A short imperative label describing what the instruction does (e.g. `"Transfer"`).                                                                                                                                                                                                                                                                                                                             |
 | `interpolatedIntent` | `string` _(optional)_      | A sentence template that composes the instruction into prose with `${root.path}` placeholders. Roots are `data.` (an instruction argument) and `accounts.` (an instruction account); the path is flat after the root (e.g. `${data.amount}`, `${accounts.destination}`). A placeholder renders through its referent's own presentation; the `skip` rule governs the fallback list only and never the sentence. |
 
+### Base
+
+| Attribute | Type                                            | Description                                                                                                                                                     |
+| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### An intent label plus an interpolated sentence

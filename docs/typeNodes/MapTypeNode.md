@@ -20,6 +20,12 @@ Entries are serialised one after the other, each key immediately followed by its
 | `value`   | [`TypeNode`](./TypeNode.md)               | The type of each entry value.                         |
 | `count`   | [`CountNode`](../countNodes/CountNode.md) | The strategy used to determine the number of entries. |
 
+### Base
+
+| Attribute | Type                                            | Description                                                                                                                                                     |
+| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Create a map type node from a key type, a value type, and a count node

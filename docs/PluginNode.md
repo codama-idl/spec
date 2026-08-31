@@ -2,6 +2,7 @@
 
 Attaches named, plugin-specific data to a node.
 A plugin is uniquely identified by its `name`; the optional `payload` carries arbitrary, consumer-defined data that only the matching plugin knows how to interpret. Codama itself treats the payload as opaque.
+Every node can carry plugins via the `plugins` base attribute.
 
 ## Attributes
 
@@ -12,6 +13,12 @@ A plugin is uniquely identified by its `name`; the optional `payload` carries ar
 | `kind`    | `"pluginNode"`      | The node discriminator.                                                                                                        |
 | `name`    | `CamelCaseString`   | The unique name identifying the plugin this data belongs to.                                                                   |
 | `payload` | `Json` _(optional)_ | Arbitrary, plugin-specific data. Its shape is defined by the plugin, not by Codama, and is carried through the graph verbatim. |
+
+### Base
+
+| Attribute | Type                                           | Description                                                                                                                                                     |
+| --------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

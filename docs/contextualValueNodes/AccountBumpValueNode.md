@@ -11,6 +11,12 @@ Refers to the bump seed of a named PDA-derived account in the surrounding instru
 | `kind`    | `"accountBumpValueNode"` | The node discriminator.                                |
 | `name`    | `CamelCaseString`        | The name of the account whose bump seed is referenced. |
 
+### Base
+
+| Attribute | Type                                            | Description                                                                                                                                                     |
+| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Create an account bump value node from an account name

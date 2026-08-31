@@ -21,6 +21,12 @@ A "remaining accounts" slot in an instruction — a variable-length tail of acco
 | `value`   | [`InstructionRemainingAccountsValue`](./InstructionRemainingAccountsValue.md)                   | The source of the remaining-accounts list — a referenced argument or a resolver.      |
 | `display` | [`InstructionAccountDisplayNode`](./displayNodes/InstructionAccountDisplayNode.md) _(optional)_ | Display metadata describing how the remaining-accounts group is presented as a whole. |
 
+### Base
+
+| Attribute | Type                                           | Description                                                                                                                                                     |
+| --------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Optional remaining signers

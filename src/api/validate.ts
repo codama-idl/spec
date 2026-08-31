@@ -63,6 +63,29 @@ export function validate(spec: Spec): string[] {
         seenCategories.add(c.name);
     }
 
+    // Base-attribute validation: duplicates within the base, resolvable
+    // references, and no collisions with any node's declared attributes
+    // (base attributes are appended to every node by codegen targets).
+    const baseAttributes = spec.base?.attributes ?? [];
+    const baseAttributeNames = new Set<string>();
+    for (const a of baseAttributes) {
+        if (baseAttributeNames.has(a.name)) {
+            errors.push(`Base attribute "${a.name}" is declared more than once.`);
+        }
+        baseAttributeNames.add(a.name);
+        walkTypeExpr(a.type, expr =>
+            checkRef(
+                expr,
+                `Base attribute "${a.name}":`,
+                errors,
+                nodeKinds,
+                unionNames,
+                enumerationNames,
+                nestedUnionNames,
+            ),
+        );
+    }
+
     // Per-node validation.
     for (const n of allNodes) {
         if (!NODE_KIND_REGEX.test(n.kind)) {
@@ -74,8 +97,19 @@ export function validate(spec: Spec): string[] {
                 errors.push(`Node "${n.kind}" declares attribute "${a.name}" more than once.`);
             }
             seenAttrs.add(a.name);
+            if (baseAttributeNames.has(a.name)) {
+                errors.push(`Node "${n.kind}" declares attribute "${a.name}", which collides with a base attribute.`);
+            }
             walkTypeExpr(a.type, expr =>
-                checkRef(expr, n.kind, a.name, errors, nodeKinds, unionNames, enumerationNames, nestedUnionNames),
+                checkRef(
+                    expr,
+                    `Node "${n.kind}", attribute "${a.name}":`,
+                    errors,
+                    nodeKinds,
+                    unionNames,
+                    enumerationNames,
+                    nestedUnionNames,
+                ),
             );
         }
     }
@@ -150,15 +184,13 @@ function walkTypeExpr(expr: TypeExpr, visit: (expr: TypeExpr) => void): void {
 
 function checkRef(
     expr: TypeExpr,
-    nodeKind: string,
-    attrName: string,
+    where: string,
     errors: string[],
     nodeKinds: Set<string>,
     unionNames: Set<string>,
     enumerationNames: Set<string>,
     nestedUnionNames: Set<string>,
 ): void {
-    const where = `Node "${nodeKind}", attribute "${attrName}":`;
     switch (expr.kind) {
         case 'node':
             if (!nodeKinds.has(expr.name)) {

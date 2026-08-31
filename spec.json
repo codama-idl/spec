@@ -1,5 +1,28 @@
 {
     "version": "1.9.2",
+    "base": {
+        "docs": [
+            "Attributes shared by every node.",
+            "Codegen targets append them after each node's declared attributes, so they always serialise last."
+        ],
+        "attributes": [
+            {
+                "name": "plugins",
+                "type": {
+                    "kind": "array",
+                    "of": {
+                        "kind": "node",
+                        "name": "pluginNode"
+                    }
+                },
+                "optional": true,
+                "docs": [
+                    "Namespaced plugins with custom structured data.",
+                    "Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata."
+                ]
+            }
+        ]
+    },
     "categories": [
         {
             "name": "type",
@@ -6458,20 +6481,6 @@
                             "docs": [
                                 "Display metadata describing how the instruction is presented."
                             ]
-                        },
-                        {
-                            "name": "plugins",
-                            "type": {
-                                "kind": "array",
-                                "of": {
-                                    "kind": "node",
-                                    "name": "pluginNode"
-                                }
-                            },
-                            "optional": true,
-                            "docs": [
-                                "Namespaced plugins with custom structured data."
-                            ]
                         }
                     ],
                     "examples": [
@@ -6943,7 +6952,8 @@
                     "kind": "pluginNode",
                     "docs": [
                         "Attaches named, plugin-specific data to a node.",
-                        "A plugin is uniquely identified by its `name`; the optional `payload` carries arbitrary, consumer-defined data that only the matching plugin knows how to interpret. Codama itself treats the payload as opaque."
+                        "A plugin is uniquely identified by its `name`; the optional `payload` carries arbitrary, consumer-defined data that only the matching plugin knows how to interpret. Codama itself treats the payload as opaque.",
+                        "Every node can carry plugins via the `plugins` base attribute."
                     ],
                     "attributes": [
                         {

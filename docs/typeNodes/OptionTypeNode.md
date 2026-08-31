@@ -18,6 +18,12 @@ A value that may be present or absent (Some/None), with an explicit numeric pref
 | `item`    | [`TypeNode`](./TypeNode.md)                                                      | The type carried by the option when present.                                                                                                                                                   |
 | `prefix`  | [`NestedTypeNode`](./NestedTypeNode.md)<[`NumberTypeNode`](./NumberTypeNode.md)> | The numeric type used as the presence flag. A prefix value of `1` means the item is present and follows the prefix; a value of `0` means the item is absent and nothing further is serialised. |
 
+### Base
+
+| Attribute | Type                                            | Description                                                                                                                                                     |
+| --------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### An optional UTF-8 with a u16 prefix

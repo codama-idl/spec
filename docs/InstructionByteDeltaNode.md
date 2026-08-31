@@ -19,6 +19,12 @@ For instance, if an instruction creates a new account of 42 bytes, this node can
 | --------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | `value`   | [`InstructionByteDeltaValue`](./InstructionByteDeltaValue.md) | The source of the delta value — a literal number, a referenced account or argument, or a resolver. |
 
+### Base
+
+| Attribute | Type                                           | Description                                                                                                                                                     |
+| --------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### A byte delta that represents a new account

@@ -19,6 +19,12 @@ A named constant exposed by the program: a typed value associated with a name.
 | `type`    | [`TypeNode`](./typeNodes/TypeNode.md)    | The type of the constant.           |
 | `value`   | [`ValueNode`](./valueNodes/ValueNode.md) | The concrete value of the constant. |
 
+### Base
+
+| Attribute | Type                                           | Description                                                                                                                                                     |
+| --------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. Available on every node — the universal extension point for renderer-specific or not-yet-standardised metadata. |
+
 ## Examples
 
 ### Numeric Constant
