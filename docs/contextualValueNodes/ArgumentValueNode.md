@@ -1,15 +1,15 @@
 # ArgumentValueNode
 
-Refers to a named argument of the surrounding instruction.
+Refers to a value within the data of the surrounding instruction.
 
 ## Attributes
 
 ### Data
 
-| Attribute    | Type                  | Description                                |
-| ------------ | --------------------- | ------------------------------------------ |
-| `kind`       | `"argumentValueNode"` | The node discriminator.                    |
-| `identifier` | `IdentifierString`    | The identifier of the referenced argument. |
+| Attribute | Type                  | Description                                                                                                                                                                                         |
+| --------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `kind`    | `"argumentValueNode"` | The node discriminator.                                                                                                                                                                             |
+| `path`    | `PathString`          | The path to the referenced value, relative to the instruction's data — e.g. `amount` or `config.fees[0]`. Field segments are only valid where the data type resolves to a struct (following links). |
 
 ### Children
 
@@ -19,10 +19,16 @@ Refers to a named argument of the surrounding instruction.
 
 ## Examples
 
-### Create an argument value node from an argument name
+### Create an argument value node from a path
 
 ```typescript
 const node = argumentValueNode('amount');
+```
+
+### Referencing a value nested within the instruction data
+
+```typescript
+argumentValueNode('config.fees[0]');
 ```
 
 ### An instruction argument defaulting to another argument

@@ -7,7 +7,7 @@ Contextual-value nodes — references resolved at instruction-build time (accoun
 - [`AccountBumpValueNode`](./AccountBumpValueNode.md) - Refers to the bump seed of a named PDA-derived account in the surrounding instruction.
 - [`AccountFieldValueNode`](./AccountFieldValueNode.md) - Refers to a field of a named account's decoded data.
 - [`AccountValueNode`](./AccountValueNode.md) - Refers to a named account in the surrounding instruction.
-- [`ArgumentValueNode`](./ArgumentValueNode.md) - Refers to a named argument of the surrounding instruction.
+- [`ArgumentValueNode`](./ArgumentValueNode.md) - Refers to a value within the data of the surrounding instruction.
 - [`ConditionalValueNode`](./ConditionalValueNode.md) - A branching contextual value.
 - [`IdentityValueNode`](./IdentityValueNode.md) - Refers to the wallet identity providing the instruction context — the main wallet that should own things.
 - [`PayerValueNode`](./PayerValueNode.md) - Refers to the wallet paying for the surrounding transaction — the main wallet that should pay for things, such as rent for account storage.

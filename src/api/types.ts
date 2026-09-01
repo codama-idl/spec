@@ -35,9 +35,24 @@ export type FloatWidth = 'f32' | 'f64';
  *   or leading/trailing dots are not. Used for plugin names, which match
  *   by exact string comparison; the identifier folding-uniqueness rule
  *   does not apply to namespaces.
+ * - `path` — a path expression pointing into nested data:
+ *   `first ( "." identifier | "[" integer "]" )*` where
+ *   `first := identifier | "[" integer "]"`, with non-negative integer
+ *   indices. `.identifier` accesses a struct field by exact identifier
+ *   match (following links); `[n]` accesses the n-th item of an array,
+ *   tuple or set. The
+ *   first segment may be an index so that tuple- or array-rooted data is
+ *   reachable — e.g. `[0].banana` against tuple-shaped instruction data.
+ *   Each attribute carrying a path documents its anchor — the data the
+ *   first segment is resolved against. Interpolated text templates embed
+ *   the same expressions as `${root…}` placeholders, where the leading
+ *   root (e.g. `data`, `accounts`) names the anchor explicitly —
+ *   `${data.amount}`, `${data[0]}`. The grammar is deliberately minimal
+ *   and unambiguous — identifiers exclude dots, so paths never need
+ *   quoting or escaping; extensions may land in minor spec versions.
  * - `version` — a semver version string (e.g. `"1.6.0"`).
  */
-export type StringConstraint = 'identifier' | 'namespace' | 'version';
+export type StringConstraint = 'identifier' | 'namespace' | 'path' | 'version';
 
 /** A primitive literal value usable inside a `literalUnion`. */
 export type LiteralValue = boolean | number | string;

@@ -47,6 +47,18 @@ export function stringNamespace(): TypeExpr {
     return Object.freeze({ kind: 'string' as const, constraint: 'namespace' as const });
 }
 
+/**
+ * A string that must be a valid path expression:
+ * `first ( "." identifier | "[" integer "]" )*` where
+ * `first := identifier | "[" integer "]"` — e.g. `amount`,
+ * `fruits[0].banana`, or `[0].banana` against tuple-rooted data. Points
+ * into nested data relative to an anchor that the carrying attribute
+ * documents; indices are non-negative.
+ */
+export function stringPath(): TypeExpr {
+    return Object.freeze({ kind: 'string' as const, constraint: 'path' as const });
+}
+
 /** A string that must be a valid version (e.g. `"1.6.0"`). */
 export function stringVersion(): TypeExpr {
     return Object.freeze({ kind: 'string' as const, constraint: 'version' as const });

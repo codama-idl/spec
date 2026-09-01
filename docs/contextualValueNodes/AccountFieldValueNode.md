@@ -8,11 +8,11 @@ Resolving the value requires reading the account state at presentation time.
 
 ### Data
 
-| Attribute | Type                            | Description                                                                                                                                                                                              |
-| --------- | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `kind`    | `"accountFieldValueNode"`       | The node discriminator.                                                                                                                                                                                  |
-| `account` | `IdentifierString`              | The identifier of the referenced account in the surrounding instruction.                                                                                                                                 |
-| `path`    | `IdentifierString` _(optional)_ | The identifier of the field within the account's decoded data. Only valid when the account's data type resolves to a struct (following links). When absent, the value is the whole decoded account data. |
+| Attribute | Type                      | Description                                                                                                                                                                                                                                            |
+| --------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `kind`    | `"accountFieldValueNode"` | The node discriminator.                                                                                                                                                                                                                                |
+| `account` | `IdentifierString`        | The identifier of the referenced account in the surrounding instruction.                                                                                                                                                                               |
+| `path`    | `PathString` _(optional)_ | The path to the value within the account's decoded data — e.g. `authority` or `state.balances[0]`. Field segments are only valid where the data type resolves to a struct (following links). When absent, the value is the whole decoded account data. |
 
 ### Children
 
