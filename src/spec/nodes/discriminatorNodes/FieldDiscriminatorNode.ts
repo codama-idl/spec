@@ -6,7 +6,7 @@ export const fieldDiscriminatorNode = defineNode('fieldDiscriminatorNode', {
     attributes: [
         attribute('name', stringIdentifier(), {
             docs: [
-                'The name of the discriminating field — a `structFieldTypeNode` of the account data or an argument of the instruction.',
+                'The name of the discriminating field — a `structFieldTypeNode` of the account data (which must resolve to a struct, following links) or an argument of the instruction.',
             ],
         }),
         attribute('offset', u64(), {

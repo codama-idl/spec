@@ -126,7 +126,8 @@ describe('spec — accountNode shape', () => {
         expect(attrNames).toEqual(['name', 'size', 'docs', 'data', 'pda', 'discriminators']);
 
         const data = account.attributes.find(a => a.name === 'data')!;
-        expect(data.type).toEqual({ kind: 'node', name: 'structTypeNode' });
+        // any type node — matching eventNode.data; links included, so account data can be shared and reused
+        expect(data.type).toEqual({ kind: 'union', name: 'typeNode' });
         expect(data.optional).toBeUndefined();
         expect(isChildAttribute(data.type)).toBe(true);
 

@@ -3725,7 +3725,7 @@
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the discriminating field — a `structFieldTypeNode` of the account data or an argument of the instruction."
+                                "The name of the discriminating field — a `structFieldTypeNode` of the account data (which must resolve to a struct, following links) or an argument of the instruction."
                             ]
                         },
                         {
@@ -4600,6 +4600,7 @@
                             "optional": true,
                             "docs": [
                                 "The name of the field within the account's decoded data.",
+                                "Only valid when the account's data type resolves to a struct (following links).",
                                 "When absent, the value is the whole decoded account data."
                             ]
                         }
@@ -5748,12 +5749,12 @@
                         {
                             "name": "data",
                             "type": {
-                                "kind": "node",
-                                "name": "structTypeNode"
+                                "kind": "union",
+                                "name": "typeNode"
                             },
                             "docs": [
-                                "The struct describing the account data.",
-                                "It must be a struct so its fields can be referenced by other nodes — e.g. `accountFieldValueNode`."
+                                "The type describing the account data — any type node, including a `definedTypeLinkNode` to share or reuse a defined type.",
+                                "Nodes that reference account fields by name — e.g. `accountFieldValueNode` or `fieldDiscriminatorNode` — are only valid when this type resolves to a struct (following links)."
                             ]
                         },
                         {
@@ -5799,6 +5800,26 @@
                                         "    ]),",
                                         "    discriminators: [sizeDiscriminatorNode(72)],",
                                         "    size: 72,",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An account reusing a defined type as its data",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "programNode({",
+                                        "    name: 'myProgram',",
+                                        "    accounts: [accountNode({ name: 'mint', data: definedTypeLinkNode('mintState') })],",
+                                        "    definedTypes: [",
+                                        "        definedTypeNode({",
+                                        "            name: 'mintState',",
+                                        "            type: structTypeNode([structFieldTypeNode({ name: 'supply', type: numberTypeNode('u64') })]),",
+                                        "        }),",
+                                        "    ],",
                                         "});"
                                     ]
                                 }

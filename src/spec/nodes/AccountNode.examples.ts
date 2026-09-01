@@ -20,6 +20,24 @@ const node = accountNode({
         ),
     ),
     example(
+        'An account reusing a defined type as its data',
+        code(
+            'typescript',
+            `
+programNode({
+    name: 'myProgram',
+    accounts: [accountNode({ name: 'mint', data: definedTypeLinkNode('mintState') })],
+    definedTypes: [
+        definedTypeNode({
+            name: 'mintState',
+            type: structTypeNode([structFieldTypeNode({ name: 'supply', type: numberTypeNode('u64') })]),
+        }),
+    ],
+});
+`,
+        ),
+    ),
+    example(
         'An account with a linked PDA',
         code(
             'typescript',

@@ -17,12 +17,12 @@ An on-chain account: its name, data structure, optional fixed size, optional PDA
 
 ### Children
 
-| Attribute        | Type                                                                            | Description                                                                                                                                |
-| ---------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `data`           | [`StructTypeNode`](./typeNodes/StructTypeNode.md)                               | The struct describing the account data. It must be a struct so its fields can be referenced by other nodes — e.g. `accountFieldValueNode`. |
-| `pda`            | [`PdaLinkNode`](./linkNodes/PdaLinkNode.md) _(optional)_                        | A link to the PDA the account is derived from, if applicable.                                                                              |
-| `discriminators` | [`DiscriminatorNode`](./discriminatorNodes/DiscriminatorNode.md)[] _(optional)_ | Discriminators that distinguish this account from others in the program. When multiple are listed, they are combined with a logical AND.   |
-| `plugins`        | [`PluginNode`](./PluginNode.md)[] _(optional)_                                  | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata.      |
+| Attribute        | Type                                                                            | Description                                                                                                                                                                                                                                                                                              |
+| ---------------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data`           | [`TypeNode`](./typeNodes/TypeNode.md)                                           | The type describing the account data — any type node, including a `definedTypeLinkNode` to share or reuse a defined type. Nodes that reference account fields by name — e.g. `accountFieldValueNode` or `fieldDiscriminatorNode` — are only valid when this type resolves to a struct (following links). |
+| `pda`            | [`PdaLinkNode`](./linkNodes/PdaLinkNode.md) _(optional)_                        | A link to the PDA the account is derived from, if applicable.                                                                                                                                                                                                                                            |
+| `discriminators` | [`DiscriminatorNode`](./discriminatorNodes/DiscriminatorNode.md)[] _(optional)_ | Discriminators that distinguish this account from others in the program. When multiple are listed, they are combined with a logical AND.                                                                                                                                                                 |
+| `plugins`        | [`PluginNode`](./PluginNode.md)[] _(optional)_                                  | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata.                                                                                                                                                                    |
 
 ## Examples
 
@@ -38,6 +38,21 @@ const node = accountNode({
     ]),
     discriminators: [sizeDiscriminatorNode(72)],
     size: 72,
+});
+```
+
+### An account reusing a defined type as its data
+
+```typescript
+programNode({
+    name: 'myProgram',
+    accounts: [accountNode({ name: 'mint', data: definedTypeLinkNode('mintState') })],
+    definedTypes: [
+        definedTypeNode({
+            name: 'mintState',
+            type: structTypeNode([structFieldTypeNode({ name: 'supply', type: numberTypeNode('u64') })]),
+        }),
+    ],
 });
 ```
 
