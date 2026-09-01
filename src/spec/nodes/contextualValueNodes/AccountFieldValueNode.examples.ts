@@ -16,10 +16,10 @@ const node = accountFieldValueNode('mint', 'decimals');
             'typescript',
             `
 instructionNode({
-    name: 'transferChecked',
+    identifier: 'transferChecked',
     accounts: [
         instructionAccountNode({
-            name: 'mint',
+            identifier: 'mint',
             isWritable: false,
             isSigner: false,
             accountLink: accountLinkNode('mint'),
@@ -28,7 +28,7 @@ instructionNode({
     ],
     arguments: [
         instructionArgumentNode({
-            name: 'decimals',
+            identifier: 'decimals',
             type: numberTypeNode('u8'),
             defaultValue: accountFieldValueNode('mint', 'decimals'),
         }),

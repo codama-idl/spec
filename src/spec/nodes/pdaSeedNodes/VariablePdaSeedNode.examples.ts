@@ -16,7 +16,7 @@ const node = variablePdaSeedNode('amount', numberTypeNode('u32'));
             'typescript',
             `
 pdaNode({
-    name: 'ticket',
+    identifier: 'ticket',
     seeds: [variablePdaSeedNode('authority', publicKeyTypeNode())],
 });
 `,

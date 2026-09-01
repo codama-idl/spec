@@ -8,13 +8,13 @@ A Solana program: its identity, version, accounts, instructions, defined types, 
 
 ### Data
 
-| Attribute   | Type                    | Description                                 |
-| ----------- | ----------------------- | ------------------------------------------- |
-| `kind`      | `"programNode"`         | The node discriminator.                     |
-| `name`      | `CamelCaseString`       | The name of the program.                    |
-| `publicKey` | `Address`               | The base58-encoded program ID.              |
-| `version`   | `SemverString`          | The version of the program, in semver form. |
-| `docs`      | `string[]` _(optional)_ | Markdown documentation for the program.     |
+| Attribute    | Type                    | Description                                 |
+| ------------ | ----------------------- | ------------------------------------------- |
+| `kind`       | `"programNode"`         | The node discriminator.                     |
+| `identifier` | `IdentifierString`      | The identifier of the program.              |
+| `publicKey`  | `Address`               | The base58-encoded program ID.              |
+| `version`    | `SemverString`          | The version of the program, in semver form. |
+| `docs`       | `string[]` _(optional)_ | Markdown documentation for the program.     |
 
 ### Children
 
@@ -35,7 +35,7 @@ A Solana program: its identity, version, accounts, instructions, defined types, 
 
 ```typescript
 const node = programNode({
-    name: 'counter',
+    identifier: 'counter',
     publicKey: '7ovtg4pFqjQdSwFAUCu8gTnh5thZHzAyJFXy3Ssnj3yK',
     version: '1.42.6',
     accounts: [],

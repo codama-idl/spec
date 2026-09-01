@@ -6,10 +6,10 @@ A reference to a program by name.
 
 ### Data
 
-| Attribute | Type                | Description                         |
-| --------- | ------------------- | ----------------------------------- |
-| `kind`    | `"programLinkNode"` | The node discriminator.             |
-| `name`    | `CamelCaseString`   | The name of the referenced program. |
+| Attribute    | Type                | Description                               |
+| ------------ | ------------------- | ----------------------------------------- |
+| `kind`       | `"programLinkNode"` | The node discriminator.                   |
+| `identifier` | `IdentifierString`  | The identifier of the referenced program. |
 
 ### Children
 

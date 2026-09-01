@@ -7,7 +7,7 @@ export const examples: DocExamples = [
             'typescript',
             `
 const node = errorNode({
-    name: 'invalidAmountArgument',
+    identifier: 'invalidAmountArgument',
     code: 1,
     message: 'The amount argument is invalid.',
 });

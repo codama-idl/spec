@@ -7,8 +7,8 @@ export const accountLinkNode = defineNode('accountLinkNode', {
         optionalAttribute('program', node('programLinkNode'), {
             docs: ['The program the referenced account belongs to. When omitted, the surrounding program is assumed.'],
         }),
-        attribute('name', stringIdentifier(), {
-            docs: ['The name of the referenced account.'],
+        attribute('identifier', stringIdentifier(), {
+            docs: ['The identifier of the referenced account.'],
         }),
     ],
     examples,

@@ -24,8 +24,8 @@ A composite type made of an ordered list of named fields. Fields are encoded and
 
 ```typescript
 structTypeNode([
-    structFieldTypeNode({ name: 'name', type: stringTypeNode('utf8', { transforms: [fixedSizeTransformNode(10)] }) }),
-    structFieldTypeNode({ name: 'age', type: numberTypeNode('u8') }),
+    structFieldTypeNode({ identifier: 'name', type: stringTypeNode('utf8', { transforms: [fixedSizeTransformNode(10)] }) }),
+    structFieldTypeNode({ identifier: 'age', type: numberTypeNode('u8') }),
 ]);
 
 // { name: Alice, age: 42 } => 0x416C69636500000000002A

@@ -13,13 +13,13 @@ import { examples } from './InstructionAccountNode.examples';
 
 export const instructionAccountNode = defineNode('instructionAccountNode', {
     docs: [
-        'An account participating in an instruction, with its name, signing/writability flags, and an optional default value.',
+        'An account participating in an instruction, with its identifier, signing/writability flags, and an optional default value.',
         '',
         '![Diagram](https://github.com/codama-idl/codama/assets/3642397/4656a08b-2f89-49c2-b428-5378cb1a0b9e)',
     ],
     attributes: [
-        attribute('name', stringIdentifier(), {
-            docs: ['The name of the account.'],
+        attribute('identifier', stringIdentifier(), {
+            docs: ['The identifier of the account.'],
         }),
         attribute('isWritable', boolean(), {
             docs: ['Whether the instruction may write to the account.'],

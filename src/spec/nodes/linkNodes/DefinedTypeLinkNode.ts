@@ -8,8 +8,8 @@ export const definedTypeLinkNode = defineNode('definedTypeLinkNode', {
         optionalAttribute('program', node('programLinkNode'), {
             docs: ['The program the referenced type is defined in. When omitted, the surrounding program is assumed.'],
         }),
-        attribute('name', stringIdentifier(), {
-            docs: ['The name of the referenced defined type.'],
+        attribute('identifier', stringIdentifier(), {
+            docs: ['The identifier of the referenced defined type.'],
         }),
         transformsAttribute(),
     ],

@@ -9,11 +9,11 @@ export const accountFieldValueNode = defineNode('accountFieldValueNode', {
     ],
     attributes: [
         attribute('account', stringIdentifier(), {
-            docs: ['The name of the referenced account in the surrounding instruction.'],
+            docs: ['The identifier of the referenced account in the surrounding instruction.'],
         }),
         optionalAttribute('path', stringIdentifier(), {
             docs: [
-                "The name of the field within the account's decoded data.",
+                "The identifier of the field within the account's decoded data.",
                 "Only valid when the account's data type resolves to a struct (following links).",
                 'When absent, the value is the whole decoded account data.',
             ],

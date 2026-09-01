@@ -13,13 +13,13 @@ import { examples } from './AccountNode.examples';
 
 export const accountNode = defineNode('accountNode', {
     docs: [
-        'An on-chain account: its name, data structure, optional fixed size, optional PDA, and optional discriminators.',
+        'An on-chain account: its identifier, data type, optional fixed size, optional PDA, and optional discriminators.',
         '',
         '![Diagram](https://github.com/codama-idl/codama/assets/3642397/77974dad-212e-49b1-8e41-5d466c273a02)',
     ],
     attributes: [
-        attribute('name', stringIdentifier(), {
-            docs: ['The name of the account.'],
+        attribute('identifier', stringIdentifier(), {
+            docs: ['The identifier of the account.'],
         }),
         optionalAttribute('size', byteSize(), {
             docs: ['The size of the account in bytes, when the data length is fixed.'],

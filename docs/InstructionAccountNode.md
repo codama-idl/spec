@@ -1,6 +1,6 @@
 # InstructionAccountNode
 
-An account participating in an instruction, with its name, signing/writability flags, and an optional default value.
+An account participating in an instruction, with its identifier, signing/writability flags, and an optional default value.
 
 ![Diagram](https://github.com/codama-idl/codama/assets/3642397/4656a08b-2f89-49c2-b428-5378cb1a0b9e)
 
@@ -11,7 +11,7 @@ An account participating in an instruction, with its name, signing/writability f
 | Attribute    | Type                        | Description                                                                                                                                                                                                  |
 | ------------ | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `kind`       | `"instructionAccountNode"`  | The node discriminator.                                                                                                                                                                                      |
-| `name`       | `CamelCaseString`           | The name of the account.                                                                                                                                                                                     |
+| `identifier` | `IdentifierString`          | The identifier of the account.                                                                                                                                                                               |
 | `isWritable` | `boolean`                   | Whether the instruction may write to the account.                                                                                                                                                            |
 | `isSigner`   | `true \| false \| "either"` | Whether the account must sign the transaction. The literal `"either"` indicates a slot that may or may not sign depending on context.                                                                        |
 | `isOptional` | `boolean` _(optional)_      | Whether the account slot may be omitted by callers. When `true`, absent accounts are handled according to the `optionalAccountStrategy` attribute of the surrounding `instructionNode`. Defaults to `false`. |
@@ -32,7 +32,7 @@ An account participating in an instruction, with its name, signing/writability f
 
 ```typescript
 instructionAccountNode({
-    name: 'freezeAuthority',
+    identifier: 'freezeAuthority',
     isWritable: false,
     isSigner: false,
     isOptional: true,
@@ -44,7 +44,7 @@ instructionAccountNode({
 
 ```typescript
 instructionAccountNode({
-    name: 'owner',
+    identifier: 'owner',
     isWritable: true,
     isSigner: 'either',
     docs: ['The owner of the asset. The owner must only sign the transaction if the asset is being updated.'],

@@ -6,11 +6,11 @@ Identifies a node by the value of a named field at a known byte offset.
 
 ### Data
 
-| Attribute | Type                       | Description                                                                                                                                                             |
-| --------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `kind`    | `"fieldDiscriminatorNode"` | The node discriminator.                                                                                                                                                 |
-| `name`    | `CamelCaseString`          | The name of the discriminating field — a `structFieldTypeNode` of the account data (which must resolve to a struct, following links) or an argument of the instruction. |
-| `offset`  | `u64`                      | The byte offset of the field.                                                                                                                                           |
+| Attribute    | Type                       | Description                                                                                                                                                                   |
+| ------------ | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `kind`       | `"fieldDiscriminatorNode"` | The node discriminator.                                                                                                                                                       |
+| `identifier` | `IdentifierString`         | The identifier of the discriminating field — a `structFieldTypeNode` of the account data (which must resolve to a struct, following links) or an argument of the instruction. |
+| `offset`     | `u64`                      | The byte offset of the field.                                                                                                                                                 |
 
 ### Children
 
@@ -32,7 +32,7 @@ const node = fieldDiscriminatorNode('accountState', 64);
 accountNode({
     data: structTypeNode([
         structFieldTypeNode({
-            name: 'discriminator',
+            identifier: 'discriminator',
             type: numberTypeNode('u32'),
             defaultValue: numberValueNode(42),
             defaultValueStrategy: 'omitted',
@@ -50,7 +50,7 @@ accountNode({
 instructionNode({
     arguments: [
         instructionArgumentNode({
-            name: 'discriminator',
+            identifier: 'discriminator',
             type: bytesTypeNode({ transforms: [fixedSizeTransformNode(8)] }),
             defaultValue: bytesValueNode('base16', '0011223344556677'),
             defaultValueStrategy: 'omitted',

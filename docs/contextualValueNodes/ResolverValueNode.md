@@ -8,11 +8,11 @@ This node acts as a fallback for any value or logic that cannot easily be descri
 
 ### Data
 
-| Attribute | Type                    | Description                                                                                            |
-| --------- | ----------------------- | ------------------------------------------------------------------------------------------------------ |
-| `kind`    | `"resolverValueNode"`   | The node discriminator.                                                                                |
-| `name`    | `CamelCaseString`       | A unique name for the resolver. This is typically the name of the function that renderers will invoke. |
-| `docs`    | `string[]` _(optional)_ | Markdown documentation for the resolver.                                                               |
+| Attribute    | Type                    | Description                                                                                                  |
+| ------------ | ----------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `kind`       | `"resolverValueNode"`   | The node discriminator.                                                                                      |
+| `identifier` | `IdentifierString`      | A unique identifier for the resolver. This is typically the name of the function that renderers will invoke. |
+| `docs`       | `string[]` _(optional)_ | Markdown documentation for the resolver.                                                                     |
 
 ### Children
 

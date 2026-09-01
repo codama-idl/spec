@@ -7,8 +7,8 @@ export const pdaLinkNode = defineNode('pdaLinkNode', {
         optionalAttribute('program', node('programLinkNode'), {
             docs: ['The program the referenced PDA belongs to. When omitted, the surrounding program is assumed.'],
         }),
-        attribute('name', stringIdentifier(), {
-            docs: ['The name of the referenced PDA.'],
+        attribute('identifier', stringIdentifier(), {
+            docs: ['The identifier of the referenced PDA.'],
         }),
     ],
     examples,

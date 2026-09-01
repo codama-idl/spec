@@ -30,7 +30,8 @@ describe('renderType', () => {
     it('renders primitives as code spans', () => {
         expect(renderType({ kind: 'integer', width: 'u64' }, markdown, linkTo)).toBe('`u64`');
         expect(renderType({ kind: 'float', width: 'f64' }, markdown, linkTo)).toBe('`f64`');
-        expect(renderType({ kind: 'string', constraint: 'identifier' }, markdown, linkTo)).toBe('`CamelCaseString`');
+        expect(renderType({ kind: 'string', constraint: 'identifier' }, markdown, linkTo)).toBe('`IdentifierString`');
+        expect(renderType({ kind: 'string', constraint: 'namespace' }, markdown, linkTo)).toBe('`NamespaceString`');
         expect(renderType({ kind: 'string', constraint: 'version' }, markdown, linkTo)).toBe('`SemverString`');
         expect(renderType({ kind: 'string' }, markdown, linkTo)).toBe('`string`');
         expect(renderType({ kind: 'docs' }, markdown, linkTo)).toBe('`string[]`');

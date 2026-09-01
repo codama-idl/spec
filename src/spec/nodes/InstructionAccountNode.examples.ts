@@ -7,7 +7,7 @@ export const examples: DocExamples = [
             'typescript',
             `
 instructionAccountNode({
-    name: 'freezeAuthority',
+    identifier: 'freezeAuthority',
     isWritable: false,
     isSigner: false,
     isOptional: true,
@@ -22,7 +22,7 @@ instructionAccountNode({
             'typescript',
             `
 instructionAccountNode({
-    name: 'owner',
+    identifier: 'owner',
     isWritable: true,
     isSigner: 'either',
     docs: ['The owner of the asset. The owner must only sign the transaction if the asset is being updated.'],

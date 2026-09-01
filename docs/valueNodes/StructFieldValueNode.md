@@ -6,10 +6,10 @@ A named field of a `structValueNode`.
 
 ### Data
 
-| Attribute | Type                     | Description             |
-| --------- | ------------------------ | ----------------------- |
-| `kind`    | `"structFieldValueNode"` | The node discriminator. |
-| `name`    | `CamelCaseString`        | The name of the field.  |
+| Attribute    | Type                     | Description                  |
+| ------------ | ------------------------ | ---------------------------- |
+| `kind`       | `"structFieldValueNode"` | The node discriminator.      |
+| `identifier` | `IdentifierString`       | The identifier of the field. |
 
 ### Children
 

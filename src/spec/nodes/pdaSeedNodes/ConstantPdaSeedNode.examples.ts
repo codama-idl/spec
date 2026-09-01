@@ -16,7 +16,7 @@ const node = constantPdaSeedNode(numberTypeNode('u32'), numberValueNode(42));
             'typescript',
             `
 pdaNode({
-    name: 'tickets',
+    identifier: 'tickets',
     seeds: [constantPdaSeedNodeFromString('utf8', 'tickets')],
 });
 

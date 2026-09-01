@@ -6,11 +6,11 @@ A PDA seed whose value is provided at derivation time, identified by name.
 
 ### Data
 
-| Attribute | Type                    | Description                                   |
-| --------- | ----------------------- | --------------------------------------------- |
-| `kind`    | `"variablePdaSeedNode"` | The node discriminator.                       |
-| `name`    | `CamelCaseString`       | The name of the seed variable.                |
-| `docs`    | `string[]` _(optional)_ | Markdown documentation for the seed variable. |
+| Attribute    | Type                    | Description                                   |
+| ------------ | ----------------------- | --------------------------------------------- |
+| `kind`       | `"variablePdaSeedNode"` | The node discriminator.                       |
+| `identifier` | `IdentifierString`      | The identifier of the seed variable.          |
+| `docs`       | `string[]` _(optional)_ | Markdown documentation for the seed variable. |
 
 ### Children
 
@@ -31,7 +31,7 @@ const node = variablePdaSeedNode('amount', numberTypeNode('u32'));
 
 ```typescript
 pdaNode({
-    name: 'ticket',
+    identifier: 'ticket',
     seeds: [variablePdaSeedNode('authority', publicKeyTypeNode())],
 });
 ```

@@ -8,8 +8,8 @@ export const definedTypeNode = defineNode('definedTypeNode', {
         '![Diagram](https://github.com/codama-idl/codama/assets/3642397/6049cf77-9a70-4915-8276-dd571d2f8828)',
     ],
     attributes: [
-        attribute('name', stringIdentifier(), {
-            docs: ['The name of the defined type.'],
+        attribute('identifier', stringIdentifier(), {
+            docs: ['The identifier of the defined type.'],
         }),
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the type.'],

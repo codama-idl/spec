@@ -8,11 +8,11 @@ A reusable named type that can be referenced by `definedTypeLinkNode` from elsew
 
 ### Data
 
-| Attribute | Type                    | Description                          |
-| --------- | ----------------------- | ------------------------------------ |
-| `kind`    | `"definedTypeNode"`     | The node discriminator.              |
-| `name`    | `CamelCaseString`       | The name of the defined type.        |
-| `docs`    | `string[]` _(optional)_ | Markdown documentation for the type. |
+| Attribute    | Type                    | Description                          |
+| ------------ | ----------------------- | ------------------------------------ |
+| `kind`       | `"definedTypeNode"`     | The node discriminator.              |
+| `identifier` | `IdentifierString`      | The identifier of the defined type.  |
+| `docs`       | `string[]` _(optional)_ | Markdown documentation for the type. |
 
 ### Children
 
@@ -27,11 +27,11 @@ A reusable named type that can be referenced by `definedTypeLinkNode` from elsew
 
 ```typescript
 const node = definedTypeNode({
-    name: 'person',
+    identifier: 'person',
     docs: ['This type describes a Person.'],
     type: structTypeNode([
-        structFieldTypeNode({ name: 'name', type: stringTypeNode('utf8') }),
-        structFieldTypeNode({ name: 'age', type: numberTypeNode('u8') }),
+        structFieldTypeNode({ identifier: 'name', type: stringTypeNode('utf8') }),
+        structFieldTypeNode({ identifier: 'age', type: numberTypeNode('u8') }),
     ]),
 });
 ```

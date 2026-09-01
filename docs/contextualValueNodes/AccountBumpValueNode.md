@@ -6,10 +6,10 @@ Refers to the bump seed of a named PDA-derived account in the surrounding instru
 
 ### Data
 
-| Attribute | Type                     | Description                                            |
-| --------- | ------------------------ | ------------------------------------------------------ |
-| `kind`    | `"accountBumpValueNode"` | The node discriminator.                                |
-| `name`    | `CamelCaseString`        | The name of the account whose bump seed is referenced. |
+| Attribute    | Type                     | Description                                                  |
+| ------------ | ------------------------ | ------------------------------------------------------------ |
+| `kind`       | `"accountBumpValueNode"` | The node discriminator.                                      |
+| `identifier` | `IdentifierString`       | The identifier of the account whose bump seed is referenced. |
 
 ### Children
 
@@ -29,10 +29,10 @@ const node = accountBumpValueNode('associatedTokenAccount');
 
 ```typescript
 instructionNode({
-    name: 'transfer',
+    identifier: 'transfer',
     accounts: [
         instructionAccountNode({
-            name: 'associatedTokenAccount',
+            identifier: 'associatedTokenAccount',
             isSigner: false,
             isWritable: true,
         }),
@@ -40,7 +40,7 @@ instructionNode({
     ],
     arguments: [
         instructionArgumentNode({
-            name: 'bump',
+            identifier: 'bump',
             type: numberTypeNode('u8'),
             defaultValue: accountBumpValueNode('associatedTokenAccount'),
         }),

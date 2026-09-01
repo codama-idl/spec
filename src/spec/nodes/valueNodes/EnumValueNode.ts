@@ -5,7 +5,7 @@ export const enumValueNode = defineNode('enumValueNode', {
     docs: ['A concrete value of a defined enum: a variant identifier plus an optional payload.'],
     attributes: [
         attribute('variant', stringIdentifier(), {
-            docs: ['The name of the selected variant.'],
+            docs: ['The identifier of the selected variant.'],
         }),
         attribute('enum', node('definedTypeLinkNode'), {
             docs: [

@@ -6,10 +6,10 @@ A reference to an account defined elsewhere — possibly in a different program.
 
 ### Data
 
-| Attribute | Type                | Description                         |
-| --------- | ------------------- | ----------------------------------- |
-| `kind`    | `"accountLinkNode"` | The node discriminator.             |
-| `name`    | `CamelCaseString`   | The name of the referenced account. |
+| Attribute    | Type                | Description                               |
+| ------------ | ------------------- | ----------------------------------------- |
+| `kind`       | `"accountLinkNode"` | The node discriminator.                   |
+| `identifier` | `IdentifierString`  | The identifier of the referenced account. |
 
 ### Children
 

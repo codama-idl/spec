@@ -7,10 +7,10 @@ export const examples: DocExamples = [
             'typescript',
             `
 eventNode({
-    name: 'transferEvent',
+    identifier: 'transferEvent',
     data: structTypeNode([
-        structFieldTypeNode({ name: 'authority', type: publicKeyTypeNode() }),
-        structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') }),
+        structFieldTypeNode({ identifier: 'authority', type: publicKeyTypeNode() }),
+        structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') }),
     ]),
 });
 `,
@@ -22,8 +22,8 @@ eventNode({
             'typescript',
             `
 eventNode({
-    name: 'transferEvent',
-    data: structTypeNode([structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') })], {
+    identifier: 'transferEvent',
+    data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') })], {
         transforms: [
             hiddenPrefixTransformNode([
                 constantValueNode(bytesTypeNode({ transforms: [fixedSizeTransformNode(8)] }), bytesValueNode('base16', '0102030405060708')),

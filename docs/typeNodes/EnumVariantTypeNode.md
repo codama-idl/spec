@@ -10,7 +10,7 @@ Absent `data` is a unit variant; a struct payload gives named fields, a tuple pa
 | Attribute       | Type                    | Description                                                                                                           |
 | --------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------------- |
 | `kind`          | `"enumVariantTypeNode"` | The node discriminator.                                                                                               |
-| `name`          | `CamelCaseString`       | The name of the variant.                                                                                              |
+| `identifier`    | `IdentifierString`      | The identifier of the variant.                                                                                        |
 | `discriminator` | `u32` _(optional)_      | Explicit discriminator value. When omitted, the discriminator is the index of the variant in the enum, starting at 0. |
 | `docs`          | `string[]` _(optional)_ | Markdown documentation for the variant.                                                                               |
 
@@ -36,8 +36,8 @@ const node = enumVariantTypeNode('uninitialized');
 enumVariantTypeNode(
     'move',
     structTypeNode([
-        structFieldTypeNode({ name: 'x', type: numberTypeNode('u32') }),
-        structFieldTypeNode({ name: 'y', type: numberTypeNode('u32') }),
+        structFieldTypeNode({ identifier: 'x', type: numberTypeNode('u32') }),
+        structFieldTypeNode({ identifier: 'y', type: numberTypeNode('u32') }),
     ]),
 );
 ```

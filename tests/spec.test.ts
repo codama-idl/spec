@@ -122,7 +122,7 @@ describe('spec — accountNode shape', () => {
     it('matches the encoded shape exactly', () => {
         const account = getNode('accountNode')!;
         const attrNames = account.attributes.map(a => a.name);
-        expect(attrNames).toEqual(['name', 'size', 'docs', 'data', 'pda', 'discriminators']);
+        expect(attrNames).toEqual(['identifier', 'size', 'docs', 'data', 'pda', 'discriminators']);
 
         const data = account.attributes.find(a => a.name === 'data')!;
         // any type node — matching eventNode.data; links included, so account data can be shared and reused
@@ -130,7 +130,7 @@ describe('spec — accountNode shape', () => {
         expect(data.optional).toBeUndefined();
         expect(isChildAttribute(data.type)).toBe(true);
 
-        const name = account.attributes.find(a => a.name === 'name')!;
+        const name = account.attributes.find(a => a.name === 'identifier')!;
         expect(name.type).toEqual({ constraint: 'identifier', kind: 'string' });
         expect(name.optional).toBeUndefined();
         expect(isChildAttribute(name.type)).toBe(false);
@@ -357,7 +357,7 @@ describe('spec — display node shapes', () => {
 describe('spec — enumVariantTypeNode shape', () => {
     it('unifies the three v1 variant flavours into one node with an optional data payload', () => {
         const variant = getNode('enumVariantTypeNode')!;
-        expect(variant.attributes.map(a => a.name)).toEqual(['name', 'discriminator', 'docs', 'data', 'display']);
+        expect(variant.attributes.map(a => a.name)).toEqual(['identifier', 'discriminator', 'docs', 'data', 'display']);
 
         const data = variant.attributes.find(a => a.name === 'data')!;
         expect(data.optional).toBe(true);
@@ -372,6 +372,27 @@ describe('spec — enumVariantTypeNode shape', () => {
             expect(getNode(gone), `${gone} should no longer exist`).toBeUndefined();
         }
         expect(getUnion('enumVariantTypeNode'), 'the v1 variant union should no longer exist').toBeUndefined();
+    });
+});
+
+describe('spec — identifier convention', () => {
+    it('no node declares a name attribute — the machine key is identifier, the plugin key is namespace', () => {
+        for (const category of getSpec().categories) {
+            for (const n of category.nodes) {
+                const name = n.attributes.find(a => a.name === 'name');
+                expect(name, `node "${n.kind}" should not declare a name attribute`).toBeUndefined();
+            }
+        }
+    });
+
+    it('every identifier attribute carries the identifier string constraint', () => {
+        for (const category of getSpec().categories) {
+            for (const n of category.nodes) {
+                const identifier = n.attributes.find(a => a.name === 'identifier');
+                if (!identifier) continue;
+                expect(identifier.type, `node "${n.kind}"`).toEqual({ constraint: 'identifier', kind: 'string' });
+            }
+        }
     });
 });
 
@@ -510,10 +531,10 @@ describe('spec — accountFieldValueNode shape', () => {
 describe('spec — providedNode shape', () => {
     it('matches the encoded shape exactly', () => {
         const n = getNode('providedNode')!;
-        expect(n.attributes.map(a => a.name)).toEqual(['name', 'node']);
-        const name = n.attributes.find(a => a.name === 'name')!;
-        expect(name.type).toEqual({ constraint: 'identifier', kind: 'string' });
-        expect(name.optional).toBeUndefined();
+        expect(n.attributes.map(a => a.name)).toEqual(['identifier', 'node']);
+        const identifier = n.attributes.find(a => a.name === 'identifier')!;
+        expect(identifier.type).toEqual({ constraint: 'identifier', kind: 'string' });
+        expect(identifier.optional).toBeUndefined();
         const nodeAttr = n.attributes.find(a => a.name === 'node')!;
         expect(nodeAttr.type).toEqual({ kind: 'anyNode' });
         expect(nodeAttr.optional).toBeUndefined();
@@ -535,11 +556,12 @@ describe('spec — instructionNode.provides', () => {
 describe('spec — pluginNode shape', () => {
     it('matches the encoded shape exactly', () => {
         const n = getNode('pluginNode')!;
-        expect(n.attributes.map(a => a.name)).toEqual(['name', 'payload']);
+        expect(n.attributes.map(a => a.name)).toEqual(['namespace', 'payload']);
 
-        const name = n.attributes.find(a => a.name === 'name')!;
-        expect(name.type).toEqual({ constraint: 'identifier', kind: 'string' });
-        expect(name.optional).toBeUndefined();
+        // plugin namespaces are dot-separated chains of identifiers (e.g. `i18n.es`), not identifiers
+        const namespace = n.attributes.find(a => a.name === 'namespace')!;
+        expect(namespace.type).toEqual({ constraint: 'namespace', kind: 'string' });
+        expect(namespace.optional).toBeUndefined();
 
         const payload = n.attributes.find(a => a.name === 'payload')!;
         expect(payload.optional).toBe(true);

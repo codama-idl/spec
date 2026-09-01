@@ -7,11 +7,11 @@ export const examples: DocExamples = [
             'typescript',
             `
 const node = definedTypeNode({
-    name: 'person',
+    identifier: 'person',
     docs: ['This type describes a Person.'],
     type: structTypeNode([
-        structFieldTypeNode({ name: 'name', type: stringTypeNode('utf8') }),
-        structFieldTypeNode({ name: 'age', type: numberTypeNode('u8') }),
+        structFieldTypeNode({ identifier: 'name', type: stringTypeNode('utf8') }),
+        structFieldTypeNode({ identifier: 'age', type: numberTypeNode('u8') }),
     ]),
 });
 `,

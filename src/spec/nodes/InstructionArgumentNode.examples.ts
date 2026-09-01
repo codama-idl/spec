@@ -7,7 +7,7 @@ export const examples: DocExamples = [
             'typescript',
             `
 instructionArgumentNode({
-    name: 'amount',
+    identifier: 'amount',
     type: numberTypeNode('u64'),
     defaultValue: numberValueNode(0),
 });
@@ -20,7 +20,7 @@ instructionArgumentNode({
             'typescript',
             `
 instructionArgumentNode({
-    name: 'instructionDiscriminator',
+    identifier: 'instructionDiscriminator',
     type: numberTypeNode('u8'),
     defaultValue: numberValueNode(42),
     defaultValueStrategy: 'omitted',

@@ -12,8 +12,8 @@ enumTypeNode([
     enumVariantTypeNode(
         'move',
         structTypeNode([
-            structFieldTypeNode({ name: 'x', type: numberTypeNode('u16') }),
-            structFieldTypeNode({ name: 'y', type: numberTypeNode('u16') }),
+            structFieldTypeNode({ identifier: 'x', type: numberTypeNode('u16') }),
+            structFieldTypeNode({ identifier: 'y', type: numberTypeNode('u16') }),
         ]),
     ),
 ]);

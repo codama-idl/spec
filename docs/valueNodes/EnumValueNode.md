@@ -6,10 +6,10 @@ A concrete value of a defined enum: a variant identifier plus an optional payloa
 
 ### Data
 
-| Attribute | Type              | Description                       |
-| --------- | ----------------- | --------------------------------- |
-| `kind`    | `"enumValueNode"` | The node discriminator.           |
-| `variant` | `CamelCaseString` | The name of the selected variant. |
+| Attribute | Type               | Description                             |
+| --------- | ------------------ | --------------------------------------- |
+| `kind`    | `"enumValueNode"`  | The node discriminator.                 |
+| `variant` | `IdentifierString` | The identifier of the selected variant. |
 
 ### Children
 

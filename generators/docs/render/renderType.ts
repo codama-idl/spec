@@ -38,7 +38,10 @@ export function renderType(t: TypeExpr, markup: MarkupRenderer, linkTo: (r: DocR
             return markup.code(t.width);
         case 'string': {
             if (t.constraint === 'identifier') {
-                return markup.code('CamelCaseString');
+                return markup.code('IdentifierString');
+            }
+            if (t.constraint === 'namespace') {
+                return markup.code('NamespaceString');
             }
             if (t.constraint === 'version') {
                 return markup.code('SemverString');

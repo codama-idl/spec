@@ -25,7 +25,7 @@ instructionStatusNode('archived');
             'typescript',
             `
 instructionNode({
-    name: 'experimentalFeature',
+    identifier: 'experimentalFeature',
     status: instructionStatusNode('draft', 'This instruction is under development and may change.'),
     // ...
 });

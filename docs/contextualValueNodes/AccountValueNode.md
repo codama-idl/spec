@@ -6,10 +6,10 @@ Refers to a named account in the surrounding instruction.
 
 ### Data
 
-| Attribute | Type                 | Description                         |
-| --------- | -------------------- | ----------------------------------- |
-| `kind`    | `"accountValueNode"` | The node discriminator.             |
-| `name`    | `CamelCaseString`    | The name of the referenced account. |
+| Attribute    | Type                 | Description                               |
+| ------------ | -------------------- | ----------------------------------------- |
+| `kind`       | `"accountValueNode"` | The node discriminator.                   |
+| `identifier` | `IdentifierString`   | The identifier of the referenced account. |
 
 ### Children
 
@@ -29,15 +29,15 @@ const node = accountValueNode('mint');
 
 ```typescript
 instructionNode({
-    name: 'mint',
+    identifier: 'mint',
     accounts: [
         instructionAccountNode({
-            name: 'payer',
+            identifier: 'payer',
             isSigner: true,
             isWritable: false,
         }),
         instructionAccountNode({
-            name: 'authority',
+            identifier: 'authority',
             isSigner: false,
             isWritable: true,
             defaultValue: accountValueNode('payer'),

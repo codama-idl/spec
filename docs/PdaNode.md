@@ -1,6 +1,6 @@
 # PdaNode
 
-A program-derived address: its name, optional program ID override, and the seeds used to derive it.
+A program-derived address: its identifier, optional program ID override, and the seeds used to derive it.
 
 ![Diagram](https://github.com/codama-idl/codama/assets/3642397/4f7c9718-1ffa-4f2c-aa45-71b3ce204219)
 
@@ -8,12 +8,12 @@ A program-derived address: its name, optional program ID override, and the seeds
 
 ### Data
 
-| Attribute   | Type                    | Description                                                                                             |
-| ----------- | ----------------------- | ------------------------------------------------------------------------------------------------------- |
-| `kind`      | `"pdaNode"`             | The node discriminator.                                                                                 |
-| `name`      | `CamelCaseString`       | The name of the PDA.                                                                                    |
-| `docs`      | `string[]` _(optional)_ | Markdown documentation for the PDA.                                                                     |
-| `programId` | `Address` _(optional)_  | The base58-encoded program ID used to derive the PDA. When omitted, the surrounding program is assumed. |
+| Attribute    | Type                    | Description                                                                                             |
+| ------------ | ----------------------- | ------------------------------------------------------------------------------------------------------- |
+| `kind`       | `"pdaNode"`             | The node discriminator.                                                                                 |
+| `identifier` | `IdentifierString`      | The identifier of the PDA.                                                                              |
+| `docs`       | `string[]` _(optional)_ | Markdown documentation for the PDA.                                                                     |
+| `programId`  | `Address` _(optional)_  | The base58-encoded program ID used to derive the PDA. When omitted, the surrounding program is assumed. |
 
 ### Children
 
@@ -28,7 +28,7 @@ A program-derived address: its name, optional program ID override, and the seeds
 
 ```typescript
 pdaNode({
-    name: 'ticket',
+    identifier: 'ticket',
     seeds: [
         constantPdaSeedNodeFromString('utf8', 'raffles'),
         variablePdaSeedNode('raffle', publicKeyTypeNode()),
@@ -42,7 +42,7 @@ pdaNode({
 
 ```typescript
 pdaNode({
-    name: 'seedlessPda',
+    identifier: 'seedlessPda',
     seeds: [],
 });
 ```

@@ -6,11 +6,11 @@ A named constant exposed by the program: a typed value associated with a name.
 
 ### Data
 
-| Attribute | Type                    | Description                              |
-| --------- | ----------------------- | ---------------------------------------- |
-| `kind`    | `"constantNode"`        | The node discriminator.                  |
-| `name`    | `CamelCaseString`       | The name of the constant.                |
-| `docs`    | `string[]` _(optional)_ | Markdown documentation for the constant. |
+| Attribute    | Type                    | Description                              |
+| ------------ | ----------------------- | ---------------------------------------- |
+| `kind`       | `"constantNode"`        | The node discriminator.                  |
+| `identifier` | `IdentifierString`      | The identifier of the constant.          |
+| `docs`       | `string[]` _(optional)_ | Markdown documentation for the constant. |
 
 ### Children
 

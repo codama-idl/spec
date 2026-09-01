@@ -20,6 +20,7 @@ import {
     node,
     string,
     stringIdentifier,
+    stringNamespace,
     stringVersion,
     u8,
     u16,
@@ -53,6 +54,9 @@ describe('string primitives', () => {
     });
     it('returns identifier-constrained string', () => {
         expect(stringIdentifier()).toEqual({ kind: 'string', constraint: 'identifier' });
+    });
+    it('returns namespace-constrained string', () => {
+        expect(stringNamespace()).toEqual({ kind: 'string', constraint: 'namespace' });
     });
     it('returns semver-constrained string', () => {
         expect(stringVersion()).toEqual({ kind: 'string', constraint: 'version' });

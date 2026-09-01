@@ -16,11 +16,11 @@ providedNode('decimals', numberValueNode(9));
             'typescript',
             `
 instructionNode({
-    name: 'transferChecked',
+    identifier: 'transferChecked',
     provides: [providedNode('decimals', numberValueNode(9))],
     arguments: [
         instructionArgumentNode({
-            name: 'decimals',
+            identifier: 'decimals',
             type: numberTypeNode('u8'),
             defaultValue: injectedValueNode({ key: 'decimals' }),
         }),

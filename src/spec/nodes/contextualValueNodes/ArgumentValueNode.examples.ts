@@ -16,14 +16,14 @@ const node = argumentValueNode('amount');
             'typescript',
             `
 instructionNode({
-    name: 'mint',
+    identifier: 'mint',
     arguments: [
         instructionArgumentNode({
-            name: 'amount',
+            identifier: 'amount',
             type: numberTypeNode('u64'),
         }),
         instructionArgumentNode({
-            name: 'amountToDelegate',
+            identifier: 'amountToDelegate',
             type: numberTypeNode('u64'),
             defaultValue: argumentValueNode('amount'),
         }),

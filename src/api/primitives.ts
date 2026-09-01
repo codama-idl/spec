@@ -26,11 +26,25 @@ export function string(): TypeExpr {
 }
 
 /**
- * A string that must be a valid IDL identifier (stored canonically in
- * camelCase). Renderers may convert to other casings at output time.
+ * A string that must be a valid IDL identifier: `[A-Za-z_][A-Za-z0-9_]*`.
+ * No casing is mandated; renderers convert to their own conventions at
+ * output time. Identifiers sharing a scope (a sibling set of the same
+ * kind) must stay unique after lowercasing and stripping underscores, so
+ * those conversions never collide. References match identifiers by exact
+ * string comparison; the folding rule governs uniqueness only.
  */
 export function stringIdentifier(): TypeExpr {
     return Object.freeze({ kind: 'string' as const, constraint: 'identifier' as const });
+}
+
+/**
+ * A string that must be a chain of identifiers separated by single dots,
+ * i.e. `identifier ("." identifier)*` — e.g. `i18n.es`, or just `anchor`
+ * (a single identifier is a valid namespace). Used for plugin
+ * namespaces, which match by exact string comparison.
+ */
+export function stringNamespace(): TypeExpr {
+    return Object.freeze({ kind: 'string' as const, constraint: 'namespace' as const });
 }
 
 /** A string that must be a valid version (e.g. `"1.6.0"`). */

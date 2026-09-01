@@ -16,10 +16,10 @@ const node = accountBumpValueNode('associatedTokenAccount');
             'typescript',
             `
 instructionNode({
-    name: 'transfer',
+    identifier: 'transfer',
     accounts: [
         instructionAccountNode({
-            name: 'associatedTokenAccount',
+            identifier: 'associatedTokenAccount',
             isSigner: false,
             isWritable: true,
         }),
@@ -27,7 +27,7 @@ instructionNode({
     ],
     arguments: [
         instructionArgumentNode({
-            name: 'bump',
+            identifier: 'bump',
             type: numberTypeNode('u8'),
             defaultValue: accountBumpValueNode('associatedTokenAccount'),
         }),
