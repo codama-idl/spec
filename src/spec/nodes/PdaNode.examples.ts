@@ -7,7 +7,7 @@ export const examples: DocExamples = [
             'typescript',
             `
 pdaNode({
-    name: 'ticket',
+    identifier: 'ticket',
     seeds: [
         constantPdaSeedNodeFromString('utf8', 'raffles'),
         variablePdaSeedNode('raffle', publicKeyTypeNode()),
@@ -24,7 +24,7 @@ pdaNode({
             'typescript',
             `
 pdaNode({
-    name: 'seedlessPda',
+    identifier: 'seedlessPda',
     seeds: [],
 });
 `,

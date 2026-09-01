@@ -26,11 +26,22 @@ export function string(): TypeExpr {
 }
 
 /**
- * A string that must be a valid IDL identifier (stored canonically in
- * camelCase). Renderers may convert to other casings at output time.
+ * A string that must be a valid IDL identifier: `[A-Za-z_][A-Za-z0-9_]*`.
+ * No casing is mandated; renderers convert to their own conventions at
+ * output time. Identifiers sharing a scope must stay unique after
+ * lowercasing and stripping underscores, so those conversions never
+ * collide.
  */
 export function stringIdentifier(): TypeExpr {
     return Object.freeze({ kind: 'string' as const, constraint: 'identifier' as const });
+}
+
+/**
+ * A string that must be a dot-separated chain of identifiers
+ * (e.g. `i18n.es`) — used for plugin names.
+ */
+export function stringNamespace(): TypeExpr {
+    return Object.freeze({ kind: 'string' as const, constraint: 'namespace' as const });
 }
 
 /** A string that must be a valid version (e.g. `"1.6.0"`). */

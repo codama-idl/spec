@@ -6,10 +6,10 @@ A reference to an account of another instruction.
 
 ### Data
 
-| Attribute | Type                           | Description                                     |
-| --------- | ------------------------------ | ----------------------------------------------- |
-| `kind`    | `"instructionAccountLinkNode"` | The node discriminator.                         |
-| `name`    | `CamelCaseString`              | The name of the referenced instruction account. |
+| Attribute    | Type                           | Description                                           |
+| ------------ | ------------------------------ | ----------------------------------------------------- |
+| `kind`       | `"instructionAccountLinkNode"` | The node discriminator.                               |
+| `identifier` | `IdentifierString`             | The identifier of the referenced instruction account. |
 
 ### Children
 

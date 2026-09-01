@@ -6,10 +6,10 @@ A reference to a PDA defined elsewhere — possibly in a different program.
 
 ### Data
 
-| Attribute | Type              | Description                     |
-| --------- | ----------------- | ------------------------------- |
-| `kind`    | `"pdaLinkNode"`   | The node discriminator.         |
-| `name`    | `CamelCaseString` | The name of the referenced PDA. |
+| Attribute    | Type               | Description                           |
+| ------------ | ------------------ | ------------------------------------- |
+| `kind`       | `"pdaLinkNode"`    | The node discriminator.               |
+| `identifier` | `IdentifierString` | The identifier of the referenced PDA. |
 
 ### Children
 

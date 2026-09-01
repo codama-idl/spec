@@ -16,10 +16,10 @@ const node = identityValueNode();
             'typescript',
             `
 instructionNode({
-    name: 'transfer',
+    identifier: 'transfer',
     accounts: [
         instructionAccountNode({
-            name: 'authority',
+            identifier: 'authority',
             isSigner: true,
             isWritable: false,
             defaultValue: identityValueNode(),

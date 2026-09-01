@@ -4,8 +4,8 @@ import { examples } from './ConstantNode.examples';
 export const constantNode = defineNode('constantNode', {
     docs: ['A named constant exposed by the program: a typed value associated with a name.'],
     attributes: [
-        attribute('name', stringIdentifier(), {
-            docs: ['The name of the constant.'],
+        attribute('identifier', stringIdentifier(), {
+            docs: ['The identifier of the constant.'],
         }),
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the constant.'],

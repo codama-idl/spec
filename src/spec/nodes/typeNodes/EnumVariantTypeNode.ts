@@ -7,8 +7,8 @@ export const enumVariantTypeNode = defineNode('enumVariantTypeNode', {
         'Absent `data` is a unit variant; a struct payload gives named fields, a tuple payload gives positional fields, and any other type node is carried as-is — a variant holding a single type needs no tuple around it.',
     ],
     attributes: [
-        attribute('name', stringIdentifier(), {
-            docs: ['The name of the variant.'],
+        attribute('identifier', stringIdentifier(), {
+            docs: ['The identifier of the variant.'],
         }),
         optionalAttribute('discriminator', u32(), {
             docs: [

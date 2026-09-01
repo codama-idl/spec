@@ -25,7 +25,7 @@ Either form may be absent; presentation strategy is left to the renderer.
 
 ```typescript
 instructionNode({
-    name: 'transferChecked',
+    identifier: 'transferChecked',
     display: instructionDisplayNode({
         intent: 'Transfer',
         interpolatedIntent: 'Transfer ${data.amount} to ${accounts.destination}',
@@ -41,7 +41,7 @@ instructionNode({
 
 ```typescript
 instructionNode({
-    name: 'closeAccount',
+    identifier: 'closeAccount',
     display: instructionDisplayNode({ intent: 'Close Account' }),
     // ...accounts and arguments
 });

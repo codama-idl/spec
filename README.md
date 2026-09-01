@@ -39,7 +39,7 @@ console.log(SPEC_VERSION); // → '2.0.0'
 
 const account = getNode('accountNode');
 console.log(account?.attributes.map(a => a.name));
-// → ['name', 'size', 'docs', 'data', 'pda', 'discriminators']
+// → ['identifier', 'size', 'docs', 'data', 'pda', 'discriminators']
 ```
 
 ### Hand-author a node
@@ -68,12 +68,12 @@ The `attribute` vs `optionalAttribute` distinction therefore has **no effect on 
 
 ### Attributes serialise in declaration order
 
-Each node declares its attributes as an ordered array in `defineNode(...)`, and that order is authored deliberately: **static data first, child nodes and arrays last**. For example, `kind`, `name`, `docs` and other scalars precede large child collections such as `accounts`, `instructions` or `fields`.
+Each node declares its attributes as an ordered array in `defineNode(...)`, and that order is authored deliberately: **static data first, child nodes and arrays last**. For example, `kind`, `identifier`, `docs` and other scalars precede large child collections such as `accounts`, `instructions` or `fields`.
 
-- **On write**, generators MUST emit a node's attributes in this declaration order (with the implicit `kind` discriminator first). They MUST NOT re-serialise through a key-sorting structure — notably `serde_json::Value`, whose object type is a `BTreeMap` and therefore sorts keys alphabetically, pushing scalars like `name` after the child arrays.
+- **On write**, generators MUST emit a node's attributes in this declaration order (with the implicit `kind` discriminator first). They MUST NOT re-serialise through a key-sorting structure — notably `serde_json::Value`, whose object type is a `BTreeMap` and therefore sorts keys alphabetically, pushing scalars like `identifier` after the child arrays.
 - **On read**, attribute order carries no semantics; consumers MUST NOT depend on it.
 
-Preserving declaration order keeps encoded IDLs readable: the identifying scalars of a node (`kind`, `name`, …) appear before its potentially large children, so a node's identity is legible at a glance even in a deeply nested IDL.
+Preserving declaration order keeps encoded IDLs readable: the identifying scalars of a node (`kind`, `identifier`, …) appear before its potentially large children, so a node's identity is legible at a glance even in a deeply nested IDL.
 
 ### Base attributes serialise last
 

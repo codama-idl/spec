@@ -27,7 +27,7 @@ pluginNode('audited');
             'typescript',
             `
 instructionNode({
-    name: 'transfer',
+    identifier: 'transfer',
     plugins: [pluginNode('explorerHints', { payload: { icon: 'transfer-arrow' } })],
     // ...
 });

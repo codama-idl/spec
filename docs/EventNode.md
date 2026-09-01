@@ -6,11 +6,11 @@ A program event: its data shape and optional discriminators used to identify it 
 
 ### Data
 
-| Attribute | Type                    | Description                           |
-| --------- | ----------------------- | ------------------------------------- |
-| `kind`    | `"eventNode"`           | The node discriminator.               |
-| `name`    | `CamelCaseString`       | The name of the event.                |
-| `docs`    | `string[]` _(optional)_ | Markdown documentation for the event. |
+| Attribute    | Type                    | Description                           |
+| ------------ | ----------------------- | ------------------------------------- |
+| `kind`       | `"eventNode"`           | The node discriminator.               |
+| `identifier` | `IdentifierString`      | The identifier of the event.          |
+| `docs`       | `string[]` _(optional)_ | Markdown documentation for the event. |
 
 ### Children
 
@@ -26,10 +26,10 @@ A program event: its data shape and optional discriminators used to identify it 
 
 ```typescript
 eventNode({
-    name: 'transferEvent',
+    identifier: 'transferEvent',
     data: structTypeNode([
-        structFieldTypeNode({ name: 'authority', type: publicKeyTypeNode() }),
-        structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') }),
+        structFieldTypeNode({ identifier: 'authority', type: publicKeyTypeNode() }),
+        structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') }),
     ]),
 });
 ```
@@ -38,8 +38,8 @@ eventNode({
 
 ```typescript
 eventNode({
-    name: 'transferEvent',
-    data: structTypeNode([structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') })], {
+    identifier: 'transferEvent',
+    data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') })], {
         transforms: [
             hiddenPrefixTransformNode([
                 constantValueNode(bytesTypeNode({ transforms: [fixedSizeTransformNode(8)] }), bytesValueNode('base16', '0102030405060708')),

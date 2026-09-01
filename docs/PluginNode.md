@@ -11,7 +11,7 @@ Every node can carry plugins via the `plugins` base attribute.
 | Attribute | Type                | Description                                                                                                                    |
 | --------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | `kind`    | `"pluginNode"`      | The node discriminator.                                                                                                        |
-| `name`    | `CamelCaseString`   | The unique name identifying the plugin this data belongs to.                                                                   |
+| `name`    | `NamespaceString`   | The unique, dot-separated namespace identifying the plugin this data belongs to (e.g. `i18n.es`).                              |
 | `payload` | `Json` _(optional)_ | Arbitrary, plugin-specific data. Its shape is defined by the plugin, not by Codama, and is carried through the graph verbatim. |
 
 ### Children
@@ -40,7 +40,7 @@ pluginNode('audited');
 
 ```typescript
 instructionNode({
-    name: 'transfer',
+    identifier: 'transfer',
     plugins: [pluginNode('explorerHints', { payload: { icon: 'transfer-arrow' } })],
     // ...
 });

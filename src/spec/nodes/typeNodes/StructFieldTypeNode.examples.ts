@@ -7,7 +7,7 @@ export const examples: DocExamples = [
             'typescript',
             `
 structFieldTypeNode({
-    name: 'age',
+    identifier: 'age',
     type: numberTypeNode('u8'),
     defaultValue: numberValueNode(42),
 });

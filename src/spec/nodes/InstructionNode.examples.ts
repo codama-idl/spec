@@ -7,14 +7,14 @@ export const examples: DocExamples = [
             'typescript',
             `
 instructionNode({
-    name: 'increment',
+    identifier: 'increment',
     accounts: [
-        instructionAccountNode({ name: 'counter', isWritable: true, isSigner: true }),
-        instructionAccountNode({ name: 'authority', isWritable: false, isSigner: false }),
+        instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: true }),
+        instructionAccountNode({ identifier: 'authority', isWritable: false, isSigner: false }),
     ],
     arguments: [
         instructionArgumentNode({
-            name: 'discriminator',
+            identifier: 'discriminator',
             type: numberTypeNode('u8'),
             defaultValue: numberValueNode(42),
             defaultValueStrategy: 'omitted',
@@ -30,10 +30,10 @@ instructionNode({
             'typescript',
             `
 instructionNode({
-    name: 'createCounter',
+    identifier: 'createCounter',
     accounts: [
-        instructionAccountNode({ name: 'counter', isWritable: true, isSigner: true }),
-        instructionAccountNode({ name: 'authority', isWritable: false, isSigner: false }),
+        instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: true }),
+        instructionAccountNode({ identifier: 'authority', isWritable: false, isSigner: false }),
     ],
     byteDeltas: [instructionByteDeltaNode(accountLinkNode('counter'))],
 });
@@ -46,11 +46,11 @@ instructionNode({
             'typescript',
             `
 instructionNode({
-    name: 'initialize',
+    identifier: 'initialize',
     accounts: [
-        instructionAccountNode({ name: 'counter', isWritable: true, isSigner: true }),
-        instructionAccountNode({ name: 'authority', isWritable: false, isSigner: false }),
-        instructionAccountNode({ name: 'freezeAuthority', isWritable: false, isSigner: false, isOptional: true }),
+        instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: true }),
+        instructionAccountNode({ identifier: 'authority', isWritable: false, isSigner: false }),
+        instructionAccountNode({ identifier: 'freezeAuthority', isWritable: false, isSigner: false, isOptional: true }),
     ],
     optionalAccountStrategy: 'omitted',
 });
@@ -63,8 +63,8 @@ instructionNode({
             'typescript',
             `
 instructionNode({
-    name: 'multisigIncrement',
-    accounts: [instructionAccountNode({ name: 'counter', isWritable: true, isSigner: false })],
+    identifier: 'multisigIncrement',
+    accounts: [instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: false })],
     remainingAccounts: [instructionRemainingAccountsNode(argumentValueNode('authorities'), { isSigner: true })],
 });
 `,
@@ -76,43 +76,43 @@ instructionNode({
             'typescript',
             `
 instructionNode({
-    name: 'increment',
+    identifier: 'increment',
     accounts: [
-        instructionAccountNode({ name: 'counter', isWritable: true, isSigner: 'either' }),
-        instructionAccountNode({ name: 'authority', isWritable: false, isSigner: true }),
+        instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: 'either' }),
+        instructionAccountNode({ identifier: 'authority', isWritable: false, isSigner: true }),
     ],
     arguments: [
-        instructionArgumentNode({ name: 'version', type: numberTypeNode('u8') }),
-        instructionArgumentNode({ name: 'amount', type: numberTypeNode('u8') }),
+        instructionArgumentNode({ identifier: 'version', type: numberTypeNode('u8') }),
+        instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u8') }),
     ],
     subInstructions: [
         instructionNode({
-            name: 'incrementV1',
-            accounts: [instructionAccountNode({ name: 'counter', isWritable: true, isSigner: true })],
+            identifier: 'incrementV1',
+            accounts: [instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: true })],
             arguments: [
                 instructionArgumentNode({
-                    name: 'version',
+                    identifier: 'version',
                     type: numberTypeNode('u8'),
                     defaultValue: numberValueNode(0),
                     defaultValueStrategy: 'omitted',
                 }),
-                instructionArgumentNode({ name: 'amount', type: numberTypeNode('u8') }),
+                instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u8') }),
             ],
         }),
         instructionNode({
-            name: 'incrementV2',
+            identifier: 'incrementV2',
             accounts: [
-                instructionAccountNode({ name: 'counter', isWritable: true, isSigner: false }),
-                instructionAccountNode({ name: 'authority', isWritable: false, isSigner: true }),
+                instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: false }),
+                instructionAccountNode({ identifier: 'authority', isWritable: false, isSigner: true }),
             ],
             arguments: [
                 instructionArgumentNode({
-                    name: 'version',
+                    identifier: 'version',
                     type: numberTypeNode('u8'),
                     defaultValue: numberValueNode(1),
                     defaultValueStrategy: 'omitted',
                 }),
-                instructionArgumentNode({ name: 'amount', type: numberTypeNode('u8') }),
+                instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u8') }),
             ],
         }),
     ],
@@ -126,13 +126,13 @@ instructionNode({
             'typescript',
             `
 instructionNode({
-    name: 'oldIncrement',
+    identifier: 'oldIncrement',
     status: instructionStatusNode(
         'deprecated',
         'Use the \`increment\` instruction instead. This will be removed in v3.0.0.',
     ),
-    accounts: [instructionAccountNode({ name: 'counter', isWritable: true, isSigner: false })],
-    arguments: [instructionArgumentNode({ name: 'amount', type: numberTypeNode('u8') })],
+    accounts: [instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: false })],
+    arguments: [instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u8') })],
 });
 `,
         ),
@@ -143,16 +143,16 @@ instructionNode({
             'typescript',
             `
 instructionNode({
-    name: 'legacyTransfer',
+    identifier: 'legacyTransfer',
     status: instructionStatusNode(
         'archived',
         'This instruction was removed in v2.0.0. It is kept here for historical parsing.',
     ),
     accounts: [
-        instructionAccountNode({ name: 'source', isWritable: true, isSigner: true }),
-        instructionAccountNode({ name: 'destination', isWritable: true, isSigner: false }),
+        instructionAccountNode({ identifier: 'source', isWritable: true, isSigner: true }),
+        instructionAccountNode({ identifier: 'destination', isWritable: true, isSigner: false }),
     ],
-    arguments: [instructionArgumentNode({ name: 'amount', type: numberTypeNode('u64') })],
+    arguments: [instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u64') })],
 });
 `,
         ),
@@ -163,9 +163,9 @@ instructionNode({
             'typescript',
             `
 instructionNode({
-    name: 'experimentalFeature',
+    identifier: 'experimentalFeature',
     status: instructionStatusNode('draft', 'This instruction is under development and may change.'),
-    accounts: [instructionAccountNode({ name: 'config', isWritable: true, isSigner: true })],
+    accounts: [instructionAccountNode({ identifier: 'config', isWritable: true, isSigner: true })],
     arguments: [],
 });
 `,

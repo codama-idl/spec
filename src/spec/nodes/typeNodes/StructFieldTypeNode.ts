@@ -13,8 +13,8 @@ import { examples } from './StructFieldTypeNode.examples';
 export const structFieldTypeNode = defineNode('structFieldTypeNode', {
     docs: ['A named field within a struct type.'],
     attributes: [
-        attribute('name', stringIdentifier(), {
-            docs: ['The name of the field.'],
+        attribute('identifier', stringIdentifier(), {
+            docs: ['The identifier of the field.'],
         }),
         optionalAttribute('defaultValueStrategy', enumeration('defaultValueStrategy'), {
             docs: ['How a configured default value is exposed in generated APIs. Required when `defaultValue` is set.'],

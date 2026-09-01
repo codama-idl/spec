@@ -15,7 +15,20 @@ export type IntegerWidth = 'i8' | 'i16' | 'i32' | 'i64' | 'i128' | 'u8' | 'u16' 
 
 export type FloatWidth = 'f32' | 'f64';
 
-export type StringConstraint = 'identifier' | 'version';
+/**
+ * Constraints a `string` type expression may carry:
+ *
+ * - `identifier` — a machine key: `[A-Za-z_][A-Za-z0-9_]*` (letters, digits,
+ *   underscore; no leading digit). No casing is mandated — `transferTokens`,
+ *   `transfer_tokens` and `TransferTokens` are all valid — but identifiers
+ *   sharing a scope must remain unique after lowercasing and stripping
+ *   underscores, so that renderers converting to their target casing
+ *   conventions never collide.
+ * - `namespace` — a dot-separated chain of identifiers (e.g. `i18n.es`),
+ *   used for plugin names.
+ * - `version` — a semver version string (e.g. `"1.6.0"`).
+ */
+export type StringConstraint = 'identifier' | 'namespace' | 'version';
 
 /** A primitive literal value usable inside a `literalUnion`. */
 export type LiteralValue = boolean | number | string;

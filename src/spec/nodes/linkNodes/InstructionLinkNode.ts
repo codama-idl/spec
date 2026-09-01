@@ -9,8 +9,8 @@ export const instructionLinkNode = defineNode('instructionLinkNode', {
                 'The program the referenced instruction belongs to. When omitted, the surrounding program is assumed.',
             ],
         }),
-        attribute('name', stringIdentifier(), {
-            docs: ['The name of the referenced instruction.'],
+        attribute('identifier', stringIdentifier(), {
+            docs: ['The identifier of the referenced instruction.'],
         }),
     ],
     examples,

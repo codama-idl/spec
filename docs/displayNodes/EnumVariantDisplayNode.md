@@ -25,7 +25,7 @@ Display metadata for an enum variant: its label and whether to hide its inner pa
 ```typescript
 enumVariantTypeNode(
     'buy',
-    structTypeNode([structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') })]),
+    structTypeNode([structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') })]),
     { display: enumVariantDisplayNode({ label: 'Buy' }) },
 );
 ```

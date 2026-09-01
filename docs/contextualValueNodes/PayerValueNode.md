@@ -30,10 +30,10 @@ const node = payerValueNode();
 
 ```typescript
 instructionNode({
-    name: 'transfer',
+    identifier: 'transfer',
     accounts: [
         instructionAccountNode({
-            name: 'payer',
+            identifier: 'payer',
             isSigner: true,
             isWritable: false,
             defaultValue: payerValueNode(),

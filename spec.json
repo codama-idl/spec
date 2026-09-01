@@ -386,8 +386,8 @@
                                         "    enumVariantTypeNode(",
                                         "        'move',",
                                         "        structTypeNode([",
-                                        "            structFieldTypeNode({ name: 'x', type: numberTypeNode('u16') }),",
-                                        "            structFieldTypeNode({ name: 'y', type: numberTypeNode('u16') }),",
+                                        "            structFieldTypeNode({ identifier: 'x', type: numberTypeNode('u16') }),",
+                                        "            structFieldTypeNode({ identifier: 'y', type: numberTypeNode('u16') }),",
                                         "        ]),",
                                         "    ),",
                                         "]);",
@@ -409,13 +409,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the variant."
+                                "The identifier of the variant."
                             ]
                         },
                         {
@@ -483,8 +483,8 @@
                                         "enumVariantTypeNode(",
                                         "    'move',",
                                         "    structTypeNode([",
-                                        "        structFieldTypeNode({ name: 'x', type: numberTypeNode('u32') }),",
-                                        "        structFieldTypeNode({ name: 'y', type: numberTypeNode('u32') }),",
+                                        "        structFieldTypeNode({ identifier: 'x', type: numberTypeNode('u32') }),",
+                                        "        structFieldTypeNode({ identifier: 'y', type: numberTypeNode('u32') }),",
                                         "    ]),",
                                         ");"
                                     ]
@@ -1046,13 +1046,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the field."
+                                "The identifier of the field."
                             ]
                         },
                         {
@@ -1117,7 +1117,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "structFieldTypeNode({",
-                                        "    name: 'age',",
+                                        "    identifier: 'age',",
                                         "    type: numberTypeNode('u8'),",
                                         "    defaultValue: numberValueNode(42),",
                                         "});",
@@ -1172,8 +1172,8 @@
                                     "language": "typescript",
                                     "content": [
                                         "structTypeNode([",
-                                        "    structFieldTypeNode({ name: 'name', type: stringTypeNode('utf8', { transforms: [fixedSizeTransformNode(10)] }) }),",
-                                        "    structFieldTypeNode({ name: 'age', type: numberTypeNode('u8') }),",
+                                        "    structFieldTypeNode({ identifier: 'name', type: stringTypeNode('utf8', { transforms: [fixedSizeTransformNode(10)] }) }),",
+                                        "    structFieldTypeNode({ identifier: 'age', type: numberTypeNode('u8') }),",
                                         "]);",
                                         "",
                                         "// { name: Alice, age: 42 } => 0x416C69636500000000002A"
@@ -2560,13 +2560,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the field."
+                                "The identifier of the field."
                             ]
                         },
                         {
@@ -2843,13 +2843,13 @@
                             ]
                         },
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the referenced account."
+                                "The identifier of the referenced account."
                             ]
                         }
                     ],
@@ -2886,13 +2886,13 @@
                             ]
                         },
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the referenced defined type."
+                                "The identifier of the referenced defined type."
                             ]
                         },
                         {
@@ -2944,13 +2944,13 @@
                             ]
                         },
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the referenced instruction account."
+                                "The identifier of the referenced instruction account."
                             ]
                         }
                     ],
@@ -2997,13 +2997,13 @@
                             ]
                         },
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the referenced instruction argument."
+                                "The identifier of the referenced instruction argument."
                             ]
                         }
                     ],
@@ -3049,13 +3049,13 @@
                             ]
                         },
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the referenced instruction."
+                                "The identifier of the referenced instruction."
                             ]
                         }
                     ],
@@ -3092,13 +3092,13 @@
                             ]
                         },
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the referenced PDA."
+                                "The identifier of the referenced PDA."
                             ]
                         }
                     ],
@@ -3124,13 +3124,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the referenced program."
+                                "The identifier of the referenced program."
                             ]
                         }
                     ],
@@ -3254,7 +3254,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "pdaNode({",
-                                        "    name: 'tickets',",
+                                        "    identifier: 'tickets',",
                                         "    seeds: [constantPdaSeedNodeFromString('utf8', 'tickets')],",
                                         "});",
                                         "",
@@ -3273,13 +3273,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the seed variable."
+                                "The identifier of the seed variable."
                             ]
                         },
                         {
@@ -3322,7 +3322,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "pdaNode({",
-                                        "    name: 'ticket',",
+                                        "    identifier: 'ticket',",
                                         "    seeds: [variablePdaSeedNode('authority', publicKeyTypeNode())],",
                                         "});"
                                     ]
@@ -3628,13 +3628,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the discriminating field — a `structFieldTypeNode` of the account data (which must resolve to a struct, following links) or an argument of the instruction."
+                                "The identifier of the discriminating field — a `structFieldTypeNode` of the account data (which must resolve to a struct, following links) or an argument of the instruction."
                             ]
                         },
                         {
@@ -3669,7 +3669,7 @@
                                         "accountNode({",
                                         "    data: structTypeNode([",
                                         "        structFieldTypeNode({",
-                                        "            name: 'discriminator',",
+                                        "            identifier: 'discriminator',",
                                         "            type: numberTypeNode('u32'),",
                                         "            defaultValue: numberValueNode(42),",
                                         "            defaultValueStrategy: 'omitted',",
@@ -3692,7 +3692,7 @@
                                         "instructionNode({",
                                         "    arguments: [",
                                         "        instructionArgumentNode({",
-                                        "            name: 'discriminator',",
+                                        "            identifier: 'discriminator',",
                                         "            type: bytesTypeNode({ transforms: [fixedSizeTransformNode(8)] }),",
                                         "            defaultValue: bytesValueNode('base16', '0011223344556677'),",
                                         "            defaultValueStrategy: 'omitted',",
@@ -4017,7 +4017,7 @@
                                     "content": [
                                         "enumVariantTypeNode(",
                                         "    'buy',",
-                                        "    structTypeNode([structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') })]),",
+                                        "    structTypeNode([structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') })]),",
                                         "    { display: enumVariantDisplayNode({ label: 'Buy' }) },",
                                         ");"
                                     ]
@@ -4076,7 +4076,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionAccountNode({",
-                                        "    name: 'destination',",
+                                        "    identifier: 'destination',",
                                         "    isSigner: false,",
                                         "    isWritable: true,",
                                         "    display: instructionAccountDisplayNode({ label: 'To' }),",
@@ -4092,7 +4092,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionAccountNode({",
-                                        "    name: 'mint',",
+                                        "    identifier: 'mint',",
                                         "    isSigner: false,",
                                         "    isWritable: false,",
                                         "    display: instructionAccountDisplayNode({ label: 'Token Mint', skip: 'whenInjected' }),",
@@ -4141,7 +4141,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'transferChecked',",
+                                        "    identifier: 'transferChecked',",
                                         "    display: instructionDisplayNode({",
                                         "        intent: 'Transfer',",
                                         "        interpolatedIntent: 'Transfer ${data.amount} to ${accounts.destination}',",
@@ -4162,7 +4162,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'closeAccount',",
+                                        "    identifier: 'closeAccount',",
                                         "    display: instructionDisplayNode({ intent: 'Close Account' }),",
                                         "    // ...accounts and arguments",
                                         "});"
@@ -4294,7 +4294,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionArgumentNode({",
-                                        "    name: 'amount',",
+                                        "    identifier: 'amount',",
                                         "    type: numberTypeNode('u64'),",
                                         "    display: structFieldDisplayNode({ label: 'Amount' }),",
                                         "});"
@@ -4309,7 +4309,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionArgumentNode({",
-                                        "    name: 'discriminator',",
+                                        "    identifier: 'discriminator',",
                                         "    type: numberTypeNode('u8'),",
                                         "    display: structFieldDisplayNode({ skip: 'always' }),",
                                         "});"
@@ -4324,7 +4324,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "structFieldTypeNode({",
-                                        "    name: 'config',",
+                                        "    identifier: 'config',",
                                         "    type: definedTypeLinkNode('config'),",
                                         "    display: structFieldDisplayNode({ flatten: true, flattenPrefix: 'config.' }),",
                                         "});"
@@ -4425,13 +4425,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the account whose bump seed is referenced."
+                                "The identifier of the account whose bump seed is referenced."
                             ]
                         }
                     ],
@@ -4454,10 +4454,10 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'transfer',",
+                                        "    identifier: 'transfer',",
                                         "    accounts: [",
                                         "        instructionAccountNode({",
-                                        "            name: 'associatedTokenAccount',",
+                                        "            identifier: 'associatedTokenAccount',",
                                         "            isSigner: false,",
                                         "            isWritable: true,",
                                         "        }),",
@@ -4465,7 +4465,7 @@
                                         "    ],",
                                         "    arguments: [",
                                         "        instructionArgumentNode({",
-                                        "            name: 'bump',",
+                                        "            identifier: 'bump',",
                                         "            type: numberTypeNode('u8'),",
                                         "            defaultValue: accountBumpValueNode('associatedTokenAccount'),",
                                         "        }),",
@@ -4529,10 +4529,10 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'transferChecked',",
+                                        "    identifier: 'transferChecked',",
                                         "    accounts: [",
                                         "        instructionAccountNode({",
-                                        "            name: 'mint',",
+                                        "            identifier: 'mint',",
                                         "            isWritable: false,",
                                         "            isSigner: false,",
                                         "            accountLink: accountLinkNode('mint'),",
@@ -4541,7 +4541,7 @@
                                         "    ],",
                                         "    arguments: [",
                                         "        instructionArgumentNode({",
-                                        "            name: 'decimals',",
+                                        "            identifier: 'decimals',",
                                         "            type: numberTypeNode('u8'),",
                                         "            defaultValue: accountFieldValueNode('mint', 'decimals'),",
                                         "        }),",
@@ -4561,13 +4561,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the referenced account."
+                                "The identifier of the referenced account."
                             ]
                         }
                     ],
@@ -4590,15 +4590,15 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'mint',",
+                                        "    identifier: 'mint',",
                                         "    accounts: [",
                                         "        instructionAccountNode({",
-                                        "            name: 'payer',",
+                                        "            identifier: 'payer',",
                                         "            isSigner: true,",
                                         "            isWritable: false,",
                                         "        }),",
                                         "        instructionAccountNode({",
-                                        "            name: 'authority',",
+                                        "            identifier: 'authority',",
                                         "            isSigner: false,",
                                         "            isWritable: true,",
                                         "            defaultValue: accountValueNode('payer'),",
@@ -4619,13 +4619,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the referenced argument."
+                                "The identifier of the referenced argument."
                             ]
                         }
                     ],
@@ -4648,14 +4648,14 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'mint',",
+                                        "    identifier: 'mint',",
                                         "    arguments: [",
                                         "        instructionArgumentNode({",
-                                        "            name: 'amount',",
+                                        "            identifier: 'amount',",
                                         "            type: numberTypeNode('u64'),",
                                         "        }),",
                                         "        instructionArgumentNode({",
-                                        "            name: 'amountToDelegate',",
+                                        "            identifier: 'amountToDelegate',",
                                         "            type: numberTypeNode('u64'),",
                                         "            defaultValue: argumentValueNode('amount'),",
                                         "        }),",
@@ -4744,15 +4744,15 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'transfer',",
+                                        "    identifier: 'transfer',",
                                         "    accounts: [",
                                         "        instructionAccountNode({",
-                                        "            name: 'source',",
+                                        "            identifier: 'source',",
                                         "            isSigner: false,",
                                         "            isWritable: true,",
                                         "        }),",
                                         "        instructionAccountNode({",
-                                        "            name: 'destination',",
+                                        "            identifier: 'destination',",
                                         "            isSigner: false,",
                                         "            isWritable: true,",
                                         "            isOptional: true,",
@@ -4766,7 +4766,7 @@
                                         "    ],",
                                         "    arguments: [",
                                         "        instructionArgumentNode({",
-                                        "            name: 'amount',",
+                                        "            identifier: 'amount',",
                                         "            type: numberTypeNode('u64'),",
                                         "        }),",
                                         "    ],",
@@ -4804,10 +4804,10 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'transfer',",
+                                        "    identifier: 'transfer',",
                                         "    accounts: [",
                                         "        instructionAccountNode({",
-                                        "            name: 'authority',",
+                                        "            identifier: 'authority',",
                                         "            isSigner: true,",
                                         "            isWritable: false,",
                                         "            defaultValue: identityValueNode(),",
@@ -4848,10 +4848,10 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'transfer',",
+                                        "    identifier: 'transfer',",
                                         "    accounts: [",
                                         "        instructionAccountNode({",
-                                        "            name: 'payer',",
+                                        "            identifier: 'payer',",
                                         "            isSigner: true,",
                                         "            isWritable: false,",
                                         "            defaultValue: payerValueNode(),",
@@ -4872,13 +4872,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the seed being filled in — a `variablePdaSeedNode` of the PDA definition."
+                                "The identifier of the seed being filled in — a `variablePdaSeedNode` of the PDA definition."
                             ]
                         },
                         {
@@ -4983,7 +4983,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "const inlinedPdaNode = pdaNode({",
-                                        "    name: 'associatedToken',",
+                                        "    identifier: 'associatedToken',",
                                         "    seeds: [",
                                         "        variablePdaSeedNode('mint', publicKeyTypeNode()),",
                                         "        constantPdaSeedNode(publicKeyTypeNode(), publicKeyValueNode('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA')),",
@@ -5030,7 +5030,7 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
@@ -5601,13 +5601,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the account."
+                                "The identifier of the account."
                             ]
                         },
                         {
@@ -5677,11 +5677,11 @@
                                     "language": "typescript",
                                     "content": [
                                         "const node = accountNode({",
-                                        "    name: 'token',",
+                                        "    identifier: 'token',",
                                         "    data: structTypeNode([",
-                                        "        structFieldTypeNode({ name: 'mint', type: publicKeyTypeNode() }),",
-                                        "        structFieldTypeNode({ name: 'owner', type: publicKeyTypeNode() }),",
-                                        "        structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') }),",
+                                        "        structFieldTypeNode({ identifier: 'mint', type: publicKeyTypeNode() }),",
+                                        "        structFieldTypeNode({ identifier: 'owner', type: publicKeyTypeNode() }),",
+                                        "        structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') }),",
                                         "    ]),",
                                         "    discriminators: [sizeDiscriminatorNode(72)],",
                                         "    size: 72,",
@@ -5697,12 +5697,12 @@
                                     "language": "typescript",
                                     "content": [
                                         "programNode({",
-                                        "    name: 'myProgram',",
-                                        "    accounts: [accountNode({ name: 'mint', data: definedTypeLinkNode('mintState') })],",
+                                        "    identifier: 'myProgram',",
+                                        "    accounts: [accountNode({ identifier: 'mint', data: definedTypeLinkNode('mintState') })],",
                                         "    definedTypes: [",
                                         "        definedTypeNode({",
-                                        "            name: 'mintState',",
-                                        "            type: structTypeNode([structFieldTypeNode({ name: 'supply', type: numberTypeNode('u64') })]),",
+                                        "            identifier: 'mintState',",
+                                        "            type: structTypeNode([structFieldTypeNode({ identifier: 'supply', type: numberTypeNode('u64') })]),",
                                         "        }),",
                                         "    ],",
                                         "});"
@@ -5717,17 +5717,17 @@
                                     "language": "typescript",
                                     "content": [
                                         "programNode({",
-                                        "    name: 'myProgram',",
+                                        "    identifier: 'myProgram',",
                                         "    accounts: [",
                                         "        accountNode({",
-                                        "            name: 'token',",
-                                        "            data: structTypeNode([structFieldTypeNode({ name: 'authority', type: publicKeyTypeNode() })]),",
+                                        "            identifier: 'token',",
+                                        "            data: structTypeNode([structFieldTypeNode({ identifier: 'authority', type: publicKeyTypeNode() })]),",
                                         "            pda: pdaLinkNode('myPda'),",
                                         "        }),",
                                         "    ],",
                                         "    pdas: [",
                                         "        pdaNode({",
-                                        "            name: 'myPda',",
+                                        "            identifier: 'myPda',",
                                         "            seeds: [",
                                         "                constantPdaSeedNodeFromString('utf8', 'token'),",
                                         "                variablePdaSeedNode('authority', publicKeyTypeNode()),",
@@ -5748,13 +5748,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the constant."
+                                "The identifier of the constant."
                             ]
                         },
                         {
@@ -5835,13 +5835,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the defined type."
+                                "The identifier of the defined type."
                             ]
                         },
                         {
@@ -5873,11 +5873,11 @@
                                     "language": "typescript",
                                     "content": [
                                         "const node = definedTypeNode({",
-                                        "    name: 'person',",
+                                        "    identifier: 'person',",
                                         "    docs: ['This type describes a Person.'],",
                                         "    type: structTypeNode([",
-                                        "        structFieldTypeNode({ name: 'name', type: stringTypeNode('utf8') }),",
-                                        "        structFieldTypeNode({ name: 'age', type: numberTypeNode('u8') }),",
+                                        "        structFieldTypeNode({ identifier: 'name', type: stringTypeNode('utf8') }),",
+                                        "        structFieldTypeNode({ identifier: 'age', type: numberTypeNode('u8') }),",
                                         "    ]),",
                                         "});"
                                     ]
@@ -5895,13 +5895,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the error."
+                                "The identifier of the error."
                             ]
                         },
                         {
@@ -5942,7 +5942,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "const node = errorNode({",
-                                        "    name: 'invalidAmountArgument',",
+                                        "    identifier: 'invalidAmountArgument',",
                                         "    code: 1,",
                                         "    message: 'The amount argument is invalid.',",
                                         "});"
@@ -5959,13 +5959,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the event."
+                                "The identifier of the event."
                             ]
                         },
                         {
@@ -6011,10 +6011,10 @@
                                     "language": "typescript",
                                     "content": [
                                         "eventNode({",
-                                        "    name: 'transferEvent',",
+                                        "    identifier: 'transferEvent',",
                                         "    data: structTypeNode([",
-                                        "        structFieldTypeNode({ name: 'authority', type: publicKeyTypeNode() }),",
-                                        "        structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') }),",
+                                        "        structFieldTypeNode({ identifier: 'authority', type: publicKeyTypeNode() }),",
+                                        "        structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') }),",
                                         "    ]),",
                                         "});"
                                     ]
@@ -6028,8 +6028,8 @@
                                     "language": "typescript",
                                     "content": [
                                         "eventNode({",
-                                        "    name: 'transferEvent',",
-                                        "    data: structTypeNode([structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') })], {",
+                                        "    identifier: 'transferEvent',",
+                                        "    data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') })], {",
                                         "        transforms: [",
                                         "            hiddenPrefixTransformNode([",
                                         "                constantValueNode(bytesTypeNode({ transforms: [fixedSizeTransformNode(8)] }), bytesValueNode('base16', '0102030405060708')),",
@@ -6057,13 +6057,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the account."
+                                "The identifier of the account."
                             ]
                         },
                         {
@@ -6154,7 +6154,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionAccountNode({",
-                                        "    name: 'freezeAuthority',",
+                                        "    identifier: 'freezeAuthority',",
                                         "    isWritable: false,",
                                         "    isSigner: false,",
                                         "    isOptional: true,",
@@ -6171,7 +6171,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionAccountNode({",
-                                        "    name: 'owner',",
+                                        "    identifier: 'owner',",
                                         "    isWritable: true,",
                                         "    isSigner: 'either',",
                                         "    docs: ['The owner of the asset. The owner must only sign the transaction if the asset is being updated.'],",
@@ -6192,13 +6192,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the argument."
+                                "The identifier of the argument."
                             ]
                         },
                         {
@@ -6264,7 +6264,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionArgumentNode({",
-                                        "    name: 'amount',",
+                                        "    identifier: 'amount',",
                                         "    type: numberTypeNode('u64'),",
                                         "    defaultValue: numberValueNode(0),",
                                         "});"
@@ -6279,7 +6279,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionArgumentNode({",
-                                        "    name: 'instructionDiscriminator',",
+                                        "    identifier: 'instructionDiscriminator',",
                                         "    type: numberTypeNode('u8'),",
                                         "    defaultValue: numberValueNode(42),",
                                         "    defaultValueStrategy: 'omitted',",
@@ -6373,13 +6373,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the instruction."
+                                "The identifier of the instruction."
                             ]
                         },
                         {
@@ -6549,14 +6549,14 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'increment',",
+                                        "    identifier: 'increment',",
                                         "    accounts: [",
-                                        "        instructionAccountNode({ name: 'counter', isWritable: true, isSigner: true }),",
-                                        "        instructionAccountNode({ name: 'authority', isWritable: false, isSigner: false }),",
+                                        "        instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: true }),",
+                                        "        instructionAccountNode({ identifier: 'authority', isWritable: false, isSigner: false }),",
                                         "    ],",
                                         "    arguments: [",
                                         "        instructionArgumentNode({",
-                                        "            name: 'discriminator',",
+                                        "            identifier: 'discriminator',",
                                         "            type: numberTypeNode('u8'),",
                                         "            defaultValue: numberValueNode(42),",
                                         "            defaultValueStrategy: 'omitted',",
@@ -6574,10 +6574,10 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'createCounter',",
+                                        "    identifier: 'createCounter',",
                                         "    accounts: [",
-                                        "        instructionAccountNode({ name: 'counter', isWritable: true, isSigner: true }),",
-                                        "        instructionAccountNode({ name: 'authority', isWritable: false, isSigner: false }),",
+                                        "        instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: true }),",
+                                        "        instructionAccountNode({ identifier: 'authority', isWritable: false, isSigner: false }),",
                                         "    ],",
                                         "    byteDeltas: [instructionByteDeltaNode(accountLinkNode('counter'))],",
                                         "});"
@@ -6592,11 +6592,11 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'initialize',",
+                                        "    identifier: 'initialize',",
                                         "    accounts: [",
-                                        "        instructionAccountNode({ name: 'counter', isWritable: true, isSigner: true }),",
-                                        "        instructionAccountNode({ name: 'authority', isWritable: false, isSigner: false }),",
-                                        "        instructionAccountNode({ name: 'freezeAuthority', isWritable: false, isSigner: false, isOptional: true }),",
+                                        "        instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: true }),",
+                                        "        instructionAccountNode({ identifier: 'authority', isWritable: false, isSigner: false }),",
+                                        "        instructionAccountNode({ identifier: 'freezeAuthority', isWritable: false, isSigner: false, isOptional: true }),",
                                         "    ],",
                                         "    optionalAccountStrategy: 'omitted',",
                                         "});"
@@ -6611,8 +6611,8 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'multisigIncrement',",
-                                        "    accounts: [instructionAccountNode({ name: 'counter', isWritable: true, isSigner: false })],",
+                                        "    identifier: 'multisigIncrement',",
+                                        "    accounts: [instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: false })],",
                                         "    remainingAccounts: [instructionRemainingAccountsNode(argumentValueNode('authorities'), { isSigner: true })],",
                                         "});"
                                     ]
@@ -6626,43 +6626,43 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'increment',",
+                                        "    identifier: 'increment',",
                                         "    accounts: [",
-                                        "        instructionAccountNode({ name: 'counter', isWritable: true, isSigner: 'either' }),",
-                                        "        instructionAccountNode({ name: 'authority', isWritable: false, isSigner: true }),",
+                                        "        instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: 'either' }),",
+                                        "        instructionAccountNode({ identifier: 'authority', isWritable: false, isSigner: true }),",
                                         "    ],",
                                         "    arguments: [",
-                                        "        instructionArgumentNode({ name: 'version', type: numberTypeNode('u8') }),",
-                                        "        instructionArgumentNode({ name: 'amount', type: numberTypeNode('u8') }),",
+                                        "        instructionArgumentNode({ identifier: 'version', type: numberTypeNode('u8') }),",
+                                        "        instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u8') }),",
                                         "    ],",
                                         "    subInstructions: [",
                                         "        instructionNode({",
-                                        "            name: 'incrementV1',",
-                                        "            accounts: [instructionAccountNode({ name: 'counter', isWritable: true, isSigner: true })],",
+                                        "            identifier: 'incrementV1',",
+                                        "            accounts: [instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: true })],",
                                         "            arguments: [",
                                         "                instructionArgumentNode({",
-                                        "                    name: 'version',",
+                                        "                    identifier: 'version',",
                                         "                    type: numberTypeNode('u8'),",
                                         "                    defaultValue: numberValueNode(0),",
                                         "                    defaultValueStrategy: 'omitted',",
                                         "                }),",
-                                        "                instructionArgumentNode({ name: 'amount', type: numberTypeNode('u8') }),",
+                                        "                instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u8') }),",
                                         "            ],",
                                         "        }),",
                                         "        instructionNode({",
-                                        "            name: 'incrementV2',",
+                                        "            identifier: 'incrementV2',",
                                         "            accounts: [",
-                                        "                instructionAccountNode({ name: 'counter', isWritable: true, isSigner: false }),",
-                                        "                instructionAccountNode({ name: 'authority', isWritable: false, isSigner: true }),",
+                                        "                instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: false }),",
+                                        "                instructionAccountNode({ identifier: 'authority', isWritable: false, isSigner: true }),",
                                         "            ],",
                                         "            arguments: [",
                                         "                instructionArgumentNode({",
-                                        "                    name: 'version',",
+                                        "                    identifier: 'version',",
                                         "                    type: numberTypeNode('u8'),",
                                         "                    defaultValue: numberValueNode(1),",
                                         "                    defaultValueStrategy: 'omitted',",
                                         "                }),",
-                                        "                instructionArgumentNode({ name: 'amount', type: numberTypeNode('u8') }),",
+                                        "                instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u8') }),",
                                         "            ],",
                                         "        }),",
                                         "    ],",
@@ -6678,13 +6678,13 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'oldIncrement',",
+                                        "    identifier: 'oldIncrement',",
                                         "    status: instructionStatusNode(",
                                         "        'deprecated',",
                                         "        'Use the `increment` instruction instead. This will be removed in v3.0.0.',",
                                         "    ),",
-                                        "    accounts: [instructionAccountNode({ name: 'counter', isWritable: true, isSigner: false })],",
-                                        "    arguments: [instructionArgumentNode({ name: 'amount', type: numberTypeNode('u8') })],",
+                                        "    accounts: [instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: false })],",
+                                        "    arguments: [instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u8') })],",
                                         "});"
                                     ]
                                 }
@@ -6697,16 +6697,16 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'legacyTransfer',",
+                                        "    identifier: 'legacyTransfer',",
                                         "    status: instructionStatusNode(",
                                         "        'archived',",
                                         "        'This instruction was removed in v2.0.0. It is kept here for historical parsing.',",
                                         "    ),",
                                         "    accounts: [",
-                                        "        instructionAccountNode({ name: 'source', isWritable: true, isSigner: true }),",
-                                        "        instructionAccountNode({ name: 'destination', isWritable: true, isSigner: false }),",
+                                        "        instructionAccountNode({ identifier: 'source', isWritable: true, isSigner: true }),",
+                                        "        instructionAccountNode({ identifier: 'destination', isWritable: true, isSigner: false }),",
                                         "    ],",
-                                        "    arguments: [instructionArgumentNode({ name: 'amount', type: numberTypeNode('u64') })],",
+                                        "    arguments: [instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u64') })],",
                                         "});"
                                     ]
                                 }
@@ -6719,9 +6719,9 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'experimentalFeature',",
+                                        "    identifier: 'experimentalFeature',",
                                         "    status: instructionStatusNode('draft', 'This instruction is under development and may change.'),",
-                                        "    accounts: [instructionAccountNode({ name: 'config', isWritable: true, isSigner: true })],",
+                                        "    accounts: [instructionAccountNode({ identifier: 'config', isWritable: true, isSigner: true })],",
                                         "    arguments: [],",
                                         "});"
                                     ]
@@ -6908,7 +6908,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'experimentalFeature',",
+                                        "    identifier: 'experimentalFeature',",
                                         "    status: instructionStatusNode('draft', 'This instruction is under development and may change.'),",
                                         "    // ...",
                                         "});"
@@ -6927,13 +6927,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the PDA."
+                                "The identifier of the PDA."
                             ]
                         },
                         {
@@ -6978,7 +6978,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "pdaNode({",
-                                        "    name: 'ticket',",
+                                        "    identifier: 'ticket',",
                                         "    seeds: [",
                                         "        constantPdaSeedNodeFromString('utf8', 'raffles'),",
                                         "        variablePdaSeedNode('raffle', publicKeyTypeNode()),",
@@ -6997,7 +6997,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "pdaNode({",
-                                        "    name: 'seedlessPda',",
+                                        "    identifier: 'seedlessPda',",
                                         "    seeds: [],",
                                         "});"
                                     ]
@@ -7018,10 +7018,10 @@
                             "name": "name",
                             "type": {
                                 "kind": "string",
-                                "constraint": "identifier"
+                                "constraint": "namespace"
                             },
                             "docs": [
-                                "The unique name identifying the plugin this data belongs to."
+                                "The unique, dot-separated namespace identifying the plugin this data belongs to (e.g. `i18n.es`)."
                             ]
                         },
                         {
@@ -7067,7 +7067,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'transfer',",
+                                        "    identifier: 'transfer',",
                                         "    plugins: [pluginNode('explorerHints', { payload: { icon: 'transfer-arrow' } })],",
                                         "    // ...",
                                         "});"
@@ -7086,13 +7086,13 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
                             },
                             "docs": [
-                                "The name of the program."
+                                "The identifier of the program."
                             ]
                         },
                         {
@@ -7224,7 +7224,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "const node = programNode({",
-                                        "    name: 'counter',",
+                                        "    identifier: 'counter',",
                                         "    publicKey: '7ovtg4pFqjQdSwFAUCu8gTnh5thZHzAyJFXy3Ssnj3yK',",
                                         "    version: '1.42.6',",
                                         "    accounts: [],",
@@ -7248,7 +7248,7 @@
                     ],
                     "attributes": [
                         {
-                            "name": "name",
+                            "name": "identifier",
                             "type": {
                                 "kind": "string",
                                 "constraint": "identifier"
@@ -7286,11 +7286,11 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    name: 'transferChecked',",
+                                        "    identifier: 'transferChecked',",
                                         "    provides: [providedNode('decimals', numberValueNode(9))],",
                                         "    arguments: [",
                                         "        instructionArgumentNode({",
-                                        "            name: 'decimals',",
+                                        "            identifier: 'decimals',",
                                         "            type: numberTypeNode('u8'),",
                                         "            defaultValue: injectedValueNode({ key: 'decimals' }),",
                                         "        }),",
@@ -7365,23 +7365,23 @@
                                     "content": [
                                         "const node = rootNode(",
                                         "    programNode({",
-                                        "        name: 'counter',",
+                                        "        identifier: 'counter',",
                                         "        publicKey: '2R3Ui2TVUUCyGcZdopxJauk8ZBzgAaHHZCVUhm5ifPaC',",
                                         "        version: '1.0.0',",
                                         "        accounts: [",
                                         "            accountNode({",
-                                        "                name: 'counter',",
+                                        "                identifier: 'counter',",
                                         "                data: structTypeNode([",
-                                        "                    structFieldTypeNode({ name: 'authority', type: publicKeyTypeNode() }),",
-                                        "                    structFieldTypeNode({ name: 'value', type: numberTypeNode('u32') }),",
+                                        "                    structFieldTypeNode({ identifier: 'authority', type: publicKeyTypeNode() }),",
+                                        "                    structFieldTypeNode({ identifier: 'value', type: numberTypeNode('u32') }),",
                                         "                ]),",
                                         "            }),",
                                         "        ],",
                                         "        instructions: [",
-                                        "            instructionNode({ name: 'create' /* ... */ }),",
-                                        "            instructionNode({ name: 'increment' /* ... */ }),",
-                                        "            instructionNode({ name: 'transferAuthority' /* ... */ }),",
-                                        "            instructionNode({ name: 'delete' /* ... */ }),",
+                                        "            instructionNode({ identifier: 'create' /* ... */ }),",
+                                        "            instructionNode({ identifier: 'increment' /* ... */ }),",
+                                        "            instructionNode({ identifier: 'transferAuthority' /* ... */ }),",
+                                        "            instructionNode({ identifier: 'delete' /* ... */ }),",
                                         "        ],",
                                         "    }),",
                                         ");"

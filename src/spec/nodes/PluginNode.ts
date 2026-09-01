@@ -1,4 +1,4 @@
-import { attribute, defineNode, json, optionalAttribute, stringIdentifier } from '../../api';
+import { attribute, defineNode, json, optionalAttribute, stringNamespace } from '../../api';
 import { examples } from './PluginNode.examples';
 
 export const pluginNode = defineNode('pluginNode', {
@@ -8,8 +8,8 @@ export const pluginNode = defineNode('pluginNode', {
         'Every node can carry plugins via the `plugins` base attribute.',
     ],
     attributes: [
-        attribute('name', stringIdentifier(), {
-            docs: ['The unique name identifying the plugin this data belongs to.'],
+        attribute('name', stringNamespace(), {
+            docs: ['The unique, dot-separated namespace identifying the plugin this data belongs to (e.g. `i18n.es`).'],
         }),
         optionalAttribute('payload', json(), {
             docs: [

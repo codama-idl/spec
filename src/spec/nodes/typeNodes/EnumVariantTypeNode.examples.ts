@@ -18,8 +18,8 @@ const node = enumVariantTypeNode('uninitialized');
 enumVariantTypeNode(
     'move',
     structTypeNode([
-        structFieldTypeNode({ name: 'x', type: numberTypeNode('u32') }),
-        structFieldTypeNode({ name: 'y', type: numberTypeNode('u32') }),
+        structFieldTypeNode({ identifier: 'x', type: numberTypeNode('u32') }),
+        structFieldTypeNode({ identifier: 'y', type: numberTypeNode('u32') }),
     ]),
 );
 `,

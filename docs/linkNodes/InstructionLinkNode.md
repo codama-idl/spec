@@ -6,10 +6,10 @@ A reference to an instruction defined elsewhere — possibly in a different prog
 
 ### Data
 
-| Attribute | Type                    | Description                             |
-| --------- | ----------------------- | --------------------------------------- |
-| `kind`    | `"instructionLinkNode"` | The node discriminator.                 |
-| `name`    | `CamelCaseString`       | The name of the referenced instruction. |
+| Attribute    | Type                    | Description                                   |
+| ------------ | ----------------------- | --------------------------------------------- |
+| `kind`       | `"instructionLinkNode"` | The node discriminator.                       |
+| `identifier` | `IdentifierString`      | The identifier of the referenced instruction. |
 
 ### Children
 

@@ -6,11 +6,11 @@ A named field within a struct type.
 
 ### Data
 
-| Attribute | Type                    | Description                           |
-| --------- | ----------------------- | ------------------------------------- |
-| `kind`    | `"structFieldTypeNode"` | The node discriminator.               |
-| `name`    | `CamelCaseString`       | The name of the field.                |
-| `docs`    | `string[]` _(optional)_ | Markdown documentation for the field. |
+| Attribute    | Type                    | Description                           |
+| ------------ | ----------------------- | ------------------------------------- |
+| `kind`       | `"structFieldTypeNode"` | The node discriminator.               |
+| `identifier` | `IdentifierString`      | The identifier of the field.          |
+| `docs`       | `string[]` _(optional)_ | Markdown documentation for the field. |
 
 ### Children
 
@@ -28,7 +28,7 @@ A named field within a struct type.
 
 ```typescript
 structFieldTypeNode({
-    name: 'age',
+    identifier: 'age',
     type: numberTypeNode('u8'),
     defaultValue: numberValueNode(42),
 });

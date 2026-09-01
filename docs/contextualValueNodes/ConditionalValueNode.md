@@ -38,15 +38,15 @@ const node = conditionalValueNode({
 
 ```typescript
 instructionNode({
-    name: 'transfer',
+    identifier: 'transfer',
     accounts: [
         instructionAccountNode({
-            name: 'source',
+            identifier: 'source',
             isSigner: false,
             isWritable: true,
         }),
         instructionAccountNode({
-            name: 'destination',
+            identifier: 'destination',
             isSigner: false,
             isWritable: true,
             isOptional: true,
@@ -60,7 +60,7 @@ instructionNode({
     ],
     arguments: [
         instructionArgumentNode({
-            name: 'amount',
+            identifier: 'amount',
             type: numberTypeNode('u64'),
         }),
     ],

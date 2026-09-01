@@ -31,7 +31,7 @@ pdaValueNode('associatedToken', [
             'typescript',
             `
 const inlinedPdaNode = pdaNode({
-    name: 'associatedToken',
+    identifier: 'associatedToken',
     seeds: [
         variablePdaSeedNode('mint', publicKeyTypeNode()),
         constantPdaSeedNode(publicKeyTypeNode(), publicKeyValueNode('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA')),

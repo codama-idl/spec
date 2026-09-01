@@ -8,7 +8,7 @@ export const resolverValueNode = defineNode('resolverValueNode', {
         'This node acts as a fallback for any value or logic that cannot easily be described by the other nodes — renderers treat resolvers as functions that can be injected into the generated code.',
     ],
     attributes: [
-        attribute('name', stringIdentifier(), {
+        attribute('identifier', stringIdentifier(), {
             docs: [
                 'A unique name for the resolver.',
                 'This is typically the name of the function that renderers will invoke.',

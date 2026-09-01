@@ -11,7 +11,7 @@ Resolution is a per-context property: a value with the same key may resolve in o
 | Attribute | Type                  | Description                                                     |
 | --------- | --------------------- | --------------------------------------------------------------- |
 | `kind`    | `"injectedValueNode"` | The node discriminator.                                         |
-| `key`     | `CamelCaseString`     | The key looked up against the surrounding provide/inject graph. |
+| `key`     | `IdentifierString`    | The key looked up against the surrounding provide/inject graph. |
 
 ### Children
 

@@ -4,8 +4,8 @@ import { examples } from './VariablePdaSeedNode.examples';
 export const variablePdaSeedNode = defineNode('variablePdaSeedNode', {
     docs: ['A PDA seed whose value is provided at derivation time, identified by name.'],
     attributes: [
-        attribute('name', stringIdentifier(), {
-            docs: ['The name of the seed variable.'],
+        attribute('identifier', stringIdentifier(), {
+            docs: ['The identifier of the seed variable.'],
         }),
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the seed variable.'],

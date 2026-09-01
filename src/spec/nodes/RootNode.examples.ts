@@ -8,23 +8,23 @@ export const examples: DocExamples = [
             `
 const node = rootNode(
     programNode({
-        name: 'counter',
+        identifier: 'counter',
         publicKey: '2R3Ui2TVUUCyGcZdopxJauk8ZBzgAaHHZCVUhm5ifPaC',
         version: '1.0.0',
         accounts: [
             accountNode({
-                name: 'counter',
+                identifier: 'counter',
                 data: structTypeNode([
-                    structFieldTypeNode({ name: 'authority', type: publicKeyTypeNode() }),
-                    structFieldTypeNode({ name: 'value', type: numberTypeNode('u32') }),
+                    structFieldTypeNode({ identifier: 'authority', type: publicKeyTypeNode() }),
+                    structFieldTypeNode({ identifier: 'value', type: numberTypeNode('u32') }),
                 ]),
             }),
         ],
         instructions: [
-            instructionNode({ name: 'create' /* ... */ }),
-            instructionNode({ name: 'increment' /* ... */ }),
-            instructionNode({ name: 'transferAuthority' /* ... */ }),
-            instructionNode({ name: 'delete' /* ... */ }),
+            instructionNode({ identifier: 'create' /* ... */ }),
+            instructionNode({ identifier: 'increment' /* ... */ }),
+            instructionNode({ identifier: 'transferAuthority' /* ... */ }),
+            instructionNode({ identifier: 'delete' /* ... */ }),
         ],
     }),
 );

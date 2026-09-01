@@ -24,7 +24,7 @@ Display metadata for an instruction account: its label in the fallback list and 
 
 ```typescript
 instructionAccountNode({
-    name: 'destination',
+    identifier: 'destination',
     isSigner: false,
     isWritable: true,
     display: instructionAccountDisplayNode({ label: 'To' }),
@@ -35,7 +35,7 @@ instructionAccountNode({
 
 ```typescript
 instructionAccountNode({
-    name: 'mint',
+    identifier: 'mint',
     isSigner: false,
     isWritable: false,
     display: instructionAccountDisplayNode({ label: 'Token Mint', skip: 'whenInjected' }),

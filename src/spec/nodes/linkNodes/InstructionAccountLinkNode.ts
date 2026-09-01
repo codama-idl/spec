@@ -10,8 +10,8 @@ export const instructionAccountLinkNode = defineNode('instructionAccountLinkNode
                 'The instruction link may itself point to a different program if needed.',
             ],
         }),
-        attribute('name', stringIdentifier(), {
-            docs: ['The name of the referenced instruction account.'],
+        attribute('identifier', stringIdentifier(), {
+            docs: ['The identifier of the referenced instruction account.'],
         }),
     ],
     examples,

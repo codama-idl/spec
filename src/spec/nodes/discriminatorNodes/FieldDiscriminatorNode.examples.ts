@@ -18,7 +18,7 @@ const node = fieldDiscriminatorNode('accountState', 64);
 accountNode({
     data: structTypeNode([
         structFieldTypeNode({
-            name: 'discriminator',
+            identifier: 'discriminator',
             type: numberTypeNode('u32'),
             defaultValue: numberValueNode(42),
             defaultValueStrategy: 'omitted',
@@ -39,7 +39,7 @@ accountNode({
 instructionNode({
     arguments: [
         instructionArgumentNode({
-            name: 'discriminator',
+            identifier: 'discriminator',
             type: bytesTypeNode({ transforms: [fixedSizeTransformNode(8)] }),
             defaultValue: bytesValueNode('base16', '0011223344556677'),
             defaultValueStrategy: 'omitted',

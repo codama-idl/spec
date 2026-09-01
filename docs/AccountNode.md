@@ -8,12 +8,12 @@ An on-chain account: its name, data structure, optional fixed size, optional PDA
 
 ### Data
 
-| Attribute | Type                    | Description                                                      |
-| --------- | ----------------------- | ---------------------------------------------------------------- |
-| `kind`    | `"accountNode"`         | The node discriminator.                                          |
-| `name`    | `CamelCaseString`       | The name of the account.                                         |
-| `size`    | `u64` _(optional)_      | The size of the account in bytes, when the data length is fixed. |
-| `docs`    | `string[]` _(optional)_ | Markdown documentation for the account.                          |
+| Attribute    | Type                    | Description                                                      |
+| ------------ | ----------------------- | ---------------------------------------------------------------- |
+| `kind`       | `"accountNode"`         | The node discriminator.                                          |
+| `identifier` | `IdentifierString`      | The identifier of the account.                                   |
+| `size`       | `u64` _(optional)_      | The size of the account in bytes, when the data length is fixed. |
+| `docs`       | `string[]` _(optional)_ | Markdown documentation for the account.                          |
 
 ### Children
 
@@ -30,11 +30,11 @@ An on-chain account: its name, data structure, optional fixed size, optional PDA
 
 ```typescript
 const node = accountNode({
-    name: 'token',
+    identifier: 'token',
     data: structTypeNode([
-        structFieldTypeNode({ name: 'mint', type: publicKeyTypeNode() }),
-        structFieldTypeNode({ name: 'owner', type: publicKeyTypeNode() }),
-        structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') }),
+        structFieldTypeNode({ identifier: 'mint', type: publicKeyTypeNode() }),
+        structFieldTypeNode({ identifier: 'owner', type: publicKeyTypeNode() }),
+        structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') }),
     ]),
     discriminators: [sizeDiscriminatorNode(72)],
     size: 72,
@@ -45,12 +45,12 @@ const node = accountNode({
 
 ```typescript
 programNode({
-    name: 'myProgram',
-    accounts: [accountNode({ name: 'mint', data: definedTypeLinkNode('mintState') })],
+    identifier: 'myProgram',
+    accounts: [accountNode({ identifier: 'mint', data: definedTypeLinkNode('mintState') })],
     definedTypes: [
         definedTypeNode({
-            name: 'mintState',
-            type: structTypeNode([structFieldTypeNode({ name: 'supply', type: numberTypeNode('u64') })]),
+            identifier: 'mintState',
+            type: structTypeNode([structFieldTypeNode({ identifier: 'supply', type: numberTypeNode('u64') })]),
         }),
     ],
 });
@@ -60,17 +60,17 @@ programNode({
 
 ```typescript
 programNode({
-    name: 'myProgram',
+    identifier: 'myProgram',
     accounts: [
         accountNode({
-            name: 'token',
-            data: structTypeNode([structFieldTypeNode({ name: 'authority', type: publicKeyTypeNode() })]),
+            identifier: 'token',
+            data: structTypeNode([structFieldTypeNode({ identifier: 'authority', type: publicKeyTypeNode() })]),
             pda: pdaLinkNode('myPda'),
         }),
     ],
     pdas: [
         pdaNode({
-            name: 'myPda',
+            identifier: 'myPda',
             seeds: [
                 constantPdaSeedNodeFromString('utf8', 'token'),
                 variablePdaSeedNode('authority', publicKeyTypeNode()),

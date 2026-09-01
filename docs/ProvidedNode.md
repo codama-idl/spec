@@ -7,10 +7,10 @@ Sits inside a host's `provides` list and pairs with `injectedValueNode` on the c
 
 ### Data
 
-| Attribute | Type              | Description                                           |
-| --------- | ----------------- | ----------------------------------------------------- |
-| `kind`    | `"providedNode"`  | The node discriminator.                               |
-| `name`    | `CamelCaseString` | The key under which the node is exposed to consumers. |
+| Attribute    | Type               | Description                                           |
+| ------------ | ------------------ | ----------------------------------------------------- |
+| `kind`       | `"providedNode"`   | The node discriminator.                               |
+| `identifier` | `IdentifierString` | The key under which the node is exposed to consumers. |
 
 ### Children
 
@@ -31,11 +31,11 @@ providedNode('decimals', numberValueNode(9));
 
 ```typescript
 instructionNode({
-    name: 'transferChecked',
+    identifier: 'transferChecked',
     provides: [providedNode('decimals', numberValueNode(9))],
     arguments: [
         instructionArgumentNode({
-            name: 'decimals',
+            identifier: 'decimals',
             type: numberTypeNode('u8'),
             defaultValue: injectedValueNode({ key: 'decimals' }),
         }),

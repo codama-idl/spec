@@ -6,10 +6,10 @@ A reference to a defined type — possibly in a different program.
 
 ### Data
 
-| Attribute | Type                    | Description                              |
-| --------- | ----------------------- | ---------------------------------------- |
-| `kind`    | `"definedTypeLinkNode"` | The node discriminator.                  |
-| `name`    | `CamelCaseString`       | The name of the referenced defined type. |
+| Attribute    | Type                    | Description                                    |
+| ------------ | ----------------------- | ---------------------------------------------- |
+| `kind`       | `"definedTypeLinkNode"` | The node discriminator.                        |
+| `identifier` | `IdentifierString`      | The identifier of the referenced defined type. |
 
 ### Children
 

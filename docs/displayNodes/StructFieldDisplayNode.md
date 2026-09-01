@@ -27,7 +27,7 @@ Value presentation is carried by the member's type; this node only addresses nam
 
 ```typescript
 instructionArgumentNode({
-    name: 'amount',
+    identifier: 'amount',
     type: numberTypeNode('u64'),
     display: structFieldDisplayNode({ label: 'Amount' }),
 });
@@ -37,7 +37,7 @@ instructionArgumentNode({
 
 ```typescript
 instructionArgumentNode({
-    name: 'discriminator',
+    identifier: 'discriminator',
     type: numberTypeNode('u8'),
     display: structFieldDisplayNode({ skip: 'always' }),
 });
@@ -47,7 +47,7 @@ instructionArgumentNode({
 
 ```typescript
 structFieldTypeNode({
-    name: 'config',
+    identifier: 'config',
     type: definedTypeLinkNode('config'),
     display: structFieldDisplayNode({ flatten: true, flattenPrefix: 'config.' }),
 });

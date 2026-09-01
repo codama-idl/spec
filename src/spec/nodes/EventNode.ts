@@ -4,8 +4,8 @@ import { examples } from './EventNode.examples';
 export const eventNode = defineNode('eventNode', {
     docs: ['A program event: its data shape and optional discriminators used to identify it on the wire.'],
     attributes: [
-        attribute('name', stringIdentifier(), {
-            docs: ['The name of the event.'],
+        attribute('identifier', stringIdentifier(), {
+            docs: ['The identifier of the event.'],
         }),
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the event.'],

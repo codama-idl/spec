@@ -7,7 +7,7 @@ export const examples: DocExamples = [
             'typescript',
             `
 const node = programNode({
-    name: 'counter',
+    identifier: 'counter',
     publicKey: '7ovtg4pFqjQdSwFAUCu8gTnh5thZHzAyJFXy3Ssnj3yK',
     version: '1.42.6',
     accounts: [],

@@ -6,10 +6,10 @@ Refers to a named argument of the surrounding instruction.
 
 ### Data
 
-| Attribute | Type                  | Description                          |
-| --------- | --------------------- | ------------------------------------ |
-| `kind`    | `"argumentValueNode"` | The node discriminator.              |
-| `name`    | `CamelCaseString`     | The name of the referenced argument. |
+| Attribute    | Type                  | Description                                |
+| ------------ | --------------------- | ------------------------------------------ |
+| `kind`       | `"argumentValueNode"` | The node discriminator.                    |
+| `identifier` | `IdentifierString`    | The identifier of the referenced argument. |
 
 ### Children
 
@@ -29,14 +29,14 @@ const node = argumentValueNode('amount');
 
 ```typescript
 instructionNode({
-    name: 'mint',
+    identifier: 'mint',
     arguments: [
         instructionArgumentNode({
-            name: 'amount',
+            identifier: 'amount',
             type: numberTypeNode('u64'),
         }),
         instructionArgumentNode({
-            name: 'amountToDelegate',
+            identifier: 'amountToDelegate',
             type: numberTypeNode('u64'),
             defaultValue: argumentValueNode('amount'),
         }),

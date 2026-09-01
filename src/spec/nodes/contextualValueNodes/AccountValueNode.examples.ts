@@ -16,15 +16,15 @@ const node = accountValueNode('mint');
             'typescript',
             `
 instructionNode({
-    name: 'mint',
+    identifier: 'mint',
     accounts: [
         instructionAccountNode({
-            name: 'payer',
+            identifier: 'payer',
             isSigner: true,
             isWritable: false,
         }),
         instructionAccountNode({
-            name: 'authority',
+            identifier: 'authority',
             isSigner: false,
             isWritable: true,
             defaultValue: accountValueNode('payer'),

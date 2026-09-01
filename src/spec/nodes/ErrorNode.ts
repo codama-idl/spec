@@ -8,8 +8,8 @@ export const errorNode = defineNode('errorNode', {
         '![Diagram](https://github.com/codama-idl/codama/assets/3642397/0bde98ea-0327-404b-bf38-137d105826b0)',
     ],
     attributes: [
-        attribute('name', stringIdentifier(), {
-            docs: ['The name of the error.'],
+        attribute('identifier', stringIdentifier(), {
+            docs: ['The identifier of the error.'],
         }),
         attribute('code', u32(), {
             docs: ['The numeric error code returned by the program.'],

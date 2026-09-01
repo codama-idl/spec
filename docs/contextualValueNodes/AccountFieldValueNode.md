@@ -8,11 +8,11 @@ Resolving the value requires reading the account state at presentation time.
 
 ### Data
 
-| Attribute | Type                           | Description                                                                                                                                                                                        |
-| --------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `kind`    | `"accountFieldValueNode"`      | The node discriminator.                                                                                                                                                                            |
-| `account` | `CamelCaseString`              | The name of the referenced account in the surrounding instruction.                                                                                                                                 |
-| `path`    | `CamelCaseString` _(optional)_ | The name of the field within the account's decoded data. Only valid when the account's data type resolves to a struct (following links). When absent, the value is the whole decoded account data. |
+| Attribute | Type                            | Description                                                                                                                                                                                        |
+| --------- | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `kind`    | `"accountFieldValueNode"`       | The node discriminator.                                                                                                                                                                            |
+| `account` | `IdentifierString`              | The name of the referenced account in the surrounding instruction.                                                                                                                                 |
+| `path`    | `IdentifierString` _(optional)_ | The name of the field within the account's decoded data. Only valid when the account's data type resolves to a struct (following links). When absent, the value is the whole decoded account data. |
 
 ### Children
 
@@ -32,10 +32,10 @@ const node = accountFieldValueNode('mint', 'decimals');
 
 ```typescript
 instructionNode({
-    name: 'transferChecked',
+    identifier: 'transferChecked',
     accounts: [
         instructionAccountNode({
-            name: 'mint',
+            identifier: 'mint',
             isWritable: false,
             isSigner: false,
             accountLink: accountLinkNode('mint'),
@@ -44,7 +44,7 @@ instructionNode({
     ],
     arguments: [
         instructionArgumentNode({
-            name: 'decimals',
+            identifier: 'decimals',
             type: numberTypeNode('u8'),
             defaultValue: accountFieldValueNode('mint', 'decimals'),
         }),

@@ -9,11 +9,11 @@ Serialised next to each other, the arguments of an instruction form its data.
 
 ### Data
 
-| Attribute | Type                        | Description                              |
-| --------- | --------------------------- | ---------------------------------------- |
-| `kind`    | `"instructionArgumentNode"` | The node discriminator.                  |
-| `name`    | `CamelCaseString`           | The name of the argument.                |
-| `docs`    | `string[]` _(optional)_     | Markdown documentation for the argument. |
+| Attribute    | Type                        | Description                              |
+| ------------ | --------------------------- | ---------------------------------------- |
+| `kind`       | `"instructionArgumentNode"` | The node discriminator.                  |
+| `identifier` | `IdentifierString`          | The identifier of the argument.          |
+| `docs`       | `string[]` _(optional)_     | Markdown documentation for the argument. |
 
 ### Children
 
@@ -31,7 +31,7 @@ Serialised next to each other, the arguments of an instruction form its data.
 
 ```typescript
 instructionArgumentNode({
-    name: 'amount',
+    identifier: 'amount',
     type: numberTypeNode('u64'),
     defaultValue: numberValueNode(0),
 });
@@ -41,7 +41,7 @@ instructionArgumentNode({
 
 ```typescript
 instructionArgumentNode({
-    name: 'instructionDiscriminator',
+    identifier: 'instructionDiscriminator',
     type: numberTypeNode('u8'),
     defaultValue: numberValueNode(42),
     defaultValueStrategy: 'omitted',

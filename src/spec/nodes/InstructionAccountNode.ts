@@ -18,8 +18,8 @@ export const instructionAccountNode = defineNode('instructionAccountNode', {
         '![Diagram](https://github.com/codama-idl/codama/assets/3642397/4656a08b-2f89-49c2-b428-5378cb1a0b9e)',
     ],
     attributes: [
-        attribute('name', stringIdentifier(), {
-            docs: ['The name of the account.'],
+        attribute('identifier', stringIdentifier(), {
+            docs: ['The identifier of the account.'],
         }),
         attribute('isWritable', boolean(), {
             docs: ['Whether the instruction may write to the account.'],

@@ -9,8 +9,8 @@ export const instructionArgumentNode = defineNode('instructionArgumentNode', {
         '![Diagram](https://github.com/codama-idl/codama/assets/3642397/7e2def82-949a-4663-bdc3-ac599d39d2d2)',
     ],
     attributes: [
-        attribute('name', stringIdentifier(), {
-            docs: ['The name of the argument.'],
+        attribute('identifier', stringIdentifier(), {
+            docs: ['The identifier of the argument.'],
         }),
         optionalAttribute('defaultValueStrategy', enumeration('defaultValueStrategy'), {
             docs: [
