@@ -34,10 +34,13 @@ export const CONSTRAINED_STRINGS: readonly { name: string; definition: string }[
     {
         name: 'PathString',
         definition:
-            'a path expression pointing into nested data: `identifier ( "." identifier | "[" integer "]" )*` — ' +
-            'e.g. `amount` or `fruits[0].banana`, with non-negative indices. Each attribute carrying a path ' +
-            'documents its anchor; interpolated text templates embed the same expressions as `${root.path}` ' +
-            'placeholders, where the leading root names the anchor explicitly.',
+            'a path expression pointing into nested data: `first ( "." identifier | "[" integer "]" )*` where ' +
+            '`first := identifier | "[" integer "]"` — e.g. `amount`, `fruits[0].banana`, or `[0].banana` against ' +
+            'tuple-rooted data. `.identifier` accesses a struct field by exact identifier match (following links); ' +
+            '`[n]` accesses the n-th item of an array, tuple or set, with non-negative indices. Each attribute ' +
+            'carrying a path documents its anchor — the data the first segment resolves against; interpolated text ' +
+            'templates embed the same expressions as `${root…}` placeholders, where the leading root names the ' +
+            'anchor explicitly.',
     },
     {
         name: 'SemverString',

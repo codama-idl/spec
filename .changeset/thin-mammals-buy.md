@@ -2,7 +2,7 @@
 '@codama/spec': major
 ---
 
-Introduce path expressions as the shared reference DSL. A path points into nested data with the grammar `identifier ( "." identifier | "[" integer "]" )*` — e.g. `amount` or `config.fees[0]` — carried by the new `path` string constraint (`stringPath()` helper, rendered as `PathString`). Interpolated intent templates embed the same expressions as `${root.path}` placeholders, so one grammar serves reference nodes and display interpolation alike. The generated docs root page gains a "Constrained strings" glossary defining `IdentifierString`, `NamespaceString`, `PathString` and `SemverString`.
+Introduce path expressions as the shared reference DSL. A path points into nested data with the grammar `first ( "." identifier | "[" integer "]" )*` where `first := identifier | "[" integer "]"` — e.g. `amount`, `config.fees[0]`, or `[0].banana` against tuple-rooted data — carried by the new `path` string constraint (`stringPath()` helper, rendered as `PathString`). Interpolated intent templates embed the same expressions as `${root…}` placeholders, so one grammar serves reference nodes and display interpolation alike. The generated docs root page gains a "Constrained strings" glossary defining `IdentifierString`, `NamespaceString`, `PathString` and `SemverString`.
 
 **BREAKING CHANGES**
 
