@@ -26,7 +26,7 @@ A tagged union: a numeric discriminator followed by one of several variant paylo
 ```typescript
 enumTypeNode([
     enumVariantTypeNode('flip'),
-    enumVariantTypeNode('rotate', tupleTypeNode([numberTypeNode('u32')])),
+    enumVariantTypeNode('rotate', numberTypeNode('u32')),
     enumVariantTypeNode(
         'move',
         structTypeNode([

@@ -6,7 +6,7 @@ Unify enum variants into a single `enumVariantTypeNode` with an optional `data` 
 
 **BREAKING CHANGES**
 
-**`enumEmptyVariantTypeNode`, `enumStructVariantTypeNode` and `enumTupleVariantTypeNode` are replaced by `enumVariantTypeNode`.** Absent `data` is a unit variant; a struct payload gives named fields, a tuple payload gives positional fields, and any other type node is carried as-is. The `name`, optional `discriminator` and optional `display` attributes carry over unchanged; the former `struct`/`tuple` attributes both become `data`. When upgrading, a v1 tuple variant holding exactly one item should unwrap to that single type — the 1-tuple was the workaround spelling of a single-type payload; renderers whose target requires a wrapper (e.g. Rust) re-wrap on their side.
+**`enumEmptyVariantTypeNode`, `enumStructVariantTypeNode` and `enumTupleVariantTypeNode` are replaced by `enumVariantTypeNode`.** Absent `data` is a unit variant; a struct payload gives named fields, a tuple payload gives positional fields, and any other type node is carried as-is. The `name`, optional `discriminator` and optional `display` attributes carry over unchanged; the former `struct`/`tuple` attributes both become `data`. When upgrading, a v1 tuple variant holding exactly one item should unwrap to that single type — the 1-tuple was the workaround spelling of a single-type payload — **unless** the item is a `structTypeNode`, `tupleTypeNode` or `definedTypeLinkNode`: those shapes determine the variant flavour in `data` position, so unwrapping them would change the generated API (e.g. `V(InlineStruct)` becoming `V { … }`) even though the wire format is identical. Renderers whose target requires a wrapper (e.g. Rust) re-wrap single-type payloads on their side.
 
 ```diff
   enumTypeNode([
@@ -14,7 +14,7 @@ Unify enum variants into a single `enumVariantTypeNode` with an optional `data` 
 -     enumTupleVariantTypeNode('rotate', tupleTypeNode([numberTypeNode('u32')])),
 -     enumStructVariantTypeNode('move', structTypeNode([/* … */])),
 +     enumVariantTypeNode('flip'),
-+     enumVariantTypeNode('rotate', tupleTypeNode([numberTypeNode('u32')])),
++     enumVariantTypeNode('rotate', numberTypeNode('u32')),
 +     enumVariantTypeNode('move', structTypeNode([/* … */])),
   ]);
 ```

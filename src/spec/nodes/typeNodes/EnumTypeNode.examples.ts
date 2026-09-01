@@ -8,7 +8,7 @@ export const examples: DocExamples = [
             `
 enumTypeNode([
     enumVariantTypeNode('flip'),
-    enumVariantTypeNode('rotate', tupleTypeNode([numberTypeNode('u32')])),
+    enumVariantTypeNode('rotate', numberTypeNode('u32')),
     enumVariantTypeNode(
         'move',
         structTypeNode([
