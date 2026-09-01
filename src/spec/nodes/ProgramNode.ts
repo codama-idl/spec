@@ -4,7 +4,6 @@ import {
     attribute,
     defineNode,
     docs,
-    enumeration,
     node,
     optionalAttribute,
     stringIdentifier,
@@ -27,9 +26,6 @@ export const programNode = defineNode('programNode', {
         }),
         attribute('version', stringVersion(), {
             docs: ['The version of the program, in semver form.'],
-        }),
-        optionalAttribute('origin', enumeration('programOrigin'), {
-            docs: ['The toolchain that originally generated the program description, if known.'],
         }),
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the program.'],

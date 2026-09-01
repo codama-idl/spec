@@ -168,14 +168,6 @@ export const postOffsetStrategy = defineEnumeration('postOffsetStrategy', {
     ],
 });
 
-export const programOrigin = defineEnumeration('programOrigin', {
-    docs: ['The toolchain that originally generated a program description.'],
-    variants: [
-        variant('anchor', { docs: ['The program was originally described by an Anchor IDL.'] }),
-        variant('shank', { docs: ['The program was originally described by a Shank IDL.'] }),
-    ],
-});
-
 export const ALL_ENUMERATIONS = [
     bytesEncoding,
     defaultValueStrategy,
@@ -186,5 +178,4 @@ export const ALL_ENUMERATIONS = [
     optionalAccountStrategy,
     postOffsetStrategy,
     preOffsetStrategy,
-    programOrigin,
 ] as const;
