@@ -39,7 +39,8 @@ export type FloatWidth = 'f32' | 'f64';
  *   `first ( "." identifier | "[" integer "]" )*` where
  *   `first := identifier | "[" integer "]"`, with non-negative integer
  *   indices. `.identifier` accesses a struct field by exact identifier
- *   match; `[n]` accesses the n-th item of an array, tuple or set. The
+ *   match (following links); `[n]` accesses the n-th item of an array,
+ *   tuple or set. The
  *   first segment may be an index so that tuple- or array-rooted data is
  *   reachable — e.g. `[0].banana` against tuple-shaped instruction data.
  *   Each attribute carrying a path documents its anchor — the data the
