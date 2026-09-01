@@ -140,11 +140,11 @@ describe('docs generation over the real spec', () => {
         }
     });
 
-    it('renders the accountNode page with a Data/Children split and the struct data link', () => {
+    it('renders the accountNode page with a Data/Children split and the typeNode data link', () => {
         const content = pageOf(MODEL, 'node', 'accountNode').content;
         expect(content.startsWith('# AccountNode')).toBe(true);
         expect(content).toContain('### Data');
         expect(content).toContain('### Children');
-        expect(content).toContain('[`StructTypeNode`]');
+        expect(content).toContain('[`TypeNode`]');
     });
 });
