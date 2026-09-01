@@ -7,9 +7,9 @@ export const examples: DocExamples = [
             'typescript',
             `
 enumTypeNode([
-    enumEmptyVariantTypeNode('flip'),
-    enumTupleVariantTypeNode('rotate', tupleTypeNode([numberTypeNode('u32')])),
-    enumStructVariantTypeNode(
+    enumVariantTypeNode('flip'),
+    enumVariantTypeNode('rotate', tupleTypeNode([numberTypeNode('u32')])),
+    enumVariantTypeNode(
         'move',
         structTypeNode([
             structFieldTypeNode({ name: 'x', type: numberTypeNode('u16') }),

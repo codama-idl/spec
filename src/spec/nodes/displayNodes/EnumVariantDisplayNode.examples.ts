@@ -6,10 +6,9 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-enumStructVariantTypeNode(
+enumVariantTypeNode(
     'buy',
     structTypeNode([structFieldTypeNode({ name: 'amount', type: numberTypeNode('u64') })]),
-    undefined,
     { display: enumVariantDisplayNode({ label: 'Buy' }) },
 );
 `,
@@ -20,12 +19,9 @@ enumStructVariantTypeNode(
         code(
             'typescript',
             `
-enumTupleVariantTypeNode(
-    'increment',
-    tupleTypeNode([numberTypeNode('u64')]),
-    undefined,
-    { display: enumVariantDisplayNode({ label: 'Increment', skipInnerData: true }) },
-);
+enumVariantTypeNode('increment', tupleTypeNode([numberTypeNode('u64')]), {
+    display: enumVariantDisplayNode({ label: 'Increment', skipInnerData: true }),
+});
 `,
         ),
     ),
