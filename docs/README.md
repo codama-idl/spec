@@ -15,6 +15,15 @@ Codegen targets append them after each node's declared attributes, so they alway
 | --------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
+## Constrained strings
+
+Attribute tables reference these constrained string types:
+
+- `IdentifierString` — a machine key: `[A-Za-z_][A-Za-z0-9_]*` (no leading digit). No casing is mandated, but identifiers sharing a scope (a sibling set of the same kind) must stay unique after lowercasing and stripping underscores, so renderer casing conversions never collide. References match identifiers by exact string comparison; the folding rule governs uniqueness only.
+- `NamespaceString` — a chain of identifiers separated by single dots: `identifier ("." identifier)*` — e.g. `i18n.es`. A single identifier is a valid namespace. Used for plugin namespaces, which match by exact string comparison; the identifier folding rule does not apply.
+- `PathString` — a path expression pointing into nested data: `identifier ( "." identifier | "[" integer "]" )*` — e.g. `amount` or `fruits[0].banana`, with non-negative indices. Each attribute carrying a path documents its anchor; interpolated text templates embed the same expressions as `${root.path}` placeholders, where the leading root names the anchor explicitly.
+- `SemverString` — a semver version string — e.g. `1.6.0`.
+
 ## Categories
 
 - [ContextualValue](./contextualValueNodes/README.md) - Contextual-value nodes — references resolved at instruction-build time (account values, argument values, …).

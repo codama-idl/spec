@@ -2,11 +2,20 @@ import { code, example, type DocExamples } from '../../../api';
 
 export const examples: DocExamples = [
     example(
-        'Create an argument value node from an argument name',
+        'Create an argument value node from a path',
         code(
             'typescript',
             `
 const node = argumentValueNode('amount');
+`,
+        ),
+    ),
+    example(
+        'Referencing a value nested within the instruction data',
+        code(
+            'typescript',
+            `
+argumentValueNode('config.fees[0]');
 `,
         ),
     ),

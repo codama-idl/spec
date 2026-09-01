@@ -396,6 +396,31 @@ describe('spec — identifier convention', () => {
     });
 });
 
+describe('spec — path expressions', () => {
+    it('argumentValueNode and fieldDiscriminatorNode reference nested data via path attributes', () => {
+        for (const kind of ['argumentValueNode', 'fieldDiscriminatorNode']) {
+            const n = getNode(kind)!;
+            const path = n.attributes.find(a => a.name === 'path');
+            expect(path, `node "${kind}" should declare a path attribute`).toBeDefined();
+            expect(path!.type, `node "${kind}"`).toEqual({ constraint: 'path', kind: 'string' });
+            expect(
+                n.attributes.find(a => a.name === 'identifier'),
+                `node "${kind}" should not also declare an identifier`,
+            ).toBeUndefined();
+        }
+    });
+
+    it('every path attribute carries the path string constraint', () => {
+        for (const category of getSpec().categories) {
+            for (const n of category.nodes) {
+                const path = n.attributes.find(a => a.name === 'path');
+                if (!path) continue;
+                expect(path.type, `node "${n.kind}"`).toEqual({ constraint: 'path', kind: 'string' });
+            }
+        }
+    });
+});
+
 describe('spec — display attribute on host nodes', () => {
     const nodeHosts: ReadonlyArray<readonly [string, string]> = [
         ['instructionNode', 'instructionDisplayNode'],
@@ -519,7 +544,7 @@ describe('spec — accountFieldValueNode shape', () => {
         expect(account.optional).toBeUndefined();
         const path = n.attributes.find(a => a.name === 'path')!;
         expect(path.optional).toBe(true);
-        expect(path.type).toEqual({ constraint: 'identifier', kind: 'string' });
+        expect(path.type).toEqual({ constraint: 'path', kind: 'string' });
     });
 
     it('is a member of standaloneContextualValueNode', () => {

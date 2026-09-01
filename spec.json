@@ -3624,17 +3624,18 @@
                 {
                     "kind": "fieldDiscriminatorNode",
                     "docs": [
-                        "Identifies a node by the value of a named field at a known byte offset."
+                        "Identifies a node by the value of a field at a known byte offset."
                     ],
                     "attributes": [
                         {
-                            "name": "identifier",
+                            "name": "path",
                             "type": {
                                 "kind": "string",
-                                "constraint": "identifier"
+                                "constraint": "path"
                             },
                             "docs": [
-                                "The identifier of the discriminating field — a `structFieldTypeNode` of the account data (which must resolve to a struct, following links) or an argument of the instruction."
+                                "The path to the discriminating field, relative to the account or instruction data — e.g. `discriminator` or `header.kind`.",
+                                "Field segments are only valid where the data type resolves to a struct (following links)."
                             ]
                         },
                         {
@@ -4128,7 +4129,7 @@
                             "optional": true,
                             "docs": [
                                 "A sentence template that composes the instruction into prose with `${root.path}` placeholders.",
-                                "Roots are `data.` (an instruction argument) and `accounts.` (an instruction account); the path is flat after the root (e.g. `${data.amount}`, `${accounts.destination}`).",
+                                "Roots are `data` (the instruction data) and `accounts` (the instruction accounts); after the root, placeholders embed the shared path-expression grammar (e.g. `${data.amount}`, `${data.config.fees[0]}`, `${accounts.destination}`).",
                                 "A placeholder renders through its referent's own presentation; the `skip` rule governs the fallback list only and never the sentence."
                             ]
                         }
@@ -4500,12 +4501,12 @@
                             "name": "path",
                             "type": {
                                 "kind": "string",
-                                "constraint": "identifier"
+                                "constraint": "path"
                             },
                             "optional": true,
                             "docs": [
-                                "The identifier of the field within the account's decoded data.",
-                                "Only valid when the account's data type resolves to a struct (following links).",
+                                "The path to the value within the account's decoded data — e.g. `authority` or `state.balances[0]`.",
+                                "Field segments are only valid where the data type resolves to a struct (following links).",
                                 "When absent, the value is the whole decoded account data."
                             ]
                         }
@@ -4615,28 +4616,40 @@
                 {
                     "kind": "argumentValueNode",
                     "docs": [
-                        "Refers to a named argument of the surrounding instruction."
+                        "Refers to a value within the data of the surrounding instruction."
                     ],
                     "attributes": [
                         {
-                            "name": "identifier",
+                            "name": "path",
                             "type": {
                                 "kind": "string",
-                                "constraint": "identifier"
+                                "constraint": "path"
                             },
                             "docs": [
-                                "The identifier of the referenced argument."
+                                "The path to the referenced value, relative to the instruction's data — e.g. `amount` or `config.fees[0]`.",
+                                "Field segments are only valid where the data type resolves to a struct (following links)."
                             ]
                         }
                     ],
                     "examples": [
                         {
-                            "title": "Create an argument value node from an argument name",
+                            "title": "Create an argument value node from a path",
                             "code": [
                                 {
                                     "language": "typescript",
                                     "content": [
                                         "const node = argumentValueNode('amount');"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Referencing a value nested within the instruction data",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "argumentValueNode('config.fees[0]');"
                                     ]
                                 }
                             ]

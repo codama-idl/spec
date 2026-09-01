@@ -43,6 +43,9 @@ export function renderType(t: TypeExpr, markup: MarkupRenderer, linkTo: (r: DocR
             if (t.constraint === 'namespace') {
                 return markup.code('NamespaceString');
             }
+            if (t.constraint === 'path') {
+                return markup.code('PathString');
+            }
             if (t.constraint === 'version') {
                 return markup.code('SemverString');
             }

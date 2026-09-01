@@ -1,4 +1,4 @@
-import { attribute, defineNode, optionalAttribute, stringIdentifier } from '../../../api';
+import { attribute, defineNode, optionalAttribute, stringIdentifier, stringPath } from '../../../api';
 import { examples } from './AccountFieldValueNode.examples';
 
 export const accountFieldValueNode = defineNode('accountFieldValueNode', {
@@ -11,10 +11,10 @@ export const accountFieldValueNode = defineNode('accountFieldValueNode', {
         attribute('account', stringIdentifier(), {
             docs: ['The identifier of the referenced account in the surrounding instruction.'],
         }),
-        optionalAttribute('path', stringIdentifier(), {
+        optionalAttribute('path', stringPath(), {
             docs: [
-                "The identifier of the field within the account's decoded data.",
-                "Only valid when the account's data type resolves to a struct (following links).",
+                "The path to the value within the account's decoded data — e.g. `authority` or `state.balances[0]`.",
+                'Field segments are only valid where the data type resolves to a struct (following links).',
                 'When absent, the value is the whole decoded account data.',
             ],
         }),

@@ -1,12 +1,13 @@
-import { attribute, defineNode, stringIdentifier, u64 } from '../../../api';
+import { attribute, defineNode, stringPath, u64 } from '../../../api';
 import { examples } from './FieldDiscriminatorNode.examples';
 
 export const fieldDiscriminatorNode = defineNode('fieldDiscriminatorNode', {
-    docs: ['Identifies a node by the value of a named field at a known byte offset.'],
+    docs: ['Identifies a node by the value of a field at a known byte offset.'],
     attributes: [
-        attribute('identifier', stringIdentifier(), {
+        attribute('path', stringPath(), {
             docs: [
-                'The identifier of the discriminating field — a `structFieldTypeNode` of the account data (which must resolve to a struct, following links) or an argument of the instruction.',
+                'The path to the discriminating field, relative to the account or instruction data — e.g. `discriminator` or `header.kind`.',
+                'Field segments are only valid where the data type resolves to a struct (following links).',
             ],
         }),
         attribute('offset', u64(), {

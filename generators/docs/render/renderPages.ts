@@ -22,7 +22,14 @@ import type {
     MarkupRenderer,
     NavRegistry,
 } from '../types';
-import { BLOCK_SEPARATOR, GROUP_TITLES, PREVIOUS_MAJOR_DOCS, ROOT_DESCRIPTION, ROOT_TITLE } from './constants';
+import {
+    BLOCK_SEPARATOR,
+    CONSTRAINED_STRINGS,
+    GROUP_TITLES,
+    PREVIOUS_MAJOR_DOCS,
+    ROOT_DESCRIPTION,
+    ROOT_TITLE,
+} from './constants';
 import { isDocChild, linkedEntity, renderType } from './renderType';
 
 /** Shared context threaded through every page renderer. `link` resolves a relative href between two pages. */
@@ -254,6 +261,8 @@ export function renderRootIndexPage(spec: Spec, ctx: RenderCtx): DocPage {
         ),
         // base attributes shared by every node (omitted when the spec declares none)
         renderBaseSection(spec, ctx, linkTo),
+        // glossary of the constrained string types used in attribute tables
+        renderConstrainedStringsSection(markup),
         // body: linked categories
         `${markup.heading(2, 'Categories')}${BLOCK_SEPARATOR}${markup.list('bulleted', categories)}`,
         // body: one section per root-level category (topLevel)
@@ -279,6 +288,17 @@ function renderBaseSection(spec: Spec, ctx: RenderCtx, linkTo: (r: DocRef) => st
         markup.heading(2, 'Base attributes'),
         renderSpecDocs(spec.base.docs, markup),
         markup.table(['Attribute', 'Type', 'Description'], rows),
+    ];
+    return parts.filter(Boolean).join(BLOCK_SEPARATOR);
+}
+
+/** The root page's "Constrained strings" section: the grammar of each constrained string type used in attribute tables. */
+function renderConstrainedStringsSection(markup: MarkupRenderer): string {
+    const items = CONSTRAINED_STRINGS.map(entry => `${markup.code(entry.name)} — ${markup.prose(entry.definition)}`);
+    const parts: (string | undefined)[] = [
+        markup.heading(2, 'Constrained strings'),
+        markup.paragraph('Attribute tables reference these constrained string types:'),
+        markup.list('bulleted', items),
     ];
     return parts.filter(Boolean).join(BLOCK_SEPARATOR);
 }

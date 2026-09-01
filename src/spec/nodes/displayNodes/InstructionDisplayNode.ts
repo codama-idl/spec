@@ -13,7 +13,7 @@ export const instructionDisplayNode = defineNode('instructionDisplayNode', {
         optionalAttribute('interpolatedIntent', string(), {
             docs: [
                 'A sentence template that composes the instruction into prose with `${root.path}` placeholders.',
-                'Roots are `data.` (an instruction argument) and `accounts.` (an instruction account); the path is flat after the root (e.g. `${data.amount}`, `${accounts.destination}`).',
+                'Roots are `data` (the instruction data) and `accounts` (the instruction accounts); after the root, placeholders embed the shared path-expression grammar (e.g. `${data.amount}`, `${data.config.fees[0]}`, `${accounts.destination}`).',
                 "A placeholder renders through its referent's own presentation; the `skip` rule governs the fallback list only and never the sentence.",
             ],
         }),

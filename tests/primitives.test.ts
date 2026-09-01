@@ -21,6 +21,7 @@ import {
     string,
     stringIdentifier,
     stringNamespace,
+    stringPath,
     stringVersion,
     u8,
     u16,
@@ -57,6 +58,9 @@ describe('string primitives', () => {
     });
     it('returns namespace-constrained string', () => {
         expect(stringNamespace()).toEqual({ kind: 'string', constraint: 'namespace' });
+    });
+    it('returns path-constrained string', () => {
+        expect(stringPath()).toEqual({ kind: 'string', constraint: 'path' });
     });
     it('returns semver-constrained string', () => {
         expect(stringVersion()).toEqual({ kind: 'string', constraint: 'version' });

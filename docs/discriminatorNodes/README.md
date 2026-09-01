@@ -5,7 +5,7 @@ Discriminator nodes — strategies for distinguishing one account or instruction
 ## Nodes
 
 - [`ConstantDiscriminatorNode`](./ConstantDiscriminatorNode.md) - Identifies a node by a constant value at a known byte offset (e.g. a magic header).
-- [`FieldDiscriminatorNode`](./FieldDiscriminatorNode.md) - Identifies a node by the value of a named field at a known byte offset.
+- [`FieldDiscriminatorNode`](./FieldDiscriminatorNode.md) - Identifies a node by the value of a field at a known byte offset.
 - [`SizeDiscriminatorNode`](./SizeDiscriminatorNode.md) - Identifies a node by its expected total byte size.
 
 ## Unions
