@@ -8,7 +8,7 @@ export const publicKeyValueNode = defineNode('publicKeyValueNode', {
             docs: ['The base58-encoded public key.'],
         }),
         optionalAttribute('identifier', stringIdentifier(), {
-            docs: ['A symbolic name for the address, useful in generated client code.'],
+            docs: ['A symbolic identifier for the address, useful in generated client code.'],
         }),
     ],
     examples,

@@ -6,7 +6,7 @@ Rename `name` to `identifier` on every named node and drop the camelCase mandate
 
 **BREAKING CHANGES**
 
-**Every `name` attribute becomes `identifier`, except on `pluginNode`.** The rename makes the machine-key role explicit; a plugin's `name` stays as-is because it is a dot-separated namespace of identifiers (e.g. `i18n.es`), carried by the new `namespace` string constraint.
+**Every `name` attribute becomes `identifier`, except on `pluginNode` where it becomes `namespace`.** The rename makes the machine-key role explicit; a plugin's key is not an identifier but a dot-separated chain of identifiers (e.g. `i18n.es`), carried by the new `namespace` string constraint and named accordingly. No v2 node has a `name` attribute.
 
 ```diff
   {

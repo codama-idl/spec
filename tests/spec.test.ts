@@ -376,15 +376,11 @@ describe('spec — enumVariantTypeNode shape', () => {
 });
 
 describe('spec — identifier convention', () => {
-    it('no node declares a name attribute except pluginNode, whose name is a namespace', () => {
+    it('no node declares a name attribute — the machine key is identifier, the plugin key is namespace', () => {
         for (const category of getSpec().categories) {
             for (const n of category.nodes) {
                 const name = n.attributes.find(a => a.name === 'name');
-                if (n.kind === 'pluginNode') {
-                    expect(name!.type).toEqual({ constraint: 'namespace', kind: 'string' });
-                } else {
-                    expect(name, `node "${n.kind}" should use identifier, not name`).toBeUndefined();
-                }
+                expect(name, `node "${n.kind}" should not declare a name attribute`).toBeUndefined();
             }
         }
     });
@@ -560,12 +556,12 @@ describe('spec — instructionNode.provides', () => {
 describe('spec — pluginNode shape', () => {
     it('matches the encoded shape exactly', () => {
         const n = getNode('pluginNode')!;
-        expect(n.attributes.map(a => a.name)).toEqual(['name', 'payload']);
+        expect(n.attributes.map(a => a.name)).toEqual(['namespace', 'payload']);
 
-        // plugin names are dot-separated namespaces (e.g. `i18n.es`), not identifiers
-        const name = n.attributes.find(a => a.name === 'name')!;
-        expect(name.type).toEqual({ constraint: 'namespace', kind: 'string' });
-        expect(name.optional).toBeUndefined();
+        // plugin namespaces are dot-separated chains of identifiers (e.g. `i18n.es`), not identifiers
+        const namespace = n.attributes.find(a => a.name === 'namespace')!;
+        expect(namespace.type).toEqual({ constraint: 'namespace', kind: 'string' });
+        expect(namespace.optional).toBeUndefined();
 
         const payload = n.attributes.find(a => a.name === 'payload')!;
         expect(payload.optional).toBe(true);

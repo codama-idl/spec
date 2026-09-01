@@ -1,6 +1,6 @@
 # PdaNode
 
-A program-derived address: its name, optional program ID override, and the seeds used to derive it.
+A program-derived address: its identifier, optional program ID override, and the seeds used to derive it.
 
 ![Diagram](https://github.com/codama-idl/codama/assets/3642397/4f7c9718-1ffa-4f2c-aa45-71b3ce204219)
 

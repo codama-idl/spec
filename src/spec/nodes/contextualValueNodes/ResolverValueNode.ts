@@ -10,7 +10,7 @@ export const resolverValueNode = defineNode('resolverValueNode', {
     attributes: [
         attribute('identifier', stringIdentifier(), {
             docs: [
-                'A unique name for the resolver.',
+                'A unique identifier for the resolver.',
                 'This is typically the name of the function that renderers will invoke.',
             ],
         }),

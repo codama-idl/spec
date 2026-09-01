@@ -23,9 +23,18 @@ export type FloatWidth = 'f32' | 'f64';
  *   `transfer_tokens` and `TransferTokens` are all valid — but identifiers
  *   sharing a scope must remain unique after lowercasing and stripping
  *   underscores, so that renderers converting to their target casing
- *   conventions never collide.
- * - `namespace` — a dot-separated chain of identifiers (e.g. `i18n.es`),
- *   used for plugin names.
+ *   conventions never collide. A scope is a sibling set of the same kind
+ *   (the accounts of an instruction, the fields of a struct, the defined
+ *   types of a program, …); the full resolution rules ship with path
+ *   expressions. References match identifiers by exact string comparison —
+ *   the folding rule governs uniqueness only, which is what makes exact
+ *   matching unambiguous.
+ * - `namespace` — a chain of identifiers separated by single dots, i.e.
+ *   `identifier ("." identifier)*`: a single identifier is a valid
+ *   namespace, segments follow the identifier charset, and empty segments
+ *   or leading/trailing dots are not. Used for plugin names, which match
+ *   by exact string comparison; the identifier folding-uniqueness rule
+ *   does not apply to namespaces.
  * - `version` — a semver version string (e.g. `"1.6.0"`).
  */
 export type StringConstraint = 'identifier' | 'namespace' | 'version';

@@ -6,11 +6,11 @@ A concrete 32-byte public key, with an optional symbolic identifier for the addr
 
 ### Data
 
-| Attribute    | Type                            | Description                                                       |
-| ------------ | ------------------------------- | ----------------------------------------------------------------- |
-| `kind`       | `"publicKeyValueNode"`          | The node discriminator.                                           |
-| `publicKey`  | `Address`                       | The base58-encoded public key.                                    |
-| `identifier` | `IdentifierString` _(optional)_ | A symbolic name for the address, useful in generated client code. |
+| Attribute    | Type                            | Description                                                             |
+| ------------ | ------------------------------- | ----------------------------------------------------------------------- |
+| `kind`       | `"publicKeyValueNode"`          | The node discriminator.                                                 |
+| `publicKey`  | `Address`                       | The base58-encoded public key.                                          |
+| `identifier` | `IdentifierString` _(optional)_ | A symbolic identifier for the address, useful in generated client code. |
 
 ### Children
 
