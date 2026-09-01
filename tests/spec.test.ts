@@ -85,7 +85,6 @@ describe('spec — coverage smoke checks', () => {
             'typeNode',
             'standaloneTypeNode',
             'registeredTypeNode',
-            'enumVariantTypeNode',
             'valueNode',
             'standaloneValueNode',
             'registeredValueNode',
@@ -355,6 +354,27 @@ describe('spec — display node shapes', () => {
     });
 });
 
+describe('spec — enumVariantTypeNode shape', () => {
+    it('unifies the three v1 variant flavours into one node with an optional data payload', () => {
+        const variant = getNode('enumVariantTypeNode')!;
+        expect(variant.attributes.map(a => a.name)).toEqual(['name', 'discriminator', 'docs', 'data', 'display']);
+
+        const data = variant.attributes.find(a => a.name === 'data')!;
+        expect(data.optional).toBe(true);
+        expect(data.type).toEqual({ kind: 'union', name: 'typeNode' });
+        expect(isChildAttribute(data.type)).toBe(true);
+
+        const variantDocs = variant.attributes.find(a => a.name === 'docs')!;
+        expect(variantDocs.optional).toBe(true);
+        expect(variantDocs.type).toEqual({ kind: 'docs' });
+
+        for (const gone of ['enumEmptyVariantTypeNode', 'enumStructVariantTypeNode', 'enumTupleVariantTypeNode']) {
+            expect(getNode(gone), `${gone} should no longer exist`).toBeUndefined();
+        }
+        expect(getUnion('enumVariantTypeNode'), 'the v1 variant union should no longer exist').toBeUndefined();
+    });
+});
+
 describe('spec — display attribute on host nodes', () => {
     const nodeHosts: ReadonlyArray<readonly [string, string]> = [
         ['instructionNode', 'instructionDisplayNode'],
@@ -363,9 +383,7 @@ describe('spec — display attribute on host nodes', () => {
         ['instructionRemainingAccountsNode', 'instructionAccountDisplayNode'],
         ['structFieldTypeNode', 'structFieldDisplayNode'],
         ['stringTypeNode', 'stringDisplayNode'],
-        ['enumEmptyVariantTypeNode', 'enumVariantDisplayNode'],
-        ['enumStructVariantTypeNode', 'enumVariantDisplayNode'],
-        ['enumTupleVariantTypeNode', 'enumVariantDisplayNode'],
+        ['enumVariantTypeNode', 'enumVariantDisplayNode'],
     ];
 
     for (const [host, expected] of nodeHosts) {

@@ -9,10 +9,8 @@ Type nodes — the building blocks of every value shape.
 - [`BooleanTypeNode`](./BooleanTypeNode.md) - A boolean serialised as a numeric value. The inner number type determines the byte width.
 - [`BytesTypeNode`](./BytesTypeNode.md) - A raw sequence of bytes. Typically carries a fixed-size, size-prefix, or sentinel transform to bound its extent.
 - [`DateTimeTypeNode`](./DateTimeTypeNode.md) - A timestamp encoded as a number, typically seconds since the Unix epoch. The inner number type determines the byte width.
-- [`EnumEmptyVariantTypeNode`](./EnumEmptyVariantTypeNode.md) - A unit-style variant of an enum that carries no payload.
-- [`EnumStructVariantTypeNode`](./EnumStructVariantTypeNode.md) - A variant of an enum that carries a struct payload (named fields).
-- [`EnumTupleVariantTypeNode`](./EnumTupleVariantTypeNode.md) - A variant of an enum that carries a tuple payload (positional fields).
 - [`EnumTypeNode`](./EnumTypeNode.md) - A tagged union: a numeric discriminator followed by one of several variant payloads.
+- [`EnumVariantTypeNode`](./EnumVariantTypeNode.md) - A named variant of an enum, with an optional data payload.
 - [`MapTypeNode`](./MapTypeNode.md) - A keyed map.
 - [`NumberTypeNode`](./NumberTypeNode.md) - A numeric type with a fixed wire format and byte order.
 - [`OptionTypeNode`](./OptionTypeNode.md) - A value that may be present or absent (Some/None), with an explicit numeric prefix indicating presence.
@@ -28,7 +26,6 @@ Type nodes — the building blocks of every value shape.
 
 ## Unions
 
-- [`EnumVariantTypeNode`](./EnumVariantTypeNode.md) - The variant flavours of an `enumTypeNode`.
 - [`RegisteredTypeNode`](./RegisteredTypeNode.md) - Every node tagged as a type-shaped node, including variants and struct fields.
 - [`StandaloneTypeNode`](./StandaloneTypeNode.md) - Every type node that can be used as a top-level type.
 - [`TypeNode`](./TypeNode.md) - The composable form: any standalone type, or a reference to a defined type via `definedTypeLinkNode`.

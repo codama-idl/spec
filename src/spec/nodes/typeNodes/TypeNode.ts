@@ -2,7 +2,6 @@
  * Named unions for the type-node category.
  *
  *  - `standaloneTypeNode`     all type nodes that can stand alone as a type.
- *  - `enumVariantTypeNode`    the three flavours of enum variant.
  *  - `registeredTypeNode`     every type-shaped node, including variants and struct fields.
  *  - `typeNode`               standaloneTypeNode + definedTypeLinkNode (the composable form).
  */
@@ -34,11 +33,6 @@ export const standaloneTypeNodeUnion = defineUnion('standaloneTypeNode', {
     members: [...STANDALONE_TYPE_NODE_KINDS],
 });
 
-export const enumVariantTypeNodeUnion = defineUnion('enumVariantTypeNode', {
-    docs: ['The variant flavours of an `enumTypeNode`.'],
-    members: ['enumEmptyVariantTypeNode', 'enumStructVariantTypeNode', 'enumTupleVariantTypeNode'],
-});
-
 export const typeNodeUnion = defineUnion('typeNode', {
     docs: ['The composable form: any standalone type, or a reference to a defined type via `definedTypeLinkNode`.'],
     members: [union('standaloneTypeNode'), 'definedTypeLinkNode'],
@@ -46,5 +40,5 @@ export const typeNodeUnion = defineUnion('typeNode', {
 
 export const registeredTypeNodeUnion = defineUnion('registeredTypeNode', {
     docs: ['Every node tagged as a type-shaped node, including variants and struct fields.'],
-    members: [union('standaloneTypeNode'), union('enumVariantTypeNode'), 'structFieldTypeNode'],
+    members: [union('standaloneTypeNode'), 'enumVariantTypeNode', 'structFieldTypeNode'],
 });

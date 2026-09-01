@@ -1,11 +1,11 @@
-import { array, attribute, defineNode, node, union } from '../../../api';
+import { array, attribute, defineNode, node } from '../../../api';
 import { transformsAttribute } from '../transformNodes';
 import { examples } from './EnumTypeNode.examples';
 
 export const enumTypeNode = defineNode('enumTypeNode', {
     docs: ['A tagged union: a numeric discriminator followed by one of several variant payloads.'],
     attributes: [
-        attribute('variants', array(union('enumVariantTypeNode')), {
+        attribute('variants', array(node('enumVariantTypeNode')), {
             docs: ['The variants of the enum, in declaration order.'],
         }),
         attribute('size', node('numberTypeNode'), {
