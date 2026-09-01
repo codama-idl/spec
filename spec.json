@@ -5582,26 +5582,6 @@
                         "How a pre-offset transform interprets its offset value before serialising the transformed type.",
                         "See `preOffsetTransformNode` for an illustrated walkthrough of each strategy."
                     ]
-                },
-                {
-                    "name": "programOrigin",
-                    "variants": [
-                        {
-                            "name": "anchor",
-                            "docs": [
-                                "The program was originally described by an Anchor IDL."
-                            ]
-                        },
-                        {
-                            "name": "shank",
-                            "docs": [
-                                "The program was originally described by a Shank IDL."
-                            ]
-                        }
-                    ],
-                    "docs": [
-                        "The toolchain that originally generated a program description."
-                    ]
                 }
             ],
             "nestedUnions": []
@@ -7132,17 +7112,6 @@
                             },
                             "docs": [
                                 "The version of the program, in semver form."
-                            ]
-                        },
-                        {
-                            "name": "origin",
-                            "type": {
-                                "kind": "enumeration",
-                                "name": "programOrigin"
-                            },
-                            "optional": true,
-                            "docs": [
-                                "The toolchain that originally generated the program description, if known."
                             ]
                         },
                         {
