@@ -3,9 +3,9 @@ import { describe, expectTypeOf, it } from 'vitest';
 import type { DocRef, DocRefKey } from '../../generators/docs/types';
 
 describe('DocRef type', () => {
-    it('exposes exactly the six known kinds', () => {
+    it('exposes exactly the five known kinds', () => {
         expectTypeOf<DocRef['kind']>().toEqualTypeOf<
-            'categoryIndex' | 'enumeration' | 'nestedUnion' | 'node' | 'rootIndex' | 'union'
+            'categoryIndex' | 'enumeration' | 'node' | 'rootIndex' | 'union'
         >();
     });
     it('discriminates its payload on kind', () => {

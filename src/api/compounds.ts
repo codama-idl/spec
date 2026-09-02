@@ -13,12 +13,3 @@ import type { TypeExpr } from './types';
 export function array(inner: TypeExpr): TypeExpr {
     return Object.freeze({ kind: 'array' as const, of: inner });
 }
-
-/**
- * A heterogeneous fixed-length tuple. Each positional slot has its own type.
- *
- * Tuples use `items` (plural) rather than `of` to signal cardinality > 1.
- */
-export function tuple(...items: TypeExpr[]): TypeExpr {
-    return Object.freeze({ kind: 'tuple' as const, items: Object.freeze([...items]) });
-}

@@ -5,7 +5,6 @@ import {
     markdownRenderer,
     renderCategoryIndexPage,
     renderEnumPage,
-    renderNestedUnionPage,
     renderNodePage,
     renderRootIndexPage,
     renderUnionPage,
@@ -28,9 +27,6 @@ export function generateDocs(spec: Spec): DocModel {
         }
         for (const union of category.unions) {
             pages.push(renderUnionPage(union, ctx));
-        }
-        for (const nestedUnion of category.nestedUnions) {
-            pages.push(renderNestedUnionPage(nestedUnion, ctx));
         }
         for (const enumeration of category.enumerations) {
             pages.push(renderEnumPage(enumeration, ctx));

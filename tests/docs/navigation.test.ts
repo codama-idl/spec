@@ -19,9 +19,6 @@ describe('buildNavRegistry', () => {
     });
     it('files non-node entities under their category folder with PascalCase names', () => {
         expect(registry.lookup({ kind: 'union', name: 'typeNode' }).pathSegments.join('/')).toBe('typeNodes/TypeNode');
-        expect(registry.lookup({ kind: 'nestedUnion', name: 'nestedTypeNode' }).pathSegments.join('/')).toBe(
-            'typeNodes/NestedTypeNode',
-        );
         expect(registry.lookup({ kind: 'enumeration', name: 'numberFormat' }).pathSegments.join('/')).toBe(
             'sharedNodes/NumberFormat',
         );
@@ -45,8 +42,8 @@ describe('buildNavRegistry', () => {
         expect(() => registry.lookup({ kind: 'node', name: 'nope' })).toThrow('Unresolved DocRef: node:nope');
     });
     it('registers every entity + non-topLevel index + root', () => {
-        // 10 entities + 3 non-topLevel category indexes (type, pdaSeed, shared) + 1 rootIndex
-        expect(registry.entries).toHaveLength(14);
+        // 9 entities + 3 non-topLevel category indexes (type, pdaSeed, shared) + 1 rootIndex
+        expect(registry.entries).toHaveLength(13);
         for (const entry of registry.entries) {
             expect(registry.lookup(entry.ref)).toBe(entry);
         }
@@ -58,9 +55,9 @@ describe('buildNavRegistry', () => {
 });
 
 describe('categoryGroups', () => {
-    it('returns the four kinds groups in fixed order', () => {
+    it('returns the three kinds groups in fixed order', () => {
         const groups = categoryGroups(defineCategory('empty'));
-        expect(groups.map(group => group.kind)).toEqual(['node', 'union', 'nestedUnion', 'enumeration']);
+        expect(groups.map(group => group.kind)).toEqual(['node', 'union', 'enumeration']);
         expect(groups.every(group => group.items.length === 0)).toBe(true);
     });
     it('carries each entity doc through', () => {

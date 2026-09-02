@@ -70,10 +70,6 @@ export function categoryGroups(category: CategorySpec): CategoryGroup[] {
         { kind: 'node', items: toCategoryGroupItems('node', category.nodes, node => node.kind) },
         { kind: 'union', items: toCategoryGroupItems('union', category.unions, union => union.name) },
         {
-            kind: 'nestedUnion',
-            items: toCategoryGroupItems('nestedUnion', category.nestedUnions, nestedUnion => nestedUnion.name),
-        },
-        {
             kind: 'enumeration',
             items: toCategoryGroupItems('enumeration', category.enumerations, enumeration => enumeration.name),
         },

@@ -8,14 +8,13 @@
  * strings; the spec doesn't constrain them.
  */
 
-import type { CategorySpec, Docs, EnumerationSpec, NestedUnionSpec, NodeSpec, UnionSpec } from './types';
+import type { CategorySpec, Docs, EnumerationSpec, NodeSpec, UnionSpec } from './types';
 
 export interface DefineCategoryOptions {
     readonly docs?: Docs;
     readonly nodes?: readonly NodeSpec[];
     readonly unions?: readonly UnionSpec[];
     readonly enumerations?: readonly EnumerationSpec[];
-    readonly nestedUnions?: readonly NestedUnionSpec[];
 }
 
 export function defineCategory(name: string, options: DefineCategoryOptions = {}): CategorySpec {
@@ -25,6 +24,5 @@ export function defineCategory(name: string, options: DefineCategoryOptions = {}
         nodes: Object.freeze([...(options.nodes ?? [])]),
         unions: Object.freeze([...(options.unions ?? [])]),
         enumerations: Object.freeze([...(options.enumerations ?? [])]),
-        nestedUnions: Object.freeze([...(options.nestedUnions ?? [])]),
     });
 }

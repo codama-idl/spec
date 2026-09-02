@@ -1615,8 +1615,7 @@
                     ]
                 }
             ],
-            "enumerations": [],
-            "nestedUnions": []
+            "enumerations": []
         },
         {
             "name": "transform",
@@ -2174,8 +2173,7 @@
                     ]
                 }
             ],
-            "enumerations": [],
-            "nestedUnions": []
+            "enumerations": []
         },
         {
             "name": "value",
@@ -3076,8 +3074,7 @@
                     ]
                 }
             ],
-            "enumerations": [],
-            "nestedUnions": []
+            "enumerations": []
         },
         {
             "name": "link",
@@ -3402,8 +3399,7 @@
                     ]
                 }
             ],
-            "enumerations": [],
-            "nestedUnions": []
+            "enumerations": []
         },
         {
             "name": "pdaSeed",
@@ -3581,8 +3577,7 @@
                     ]
                 }
             ],
-            "enumerations": [],
-            "nestedUnions": []
+            "enumerations": []
         },
         {
             "name": "count",
@@ -3744,8 +3739,7 @@
                     ]
                 }
             ],
-            "enumerations": [],
-            "nestedUnions": []
+            "enumerations": []
         },
         {
             "name": "discriminator",
@@ -4006,8 +4000,7 @@
                     ]
                 }
             ],
-            "enumerations": [],
-            "nestedUnions": []
+            "enumerations": []
         },
         {
             "name": "display",
@@ -4560,8 +4553,7 @@
                     ]
                 }
             ],
-            "enumerations": [],
-            "nestedUnions": []
+            "enumerations": []
         },
         {
             "name": "contextualValue",
@@ -5351,8 +5343,7 @@
                     ]
                 }
             ],
-            "enumerations": [],
-            "nestedUnions": []
+            "enumerations": []
         },
         {
             "name": "shared",
@@ -5669,8 +5660,7 @@
                         "See `preOffsetTransformNode` for an illustrated walkthrough of each strategy."
                     ]
                 }
-            ],
-            "nestedUnions": []
+            ]
         },
         {
             "name": "topLevel",
@@ -7409,8 +7399,7 @@
                     ]
                 }
             ],
-            "enumerations": [],
-            "nestedUnions": []
+            "enumerations": []
         }
     ]
 }

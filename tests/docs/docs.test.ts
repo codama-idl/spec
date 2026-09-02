@@ -64,13 +64,7 @@ describe('docs generation over the real spec', () => {
     it('emits exactly one page per entity, one index per own-directory category, and one root index', () => {
         const spec = getSpec();
         const entityCount = spec.categories.reduce((total, category) => {
-            return (
-                total +
-                category.nodes.length +
-                category.unions.length +
-                category.nestedUnions.length +
-                category.enumerations.length
-            );
+            return total + category.nodes.length + category.unions.length + category.enumerations.length;
         }, 0);
         const ownDirCategories = spec.categories.filter(category => category.name !== 'topLevel').length;
         expect(MODEL.pages.filter(page => page.ref.kind === 'rootIndex')).toHaveLength(1);
@@ -78,7 +72,7 @@ describe('docs generation over the real spec', () => {
         expect(MODEL.pages).toHaveLength(entityCount + ownDirCategories + 1);
     });
 
-    it('produces a page for every node, union, nestedUnion, and enumeration in the spec', () => {
+    it('produces a page for every node, union, and enumeration in the spec', () => {
         const spec = getSpec();
         for (const category of spec.categories) {
             for (const node of category.nodes) {
@@ -86,9 +80,6 @@ describe('docs generation over the real spec', () => {
             }
             for (const union of category.unions) {
                 expect(() => pageOf(MODEL, 'union', union.name)).not.toThrow();
-            }
-            for (const nestedUnion of category.nestedUnions) {
-                expect(() => pageOf(MODEL, 'nestedUnion', nestedUnion.name)).not.toThrow();
             }
             for (const enumeration of category.enumerations) {
                 expect(() => pageOf(MODEL, 'enumeration', enumeration.name)).not.toThrow();

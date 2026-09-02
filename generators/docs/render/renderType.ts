@@ -12,12 +12,6 @@ export function renderType(t: TypeExpr, markup: MarkupRenderer, linkTo: (r: DocR
             return linkedEntity({ kind: 'union', name: t.name }, markup, linkTo);
         case 'enumeration':
             return linkedEntity({ kind: 'enumeration', name: t.name }, markup, linkTo);
-        case 'nestedUnion':
-            return (
-                // the `<` is literal text, so `prose` lets stricter renderers escape it; `>` is inert everywhere
-                `${linkedEntity({ kind: 'nestedUnion', name: t.alias }, markup, linkTo)}${markup.prose('<')}` +
-                `${linkedEntity({ kind: 'node', name: t.name }, markup, linkTo)}>`
-            );
         case 'anyNode':
             return markup.code('anyNode');
         case 'array':
@@ -26,15 +20,11 @@ export function renderType(t: TypeExpr, markup: MarkupRenderer, linkTo: (r: DocR
                 return `${markup.code(`(${literalUnionBody(t.of.values)})`)}[]`;
             }
             return `${renderType(t.of, markup, linkTo)}[]`;
-        case 'tuple':
-            return `[${t.items.map(item => renderType(item, markup, linkTo)).join(', ')}]`;
         case 'boolean':
             return markup.code('boolean');
         case 'address':
             return markup.code('Address');
         case 'integer':
-            return markup.code(t.width);
-        case 'float':
             return markup.code(t.width);
         case 'string': {
             if (t.constraint === 'identifier') {
@@ -74,7 +64,7 @@ export function renderType(t: TypeExpr, markup: MarkupRenderer, linkTo: (r: DocR
     }
 }
 
-/** Whether a type tree references an enumeration (directly, or inside an array/tuple). */
+/** Whether a type tree references an enumeration (directly, or inside an array). */
 function referencesEnumeration(t: TypeExpr): boolean {
     if (t.kind === 'enumeration') {
         return true;
@@ -82,15 +72,12 @@ function referencesEnumeration(t: TypeExpr): boolean {
     if (t.kind === 'array') {
         return referencesEnumeration(t.of);
     }
-    if (t.kind === 'tuple') {
-        return t.items.some(item => referencesEnumeration(item));
-    }
     return false;
 }
 
 /**
- * Children are attributes referencing an entity (node, union, nestedUnion, anyNode) or an enumeration.
- * References nested in arrays or tuples count too. Everything else is Data.
+ * Children are attributes referencing an entity (node, union, anyNode) or an enumeration.
+ * References nested in arrays count too. Everything else is Data.
  */
 export function isDocChild(t: TypeExpr): boolean {
     return isChildAttribute(t) || referencesEnumeration(t);

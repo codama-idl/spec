@@ -5,7 +5,7 @@
  * those objects verbatim; codegen targets read them and emit native types.
  */
 
-import type { FloatWidth, IntegerWidth, LiteralValue, StringConstraint, TypeExpr } from './types';
+import type { IntegerWidth, LiteralValue, StringConstraint, TypeExpr } from './types';
 
 // Addresses.
 
@@ -108,13 +108,6 @@ export const i32 = (): TypeExpr => integer('i32');
 export const i64 = (): TypeExpr => integer('i64');
 export const i128 = (): TypeExpr => integer('i128');
 
-// Floats.
-
-const float = (width: FloatWidth): TypeExpr => Object.freeze({ kind: 'float' as const, width });
-
-export const f32 = (): TypeExpr => float('f32');
-export const f64 = (): TypeExpr => float('f64');
-
 // Booleans and literals.
 
 export function boolean(): TypeExpr {
@@ -189,18 +182,5 @@ export function union(name: string): TypeExpr {
     return Object.freeze({ kind: 'union' as const, name });
 }
 
-/**
- * Reference to a named node, wrapped by a named recursive `NestedUnion`
- * alias. `alias` selects which `NestedUnion` declared via
- * `defineNestedUnion` the wrapping uses (e.g. `'nestedTypeNode'`); `name`
- * is the inner node kind.
- *
- * Renderers emit `<alias><<innerInterface>>` and an import for the alias
- * file.
- */
-export function nestedUnion(alias: string, name: string): TypeExpr {
-    return Object.freeze({ kind: 'nestedUnion' as const, alias, name });
-}
-
 // Re-exports for type ergonomics.
-export type { FloatWidth, IntegerWidth, LiteralValue, StringConstraint, TypeExpr };
+export type { IntegerWidth, LiteralValue, StringConstraint, TypeExpr };

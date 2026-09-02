@@ -13,7 +13,7 @@
  * collapsing to `array(string())`.
  */
 
-import { i64, u32, u64 } from './primitives';
+import { i64, u64 } from './primitives';
 import type { TypeExpr } from './types';
 
 /** Number of bytes; non-negative. Encoded as `u64`. */
@@ -24,11 +24,6 @@ export function byteSize(): TypeExpr {
 /** Signed byte offset. Encoded as `i64`. */
 export function byteOffset(): TypeExpr {
     return i64();
-}
-
-/** Count of items in a collection; non-negative. Encoded as `u32`. */
-export function count(): TypeExpr {
-    return u32();
 }
 
 /**

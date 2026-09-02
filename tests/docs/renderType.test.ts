@@ -22,14 +22,8 @@ describe('renderType', () => {
             '[`PdaNode`](#node:pdaNode)[]',
         );
     });
-    it('renders a nestedUnion as Alias<Inner>, both linked', () => {
-        expect(
-            renderType({ kind: 'nestedUnion', alias: 'nestedTypeNode', name: 'structTypeNode' }, markdown, linkTo),
-        ).toBe('[`NestedTypeNode`](#nestedUnion:nestedTypeNode)<[`StructTypeNode`](#node:structTypeNode)>');
-    });
     it('renders primitives as code spans', () => {
         expect(renderType({ kind: 'integer', width: 'u64' }, markdown, linkTo)).toBe('`u64`');
-        expect(renderType({ kind: 'float', width: 'f64' }, markdown, linkTo)).toBe('`f64`');
         expect(renderType({ kind: 'string', constraint: 'identifier' }, markdown, linkTo)).toBe('`IdentifierString`');
         expect(renderType({ kind: 'string', constraint: 'namespace' }, markdown, linkTo)).toBe('`NamespaceString`');
         expect(renderType({ kind: 'string', constraint: 'path' }, markdown, linkTo)).toBe('`PathString`');
@@ -43,11 +37,6 @@ describe('renderType', () => {
         expect(renderType({ kind: 'literal', value: 42 }, markdown, linkTo)).toBe('`42`');
         expect(renderType({ kind: 'literal', value: 'abc' }, markdown, linkTo)).toBe('`"abc"`');
         expect(renderType({ kind: 'literal', value: true }, markdown, linkTo)).toBe('`true`');
-    });
-    it('renders a tuple as [A, B], recursing into each item', () => {
-        expect(renderType({ kind: 'tuple', items: [{ kind: 'boolean' }, { kind: 'address' }] }, markdown, linkTo)).toBe(
-            '[`boolean`, `Address`]',
-        );
     });
     it('renders anyNode as a plain code span, not a link', () => {
         expect(renderType({ kind: 'anyNode' }, markdown, linkTo)).toBe('`anyNode`');
@@ -72,12 +61,8 @@ describe('isDocChild', () => {
     it('counts anyNode as a child (via isChildAttribute)', () => {
         expect(isDocChild({ kind: 'anyNode' })).toBe(true);
     });
-    it('recurses into arrays and tuples', () => {
+    it('recurses into arrays', () => {
         // an array of enumerations is a child (referencesEnumeration recurses into `of`)
         expect(isDocChild({ kind: 'array', of: { kind: 'enumeration', name: 'numberFormat' } })).toBe(true);
-        // a tuple of primitives is data
-        expect(isDocChild({ kind: 'tuple', items: [{ kind: 'boolean' }, { kind: 'integer', width: 'u8' }] })).toBe(
-            false,
-        );
     });
 });
