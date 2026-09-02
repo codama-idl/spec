@@ -64,9 +64,9 @@ describe('spec — coverage smoke checks', () => {
             'stringDisplayNode',
             'structFieldDisplayNode',
             // contextual value nodes
-            'accountFieldValueNode',
+            'accountDataValueNode',
             'accountValueNode',
-            'argumentValueNode',
+            'dataValueNode',
             'pdaValueNode',
             // top-level
             'accountNode',
@@ -396,9 +396,52 @@ describe('spec — identifier convention', () => {
     });
 });
 
+describe('spec — instructionNode data', () => {
+    it('carries optional data as any type node', () => {
+        const n = getNode('instructionNode')!;
+        const data = n.attributes.find(a => a.name === 'data')!;
+        expect(data).toBeDefined();
+        expect(data.optional).toBe(true);
+        expect(data.type).toEqual({ kind: 'union', name: 'typeNode' });
+        expect(isChildAttribute(data.type)).toBe(true);
+        for (const gone of ['arguments', 'extraArguments']) {
+            expect(
+                n.attributes.find(a => a.name === gone),
+                `${gone} should be removed`,
+            ).toBeUndefined();
+        }
+    });
+
+    it('removes the argument and resolver machinery', () => {
+        for (const gone of ['instructionArgumentNode', 'resolverValueNode', 'instructionArgumentLinkNode']) {
+            expect(getNode(gone), `${gone} should no longer exist`).toBeUndefined();
+        }
+        expect(getUnion('instructionRemainingAccountsValue')).toBeUndefined();
+        expect(getUnion('resolverDependency')).toBeUndefined();
+        expect(getUnion('instructionByteDeltaValue')!.members.map(m => m.name)).toEqual([
+            'accountLinkNode',
+            'dataValueNode',
+            'numberValueNode',
+        ]);
+        expect(getUnion('conditionalValueCondition')!.members.map(m => m.name)).toEqual([
+            'accountValueNode',
+            'dataValueNode',
+        ]);
+    });
+
+    it('remaining accounts declare a named client input', () => {
+        const n = getNode('instructionRemainingAccountsNode')!;
+        const identifier = n.attributes.find(a => a.name === 'identifier');
+        expect(identifier, 'remaining accounts should declare an identifier').toBeDefined();
+        expect(n.attributes[0].name).toBe('identifier');
+        expect(identifier!.type).toEqual({ constraint: 'identifier', kind: 'string' });
+        expect(n.attributes.find(a => a.name === 'value')).toBeUndefined();
+    });
+});
+
 describe('spec — path expressions', () => {
-    it('argumentValueNode and fieldDiscriminatorNode reference nested data via path attributes', () => {
-        for (const kind of ['argumentValueNode', 'fieldDiscriminatorNode']) {
+    it('dataValueNode and fieldDiscriminatorNode reference nested data via path attributes', () => {
+        for (const kind of ['dataValueNode', 'fieldDiscriminatorNode']) {
             const n = getNode(kind)!;
             const path = n.attributes.find(a => a.name === 'path');
             expect(path, `node "${kind}" should declare a path attribute`).toBeDefined();
@@ -425,7 +468,6 @@ describe('spec — display attribute on host nodes', () => {
     const nodeHosts: ReadonlyArray<readonly [string, string]> = [
         ['instructionNode', 'instructionDisplayNode'],
         ['instructionAccountNode', 'instructionAccountDisplayNode'],
-        ['instructionArgumentNode', 'structFieldDisplayNode'],
         ['instructionRemainingAccountsNode', 'instructionAccountDisplayNode'],
         ['structFieldTypeNode', 'structFieldDisplayNode'],
         ['stringTypeNode', 'stringDisplayNode'],
@@ -535,9 +577,9 @@ describe('spec — injectable value unions', () => {
     });
 });
 
-describe('spec — accountFieldValueNode shape', () => {
+describe('spec — accountDataValueNode shape', () => {
     it('matches the encoded shape exactly', () => {
-        const n = getNode('accountFieldValueNode')!;
+        const n = getNode('accountDataValueNode')!;
         expect(n.attributes.map(a => a.name)).toEqual(['account', 'path']);
         const account = n.attributes.find(a => a.name === 'account')!;
         expect(account.type).toEqual({ constraint: 'identifier', kind: 'string' });
@@ -549,7 +591,7 @@ describe('spec — accountFieldValueNode shape', () => {
 
     it('is a member of standaloneContextualValueNode', () => {
         const u = getUnion('standaloneContextualValueNode')!;
-        expect(u.members).toContainEqual({ kind: 'node', name: 'accountFieldValueNode' });
+        expect(u.members).toContainEqual({ kind: 'node', name: 'accountDataValueNode' });
     });
 });
 

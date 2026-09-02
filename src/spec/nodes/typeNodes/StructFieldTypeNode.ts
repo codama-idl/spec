@@ -17,7 +17,10 @@ export const structFieldTypeNode = defineNode('structFieldTypeNode', {
             docs: ['The identifier of the field.'],
         }),
         optionalAttribute('defaultValueStrategy', enumeration('defaultValueStrategy'), {
-            docs: ['How a configured default value is exposed in generated APIs. Required when `defaultValue` is set.'],
+            docs: [
+                'How a configured default value is exposed in generated APIs.',
+                'Only relevant when `defaultValue` is set — a strategy without a default value is meaningless. When absent, `optional` is assumed.',
+            ],
         }),
         optionalAttribute('docs', docs(), {
             docs: ['Markdown documentation for the field.'],

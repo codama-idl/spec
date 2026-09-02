@@ -5,5 +5,4 @@ The condition forms accepted by a `conditionalValueNode`.
 One of the following:
 
 - [`AccountValueNode`](./AccountValueNode.md)
-- [`ArgumentValueNode`](./ArgumentValueNode.md)
-- [`ResolverValueNode`](./ResolverValueNode.md)
+- [`DataValueNode`](./DataValueNode.md)

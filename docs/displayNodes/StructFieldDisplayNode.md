@@ -23,20 +23,20 @@ Value presentation is carried by the member's type; this node only addresses nam
 
 ## Examples
 
-### Relabelling an instruction argument
+### Relabelling an instruction data field
 
 ```typescript
-instructionArgumentNode({
+structFieldTypeNode({
     identifier: 'amount',
     type: numberTypeNode('u64'),
     display: structFieldDisplayNode({ label: 'Amount' }),
 });
 ```
 
-### Hiding a discriminator argument from the fallback list
+### Hiding a discriminator field from the fallback list
 
 ```typescript
-instructionArgumentNode({
+structFieldTypeNode({
     identifier: 'discriminator',
     type: numberTypeNode('u8'),
     display: structFieldDisplayNode({ skip: 'always' }),

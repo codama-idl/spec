@@ -1,7 +1,7 @@
 /**
  * Named unions for the contextual-value-node category.
  *
- * `conditionalValueCondition`, `resolverDependency`, `pdaSeedValueValue`,
+ * `conditionalValueCondition`, `pdaSeedValueValue`,
  * `pdaValuePda`, and `pdaValueProgramId` are inline-union helpers used by
  * specific contextual-value-node attributes.
  */
@@ -10,15 +10,14 @@ import { defineUnion, union } from '../../../api';
 
 const STANDALONE_CONTEXTUAL_VALUE_NODE_KINDS = [
     'accountBumpValueNode',
-    'accountFieldValueNode',
+    'accountDataValueNode',
     'accountValueNode',
-    'argumentValueNode',
     'conditionalValueNode',
+    'dataValueNode',
     'identityValueNode',
     'payerValueNode',
     'pdaValueNode',
     'programIdValueNode',
-    'resolverValueNode',
 ] as const;
 
 export const standaloneContextualValueNodeUnion = defineUnion('standaloneContextualValueNode', {
@@ -38,7 +37,7 @@ export const registeredContextualValueNodeUnion = defineUnion('registeredContext
 
 export const instructionInputValueNodeUnion = defineUnion('instructionInputValueNode', {
     docs: [
-        'Anything that can be used as the input value for an instruction account or argument default.',
+        'Anything that can be used as the input value for an instruction account default or a conditional branch.',
         'Covers concrete values, contextual references, and program links.',
     ],
     members: [union('contextualValueNode'), 'programLinkNode', union('valueNode')],
@@ -48,17 +47,12 @@ export const instructionInputValueNodeUnion = defineUnion('instructionInputValue
 
 export const conditionalValueConditionUnion = defineUnion('conditionalValueCondition', {
     docs: ['The condition forms accepted by a `conditionalValueNode`.'],
-    members: ['accountValueNode', 'argumentValueNode', 'resolverValueNode'],
-});
-
-export const resolverDependencyUnion = defineUnion('resolverDependency', {
-    docs: ['The dependency forms accepted by a `resolverValueNode`.'],
-    members: ['accountValueNode', 'argumentValueNode'],
+    members: ['accountValueNode', 'dataValueNode'],
 });
 
 export const pdaSeedValueValueUnion = defineUnion('pdaSeedValueValue', {
     docs: ['The value forms accepted by a `pdaSeedValueNode`.'],
-    members: ['accountValueNode', 'argumentValueNode', union('valueNode')],
+    members: ['accountValueNode', 'dataValueNode', union('valueNode')],
 });
 
 export const pdaValuePdaUnion = defineUnion('pdaValuePda', {
@@ -68,5 +62,5 @@ export const pdaValuePdaUnion = defineUnion('pdaValuePda', {
 
 export const pdaValueProgramIdUnion = defineUnion('pdaValueProgramId', {
     docs: ['The program-id forms accepted by a `pdaValueNode`.'],
-    members: ['accountValueNode', 'argumentValueNode'],
+    members: ['accountValueNode', 'dataValueNode'],
 });

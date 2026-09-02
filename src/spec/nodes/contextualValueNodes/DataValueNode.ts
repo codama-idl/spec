@@ -1,7 +1,7 @@
 import { attribute, defineNode, stringPath } from '../../../api';
-import { examples } from './ArgumentValueNode.examples';
+import { examples } from './DataValueNode.examples';
 
-export const argumentValueNode = defineNode('argumentValueNode', {
+export const dataValueNode = defineNode('dataValueNode', {
     docs: ['Refers to a value within the data of the surrounding instruction.'],
     attributes: [
         attribute('path', stringPath(), {

@@ -6,7 +6,7 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-instructionRemainingAccountsNode(argumentValueNode('authorities'), {
+instructionRemainingAccountsNode('authorities', {
     isSigner: true,
     isOptional: true,
 });
@@ -18,23 +18,28 @@ instructionRemainingAccountsNode(argumentValueNode('authorities'), {
         code(
             'typescript',
             `
-instructionRemainingAccountsNode(argumentValueNode('authorities'), {
+instructionRemainingAccountsNode('authorities', {
     isSigner: 'either',
 });
 `,
         ),
     ),
     example(
-        'Remaining accounts using a resolver',
+        'Remaining accounts auto-filled by a renderer plugin',
         code(
             'typescript',
             `
-instructionRemainingAccountsNode(
-    resolverValueNode('resolveTransferRemainingAccounts', {
-        docs: ['Provide authorities as remaining accounts if and only if the asset has a multisig set up.'],
-        dependsOn: [argumentValueNode('hasMultisig'), argumentValueNode('authorities')],
-    }),
-);
+// The identifier honestly declares a client input; renderers with a matching
+// plugin may fill it automatically, others expose it as a plain input.
+instructionRemainingAccountsNode('authorities', {
+    isSigner: true,
+    docs: ['Provide authorities as remaining accounts if and only if the asset has a multisig set up.'],
+    plugins: [
+        pluginNode('codama.jsResolver', {
+            payload: { function: 'resolveTransferRemainingAccounts', dependsOn: ['data.hasMultisig'] },
+        }),
+    ],
+});
 `,
         ),
     ),

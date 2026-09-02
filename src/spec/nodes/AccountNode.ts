@@ -30,7 +30,7 @@ export const accountNode = defineNode('accountNode', {
         attribute('data', union('typeNode'), {
             docs: [
                 'The type describing the account data — any type node, including a `definedTypeLinkNode` to share or reuse a defined type.',
-                'Nodes that reference account fields by name — e.g. `accountFieldValueNode` or `fieldDiscriminatorNode` — are only valid when this type resolves to a struct (following links).',
+                'Nodes that reference account fields by name — e.g. `accountDataValueNode` or `fieldDiscriminatorNode` — are only valid when this type resolves to a struct (following links).',
             ],
         }),
         optionalAttribute('pda', node('pdaLinkNode'), {

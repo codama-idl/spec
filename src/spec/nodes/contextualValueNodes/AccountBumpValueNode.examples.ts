@@ -11,7 +11,7 @@ const node = accountBumpValueNode('associatedTokenAccount');
         ),
     ),
     example(
-        'An instruction argument defaulting to the bump derivation of an instruction account',
+        'A data field defaulting to the bump derivation of an instruction account',
         code(
             'typescript',
             `
@@ -25,14 +25,15 @@ instructionNode({
         }),
         // ...
     ],
-    arguments: [
-        instructionArgumentNode({
+    data: structTypeNode([
+        structFieldTypeNode({
             identifier: 'bump',
             type: numberTypeNode('u8'),
-            defaultValue: accountBumpValueNode('associatedTokenAccount'),
+            defaultValue: injectedValueNode({ key: 'bump' }),
         }),
         // ...
-    ],
+    ]),
+    provides: [providedNode('bump', accountBumpValueNode('associatedTokenAccount'))],
 });
 `,
         ),

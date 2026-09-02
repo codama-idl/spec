@@ -22,10 +22,9 @@ import { ALL_DISPLAY_NODE_UNIONS, ALL_DISPLAY_NODES } from './nodes/displayNodes
 import { errorNode } from './nodes/ErrorNode';
 import { eventNode } from './nodes/EventNode';
 import { instructionAccountNode } from './nodes/InstructionAccountNode';
-import { instructionArgumentNode } from './nodes/InstructionArgumentNode';
 import { instructionByteDeltaNode } from './nodes/InstructionByteDeltaNode';
 import { instructionNode } from './nodes/InstructionNode';
-import { instructionByteDeltaValueUnion, instructionRemainingAccountsValueUnion } from './nodes/InstructionNodeUnions';
+import { instructionByteDeltaValueUnion } from './nodes/InstructionNodeUnions';
 import { instructionRemainingAccountsNode } from './nodes/InstructionRemainingAccountsNode';
 import { instructionStatusNode } from './nodes/InstructionStatusNode';
 import { ALL_LINK_NODE_UNIONS, ALL_LINK_NODES } from './nodes/linkNodes';
@@ -110,9 +109,7 @@ const DISPLAY_CATEGORY = defineCategory('display', {
 });
 
 const CONTEXTUAL_VALUE_CATEGORY = defineCategory('contextualValue', {
-    docs: [
-        'Contextual-value nodes — references resolved at instruction-build time (account values, argument values, …).',
-    ],
+    docs: ['Contextual-value nodes — references resolved at instruction-build time (account values, data values, …).'],
     nodes: [...ALL_CONTEXTUAL_VALUE_NODES],
     unions: [...ALL_CONTEXTUAL_VALUE_NODE_UNIONS],
 });
@@ -131,7 +128,6 @@ const TOP_LEVEL_CATEGORY = defineCategory('topLevel', {
         errorNode,
         eventNode,
         instructionAccountNode,
-        instructionArgumentNode,
         instructionByteDeltaNode,
         instructionNode,
         instructionRemainingAccountsNode,
@@ -142,7 +138,7 @@ const TOP_LEVEL_CATEGORY = defineCategory('topLevel', {
         providedNode,
         rootNode,
     ],
-    unions: [instructionByteDeltaValueUnion, instructionRemainingAccountsValueUnion],
+    unions: [instructionByteDeltaValueUnion],
 });
 
 const ALL_CATEGORIES: readonly CategorySpec[] = [

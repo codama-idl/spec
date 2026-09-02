@@ -1,7 +1,6 @@
 import { accountLinkNode } from './AccountLinkNode';
 import { definedTypeLinkNode } from './DefinedTypeLinkNode';
 import { instructionAccountLinkNode } from './InstructionAccountLinkNode';
-import { instructionArgumentLinkNode } from './InstructionArgumentLinkNode';
 import { instructionLinkNode } from './InstructionLinkNode';
 import { linkNodeUnion, registeredLinkNodeUnion } from './LinkNode';
 import { pdaLinkNode } from './PdaLinkNode';
@@ -11,7 +10,6 @@ export const ALL_LINK_NODES = [
     accountLinkNode,
     definedTypeLinkNode,
     instructionAccountLinkNode,
-    instructionArgumentLinkNode,
     instructionLinkNode,
     pdaLinkNode,
     programLinkNode,

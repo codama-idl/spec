@@ -10,7 +10,6 @@ export const registeredLinkNodeUnion = defineUnion('registeredLinkNode', {
         'accountLinkNode',
         'definedTypeLinkNode',
         'instructionAccountLinkNode',
-        'instructionArgumentLinkNode',
         'instructionLinkNode',
         'pdaLinkNode',
         'programLinkNode',

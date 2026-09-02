@@ -7,17 +7,17 @@ For instance, if an instruction creates a new account of 42 bytes, this node can
 
 ### Data
 
-| Attribute    | Type                         | Description                                                                                                                                                |
-| ------------ | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `kind`       | `"instructionByteDeltaNode"` | The node discriminator.                                                                                                                                    |
-| `withHeader` | `boolean`                    | Whether the delta includes the account header overhead — i.e. 128 bytes. Defaults to `false` when the value is a `resolverValueNode` and `true` otherwise. |
-| `subtract`   | `boolean` _(optional)_       | When `true`, the delta is subtracted from the running size instead of added. Defaults to `false`.                                                          |
+| Attribute    | Type                         | Description                                                                                       |
+| ------------ | ---------------------------- | ------------------------------------------------------------------------------------------------- |
+| `kind`       | `"instructionByteDeltaNode"` | The node discriminator.                                                                           |
+| `withHeader` | `boolean`                    | Whether the delta includes the account header overhead — i.e. 128 bytes.                          |
+| `subtract`   | `boolean` _(optional)_       | When `true`, the delta is subtracted from the running size instead of added. Defaults to `false`. |
 
 ### Children
 
 | Attribute | Type                                                          | Description                                                                                                                           |
 | --------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `value`   | [`InstructionByteDeltaValue`](./InstructionByteDeltaValue.md) | The source of the delta value — a literal number, a referenced account or argument, or a resolver.                                    |
+| `value`   | [`InstructionByteDeltaValue`](./InstructionByteDeltaValue.md) | The source of the delta value — a literal number, the size of a linked account, or a value within the instruction data.               |
 | `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_                | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
@@ -34,8 +34,8 @@ instructionByteDeltaNode(accountLinkNode('token'));
 instructionByteDeltaNode(accountLinkNode('token'), { subtract: true });
 ```
 
-### A byte delta that uses an argument value to increase the space of an account
+### A byte delta that uses a data value to increase the space of an account
 
 ```typescript
-instructionByteDeltaNode(argumentValueNode('additionalSpace'), { withHeader: false });
+instructionByteDeltaNode(dataValueNode('additionalSpace'), { withHeader: false });
 ```

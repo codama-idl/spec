@@ -8,10 +8,9 @@ import { ALL_DISPLAY_NODE_UNIONS, ALL_DISPLAY_NODES } from './displayNodes';
 import { errorNode } from './ErrorNode';
 import { eventNode } from './EventNode';
 import { instructionAccountNode } from './InstructionAccountNode';
-import { instructionArgumentNode } from './InstructionArgumentNode';
 import { instructionByteDeltaNode } from './InstructionByteDeltaNode';
 import { instructionNode } from './InstructionNode';
-import { instructionByteDeltaValueUnion, instructionRemainingAccountsValueUnion } from './InstructionNodeUnions';
+import { instructionByteDeltaValueUnion } from './InstructionNodeUnions';
 import { instructionRemainingAccountsNode } from './InstructionRemainingAccountsNode';
 import { instructionStatusNode } from './InstructionStatusNode';
 import { ALL_LINK_NODE_UNIONS, ALL_LINK_NODES } from './linkNodes';
@@ -41,7 +40,6 @@ export const ALL_NODES = [
     errorNode,
     eventNode,
     instructionAccountNode,
-    instructionArgumentNode,
     instructionByteDeltaNode,
     instructionNode,
     instructionRemainingAccountsNode,
@@ -65,5 +63,4 @@ export const ALL_UNIONS = [
 
     // Inline-helper unions used by instruction-shaped nodes.
     instructionByteDeltaValueUnion,
-    instructionRemainingAccountsValueUnion,
 ] as const;

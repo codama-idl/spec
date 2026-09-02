@@ -2,11 +2,11 @@ import { code, example, type DocExamples } from '../../../api';
 
 export const examples: DocExamples = [
     example(
-        'Create an argument value node from a path',
+        'Create a data value node from a path',
         code(
             'typescript',
             `
-const node = argumentValueNode('amount');
+const node = dataValueNode('amount');
 `,
         ),
     ),
@@ -15,29 +15,30 @@ const node = argumentValueNode('amount');
         code(
             'typescript',
             `
-argumentValueNode('config.fees[0]');
+dataValueNode('config.fees[0]');
 `,
         ),
     ),
     example(
-        'An instruction argument defaulting to another argument',
+        'An instruction data field defaulting to another field',
         code(
             'typescript',
             `
 instructionNode({
     identifier: 'mint',
-    arguments: [
-        instructionArgumentNode({
+    data: structTypeNode([
+        structFieldTypeNode({
             identifier: 'amount',
             type: numberTypeNode('u64'),
         }),
-        instructionArgumentNode({
+        structFieldTypeNode({
             identifier: 'amountToDelegate',
             type: numberTypeNode('u64'),
-            defaultValue: argumentValueNode('amount'),
+            defaultValue: injectedValueNode({ key: 'amountToDelegate' }),
         }),
         // ...
-    ],
+    ]),
+    provides: [providedNode('amountToDelegate', dataValueNode('amount'))],
 });
 `,
         ),
