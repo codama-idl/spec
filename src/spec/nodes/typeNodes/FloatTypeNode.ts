@@ -21,7 +21,10 @@ export const floatTypeNode = defineNode('floatTypeNode', {
             ],
         }),
         optionalAttribute('display', union('numberDisplayNode'), {
-            docs: ['Display metadata describing how the float is presented.'],
+            docs: [
+                'Display metadata describing how the float is presented.',
+                'Typically only `unit` is meaningful for floats — a float already carries its own scale, so `decimals` is not a supported pattern.',
+            ],
         }),
         transformsAttribute(),
     ],

@@ -10,7 +10,7 @@ Renderers typically format the value as `HH:mm:ss` or a coarser human-readable f
 | Attribute        | Type                 | Description                                                                                                                                                                            |
 | ---------------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `kind`           | `"durationTypeNode"` | The node discriminator.                                                                                                                                                                |
-| `ticksPerSecond` | `u64` _(optional)_   | How many ticks make one second. Defaults to `1` (the value is already in seconds). Common choices are `1000` (milliseconds), `1000000` (microseconds), and `1000000000` (nanoseconds). |
+| `ticksPerSecond` | `u32` _(optional)_   | How many ticks make one second. Defaults to `1` (the value is already in seconds). Common choices are `1000` (milliseconds), `1000000` (microseconds), and `1000000000` (nanoseconds). |
 
 ### Children
 

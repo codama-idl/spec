@@ -54,7 +54,7 @@ export const enumValuePayloadUnion = defineUnion('enumValuePayload', {
 });
 
 export const injectableIntegerValueNodeUnion = defineUnion('injectableIntegerValueNode', {
-    docs: ['A concrete number value, or a key resolved at presentation time from a surrounding provider.'],
+    docs: ['A concrete integer value, or a key resolved at presentation time from a surrounding provider.'],
     members: ['integerValueNode', 'injectedValueNode'],
 });
 

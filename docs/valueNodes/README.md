@@ -26,7 +26,7 @@ Value nodes — concrete values whose shape is described by a type node.
 ## Unions
 
 - [`EnumValuePayload`](./EnumValuePayload.md) - The payload kinds an `enumValueNode` may carry — struct fields or positional tuple slots.
-- [`InjectableIntegerValueNode`](./InjectableIntegerValueNode.md) - A concrete number value, or a key resolved at presentation time from a surrounding provider.
+- [`InjectableIntegerValueNode`](./InjectableIntegerValueNode.md) - A concrete integer value, or a key resolved at presentation time from a surrounding provider.
 - [`InjectableStringValueNode`](./InjectableStringValueNode.md) - A concrete string value, or a key resolved at presentation time from a surrounding provider.
 - [`RegisteredValueNode`](./RegisteredValueNode.md) - Every node tagged as a value-shaped node, including container variants.
 - [`StandaloneValueNode`](./StandaloneValueNode.md) - Every value node that can be used as a top-level value.

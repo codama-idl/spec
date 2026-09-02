@@ -1,4 +1,4 @@
-import { attribute, defineNode, literalUnion, node, optionalAttribute, string, u32 } from '../../../api';
+import { attribute, defineNode, literalUnion, node, optionalAttribute, string, u32, union } from '../../../api';
 import { transformsAttribute } from '../transformNodes';
 import { examples } from './FixedPointTypeNode.examples';
 
@@ -23,7 +23,13 @@ export const fixedPointTypeNode = defineNode('fixedPointTypeNode', {
         attribute('number', node('integerTypeNode'), {
             docs: [
                 'The integer type used to serialise the raw value — a pure encoding slot.',
-                'It must use a fixed-size format (variable-size formats such as `shortU16` are invalid here) and must not carry a `unit` or `display` of its own.',
+                'It must use a fixed-size format, because a fixed point presupposes a fixed bit width — most visibly for binary Q-format fractions, whose layout is defined by that width. Variable-size formats such as `shortU16` therefore cannot anchor one.',
+                'It must not carry a `unit` or `display` of its own.',
+            ],
+        }),
+        optionalAttribute('display', union('numberDisplayNode'), {
+            docs: [
+                'Display metadata describing how the quantity is presented — e.g. a contextual unit resolved via injection on top of the static scale.',
             ],
         }),
         transformsAttribute(),

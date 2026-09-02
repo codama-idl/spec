@@ -45,16 +45,18 @@ export const CONSTRAINED_STRINGS: readonly { name: string; definition: string }[
     {
         name: 'IntegerString',
         definition:
-            'a base-10 integer string: `-?[0-9]+` — e.g. `"42"` or `"-12048014319693667524"`. String storage keeps ' +
+            'a base-10 integer string: `0|-?[1-9][0-9]*` — e.g. `"42"` or `"-12048014319693667524"`, with no ' +
+            'leading zeros and no negative zero, so every integer has exactly one spelling. String storage keeps ' +
             'the full 64- and 128-bit ranges lossless through JSON transport, where a bare number would be corrupted ' +
             'to the nearest 64-bit float.',
     },
     {
         name: 'DecimalString',
         definition:
-            'a decimal number string: optional sign, digits, optional fraction and exponent — e.g. `"1.5"`, ' +
-            '`"-0.25"`, `"6.02e23"` — or one of the specials `"NaN"`, `"Infinity"`, `"-Infinity"`. String storage ' +
-            'makes float round-trips deterministic across serialisers.',
+            'a decimal number string matching `-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?` — the JSON number ' +
+            'grammar, e.g. `"1.5"`, `"-0.25"`, `"6.02e23"` — or one of the exact-case specials `"NaN"`, `"Infinity"`, ' +
+            '`"-Infinity"`. Signed zero is valid (floats distinguish it); `"+1.5"`, `".5"` and `"inf"` are not. ' +
+            'String storage makes float round-trips deterministic across serialisers.',
     },
     {
         name: 'SemverString',

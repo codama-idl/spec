@@ -1,6 +1,6 @@
 # InjectableIntegerValueNode (abstract)
 
-A concrete number value, or a key resolved at presentation time from a surrounding provider.
+A concrete integer value, or a key resolved at presentation time from a surrounding provider.
 
 One of the following:
 

@@ -60,7 +60,6 @@ describe('spec — coverage smoke checks', () => {
             'sizeDiscriminatorNode',
             // display nodes
             'amountNumberDisplayNode',
-            'amountNumberDisplayNode',
             'enumVariantDisplayNode',
             'instructionAccountDisplayNode',
             'instructionDisplayNode',
@@ -347,7 +346,7 @@ describe('spec — display node shapes', () => {
             const ticks = n.attributes.find(a => a.name === 'ticksPerSecond')!;
             expect(ticks, `${kind} should carry ticksPerSecond`).toBeDefined();
             expect(ticks.optional).toBe(true);
-            expect(ticks.type).toEqual({ kind: 'integer', width: 'u64' });
+            expect(ticks.type).toEqual({ kind: 'integer', width: 'u32' });
         }
     });
 
@@ -462,7 +461,7 @@ describe('spec — numeric family', () => {
 
     it('fixedPointTypeNode wraps an integer encoding slot with scale, base and unit', () => {
         const n = getNode('fixedPointTypeNode')!;
-        expect(n.attributes.map(a => a.name)).toEqual(['scale', 'base', 'unit', 'number', 'transforms']);
+        expect(n.attributes.map(a => a.name)).toEqual(['scale', 'base', 'unit', 'number', 'display', 'transforms']);
         expect(n.attributes.find(a => a.name === 'scale')!.type).toEqual({ kind: 'integer', width: 'u32' });
         expect(n.attributes.find(a => a.name === 'base')!.type).toEqual({ kind: 'literalUnion', values: [2, 10] });
         expect(n.attributes.find(a => a.name === 'number')!.type).toEqual({ kind: 'node', name: 'integerTypeNode' });
@@ -536,6 +535,7 @@ describe('spec — display attribute on host nodes', () => {
     const unionHosts: ReadonlyArray<readonly [string, string]> = [
         ['integerTypeNode', 'numberDisplayNode'],
         ['floatTypeNode', 'numberDisplayNode'],
+        ['fixedPointTypeNode', 'numberDisplayNode'],
     ];
 
     for (const [host, expected] of unionHosts) {
@@ -554,7 +554,6 @@ describe('spec — registeredDisplayNode union', () => {
     it('includes every display node', () => {
         const u = getUnion('registeredDisplayNode')!;
         for (const kind of [
-            'amountNumberDisplayNode',
             'amountNumberDisplayNode',
             'enumVariantDisplayNode',
             'instructionAccountDisplayNode',

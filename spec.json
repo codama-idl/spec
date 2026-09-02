@@ -209,7 +209,7 @@
                             "name": "ticksPerSecond",
                             "type": {
                                 "kind": "integer",
-                                "width": "u64"
+                                "width": "u32"
                             },
                             "optional": true,
                             "docs": [
@@ -281,7 +281,7 @@
                             "name": "ticksPerSecond",
                             "type": {
                                 "kind": "integer",
-                                "width": "u64"
+                                "width": "u32"
                             },
                             "optional": true,
                             "docs": [
@@ -579,7 +579,19 @@
                             },
                             "docs": [
                                 "The integer type used to serialise the raw value — a pure encoding slot.",
-                                "It must use a fixed-size format (variable-size formats such as `shortU16` are invalid here) and must not carry a `unit` or `display` of its own."
+                                "It must use a fixed-size format, because a fixed point presupposes a fixed bit width — most visibly for binary Q-format fractions, whose layout is defined by that width. Variable-size formats such as `shortU16` therefore cannot anchor one.",
+                                "It must not carry a `unit` or `display` of its own."
+                            ]
+                        },
+                        {
+                            "name": "display",
+                            "type": {
+                                "kind": "union",
+                                "name": "numberDisplayNode"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Display metadata describing how the quantity is presented — e.g. a contextual unit resolved via injection on top of the static scale."
                             ]
                         },
                         {
@@ -686,7 +698,8 @@
                             },
                             "optional": true,
                             "docs": [
-                                "Display metadata describing how the float is presented."
+                                "Display metadata describing how the float is presented.",
+                                "Typically only `unit` is meaningful for floats — a float already carries its own scale, so `decimals` is not a supported pattern."
                             ]
                         },
                         {
@@ -3043,7 +3056,7 @@
                         }
                     ],
                     "docs": [
-                        "A concrete number value, or a key resolved at presentation time from a surrounding provider."
+                        "A concrete integer value, or a key resolved at presentation time from a surrounding provider."
                     ]
                 },
                 {
@@ -4007,7 +4020,8 @@
                     "docs": [
                         "Display metadata that presents a number as a scaled amount with an optional unit, for quantities whose scale or unit are contextual rather than static — e.g. a raw token amount whose decimals live in the mint account.",
                         "The value is divided by `10 ^ decimals` and rendered alongside `unit` (e.g. `\"USDC\"`, `\"%\"`, `\"bps\"`).",
-                        "When the type itself carries static semantics (`fixedPointTypeNode`, a unit-ed `integerTypeNode`), renderers should use those; restating static facts here is discouraged — this node exists for values resolved at presentation time via injection."
+                        "When the type itself carries static semantics (`fixedPointTypeNode`, a unit-ed `integerTypeNode`), renderers should use those; restating static facts here is discouraged — this node exists for values resolved at presentation time via injection.",
+                        "When both are present, a resolved display value wins for presentation; the type's static `unit` and scale are the fallback whenever injection cannot resolve."
                     ],
                     "attributes": [
                         {

@@ -6,6 +6,7 @@ export const amountNumberDisplayNode = defineNode('amountNumberDisplayNode', {
         'Display metadata that presents a number as a scaled amount with an optional unit, for quantities whose scale or unit are contextual rather than static — e.g. a raw token amount whose decimals live in the mint account.',
         'The value is divided by `10 ^ decimals` and rendered alongside `unit` (e.g. `"USDC"`, `"%"`, `"bps"`).',
         'When the type itself carries static semantics (`fixedPointTypeNode`, a unit-ed `integerTypeNode`), renderers should use those; restating static facts here is discouraged — this node exists for values resolved at presentation time via injection.',
+        "When both are present, a resolved display value wins for presentation; the type's static `unit` and scale are the fallback whenever injection cannot resolve.",
     ],
     attributes: [
         optionalAttribute('decimals', union('injectableIntegerValueNode'), {

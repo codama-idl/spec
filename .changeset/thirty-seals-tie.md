@@ -15,7 +15,7 @@ Rework the numeric system so every numeric fact lives in exactly one layer. Type
 + floatTypeNode('f64')
 ```
 
-**`numberValueNode` splits into string-encoded `integerValueNode` and `floatValueNode`.** Integer values are `IntegerString`s (`-?[0-9]+`), so the full 64- and 128-bit ranges survive JSON transport — a `u64` discriminator no longer corrupts at parse time. Float values are `DecimalString`s, making round-trips deterministic across serialisers. The `injectableNumberValueNode` union becomes `injectableIntegerValueNode`, and the byte-delta union's number member becomes `integerValueNode`.
+**`numberValueNode` splits into string-encoded `integerValueNode` and `floatValueNode`.** Integer values are `IntegerString`s (`0|-?[1-9][0-9]*` — one spelling per integer), so the full 64- and 128-bit ranges survive JSON transport — a `u64` discriminator no longer corrupts at parse time. Float values are `DecimalString`s, making round-trips deterministic across serialisers. The `injectableNumberValueNode` union becomes `injectableIntegerValueNode`, and the byte-delta union's number member becomes `integerValueNode`.
 
 ```diff
 - numberValueNode(12048014319693667524)   // silently becomes 12048014319693668352
