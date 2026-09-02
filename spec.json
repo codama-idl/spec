@@ -4459,7 +4459,7 @@
                     ],
                     "examples": [
                         {
-                            "title": "Create an account field value node from an account name and a field path",
+                            "title": "Create an account data value node from an account name and a path",
                             "code": [
                                 {
                                     "language": "typescript",
@@ -7191,7 +7191,7 @@
                     ],
                     "docs": [
                         "The value forms accepted by an `instructionByteDeltaNode`.",
-                        "An `accountLinkNode` uses the size of the linked account; an `dataValueNode` uses a value within the instruction data; and a `numberValueNode` uses that explicit number."
+                        "An `accountLinkNode` uses the size of the linked account; a `dataValueNode` uses a value within the instruction data; and a `numberValueNode` uses that explicit number."
                     ]
                 }
             ],

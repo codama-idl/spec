@@ -22,7 +22,7 @@ Resolving the value requires reading the account state at presentation time.
 
 ## Examples
 
-### Create an account field value node from an account name and a field path
+### Create an account data value node from an account name and a path
 
 ```typescript
 const node = accountDataValueNode('mint', 'decimals');

@@ -2,7 +2,7 @@ import { code, example, type DocExamples } from '../../../api';
 
 export const examples: DocExamples = [
     example(
-        'Create an account field value node from an account name and a field path',
+        'Create an account data value node from an account name and a path',
         code(
             'typescript',
             `
