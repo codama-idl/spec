@@ -24,7 +24,7 @@ A PDA seed whose value is provided at derivation time, identified by name.
 ### Create a variable PDA seed node from a name and a type node
 
 ```typescript
-const node = variablePdaSeedNode('amount', numberTypeNode('u32'));
+const node = variablePdaSeedNode('amount', integerTypeNode('u32'));
 ```
 
 ### A PDA node with a public key variable seed

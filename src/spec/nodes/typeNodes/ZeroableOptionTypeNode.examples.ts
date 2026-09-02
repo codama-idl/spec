@@ -6,7 +6,7 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-zeroableOptionTypeNode(numberTypeNode('u32'));
+zeroableOptionTypeNode(integerTypeNode('u32'));
 
 // None     => 0x00000000
 // Some(42) => 0x2A000000
@@ -18,7 +18,7 @@ zeroableOptionTypeNode(numberTypeNode('u32'));
         code(
             'typescript',
             `
-zeroableOptionTypeNode(numberTypeNode('u32'), constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffffffff')));
+zeroableOptionTypeNode(integerTypeNode('u32'), constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffffffff')));
 
 // None     => 0xFFFFFFFF
 // Some(42) => 0x2A000000

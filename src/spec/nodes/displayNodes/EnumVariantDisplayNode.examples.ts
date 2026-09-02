@@ -8,7 +8,7 @@ export const examples: DocExamples = [
             `
 enumVariantTypeNode(
     'buy',
-    structTypeNode([structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') })]),
+    structTypeNode([structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u64') })]),
     { display: enumVariantDisplayNode({ label: 'Buy' }) },
 );
 `,
@@ -19,7 +19,7 @@ enumVariantTypeNode(
         code(
             'typescript',
             `
-enumVariantTypeNode('increment', tupleTypeNode([numberTypeNode('u64')]), {
+enumVariantTypeNode('increment', tupleTypeNode([integerTypeNode('u64')]), {
     display: enumVariantDisplayNode({ label: 'Increment', skipInnerData: true }),
 });
 `,

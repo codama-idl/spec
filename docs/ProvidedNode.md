@@ -25,7 +25,7 @@ Scoping is lexical: the nearest enclosing `provides` entry for a key wins, shado
 ### Providing a constant value to consumers
 
 ```typescript
-providedNode('decimals', numberValueNode(9));
+providedNode('decimals', integerValueNode('9'));
 ```
 
 ### A provided value consumed via injection
@@ -33,11 +33,11 @@ providedNode('decimals', numberValueNode(9));
 ```typescript
 instructionNode({
     identifier: 'transferChecked',
-    provides: [providedNode('decimals', numberValueNode(9))],
+    provides: [providedNode('decimals', integerValueNode('9'))],
     data: structTypeNode([
         structFieldTypeNode({
             identifier: 'decimals',
-            type: numberTypeNode('u8'),
+            type: integerTypeNode('u8'),
             defaultValue: injectedValueNode({ key: 'decimals' }),
         }),
         // ...

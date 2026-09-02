@@ -6,7 +6,7 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-const node = arrayTypeNode(publicKeyTypeNode(), prefixedCountNode(numberTypeNode('u32')));
+const node = arrayTypeNode(publicKeyTypeNode(), prefixedCountNode(integerTypeNode('u32')));
 `,
         ),
     ),
@@ -15,7 +15,7 @@ const node = arrayTypeNode(publicKeyTypeNode(), prefixedCountNode(numberTypeNode
         code(
             'typescript',
             `
-arrayTypeNode(numberTypeNode('u8'), prefixedCountNode(numberTypeNode('u32')));
+arrayTypeNode(integerTypeNode('u8'), prefixedCountNode(integerTypeNode('u32')));
 
 // [1, 2, 3] => 0x03000000010203
 `,

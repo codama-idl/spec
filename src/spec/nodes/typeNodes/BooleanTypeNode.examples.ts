@@ -18,7 +18,7 @@ booleanTypeNode();
         code(
             'typescript',
             `
-booleanTypeNode(numberTypeNode('u32'));
+booleanTypeNode(integerTypeNode('u32'));
 
 // true  => 0x01000000
 // false => 0x00000000

@@ -46,6 +46,12 @@ export function renderType(t: TypeExpr, markup: MarkupRenderer, linkTo: (r: DocR
             if (t.constraint === 'path') {
                 return markup.code('PathString');
             }
+            if (t.constraint === 'integer') {
+                return markup.code('IntegerString');
+            }
+            if (t.constraint === 'decimal') {
+                return markup.code('DecimalString');
+            }
             if (t.constraint === 'version') {
                 return markup.code('SemverString');
             }

@@ -73,19 +73,19 @@ offset = -2
 ### A relative pre-offset (the default strategy)
 
 ```typescript
-numberTypeNode('u32', { transforms: [preOffsetTransformNode(2)] });
+integerTypeNode('u32', { transforms: [preOffsetTransformNode(2)] });
 ```
 
 ### An absolute pre-offset
 
 ```typescript
-numberTypeNode('u32', { transforms: [preOffsetTransformNode(-2, 'absolute')] });
+integerTypeNode('u32', { transforms: [preOffsetTransformNode(-2, 'absolute')] });
 ```
 
 ### A left-padded u32 number
 
 ```typescript
-numberTypeNode('u32', { transforms: [preOffsetTransformNode(4, 'padded')] });
+integerTypeNode('u32', { transforms: [preOffsetTransformNode(4, 'padded')] });
 
 // 42 => 0x000000002A000000
 ```
@@ -93,7 +93,7 @@ numberTypeNode('u32', { transforms: [preOffsetTransformNode(4, 'padded')] });
 ### A u32 number overwritten by a u16 number
 
 ```typescript
-tupleTypeNode([numberTypeNode('u32'), numberTypeNode('u16', { transforms: [preOffsetTransformNode(-2)] })]);
+tupleTypeNode([integerTypeNode('u32'), integerTypeNode('u16', { transforms: [preOffsetTransformNode(-2)] })]);
 
 // [1, 2]           => 0x01000200
 // [0xFFFFFFFF, 42] => 0xFFFF2A00

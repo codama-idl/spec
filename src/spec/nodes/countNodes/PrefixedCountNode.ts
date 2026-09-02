@@ -7,8 +7,8 @@ export const prefixedCountNode = defineNode('prefixedCountNode', {
         'This enables nodes such as `arrayTypeNode` to represent collections whose length is stored as a prefix.',
     ],
     attributes: [
-        attribute('prefix', node('numberTypeNode'), {
-            docs: ['The numeric type used as the count prefix.'],
+        attribute('prefix', node('integerTypeNode'), {
+            docs: ['The integer type used as the count prefix.'],
         }),
     ],
     examples,

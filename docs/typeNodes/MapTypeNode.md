@@ -27,7 +27,7 @@ Entries are serialised one after the other, each key immediately followed by its
 ### Create a map type node from a key type, a value type, and a count node
 
 ```typescript
-const node = mapTypeNode(publicKeyTypeNode(), numberTypeNode('u32'), prefixedCountNode(numberTypeNode('u32')));
+const node = mapTypeNode(publicKeyTypeNode(), integerTypeNode('u32'), prefixedCountNode(integerTypeNode('u32')));
 ```
 
 ### A histogram that counts letters
@@ -35,8 +35,8 @@ const node = mapTypeNode(publicKeyTypeNode(), numberTypeNode('u32'), prefixedCou
 ```typescript
 mapTypeNode(
     stringTypeNode('utf8', { transforms: [fixedSizeTransformNode(1)] }), // Key: Single UTF-8 character.
-    numberTypeNode('u16'), // Value: 16-bit unsigned integer.
-    prefixedCountNode(numberTypeNode('u8')), // Count: map length is prefixed with a u8.
+    integerTypeNode('u16'), // Value: 16-bit unsigned integer.
+    prefixedCountNode(integerTypeNode('u8')), // Count: map length is prefixed with a u8.
 );
 
 // { A: 42, B: 1, C: 16 } => 0x03412A00420100431000

@@ -32,5 +32,5 @@ injectedValueNode({ key: 'decimals' });
 ### An injected value with a fallback
 
 ```typescript
-injectedValueNode({ key: 'decimals', fallback: numberValueNode(0) });
+injectedValueNode({ key: 'decimals', fallback: integerValueNode('0') });
 ```

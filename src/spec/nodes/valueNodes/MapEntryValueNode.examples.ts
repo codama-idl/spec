@@ -6,7 +6,7 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-const node = mapEntryValueNode(stringValueNode('total'), numberValueNode(42));
+const node = mapEntryValueNode(stringValueNode('total'), integerValueNode('42'));
 `,
         ),
     ),

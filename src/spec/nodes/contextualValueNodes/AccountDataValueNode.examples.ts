@@ -29,7 +29,7 @@ instructionNode({
     data: structTypeNode([
         structFieldTypeNode({
             identifier: 'decimals',
-            type: numberTypeNode('u8'),
+            type: integerTypeNode('u8'),
             defaultValue: injectedValueNode({ key: 'decimals' }),
         }),
         // ...

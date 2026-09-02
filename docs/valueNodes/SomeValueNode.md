@@ -23,5 +23,5 @@ For instance, this can be set as the default value of a field whose type is an `
 ### Create a some value node from a value node
 
 ```typescript
-const node = someValueNode(numberValueNode(42));
+const node = someValueNode(integerValueNode('42'));
 ```

@@ -6,7 +6,7 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-const node = structFieldValueNode('age', numberValueNode(42));
+const node = structFieldValueNode('age', integerValueNode('42'));
 `,
         ),
     ),

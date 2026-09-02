@@ -34,7 +34,7 @@ const node = accountNode({
     data: structTypeNode([
         structFieldTypeNode({ identifier: 'mint', type: publicKeyTypeNode() }),
         structFieldTypeNode({ identifier: 'owner', type: publicKeyTypeNode() }),
-        structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') }),
+        structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u64') }),
     ]),
     discriminators: [sizeDiscriminatorNode(72)],
     size: 72,
@@ -50,7 +50,7 @@ programNode({
     definedTypes: [
         definedTypeNode({
             identifier: 'mintState',
-            type: structTypeNode([structFieldTypeNode({ identifier: 'supply', type: numberTypeNode('u64') })]),
+            type: structTypeNode([structFieldTypeNode({ identifier: 'supply', type: integerTypeNode('u64') })]),
         }),
     ],
 });

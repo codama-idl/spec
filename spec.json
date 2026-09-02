@@ -31,77 +31,6 @@
             ],
             "nodes": [
                 {
-                    "kind": "amountTypeNode",
-                    "docs": [
-                        "Wraps a number type to provide additional context such as decimal places and a unit.",
-                        "Particularly useful for representing financial values as integers, since floating-point numbers are notoriously unsafe for that purpose."
-                    ],
-                    "attributes": [
-                        {
-                            "name": "decimals",
-                            "type": {
-                                "kind": "integer",
-                                "width": "u32"
-                            },
-                            "docs": [
-                                "The number of decimal places the inner integer carries.",
-                                "For example, an integer value of 12345 with 2 decimal places represents 123.45."
-                            ]
-                        },
-                        {
-                            "name": "unit",
-                            "type": {
-                                "kind": "string"
-                            },
-                            "optional": true,
-                            "docs": [
-                                "The unit of the amount — e.g. \"USD\" or \"%\"."
-                            ]
-                        },
-                        {
-                            "name": "number",
-                            "type": {
-                                "kind": "node",
-                                "name": "numberTypeNode"
-                            },
-                            "docs": [
-                                "The number type the amount wraps."
-                            ]
-                        },
-                        {
-                            "name": "transforms",
-                            "type": {
-                                "kind": "array",
-                                "of": {
-                                    "kind": "union",
-                                    "name": "transformNode"
-                                }
-                            },
-                            "optional": true,
-                            "docs": [
-                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
-                            ]
-                        }
-                    ],
-                    "examples": [
-                        {
-                            "title": "2-decimals USD amount",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "amountTypeNode(numberTypeNode('u32'), 2, 'USD');",
-                                        "",
-                                        "// 0.01 USD   => 0x01000000",
-                                        "// 10 USD     => 0xE8030000",
-                                        "// 400.60 USD => 0x7C9C0000"
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
                     "kind": "arrayTypeNode",
                     "docs": [
                         "A homogeneous list of items. The item type is defined by `item`; the length is determined by the `count` strategy."
@@ -149,7 +78,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "const node = arrayTypeNode(publicKeyTypeNode(), prefixedCountNode(numberTypeNode('u32')));"
+                                        "const node = arrayTypeNode(publicKeyTypeNode(), prefixedCountNode(integerTypeNode('u32')));"
                                     ]
                                 }
                             ]
@@ -163,7 +92,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "arrayTypeNode(numberTypeNode('u8'), prefixedCountNode(numberTypeNode('u32')));",
+                                        "arrayTypeNode(integerTypeNode('u8'), prefixedCountNode(integerTypeNode('u32')));",
                                         "",
                                         "// [1, 2, 3] => 0x03000000010203"
                                     ]
@@ -175,7 +104,7 @@
                 {
                     "kind": "booleanTypeNode",
                     "docs": [
-                        "A boolean serialised as a numeric value. The inner number type determines the byte width.",
+                        "A boolean serialised as an integer. The inner integer type determines the byte width.",
                         "A decoded number of `1` yields `true`; any other value yields `false`."
                     ],
                     "attributes": [
@@ -183,10 +112,10 @@
                             "name": "size",
                             "type": {
                                 "kind": "node",
-                                "name": "numberTypeNode"
+                                "name": "integerTypeNode"
                             },
                             "docs": [
-                                "The numeric type used to serialise the boolean."
+                                "The integer type used to serialise the boolean."
                             ]
                         },
                         {
@@ -225,7 +154,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "booleanTypeNode(numberTypeNode('u32'));",
+                                        "booleanTypeNode(integerTypeNode('u32'));",
                                         "",
                                         "// true  => 0x01000000",
                                         "// false => 0x00000000"
@@ -273,17 +202,30 @@
                 {
                     "kind": "dateTimeTypeNode",
                     "docs": [
-                        "A timestamp encoded as a number, typically seconds since the Unix epoch. The inner number type determines the byte width."
+                        "A point in time encoded as an integer count of ticks since the Unix epoch."
                     ],
                     "attributes": [
+                        {
+                            "name": "ticksPerSecond",
+                            "type": {
+                                "kind": "integer",
+                                "width": "u32"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "How many ticks make one second. Defaults to `1` (the value is in seconds since the epoch).",
+                                "Common choices are `1000` (milliseconds), `1000000` (microseconds), and `1000000000` (nanoseconds)."
+                            ]
+                        },
                         {
                             "name": "number",
                             "type": {
                                 "kind": "node",
-                                "name": "numberTypeNode"
+                                "name": "integerTypeNode"
                             },
                             "docs": [
-                                "The numeric type used to serialise the timestamp."
+                                "The integer type used to serialise the tick count — a pure encoding slot.",
+                                "It must not carry a `unit` or `display` of its own."
                             ]
                         },
                         {
@@ -303,25 +245,97 @@
                     ],
                     "examples": [
                         {
-                            "title": "Create a date time type node from a number type node",
+                            "title": "A u64 unix timestamp in seconds",
                             "code": [
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "const node = dateTimeTypeNode(numberTypeNode('u64'));"
+                                        "const node = dateTimeTypeNode(integerTypeNode('u64'));",
+                                        "",
+                                        "// 2024-06-27T14:57:56Z => 0xF47D7D6600000000"
                                     ]
                                 }
                             ]
                         },
                         {
-                            "title": "u64 unix datetime",
+                            "title": "An i64 unix timestamp in milliseconds",
                             "code": [
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "dateTimeTypeNode(numberTypeNode('u64'));",
+                                        "dateTimeTypeNode(integerTypeNode('i64'), { ticksPerSecond: 1000 });"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "durationTypeNode",
+                    "docs": [
+                        "An elapsed duration encoded as an integer count of ticks.",
+                        "Renderers typically format the value as `HH:mm:ss` or a coarser human-readable form."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "ticksPerSecond",
+                            "type": {
+                                "kind": "integer",
+                                "width": "u32"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "How many ticks make one second. Defaults to `1` (the value is already in seconds).",
+                                "Common choices are `1000` (milliseconds), `1000000` (microseconds), and `1000000000` (nanoseconds)."
+                            ]
+                        },
+                        {
+                            "name": "number",
+                            "type": {
+                                "kind": "node",
+                                "name": "integerTypeNode"
+                            },
+                            "docs": [
+                                "The integer type used to serialise the tick count — a pure encoding slot.",
+                                "It must not carry a `unit` or `display` of its own."
+                            ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
+                            ]
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "title": "A duration in seconds",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = durationTypeNode(integerTypeNode('u32'));",
                                         "",
-                                        "// 2024-06-27T14:57:56Z => 0xF47D7D6600000000"
+                                        "// 3661 => 01:01:01"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A duration in milliseconds",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "durationTypeNode(integerTypeNode('u64'), { ticksPerSecond: 1000 });"
                                     ]
                                 }
                             ]
@@ -351,10 +365,10 @@
                             "name": "size",
                             "type": {
                                 "kind": "node",
-                                "name": "numberTypeNode"
+                                "name": "integerTypeNode"
                             },
                             "docs": [
-                                "The numeric type used to serialise the discriminator.",
+                                "The integer type used to serialise the discriminator.",
                                 "The discriminator prepends the serialised variant payload to identify which variant was selected. By default it is the index of the variant (starting at 0), unless the variant provides its own custom discriminator value."
                             ]
                         },
@@ -382,12 +396,12 @@
                                     "content": [
                                         "enumTypeNode([",
                                         "    enumVariantTypeNode('flip'),",
-                                        "    enumVariantTypeNode('rotate', numberTypeNode('u32')),",
+                                        "    enumVariantTypeNode('rotate', integerTypeNode('u32')),",
                                         "    enumVariantTypeNode(",
                                         "        'move',",
                                         "        structTypeNode([",
-                                        "            structFieldTypeNode({ identifier: 'x', type: numberTypeNode('u16') }),",
-                                        "            structFieldTypeNode({ identifier: 'y', type: numberTypeNode('u16') }),",
+                                        "            structFieldTypeNode({ identifier: 'x', type: integerTypeNode('u16') }),",
+                                        "            structFieldTypeNode({ identifier: 'y', type: integerTypeNode('u16') }),",
                                         "        ]),",
                                         "    ),",
                                         "]);",
@@ -483,8 +497,8 @@
                                         "enumVariantTypeNode(",
                                         "    'move',",
                                         "    structTypeNode([",
-                                        "        structFieldTypeNode({ identifier: 'x', type: numberTypeNode('u32') }),",
-                                        "        structFieldTypeNode({ identifier: 'y', type: numberTypeNode('u32') }),",
+                                        "        structFieldTypeNode({ identifier: 'x', type: integerTypeNode('u32') }),",
+                                        "        structFieldTypeNode({ identifier: 'y', type: integerTypeNode('u32') }),",
                                         "    ]),",
                                         ");"
                                     ]
@@ -497,7 +511,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "enumVariantTypeNode('coordinates', tupleTypeNode([numberTypeNode('u32'), numberTypeNode('u32')]));"
+                                        "enumVariantTypeNode('coordinates', tupleTypeNode([integerTypeNode('u32'), integerTypeNode('u32')]));"
                                     ]
                                 }
                             ]
@@ -508,7 +522,340 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "enumVariantTypeNode('amount', numberTypeNode('u64'));"
+                                        "enumVariantTypeNode('amount', integerTypeNode('u64'));"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "fixedPointTypeNode",
+                    "docs": [
+                        "A scaled quantity stored as an integer: the value is `raw / base^scale`.",
+                        "Integers are the safe way to carry financial values; this node adds the scaling and unit that give the raw integer its meaning — e.g. token amounts, prices, or binary Q-format fractions."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "scale",
+                            "type": {
+                                "kind": "integer",
+                                "width": "u32"
+                            },
+                            "docs": [
+                                "How many powers of `base` divide the raw integer. An integer value of 12345 with a base-10 scale of 2 represents 123.45.",
+                                "Must be non-zero: an unscaled quantity is an `integerTypeNode` with a `unit`."
+                            ]
+                        },
+                        {
+                            "name": "base",
+                            "type": {
+                                "kind": "literalUnion",
+                                "values": [
+                                    2,
+                                    10
+                                ]
+                            },
+                            "optional": true,
+                            "docs": [
+                                "The base the scale applies to. Defaults to `10`; use `2` for binary Q-format fractions."
+                            ]
+                        },
+                        {
+                            "name": "unit",
+                            "type": {
+                                "kind": "string"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "The unit of measure the quantity denotes — e.g. `\"SOL\"`, `\"USDC\"` or `\"%\"`."
+                            ]
+                        },
+                        {
+                            "name": "number",
+                            "type": {
+                                "kind": "node",
+                                "name": "integerTypeNode"
+                            },
+                            "docs": [
+                                "The integer type used to serialise the raw value — a pure encoding slot.",
+                                "It must use a fixed-size format, because a fixed point presupposes a fixed bit width — most visibly for binary Q-format fractions, whose layout is defined by that width. Variable-size formats such as `shortU16` therefore cannot anchor one.",
+                                "It must not carry a `unit` or `display` of its own."
+                            ]
+                        },
+                        {
+                            "name": "display",
+                            "type": {
+                                "kind": "node",
+                                "name": "unitNumberDisplayNode"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Display metadata describing how the quantity is presented — a contextual unit resolved via injection on top of the static scale."
+                            ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
+                            ]
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "title": "A token amount with 6 decimal places",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = fixedPointTypeNode(integerTypeNode('u64'), 6, { unit: 'USDC' });",
+                                        "",
+                                        "// 1500000 => 1.5 USDC"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A SOL amount expressed in lamports",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "fixedPointTypeNode(integerTypeNode('u64'), 9, { unit: 'SOL' });",
+                                        "",
+                                        "// 1000000000 => 1 SOL"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A binary Q64.64 fraction",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "fixedPointTypeNode(integerTypeNode('u128'), 64, { base: 2 });",
+                                        "",
+                                        "// raw / 2^64"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "floatTypeNode",
+                    "docs": [
+                        "An IEEE-754 floating-point number with a fixed wire format and byte order.",
+                        "Floating-point numbers are notoriously unsafe for financial values — prefer `fixedPointTypeNode` for those."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "format",
+                            "type": {
+                                "kind": "enumeration",
+                                "name": "floatFormat"
+                            },
+                            "docs": [
+                                "The wire format used to serialise the float."
+                            ]
+                        },
+                        {
+                            "name": "endian",
+                            "type": {
+                                "kind": "enumeration",
+                                "name": "endianness"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "The byte order used to serialise the float. Defaults to `le`."
+                            ]
+                        },
+                        {
+                            "name": "unit",
+                            "type": {
+                                "kind": "string"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "The unit of measure the float denotes — e.g. `\"USD\"`.",
+                                "Part of the value semantics: without it, consumers cannot know what quantity the number represents."
+                            ]
+                        },
+                        {
+                            "name": "display",
+                            "type": {
+                                "kind": "node",
+                                "name": "unitNumberDisplayNode"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Display metadata describing how the float is presented.",
+                                "Only a contextual unit applies: a float already carries its own scale."
+                            ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
+                            ]
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "title": "A little-endian f64",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = floatTypeNode('f64');",
+                                        "",
+                                        "// 1.5 => 0x000000000000F83F"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A float denoting a quantity",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "floatTypeNode('f64', { unit: 'USD' });"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "integerTypeNode",
+                    "docs": [
+                        "An integer with a fixed wire format and byte order."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "format",
+                            "type": {
+                                "kind": "enumeration",
+                                "name": "integerFormat"
+                            },
+                            "docs": [
+                                "The wire format used to serialise the integer."
+                            ]
+                        },
+                        {
+                            "name": "endian",
+                            "type": {
+                                "kind": "enumeration",
+                                "name": "endianness"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "The byte order used to serialise the integer. Defaults to `le`; byte-oriented formats such as `shortU16` ignore it."
+                            ]
+                        },
+                        {
+                            "name": "unit",
+                            "type": {
+                                "kind": "string"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "The unit of measure the integer denotes — e.g. `\"slots\"` or `\"bps\"`.",
+                                "Part of the value semantics: without it, consumers cannot know what quantity the number represents. For scaled quantities, use `fixedPointTypeNode` instead."
+                            ]
+                        },
+                        {
+                            "name": "display",
+                            "type": {
+                                "kind": "union",
+                                "name": "numberDisplayNode"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Display metadata describing how the integer is presented."
+                            ]
+                        },
+                        {
+                            "name": "transforms",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "union",
+                                    "name": "transformNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
+                            ]
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "title": "A little-endian u64",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = integerTypeNode('u64');",
+                                        "",
+                                        "// 42 => 0x2A00000000000000"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A big-endian i32",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "integerTypeNode('i32', { endian: 'be' });",
+                                        "",
+                                        "// -42 => 0xFFFFFFD6"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An integer denoting a quantity",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "integerTypeNode('u64', { unit: 'slots' });"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A Solana compact-u16",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "integerTypeNode('shortU16');",
+                                        "",
+                                        "// 42    => 0x2A",
+                                        "// 26742 => 0xF6D0"
                                     ]
                                 }
                             ]
@@ -575,7 +922,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "const node = mapTypeNode(publicKeyTypeNode(), numberTypeNode('u32'), prefixedCountNode(numberTypeNode('u32')));"
+                                        "const node = mapTypeNode(publicKeyTypeNode(), integerTypeNode('u32'), prefixedCountNode(integerTypeNode('u32')));"
                                     ]
                                 }
                             ]
@@ -588,120 +935,11 @@
                                     "content": [
                                         "mapTypeNode(",
                                         "    stringTypeNode('utf8', { transforms: [fixedSizeTransformNode(1)] }), // Key: Single UTF-8 character.",
-                                        "    numberTypeNode('u16'), // Value: 16-bit unsigned integer.",
-                                        "    prefixedCountNode(numberTypeNode('u8')), // Count: map length is prefixed with a u8.",
+                                        "    integerTypeNode('u16'), // Value: 16-bit unsigned integer.",
+                                        "    prefixedCountNode(integerTypeNode('u8')), // Count: map length is prefixed with a u8.",
                                         ");",
                                         "",
                                         "// { A: 42, B: 1, C: 16 } => 0x03412A00420100431000"
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "kind": "numberTypeNode",
-                    "docs": [
-                        "A numeric type with a fixed wire format and byte order."
-                    ],
-                    "attributes": [
-                        {
-                            "name": "format",
-                            "type": {
-                                "kind": "enumeration",
-                                "name": "numberFormat"
-                            },
-                            "docs": [
-                                "The wire format used to serialise the number."
-                            ]
-                        },
-                        {
-                            "name": "endian",
-                            "type": {
-                                "kind": "enumeration",
-                                "name": "endianness"
-                            },
-                            "docs": [
-                                "The byte order used to serialise the number."
-                            ]
-                        },
-                        {
-                            "name": "display",
-                            "type": {
-                                "kind": "union",
-                                "name": "numberDisplayNode"
-                            },
-                            "optional": true,
-                            "docs": [
-                                "Display metadata describing how the number is presented."
-                            ]
-                        },
-                        {
-                            "name": "transforms",
-                            "type": {
-                                "kind": "array",
-                                "of": {
-                                    "kind": "union",
-                                    "name": "transformNode"
-                                }
-                            },
-                            "optional": true,
-                            "docs": [
-                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
-                            ]
-                        }
-                    ],
-                    "examples": [
-                        {
-                            "title": "Encoding `u32` integers",
-                            "docs": [
-                                "![Diagram](https://github.com/codama-idl/codama/assets/3642397/4bb1ae23-c69f-4c9f-a7ec-8f971d061667)"
-                            ],
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "numberTypeNode('u32');",
-                                        "",
-                                        "// 5     => 0x05000000",
-                                        "// 42    => 0x2A000000",
-                                        "// 65535 => 0xFFFF0000"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "title": "Encoding `f32` big-endian decimal numbers",
-                            "docs": [
-                                "![Diagram](https://github.com/codama-idl/codama/assets/3642397/d9cbfd3c-b8a2-4c13-a8a8-a11e7ed5d422)"
-                            ],
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "numberTypeNode('f32', 'be');",
-                                        "",
-                                        "// 1      => 0x3F800000",
-                                        "// -42    => 0xC2280000",
-                                        "// 3.1415 => 0x40490E56"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "title": "Encoding `shortU16` integers",
-                            "docs": [
-                                "![Diagram](https://github.com/codama-idl/codama/assets/3642397/73e12166-cdaa-4fca-ae2a-67937f8b130e)"
-                            ],
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "numberTypeNode('shortU16');",
-                                        "",
-                                        "// 42    => 0x2A",
-                                        "// 128   => 0x8001",
-                                        "// 16384 => 0x808001"
                                     ]
                                 }
                             ]
@@ -739,10 +977,10 @@
                             "name": "prefix",
                             "type": {
                                 "kind": "node",
-                                "name": "numberTypeNode"
+                                "name": "integerTypeNode"
                             },
                             "docs": [
-                                "The numeric type used as the presence flag.",
+                                "The integer type used as the presence flag.",
                                 "A prefix value of `1` means the item is present and follows the prefix; a value of `0` means the item is absent and nothing further is serialised."
                             ]
                         },
@@ -768,7 +1006,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "optionTypeNode(stringTypeNode('utf8'), { prefix: numberTypeNode('u16') });",
+                                        "optionTypeNode(stringTypeNode('utf8'), { prefix: integerTypeNode('u16') });",
                                         "",
                                         "// None          => 0x0000",
                                         "// Some(\"Hello\") => 0x010048656C6C6F"
@@ -782,7 +1020,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "optionTypeNode(numberTypeNode('u32'), { fixed: true });",
+                                        "optionTypeNode(integerTypeNode('u32'), { fixed: true });",
                                         "",
                                         "// None     => 0x0000000000",
                                         "// Some(42) => 0x012A000000"
@@ -923,58 +1161,9 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "setTypeNode(numberTypeNode('u8'), prefixedCountNode(numberTypeNode('u32')));",
+                                        "setTypeNode(integerTypeNode('u8'), prefixedCountNode(integerTypeNode('u32')));",
                                         "",
                                         "// Set (1, 2, 3) => 0x03000000010203"
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "kind": "solAmountTypeNode",
-                    "docs": [
-                        "A SOL amount expressed in lamports under the inner numeric type.",
-                        "Equivalent to an `amountTypeNode` with 9 decimals and `SOL` as the unit."
-                    ],
-                    "attributes": [
-                        {
-                            "name": "number",
-                            "type": {
-                                "kind": "node",
-                                "name": "numberTypeNode"
-                            },
-                            "docs": [
-                                "The numeric type used to serialise the lamport amount."
-                            ]
-                        },
-                        {
-                            "name": "transforms",
-                            "type": {
-                                "kind": "array",
-                                "of": {
-                                    "kind": "union",
-                                    "name": "transformNode"
-                                }
-                            },
-                            "optional": true,
-                            "docs": [
-                                "Transforms applied to the serialisation of this type, in order — the first is the innermost."
-                            ]
-                        }
-                    ],
-                    "examples": [
-                        {
-                            "title": "u64 Solana amounts",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "solAmountTypeNode(numberTypeNode('u64'));",
-                                        "",
-                                        "// 1.5 SOL => 0x002F685900000000",
-                                        "// 300 SOL => 0x00B864D945000000"
                                     ]
                                 }
                             ]
@@ -1119,8 +1308,8 @@
                                     "content": [
                                         "structFieldTypeNode({",
                                         "    identifier: 'age',",
-                                        "    type: numberTypeNode('u8'),",
-                                        "    defaultValue: numberValueNode(42),",
+                                        "    type: integerTypeNode('u8'),",
+                                        "    defaultValue: integerValueNode('42'),",
                                         "});",
                                         "",
                                         "// {}          => 0x2A",
@@ -1174,7 +1363,7 @@
                                     "content": [
                                         "structTypeNode([",
                                         "    structFieldTypeNode({ identifier: 'name', type: stringTypeNode('utf8', { transforms: [fixedSizeTransformNode(10)] }) }),",
-                                        "    structFieldTypeNode({ identifier: 'age', type: numberTypeNode('u8') }),",
+                                        "    structFieldTypeNode({ identifier: 'age', type: integerTypeNode('u8') }),",
                                         "]);",
                                         "",
                                         "// { name: Alice, age: 42 } => 0x416C69636500000000002A"
@@ -1225,7 +1414,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "tupleTypeNode([stringTypeNode('utf8', { transforms: [fixedSizeTransformNode(10)] }), numberTypeNode('u8')]);",
+                                        "tupleTypeNode([stringTypeNode('utf8', { transforms: [fixedSizeTransformNode(10)] }), integerTypeNode('u8')]);",
                                         "",
                                         "// (Alice, 42) => 0x416C69636500000000002A"
                                     ]
@@ -1283,7 +1472,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "zeroableOptionTypeNode(numberTypeNode('u32'));",
+                                        "zeroableOptionTypeNode(integerTypeNode('u32'));",
                                         "",
                                         "// None     => 0x00000000",
                                         "// Some(42) => 0x2A000000"
@@ -1297,7 +1486,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "zeroableOptionTypeNode(numberTypeNode('u32'), constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffffffff')));",
+                                        "zeroableOptionTypeNode(integerTypeNode('u32'), constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffffffff')));",
                                         "",
                                         "// None     => 0xFFFFFFFF",
                                         "// Some(42) => 0x2A000000"
@@ -1312,10 +1501,6 @@
                 {
                     "name": "standaloneTypeNode",
                     "members": [
-                        {
-                            "kind": "node",
-                            "name": "amountTypeNode"
-                        },
                         {
                             "kind": "node",
                             "name": "arrayTypeNode"
@@ -1334,15 +1519,27 @@
                         },
                         {
                             "kind": "node",
+                            "name": "durationTypeNode"
+                        },
+                        {
+                            "kind": "node",
                             "name": "enumTypeNode"
                         },
                         {
                             "kind": "node",
-                            "name": "mapTypeNode"
+                            "name": "fixedPointTypeNode"
                         },
                         {
                             "kind": "node",
-                            "name": "numberTypeNode"
+                            "name": "floatTypeNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "integerTypeNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "mapTypeNode"
                         },
                         {
                             "kind": "node",
@@ -1359,10 +1556,6 @@
                         {
                             "kind": "node",
                             "name": "setTypeNode"
-                        },
-                        {
-                            "kind": "node",
-                            "name": "solAmountTypeNode"
                         },
                         {
                             "kind": "node",
@@ -1507,7 +1700,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "numberTypeNode('u32', {",
+                                        "integerTypeNode('u32', {",
                                         "    transforms: [hiddenPrefixTransformNode([constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffff'))])],",
                                         "});",
                                         "",
@@ -1564,7 +1757,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "numberTypeNode('u32', {",
+                                        "integerTypeNode('u32', {",
                                         "    transforms: [hiddenSuffixTransformNode([constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffff'))])],",
                                         "});",
                                         "",
@@ -1692,7 +1885,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "numberTypeNode('u32', { transforms: [postOffsetTransformNode(2)] });"
+                                        "integerTypeNode('u32', { transforms: [postOffsetTransformNode(2)] });"
                                     ]
                                 }
                             ]
@@ -1703,7 +1896,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "numberTypeNode('u32', { transforms: [postOffsetTransformNode(-2, 'absolute')] });"
+                                        "integerTypeNode('u32', { transforms: [postOffsetTransformNode(-2, 'absolute')] });"
                                     ]
                                 }
                             ]
@@ -1714,7 +1907,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "numberTypeNode('u32', { transforms: [postOffsetTransformNode(4, 'padded')] });",
+                                        "integerTypeNode('u32', { transforms: [postOffsetTransformNode(4, 'padded')] });",
                                         "",
                                         "// 42 => 0x2A00000000000000"
                                     ]
@@ -1727,7 +1920,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "tupleTypeNode([numberTypeNode('u32', { transforms: [postOffsetTransformNode(-2)] }), numberTypeNode('u16')]);",
+                                        "tupleTypeNode([integerTypeNode('u32', { transforms: [postOffsetTransformNode(-2)] }), integerTypeNode('u16')]);",
                                         "",
                                         "// [1, 2]           => 0x01000200",
                                         "// [0xFFFFFFFF, 42] => 0xFFFF2A00"
@@ -1821,7 +2014,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "numberTypeNode('u32', { transforms: [preOffsetTransformNode(2)] });"
+                                        "integerTypeNode('u32', { transforms: [preOffsetTransformNode(2)] });"
                                     ]
                                 }
                             ]
@@ -1832,7 +2025,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "numberTypeNode('u32', { transforms: [preOffsetTransformNode(-2, 'absolute')] });"
+                                        "integerTypeNode('u32', { transforms: [preOffsetTransformNode(-2, 'absolute')] });"
                                     ]
                                 }
                             ]
@@ -1843,7 +2036,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "numberTypeNode('u32', { transforms: [preOffsetTransformNode(4, 'padded')] });",
+                                        "integerTypeNode('u32', { transforms: [preOffsetTransformNode(4, 'padded')] });",
                                         "",
                                         "// 42 => 0x000000002A000000"
                                     ]
@@ -1856,7 +2049,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "tupleTypeNode([numberTypeNode('u32'), numberTypeNode('u16', { transforms: [preOffsetTransformNode(-2)] })]);",
+                                        "tupleTypeNode([integerTypeNode('u32'), integerTypeNode('u16', { transforms: [preOffsetTransformNode(-2)] })]);",
                                         "",
                                         "// [1, 2]           => 0x01000200",
                                         "// [0xFFFFFFFF, 42] => 0xFFFF2A00"
@@ -1917,10 +2110,10 @@
                             "name": "prefix",
                             "type": {
                                 "kind": "node",
-                                "name": "numberTypeNode"
+                                "name": "integerTypeNode"
                             },
                             "docs": [
-                                "The numeric type used as the size prefix."
+                                "The integer type used as the size prefix."
                             ]
                         }
                     ],
@@ -1931,7 +2124,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "stringTypeNode('utf8', { transforms: [sizePrefixTransformNode(numberTypeNode('u16'))] });",
+                                        "stringTypeNode('utf8', { transforms: [sizePrefixTransformNode(integerTypeNode('u16'))] });",
                                         "",
                                         "// \"\"      => 0x0000",
                                         "// \"Hello\" => 0x050048656C6C6F"
@@ -2017,7 +2210,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "const node = arrayValueNode([numberValueNode(1), numberValueNode(2), numberValueNode(3)]);"
+                                        "const node = arrayValueNode([integerValueNode('1'), integerValueNode('2'), integerValueNode('3')]);"
                                     ]
                                 }
                             ]
@@ -2129,7 +2322,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "const node = constantValueNode(numberTypeNode('u32'), numberValueNode(42));"
+                                        "const node = constantValueNode(integerTypeNode('u32'), integerValueNode('42'));"
                                     ]
                                 }
                             ]
@@ -2219,9 +2412,56 @@
                                         "    'myVariantWithData',",
                                         "    structValueNode([",
                                         "        structFieldValueNode('name', stringValueNode('Alice')),",
-                                        "        structFieldValueNode('age', numberValueNode(42)),",
+                                        "        structFieldValueNode('age', integerValueNode('42')),",
                                         "    ]),",
                                         ");"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "floatValueNode",
+                    "docs": [
+                        "A concrete floating-point value, stored as a string so round-trips are deterministic across serialisers.",
+                        "The surrounding type context narrows it to a specific width."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "value",
+                            "type": {
+                                "kind": "string",
+                                "constraint": "decimal"
+                            },
+                            "docs": [
+                                "The decimal value — e.g. `\"1.5\"`, `\"-0.25\"` or `\"6.02e23\"`. The specials `\"NaN\"`, `\"Infinity\"` and `\"-Infinity\"` are permitted."
+                            ]
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "title": "Create a float value node from a string",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = floatValueNode('1.5');"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A default value for an f64 field",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "structFieldTypeNode({",
+                                        "    identifier: 'exchangeRate',",
+                                        "    type: floatTypeNode('f64'),",
+                                        "    defaultValue: floatValueNode('1.0'),",
+                                        "});"
                                     ]
                                 }
                             ]
@@ -2278,7 +2518,53 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "injectedValueNode({ key: 'decimals', fallback: numberValueNode(0) });"
+                                        "injectedValueNode({ key: 'decimals', fallback: integerValueNode('0') });"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "integerValueNode",
+                    "docs": [
+                        "A concrete integer value, stored as a string so the full 64- and 128-bit ranges survive JSON transport losslessly.",
+                        "In memory it maps to a native big integer (`bigint` in JavaScript, `i128`/`u128` in Rust); the surrounding type context narrows it to a specific width."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "value",
+                            "type": {
+                                "kind": "string",
+                                "constraint": "integer"
+                            },
+                            "docs": [
+                                "The integer value, as a base-10 string — e.g. `\"42\"` or `\"-12048014319693667524\"`."
+                            ]
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "title": "Create an integer value node from a string",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = integerValueNode('42');"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A u64 discriminator beyond the safe JavaScript number range",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "integerValueNode('12048014319693667524');",
+                                        "",
+                                        "// The quotes are load-bearing: as a JSON number, this value would be",
+                                        "// corrupted to 12048014319693668352 by standard f64 parsing."
                                     ]
                                 }
                             ]
@@ -2320,7 +2606,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "const node = mapEntryValueNode(stringValueNode('total'), numberValueNode(42));"
+                                        "const node = mapEntryValueNode(stringValueNode('total'), integerValueNode('42'));"
                                     ]
                                 }
                             ]
@@ -2355,9 +2641,9 @@
                                     "language": "typescript",
                                     "content": [
                                         "const node = mapValueNode([",
-                                        "    mapEntryValueNode(stringValueNode('apples'), numberValueNode(12)),",
-                                        "    mapEntryValueNode(stringValueNode('bananas'), numberValueNode(34)),",
-                                        "    mapEntryValueNode(stringValueNode('carrots'), numberValueNode(56)),",
+                                        "    mapEntryValueNode(stringValueNode('apples'), integerValueNode('12')),",
+                                        "    mapEntryValueNode(stringValueNode('bananas'), integerValueNode('34')),",
+                                        "    mapEntryValueNode(stringValueNode('carrots'), integerValueNode('56')),",
                                         "]);"
                                     ]
                                 }
@@ -2380,38 +2666,6 @@
                                     "language": "typescript",
                                     "content": [
                                         "const node = noneValueNode();"
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "kind": "numberValueNode",
-                    "docs": [
-                        "A concrete numeric value.",
-                        "Stored as a 64-bit float; consumers narrow to a specific integer or float width based on the surrounding type context."
-                    ],
-                    "attributes": [
-                        {
-                            "name": "number",
-                            "type": {
-                                "kind": "float",
-                                "width": "f64"
-                            },
-                            "docs": [
-                                "The numeric value."
-                            ]
-                        }
-                    ],
-                    "examples": [
-                        {
-                            "title": "Create a number value node from a number",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "const node = numberValueNode(42);"
                                     ]
                                 }
                             ]
@@ -2486,7 +2740,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "const node = setValueNode([numberValueNode(1), numberValueNode(2), numberValueNode(3)]);"
+                                        "const node = setValueNode([integerValueNode('1'), integerValueNode('2'), integerValueNode('3')]);"
                                     ]
                                 }
                             ]
@@ -2518,7 +2772,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "const node = someValueNode(numberValueNode(42));"
+                                        "const node = someValueNode(integerValueNode('42'));"
                                     ]
                                 }
                             ]
@@ -2589,7 +2843,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "const node = structFieldValueNode('age', numberValueNode(42));"
+                                        "const node = structFieldValueNode('age', integerValueNode('42'));"
                                     ]
                                 }
                             ]
@@ -2625,7 +2879,7 @@
                                     "content": [
                                         "const node = structValueNode([",
                                         "    structFieldValueNode('name', stringValueNode('Alice')),",
-                                        "    structFieldValueNode('age', numberValueNode(42)),",
+                                        "    structFieldValueNode('age', integerValueNode('42')),",
                                         "]);"
                                     ]
                                 }
@@ -2660,7 +2914,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "const node = tupleValueNode([stringValueNode('Alice'), numberValueNode(42)]);"
+                                        "const node = tupleValueNode([stringValueNode('Alice'), integerValueNode('42')]);"
                                     ]
                                 }
                             ]
@@ -2694,7 +2948,15 @@
                         },
                         {
                             "kind": "node",
+                            "name": "floatValueNode"
+                        },
+                        {
+                            "kind": "node",
                             "name": "injectedValueNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "integerValueNode"
                         },
                         {
                             "kind": "node",
@@ -2703,10 +2965,6 @@
                         {
                             "kind": "node",
                             "name": "noneValueNode"
-                        },
-                        {
-                            "kind": "node",
-                            "name": "numberValueNode"
                         },
                         {
                             "kind": "node",
@@ -2786,11 +3044,11 @@
                     ]
                 },
                 {
-                    "name": "injectableNumberValueNode",
+                    "name": "injectableIntegerValueNode",
                     "members": [
                         {
                             "kind": "node",
-                            "name": "numberValueNode"
+                            "name": "integerValueNode"
                         },
                         {
                             "kind": "node",
@@ -2798,7 +3056,7 @@
                         }
                     ],
                     "docs": [
-                        "A concrete number value, or a key resolved at presentation time from a surrounding provider."
+                        "A concrete integer value, or a key resolved at presentation time from a surrounding provider."
                     ]
                 },
                 {
@@ -3187,7 +3445,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "const node = constantPdaSeedNode(numberTypeNode('u32'), numberValueNode(42));"
+                                        "const node = constantPdaSeedNode(integerTypeNode('u32'), integerValueNode('42'));"
                                     ]
                                 }
                             ]
@@ -3255,7 +3513,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "const node = variablePdaSeedNode('amount', numberTypeNode('u32'));"
+                                        "const node = variablePdaSeedNode('amount', integerTypeNode('u32'));"
                                     ]
                                 }
                             ]
@@ -3386,10 +3644,10 @@
                             "name": "prefix",
                             "type": {
                                 "kind": "node",
-                                "name": "numberTypeNode"
+                                "name": "integerTypeNode"
                             },
                             "docs": [
-                                "The numeric type used as the count prefix."
+                                "The integer type used as the count prefix."
                             ]
                         }
                     ],
@@ -3400,7 +3658,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "const node = prefixedCountNode(numberTypeNode('u32'));"
+                                        "const node = prefixedCountNode(integerTypeNode('u32'));"
                                     ]
                                 }
                             ]
@@ -3411,7 +3669,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "arrayTypeNode(publicKeyTypeNode(), prefixedCountNode(numberTypeNode('u32')));"
+                                        "arrayTypeNode(publicKeyTypeNode(), prefixedCountNode(integerTypeNode('u32')));"
                                     ]
                                 }
                             ]
@@ -3541,7 +3799,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "accountNode({",
-                                        "    discriminators: [constantDiscriminatorNode(constantValueNode(numberTypeNode('u32'), numberValueNode(42)))],",
+                                        "    discriminators: [constantDiscriminatorNode(constantValueNode(integerTypeNode('u32'), integerValueNode('42')))],",
                                         "    // ...",
                                         "});"
                                     ]
@@ -3616,8 +3874,8 @@
                                         "    data: structTypeNode([",
                                         "        structFieldTypeNode({",
                                         "            identifier: 'discriminator',",
-                                        "            type: numberTypeNode('u32'),",
-                                        "            defaultValue: numberValueNode(42),",
+                                        "            type: integerTypeNode('u32'),",
+                                        "            defaultValue: integerValueNode('42'),",
                                         "            defaultValueStrategy: 'omitted',",
                                         "        }),",
                                         "        // ...",
@@ -3760,19 +4018,20 @@
                 {
                     "kind": "amountNumberDisplayNode",
                     "docs": [
-                        "Display metadata that presents a number as a scaled amount with an optional unit.",
-                        "The value is divided by `10 ^ decimals` and rendered alongside `unit` (e.g. `\"USDC\"`, `\"%\"`, `\"bps\"`)."
+                        "Display metadata that presents an integer as a scaled amount with an optional unit, for quantities whose scale is contextual rather than static — e.g. a raw token amount whose decimals live in the mint account.",
+                        "The value is divided by `10 ^ decimals` and rendered alongside `unit` (e.g. `\"USDC\"`, `\"%\"`, `\"bps\"`).",
+                        "Statically scaled quantities belong on the type instead (`fixedPointTypeNode`); for a contextual unit without scaling, use `unitNumberDisplayNode`.",
+                        "When both are present, a resolved display value wins for presentation; the type's static `unit` is the fallback whenever injection cannot resolve."
                     ],
                     "attributes": [
                         {
                             "name": "decimals",
                             "type": {
                                 "kind": "union",
-                                "name": "injectableNumberValueNode"
+                                "name": "injectableIntegerValueNode"
                             },
-                            "optional": true,
                             "docs": [
-                                "How many decimal places scale the underlying integer. Resolved as a number value: either a literal `numberValueNode` or a key resolved from a surrounding provider.",
+                                "How many decimal places scale the underlying integer. Resolved as an integer value: either a literal `integerValueNode` or a key resolved from a surrounding provider.",
                                 "A value of `1000000` with `decimals` resolving to `6` renders as `1`.",
                                 "When this input cannot resolve, renderers should fall back to presenting the raw value rather than guess the scale."
                             ]
@@ -3792,27 +4051,12 @@
                     ],
                     "examples": [
                         {
-                            "title": "A fixed 9-decimal SOL amount",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "numberTypeNode('u64', 'le', {",
-                                        "    display: amountNumberDisplayNode({ decimals: numberValueNode(9), unit: stringValueNode('SOL') }),",
-                                        "});",
-                                        "",
-                                        "// 1_100_000_000 => \"1.1 SOL\""
-                                    ]
-                                }
-                            ]
-                        },
-                        {
                             "title": "Decimals and unit injected from surrounding account state",
                             "code": [
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "numberTypeNode('u64', 'le', {",
+                                        "integerTypeNode('u64', {",
                                         "    display: amountNumberDisplayNode({",
                                         "        decimals: injectedValueNode({ key: 'decimals' }),",
                                         "        unit: injectedValueNode({ key: 'symbol' }),",
@@ -3823,102 +4067,20 @@
                                     ]
                                 }
                             ]
-                        }
-                    ]
-                },
-                {
-                    "kind": "dateTimeNumberDisplayNode",
-                    "docs": [
-                        "Display metadata that presents a number as a point in time.",
-                        "The underlying value counts ticks since the Unix epoch; `ticksPerSecond` is the divisor that converts those ticks back to seconds."
-                    ],
-                    "attributes": [
-                        {
-                            "name": "ticksPerSecond",
-                            "type": {
-                                "kind": "integer",
-                                "width": "u64"
-                            },
-                            "optional": true,
-                            "docs": [
-                                "How many ticks make one second. Defaults to `1` (the value is already in seconds).",
-                                "Common choices are `1000` (milliseconds), `1000000` (microseconds), and `1000000000` (nanoseconds)."
-                            ]
-                        }
-                    ],
-                    "examples": [
-                        {
-                            "title": "A Unix timestamp already in seconds",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "numberTypeNode('i64', 'le', { display: dateTimeNumberDisplayNode({}) });",
-                                        "",
-                                        "// 1_761_365_183 => \"2025-10-25T04:06:23.000Z\""
-                                    ]
-                                }
-                            ]
                         },
                         {
-                            "title": "A millisecond timestamp scaled back to seconds",
+                            "title": "An injected scale with a static fallback",
                             "code": [
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "numberTypeNode('i64', 'le', { display: dateTimeNumberDisplayNode({ ticksPerSecond: 1000 }) });",
-                                        "",
-                                        "// 1_761_365_183_000 => \"2025-10-25T04:06:23.000Z\""
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "kind": "durationNumberDisplayNode",
-                    "docs": [
-                        "Display metadata that presents a number as an elapsed duration.",
-                        "The underlying value counts ticks; `ticksPerSecond` is the divisor that converts those ticks back to seconds.",
-                        "Renderers typically format the result as `HH:mm:ss` or a coarser human-readable form."
-                    ],
-                    "attributes": [
-                        {
-                            "name": "ticksPerSecond",
-                            "type": {
-                                "kind": "integer",
-                                "width": "u64"
-                            },
-                            "optional": true,
-                            "docs": [
-                                "How many ticks make one second. Defaults to `1` (the value is already in seconds).",
-                                "Common choices are `1000` (milliseconds), `1000000` (microseconds), and `1000000000` (nanoseconds)."
-                            ]
-                        }
-                    ],
-                    "examples": [
-                        {
-                            "title": "A duration already in seconds",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "numberTypeNode('u32', 'le', { display: durationNumberDisplayNode({}) });",
-                                        "",
-                                        "// 3600 => \"01:00:00\""
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "title": "A duration in milliseconds scaled back to seconds",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "numberTypeNode('u64', 'le', { display: durationNumberDisplayNode({ ticksPerSecond: 1000 }) });",
-                                        "",
-                                        "// 90_000 => \"00:01:30\""
+                                        "// Static scale and unit belong on the type instead — see fixedPointTypeNode.",
+                                        "integerTypeNode('u64', {",
+                                        "    display: amountNumberDisplayNode({",
+                                        "        decimals: injectedValueNode({ key: 'decimals', fallback: integerValueNode('0') }),",
+                                        "        unit: injectedValueNode({ key: 'symbol' }),",
+                                        "    }),",
+                                        "});"
                                     ]
                                 }
                             ]
@@ -3963,7 +4125,7 @@
                                     "content": [
                                         "enumVariantTypeNode(",
                                         "    'buy',",
-                                        "    structTypeNode([structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') })]),",
+                                        "    structTypeNode([structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u64') })]),",
                                         "    { display: enumVariantDisplayNode({ label: 'Buy' }) },",
                                         ");"
                                     ]
@@ -3976,7 +4138,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "enumVariantTypeNode('increment', tupleTypeNode([numberTypeNode('u64')]), {",
+                                        "enumVariantTypeNode('increment', tupleTypeNode([integerTypeNode('u64')]), {",
                                         "    display: enumVariantDisplayNode({ label: 'Increment', skipInnerData: true }),",
                                         "});"
                                     ]
@@ -4241,7 +4403,7 @@
                                     "content": [
                                         "structFieldTypeNode({",
                                         "    identifier: 'amount',",
-                                        "    type: numberTypeNode('u64'),",
+                                        "    type: integerTypeNode('u64'),",
                                         "    display: structFieldDisplayNode({ label: 'Amount' }),",
                                         "});"
                                     ]
@@ -4256,7 +4418,7 @@
                                     "content": [
                                         "structFieldTypeNode({",
                                         "    identifier: 'discriminator',",
-                                        "    type: numberTypeNode('u8'),",
+                                        "    type: integerTypeNode('u8'),",
                                         "    display: structFieldDisplayNode({ skip: 'always' }),",
                                         "});"
                                     ]
@@ -4279,6 +4441,57 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "kind": "unitNumberDisplayNode",
+                    "docs": [
+                        "Display metadata that labels a number with a contextually resolved unit, without any scaling.",
+                        "The one presentation form valid on numbers whose scale is already fixed — floats (which self-scale) and `fixedPointTypeNode`s (whose `scale` is static) — and equally usable on plain integers.",
+                        "When the type also carries a static `unit`, a resolved display unit wins for presentation; the type's unit is the fallback whenever injection cannot resolve."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "unit",
+                            "type": {
+                                "kind": "union",
+                                "name": "injectableStringValueNode"
+                            },
+                            "docs": [
+                                "A label appended after the value (e.g. `\"SOL\"`, `\"USDC\"`, `\"%\"`). Resolved as a string value: either a literal `stringValueNode` or a key resolved from a surrounding provider.",
+                                "When this input cannot resolve, renderers should present the value without a unit."
+                            ]
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "title": "A fixed-point amount with a per-mint symbol",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "fixedPointTypeNode(integerTypeNode('u64'), 9, {",
+                                        "    display: unitNumberDisplayNode(injectedValueNode({ key: 'symbol' })),",
+                                        "});",
+                                        "",
+                                        "// 1_100_000_000 with the injected symbol \"SOL\" => \"1.1 SOL\""
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A float labelled with a contextual unit",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "floatTypeNode('f64', {",
+                                        "    display: unitNumberDisplayNode(injectedValueNode({ key: 'currency' })),",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ],
             "unions": [
@@ -4291,11 +4504,7 @@
                         },
                         {
                             "kind": "node",
-                            "name": "dateTimeNumberDisplayNode"
-                        },
-                        {
-                            "kind": "node",
-                            "name": "durationNumberDisplayNode"
+                            "name": "unitNumberDisplayNode"
                         }
                     ],
                     "docs": [
@@ -4308,14 +4517,6 @@
                         {
                             "kind": "node",
                             "name": "amountNumberDisplayNode"
-                        },
-                        {
-                            "kind": "node",
-                            "name": "dateTimeNumberDisplayNode"
-                        },
-                        {
-                            "kind": "node",
-                            "name": "durationNumberDisplayNode"
                         },
                         {
                             "kind": "node",
@@ -4336,6 +4537,10 @@
                         {
                             "kind": "node",
                             "name": "structFieldDisplayNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "unitNumberDisplayNode"
                         }
                     ],
                     "docs": [
@@ -4412,7 +4617,7 @@
                                         "    data: structTypeNode([",
                                         "        structFieldTypeNode({",
                                         "            identifier: 'bump',",
-                                        "            type: numberTypeNode('u8'),",
+                                        "            type: integerTypeNode('u8'),",
                                         "            defaultValue: injectedValueNode({ key: 'bump' }),",
                                         "        }),",
                                         "        // ...",
@@ -4489,7 +4694,7 @@
                                         "    data: structTypeNode([",
                                         "        structFieldTypeNode({",
                                         "            identifier: 'decimals',",
-                                        "            type: numberTypeNode('u8'),",
+                                        "            type: integerTypeNode('u8'),",
                                         "            defaultValue: injectedValueNode({ key: 'decimals' }),",
                                         "        }),",
                                         "        // ...",
@@ -4612,11 +4817,11 @@
                                         "    data: structTypeNode([",
                                         "        structFieldTypeNode({",
                                         "            identifier: 'amount',",
-                                        "            type: numberTypeNode('u64'),",
+                                        "            type: integerTypeNode('u64'),",
                                         "        }),",
                                         "        structFieldTypeNode({",
                                         "            identifier: 'amountToDelegate',",
-                                        "            type: numberTypeNode('u64'),",
+                                        "            type: integerTypeNode('u64'),",
                                         "            defaultValue: injectedValueNode({ key: 'amountToDelegate' }),",
                                         "        }),",
                                         "        // ...",
@@ -4690,7 +4895,7 @@
                                     "content": [
                                         "const node = conditionalValueNode({",
                                         "    condition: dataValueNode('amount'),",
-                                        "    value: numberValueNode(0),",
+                                        "    value: integerValueNode('0'),",
                                         "    ifTrue: accountValueNode('mint'),",
                                         "    ifFalse: programIdValueNode(),",
                                         "});"
@@ -4719,7 +4924,7 @@
                                         "            isOptional: true,",
                                         "            defaultValue: conditionalValueNode({",
                                         "                condition: dataValueNode('amount'),",
-                                        "                value: numberValueNode(0),",
+                                        "                value: integerValueNode('0'),",
                                         "                ifTrue: accountValueNode('source'),",
                                         "            }),",
                                         "        }),",
@@ -4728,7 +4933,7 @@
                                         "    data: structTypeNode([",
                                         "        structFieldTypeNode({",
                                         "            identifier: 'amount',",
-                                        "            type: numberTypeNode('u64'),",
+                                        "            type: integerTypeNode('u64'),",
                                         "        }),",
                                         "    ]),",
                                         "});"
@@ -5258,6 +5463,26 @@
                     ]
                 },
                 {
+                    "name": "floatFormat",
+                    "variants": [
+                        {
+                            "name": "f32",
+                            "docs": [
+                                "IEEE-754 32-bit floating point."
+                            ]
+                        },
+                        {
+                            "name": "f64",
+                            "docs": [
+                                "IEEE-754 64-bit floating point."
+                            ]
+                        }
+                    ],
+                    "docs": [
+                        "The wire format of a floating-point serialization."
+                    ]
+                },
+                {
                     "name": "instructionLifecycle",
                     "variants": [
                         {
@@ -5290,20 +5515,8 @@
                     ]
                 },
                 {
-                    "name": "numberFormat",
+                    "name": "integerFormat",
                     "variants": [
-                        {
-                            "name": "f32",
-                            "docs": [
-                                "IEEE-754 32-bit floating point."
-                            ]
-                        },
-                        {
-                            "name": "f64",
-                            "docs": [
-                                "IEEE-754 64-bit floating point."
-                            ]
-                        },
                         {
                             "name": "i8",
                             "docs": [
@@ -5337,7 +5550,8 @@
                         {
                             "name": "shortU16",
                             "docs": [
-                                "Solana compact-u16 encoding: a variable-length unsigned integer occupying 1 to 3 bytes. Values up to `0x7f` are stored as-is in a single byte; above that, the top bit of each byte is set and the remaining value continues in the next byte, with the third byte — when needed — using all 8 bits."
+                                "Solana compact-u16 encoding: a variable-length unsigned integer occupying 1 to 3 bytes. Values up to `0x7f` are stored as-is in a single byte; above that, the top bit of each byte is set and the remaining value continues in the next byte, with the third byte — when needed — using all 8 bits.",
+                                "As a byte-oriented format, it ignores the `endian` attribute."
                             ]
                         },
                         {
@@ -5372,7 +5586,7 @@
                         }
                     ],
                     "docs": [
-                        "The wire format of a numeric serialization."
+                        "The wire format of an integer serialization."
                     ]
                 },
                 {
@@ -5553,7 +5767,7 @@
                                         "    data: structTypeNode([",
                                         "        structFieldTypeNode({ identifier: 'mint', type: publicKeyTypeNode() }),",
                                         "        structFieldTypeNode({ identifier: 'owner', type: publicKeyTypeNode() }),",
-                                        "        structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') }),",
+                                        "        structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u64') }),",
                                         "    ]),",
                                         "    discriminators: [sizeDiscriminatorNode(72)],",
                                         "    size: 72,",
@@ -5574,7 +5788,7 @@
                                         "    definedTypes: [",
                                         "        definedTypeNode({",
                                         "            identifier: 'mintState',",
-                                        "            type: structTypeNode([structFieldTypeNode({ identifier: 'supply', type: numberTypeNode('u64') })]),",
+                                        "            type: structTypeNode([structFieldTypeNode({ identifier: 'supply', type: integerTypeNode('u64') })]),",
                                         "        }),",
                                         "    ],",
                                         "});"
@@ -5667,7 +5881,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "const node = constantNode('maxSize', numberTypeNode('u32'), numberValueNode(100));"
+                                        "const node = constantNode('maxSize', integerTypeNode('u32'), integerValueNode('100'));"
                                     ]
                                 }
                             ]
@@ -5689,7 +5903,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "const node = constantNode('maxItems', numberTypeNode('u64'), numberValueNode(1000), [",
+                                        "const node = constantNode('maxItems', integerTypeNode('u64'), integerValueNode('1000'), [",
                                         "    'The maximum number of items allowed.',",
                                         "]);"
                                     ]
@@ -5749,7 +5963,7 @@
                                         "    docs: ['This type describes a Person.'],",
                                         "    type: structTypeNode([",
                                         "        structFieldTypeNode({ identifier: 'name', type: stringTypeNode('utf8') }),",
-                                        "        structFieldTypeNode({ identifier: 'age', type: numberTypeNode('u8') }),",
+                                        "        structFieldTypeNode({ identifier: 'age', type: integerTypeNode('u8') }),",
                                         "    ]),",
                                         "});"
                                     ]
@@ -5886,7 +6100,7 @@
                                         "    identifier: 'transferEvent',",
                                         "    data: structTypeNode([",
                                         "        structFieldTypeNode({ identifier: 'authority', type: publicKeyTypeNode() }),",
-                                        "        structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') }),",
+                                        "        structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u64') }),",
                                         "    ]),",
                                         "});"
                                     ]
@@ -5901,7 +6115,7 @@
                                     "content": [
                                         "eventNode({",
                                         "    identifier: 'transferEvent',",
-                                        "    data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') })], {",
+                                        "    data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u64') })], {",
                                         "        transforms: [",
                                         "            hiddenPrefixTransformNode([",
                                         "                constantValueNode(bytesTypeNode({ transforms: [fixedSizeTransformNode(8)] }), bytesValueNode('base16', '0102030405060708')),",
@@ -6306,8 +6520,8 @@
                                         "    data: structTypeNode([",
                                         "        structFieldTypeNode({",
                                         "            identifier: 'discriminator',",
-                                        "            type: numberTypeNode('u8'),",
-                                        "            defaultValue: numberValueNode(42),",
+                                        "            type: integerTypeNode('u8'),",
+                                        "            defaultValue: integerValueNode('42'),",
                                         "            defaultValueStrategy: 'omitted',",
                                         "        }),",
                                         "    ]),",
@@ -6331,7 +6545,7 @@
                                         "    data: structTypeNode([",
                                         "        structFieldTypeNode({",
                                         "            identifier: 'bump',",
-                                        "            type: numberTypeNode('u8'),",
+                                        "            type: integerTypeNode('u8'),",
                                         "            defaultValue: injectedValueNode({ key: 'bump' }),",
                                         "        }),",
                                         "    ]),",
@@ -6406,8 +6620,8 @@
                                         "        instructionAccountNode({ identifier: 'authority', isWritable: false, isSigner: true }),",
                                         "    ],",
                                         "    data: structTypeNode([",
-                                        "        structFieldTypeNode({ identifier: 'version', type: numberTypeNode('u8') }),",
-                                        "        structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u8') }),",
+                                        "        structFieldTypeNode({ identifier: 'version', type: integerTypeNode('u8') }),",
+                                        "        structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u8') }),",
                                         "    ]),",
                                         "    subInstructions: [",
                                         "        instructionNode({",
@@ -6416,11 +6630,11 @@
                                         "            data: structTypeNode([",
                                         "                structFieldTypeNode({",
                                         "                    identifier: 'version',",
-                                        "                    type: numberTypeNode('u8'),",
-                                        "                    defaultValue: numberValueNode(0),",
+                                        "                    type: integerTypeNode('u8'),",
+                                        "                    defaultValue: integerValueNode('0'),",
                                         "                    defaultValueStrategy: 'omitted',",
                                         "                }),",
-                                        "                structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u8') }),",
+                                        "                structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u8') }),",
                                         "            ]),",
                                         "        }),",
                                         "        instructionNode({",
@@ -6432,11 +6646,11 @@
                                         "            data: structTypeNode([",
                                         "                structFieldTypeNode({",
                                         "                    identifier: 'version',",
-                                        "                    type: numberTypeNode('u8'),",
-                                        "                    defaultValue: numberValueNode(1),",
+                                        "                    type: integerTypeNode('u8'),",
+                                        "                    defaultValue: integerValueNode('1'),",
                                         "                    defaultValueStrategy: 'omitted',",
                                         "                }),",
-                                        "                structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u8') }),",
+                                        "                structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u8') }),",
                                         "            ]),",
                                         "        }),",
                                         "    ],",
@@ -6458,7 +6672,7 @@
                                         "        'Use the `increment` instruction instead. This will be removed in v3.0.0.',",
                                         "    ),",
                                         "    accounts: [instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: false })],",
-                                        "    data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u8') })]),",
+                                        "    data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u8') })]),",
                                         "});"
                                     ]
                                 }
@@ -6480,7 +6694,7 @@
                                         "        instructionAccountNode({ identifier: 'source', isWritable: true, isSigner: true }),",
                                         "        instructionAccountNode({ identifier: 'destination', isWritable: true, isSigner: false }),",
                                         "    ],",
-                                        "    data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') })]),",
+                                        "    data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u64') })]),",
                                         "});"
                                     ]
                                 }
@@ -6762,7 +6976,7 @@
                                         "        constantPdaSeedNodeFromString('utf8', 'raffles'),",
                                         "        variablePdaSeedNode('raffle', publicKeyTypeNode()),",
                                         "        constantPdaSeedNodeFromString('utf8', 'tickets'),",
-                                        "        variablePdaSeedNode('ticketNumber', numberTypeNode('u32')),",
+                                        "        variablePdaSeedNode('ticketNumber', integerTypeNode('u32')),",
                                         "    ],",
                                         "});"
                                     ]
@@ -7054,7 +7268,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "providedNode('decimals', numberValueNode(9));"
+                                        "providedNode('decimals', integerValueNode('9'));"
                                     ]
                                 }
                             ]
@@ -7067,11 +7281,11 @@
                                     "content": [
                                         "instructionNode({",
                                         "    identifier: 'transferChecked',",
-                                        "    provides: [providedNode('decimals', numberValueNode(9))],",
+                                        "    provides: [providedNode('decimals', integerValueNode('9'))],",
                                         "    data: structTypeNode([",
                                         "        structFieldTypeNode({",
                                         "            identifier: 'decimals',",
-                                        "            type: numberTypeNode('u8'),",
+                                        "            type: integerTypeNode('u8'),",
                                         "            defaultValue: injectedValueNode({ key: 'decimals' }),",
                                         "        }),",
                                         "        // ...",
@@ -7153,7 +7367,7 @@
                                         "                identifier: 'counter',",
                                         "                data: structTypeNode([",
                                         "                    structFieldTypeNode({ identifier: 'authority', type: publicKeyTypeNode() }),",
-                                        "                    structFieldTypeNode({ identifier: 'value', type: numberTypeNode('u32') }),",
+                                        "                    structFieldTypeNode({ identifier: 'value', type: integerTypeNode('u32') }),",
                                         "                ]),",
                                         "            }),",
                                         "        ],",
@@ -7186,12 +7400,12 @@
                         },
                         {
                             "kind": "node",
-                            "name": "numberValueNode"
+                            "name": "integerValueNode"
                         }
                     ],
                     "docs": [
                         "The value forms accepted by an `instructionByteDeltaNode`.",
-                        "An `accountLinkNode` uses the size of the linked account; a `dataValueNode` uses a value within the instruction data; and a `numberValueNode` uses that explicit number."
+                        "An `accountLinkNode` uses the size of the linked account; a `dataValueNode` uses a value within the instruction data; and an `integerValueNode` uses that explicit number."
                     ]
                 }
             ],

@@ -8,12 +8,12 @@ export const examples: DocExamples = [
             `
 enumTypeNode([
     enumVariantTypeNode('flip'),
-    enumVariantTypeNode('rotate', numberTypeNode('u32')),
+    enumVariantTypeNode('rotate', integerTypeNode('u32')),
     enumVariantTypeNode(
         'move',
         structTypeNode([
-            structFieldTypeNode({ identifier: 'x', type: numberTypeNode('u16') }),
-            structFieldTypeNode({ identifier: 'y', type: numberTypeNode('u16') }),
+            structFieldTypeNode({ identifier: 'x', type: integerTypeNode('u16') }),
+            structFieldTypeNode({ identifier: 'y', type: integerTypeNode('u16') }),
         ]),
     ),
 ]);

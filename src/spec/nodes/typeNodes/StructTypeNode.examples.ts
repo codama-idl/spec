@@ -8,7 +8,7 @@ export const examples: DocExamples = [
             `
 structTypeNode([
     structFieldTypeNode({ identifier: 'name', type: stringTypeNode('utf8', { transforms: [fixedSizeTransformNode(10)] }) }),
-    structFieldTypeNode({ identifier: 'age', type: numberTypeNode('u8') }),
+    structFieldTypeNode({ identifier: 'age', type: integerTypeNode('u8') }),
 ]);
 
 // { name: Alice, age: 42 } => 0x416C69636500000000002A

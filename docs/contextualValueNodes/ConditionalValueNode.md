@@ -28,7 +28,7 @@ The condition resolves to a value at instruction time; that result selects betwe
 ```typescript
 const node = conditionalValueNode({
     condition: dataValueNode('amount'),
-    value: numberValueNode(0),
+    value: integerValueNode('0'),
     ifTrue: accountValueNode('mint'),
     ifFalse: programIdValueNode(),
 });
@@ -52,7 +52,7 @@ instructionNode({
             isOptional: true,
             defaultValue: conditionalValueNode({
                 condition: dataValueNode('amount'),
-                value: numberValueNode(0),
+                value: integerValueNode('0'),
                 ifTrue: accountValueNode('source'),
             }),
         }),
@@ -61,7 +61,7 @@ instructionNode({
     data: structTypeNode([
         structFieldTypeNode({
             identifier: 'amount',
-            type: numberTypeNode('u64'),
+            type: integerTypeNode('u64'),
         }),
     ]),
 });

@@ -28,7 +28,7 @@ Value presentation is carried by the member's type; this node only addresses nam
 ```typescript
 structFieldTypeNode({
     identifier: 'amount',
-    type: numberTypeNode('u64'),
+    type: integerTypeNode('u64'),
     display: structFieldDisplayNode({ label: 'Amount' }),
 });
 ```
@@ -38,7 +38,7 @@ structFieldTypeNode({
 ```typescript
 structFieldTypeNode({
     identifier: 'discriminator',
-    type: numberTypeNode('u8'),
+    type: integerTypeNode('u8'),
     display: structFieldDisplayNode({ skip: 'always' }),
 });
 ```

@@ -17,11 +17,9 @@ export const endianness = defineEnumeration('endianness', {
     ],
 });
 
-export const numberFormat = defineEnumeration('numberFormat', {
-    docs: ['The wire format of a numeric serialization.'],
+export const integerFormat = defineEnumeration('integerFormat', {
+    docs: ['The wire format of an integer serialization.'],
     variants: [
-        variant('f32', { docs: ['IEEE-754 32-bit floating point.'] }),
-        variant('f64', { docs: ['IEEE-754 64-bit floating point.'] }),
         variant('i8', { docs: ['Signed 8-bit integer.'] }),
         variant('i16', { docs: ['Signed 16-bit integer.'] }),
         variant('i32', { docs: ['Signed 32-bit integer.'] }),
@@ -30,6 +28,7 @@ export const numberFormat = defineEnumeration('numberFormat', {
         variant('shortU16', {
             docs: [
                 'Solana compact-u16 encoding: a variable-length unsigned integer occupying 1 to 3 bytes. Values up to `0x7f` are stored as-is in a single byte; above that, the top bit of each byte is set and the remaining value continues in the next byte, with the third byte — when needed — using all 8 bits.',
+                'As a byte-oriented format, it ignores the `endian` attribute.',
             ],
         }),
         variant('u8', { docs: ['Unsigned 8-bit integer.'] }),
@@ -37,6 +36,14 @@ export const numberFormat = defineEnumeration('numberFormat', {
         variant('u32', { docs: ['Unsigned 32-bit integer.'] }),
         variant('u64', { docs: ['Unsigned 64-bit integer.'] }),
         variant('u128', { docs: ['Unsigned 128-bit integer.'] }),
+    ],
+});
+
+export const floatFormat = defineEnumeration('floatFormat', {
+    docs: ['The wire format of a floating-point serialization.'],
+    variants: [
+        variant('f32', { docs: ['IEEE-754 32-bit floating point.'] }),
+        variant('f64', { docs: ['IEEE-754 64-bit floating point.'] }),
     ],
 });
 
@@ -173,8 +180,9 @@ export const ALL_ENUMERATIONS = [
     defaultValueStrategy,
     displaySkip,
     endianness,
+    floatFormat,
     instructionLifecycle,
-    numberFormat,
+    integerFormat,
     optionalAccountStrategy,
     postOffsetStrategy,
     preOffsetStrategy,

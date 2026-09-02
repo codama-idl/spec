@@ -6,7 +6,7 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-setTypeNode(numberTypeNode('u8'), prefixedCountNode(numberTypeNode('u32')));
+setTypeNode(integerTypeNode('u8'), prefixedCountNode(integerTypeNode('u32')));
 
 // Set (1, 2, 3) => 0x03000000010203
 `,

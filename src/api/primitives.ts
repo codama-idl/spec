@@ -59,6 +59,25 @@ export function stringPath(): TypeExpr {
     return Object.freeze({ kind: 'string' as const, constraint: 'path' as const });
 }
 
+/**
+ * A string that must be a base-10 integer: `0|-?[1-9][0-9]*` — no leading
+ * zeros, no negative zero, so every integer has exactly one spelling.
+ * Keeps the full 64- and 128-bit ranges lossless through JSON transport.
+ */
+export function stringInteger(): TypeExpr {
+    return Object.freeze({ kind: 'string' as const, constraint: 'integer' as const });
+}
+
+/**
+ * A string that must be a decimal number matching
+ * `-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?` — the JSON number
+ * grammar — or one of the exact-case specials `NaN`, `Infinity`,
+ * `-Infinity`. Makes float round-trips deterministic across serialisers.
+ */
+export function stringDecimal(): TypeExpr {
+    return Object.freeze({ kind: 'string' as const, constraint: 'decimal' as const });
+}
+
 /** A string that must be a valid version (e.g. `"1.6.0"`). */
 export function stringVersion(): TypeExpr {
     return Object.freeze({ kind: 'string' as const, constraint: 'version' as const });

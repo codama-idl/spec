@@ -36,8 +36,8 @@ const node = enumVariantTypeNode('uninitialized');
 enumVariantTypeNode(
     'move',
     structTypeNode([
-        structFieldTypeNode({ identifier: 'x', type: numberTypeNode('u32') }),
-        structFieldTypeNode({ identifier: 'y', type: numberTypeNode('u32') }),
+        structFieldTypeNode({ identifier: 'x', type: integerTypeNode('u32') }),
+        structFieldTypeNode({ identifier: 'y', type: integerTypeNode('u32') }),
     ]),
 );
 ```
@@ -45,11 +45,11 @@ enumVariantTypeNode(
 ### A tuple variant — positional fields
 
 ```typescript
-enumVariantTypeNode('coordinates', tupleTypeNode([numberTypeNode('u32'), numberTypeNode('u32')]));
+enumVariantTypeNode('coordinates', tupleTypeNode([integerTypeNode('u32'), integerTypeNode('u32')]));
 ```
 
 ### A variant carrying a single type — no tuple needed
 
 ```typescript
-enumVariantTypeNode('amount', numberTypeNode('u64'));
+enumVariantTypeNode('amount', integerTypeNode('u64'));
 ```

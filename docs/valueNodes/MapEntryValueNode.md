@@ -24,5 +24,5 @@ For example, the map `{ total: 42 }` has one entry whose key is the string `"tot
 ### Create a map entry value node from a key and a value
 
 ```typescript
-const node = mapEntryValueNode(stringValueNode('total'), numberValueNode(42));
+const node = mapEntryValueNode(stringValueNode('total'), integerValueNode('42'));
 ```

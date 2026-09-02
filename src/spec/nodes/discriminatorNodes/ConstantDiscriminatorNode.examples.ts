@@ -16,7 +16,7 @@ const node = constantDiscriminatorNode(constantValueNode(stringTypeNode('utf8'),
             'typescript',
             `
 accountNode({
-    discriminators: [constantDiscriminatorNode(constantValueNode(numberTypeNode('u32'), numberValueNode(42)))],
+    discriminators: [constantDiscriminatorNode(constantValueNode(integerTypeNode('u32'), integerValueNode('42')))],
     // ...
 });
 `,

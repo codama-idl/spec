@@ -1,17 +1,18 @@
-import { amountTypeNode } from './AmountTypeNode';
 import { arrayTypeNode } from './ArrayTypeNode';
 import { booleanTypeNode } from './BooleanTypeNode';
 import { bytesTypeNode } from './BytesTypeNode';
 import { dateTimeTypeNode } from './DateTimeTypeNode';
+import { durationTypeNode } from './DurationTypeNode';
 import { enumTypeNode } from './EnumTypeNode';
 import { enumVariantTypeNode } from './EnumVariantTypeNode';
+import { fixedPointTypeNode } from './FixedPointTypeNode';
+import { floatTypeNode } from './FloatTypeNode';
+import { integerTypeNode } from './IntegerTypeNode';
 import { mapTypeNode } from './MapTypeNode';
-import { numberTypeNode } from './NumberTypeNode';
 import { optionTypeNode } from './OptionTypeNode';
 import { publicKeyTypeNode } from './PublicKeyTypeNode';
 import { remainderOptionTypeNode } from './RemainderOptionTypeNode';
 import { setTypeNode } from './SetTypeNode';
-import { solAmountTypeNode } from './SolAmountTypeNode';
 import { stringTypeNode } from './StringTypeNode';
 import { structFieldTypeNode } from './StructFieldTypeNode';
 import { structTypeNode } from './StructTypeNode';
@@ -20,20 +21,21 @@ import { registeredTypeNodeUnion, standaloneTypeNodeUnion, typeNodeUnion } from 
 import { zeroableOptionTypeNode } from './ZeroableOptionTypeNode';
 
 export const ALL_TYPE_NODES = [
-    amountTypeNode,
     arrayTypeNode,
     booleanTypeNode,
     bytesTypeNode,
     dateTimeTypeNode,
+    durationTypeNode,
     enumTypeNode,
     enumVariantTypeNode,
+    fixedPointTypeNode,
+    floatTypeNode,
+    integerTypeNode,
     mapTypeNode,
-    numberTypeNode,
     optionTypeNode,
     publicKeyTypeNode,
     remainderOptionTypeNode,
     setTypeNode,
-    solAmountTypeNode,
     stringTypeNode,
     structFieldTypeNode,
     structTypeNode,
