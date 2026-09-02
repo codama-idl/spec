@@ -12,7 +12,7 @@ type RegistryKind = 'enumeration' | 'node' | 'union';
 
 /**
  * The canonical camelCase identifier shape used across the spec for
- * unions, enumerations, and nested-union aliases. Node kinds must also
+ * unions and enumerations. Node kinds must also
  * end in `Node` — see `NODE_KIND_REGEX`.
  */
 const CAMEL_CASE_REGEX = /^[a-z][A-Za-z0-9]*$/;
@@ -34,8 +34,8 @@ export function validate(spec: Spec): string[] {
     const unionNames = new Set(allUnions.map(u => u.name));
     const enumerationNames = new Set(allEnumerations.map(e => e.name));
 
-    // Single-pass name-collision check across nodes, unions, enumerations,
-    // and nested unions. One error per offending name.
+    // Single-pass name-collision check across nodes, unions, and
+    // enumerations. One error per offending name.
     const registrations = new Map<string, RegistryKind[]>();
     const record = (name: string, kind: RegistryKind): void => {
         const list = registrations.get(name);

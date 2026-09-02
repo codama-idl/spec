@@ -55,7 +55,7 @@ describe('buildNavRegistry', () => {
 });
 
 describe('categoryGroups', () => {
-    it('returns the four kinds groups in fixed order', () => {
+    it('returns the three kinds groups in fixed order', () => {
         const groups = categoryGroups(defineCategory('empty'));
         expect(groups.map(group => group.kind)).toEqual(['node', 'union', 'enumeration']);
         expect(groups.every(group => group.items.length === 0)).toBe(true);

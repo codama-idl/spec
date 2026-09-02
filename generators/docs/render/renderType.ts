@@ -64,7 +64,7 @@ export function renderType(t: TypeExpr, markup: MarkupRenderer, linkTo: (r: DocR
     }
 }
 
-/** Whether a type tree references an enumeration (directly, or inside an array/tuple). */
+/** Whether a type tree references an enumeration (directly, or inside an array). */
 function referencesEnumeration(t: TypeExpr): boolean {
     if (t.kind === 'enumeration') {
         return true;
@@ -76,8 +76,8 @@ function referencesEnumeration(t: TypeExpr): boolean {
 }
 
 /**
- * Children are attributes referencing an entity (node, union, nestedUnion, anyNode) or an enumeration.
- * References nested in arrays or tuples count too. Everything else is Data.
+ * Children are attributes referencing an entity (node, union, anyNode) or an enumeration.
+ * References nested in arrays count too. Everything else is Data.
  */
 export function isDocChild(t: TypeExpr): boolean {
     return isChildAttribute(t) || referencesEnumeration(t);
