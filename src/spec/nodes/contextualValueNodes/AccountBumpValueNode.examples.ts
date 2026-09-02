@@ -11,7 +11,7 @@ const node = accountBumpValueNode('associatedTokenAccount');
         ),
     ),
     example(
-        'An instruction argument defaulting to the bump derivation of an instruction account',
+        'A data field defaulting to the bump derivation of an instruction account',
         code(
             'typescript',
             `

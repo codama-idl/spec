@@ -1,9 +1,9 @@
 import { attribute, defineNode, optionalAttribute, stringIdentifier, stringPath } from '../../../api';
-import { examples } from './AccountFieldValueNode.examples';
+import { examples } from './AccountDataValueNode.examples';
 
-export const accountFieldValueNode = defineNode('accountFieldValueNode', {
+export const accountDataValueNode = defineNode('accountDataValueNode', {
     docs: [
-        "Refers to a field of a named account's decoded data.",
+        "Refers to a value within a named account's decoded data.",
         "The referenced account must carry an `accountLink` so the account's layout is known.",
         'Resolving the value requires reading the account state at presentation time.',
     ],

@@ -1,7 +1,6 @@
 import { accountBumpValueNode } from './AccountBumpValueNode';
-import { accountFieldValueNode } from './AccountFieldValueNode';
+import { accountDataValueNode } from './AccountDataValueNode';
 import { accountValueNode } from './AccountValueNode';
-import { argumentValueNode } from './ArgumentValueNode';
 import { conditionalValueNode } from './ConditionalValueNode';
 import {
     conditionalValueConditionUnion,
@@ -13,6 +12,7 @@ import {
     registeredContextualValueNodeUnion,
     standaloneContextualValueNodeUnion,
 } from './ContextualValueNode';
+import { dataValueNode } from './DataValueNode';
 import { identityValueNode } from './IdentityValueNode';
 import { payerValueNode } from './PayerValueNode';
 import { pdaSeedValueNode } from './PdaSeedValueNode';
@@ -21,9 +21,9 @@ import { programIdValueNode } from './ProgramIdValueNode';
 
 export const ALL_CONTEXTUAL_VALUE_NODES = [
     accountBumpValueNode,
-    accountFieldValueNode,
+    accountDataValueNode,
     accountValueNode,
-    argumentValueNode,
+    dataValueNode,
     conditionalValueNode,
     identityValueNode,
     payerValueNode,

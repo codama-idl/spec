@@ -7,7 +7,7 @@ export const examples: DocExamples = [
             'typescript',
             `
 const node = conditionalValueNode({
-    condition: argumentValueNode('amount'),
+    condition: dataValueNode('amount'),
     value: numberValueNode(0),
     ifTrue: accountValueNode('mint'),
     ifFalse: programIdValueNode(),
@@ -34,7 +34,7 @@ instructionNode({
             isWritable: true,
             isOptional: true,
             defaultValue: conditionalValueNode({
-                condition: argumentValueNode('amount'),
+                condition: dataValueNode('amount'),
                 value: numberValueNode(0),
                 ifTrue: accountValueNode('source'),
             }),

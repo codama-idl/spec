@@ -6,12 +6,12 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-const node = accountFieldValueNode('mint', 'decimals');
+const node = accountDataValueNode('mint', 'decimals');
 `,
         ),
     ),
     example(
-        'An argument defaulting to a field of an instruction account',
+        'A data field defaulting to a value within an instruction account',
         code(
             'typescript',
             `
@@ -34,7 +34,7 @@ instructionNode({
         }),
         // ...
     ]),
-    provides: [providedNode('decimals', accountFieldValueNode('mint', 'decimals'))],
+    provides: [providedNode('decimals', accountDataValueNode('mint', 'decimals'))],
 });
 `,
         ),

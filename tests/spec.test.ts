@@ -64,9 +64,9 @@ describe('spec — coverage smoke checks', () => {
             'stringDisplayNode',
             'structFieldDisplayNode',
             // contextual value nodes
-            'accountFieldValueNode',
+            'accountDataValueNode',
             'accountValueNode',
-            'argumentValueNode',
+            'dataValueNode',
             'pdaValueNode',
             // top-level
             'accountNode',
@@ -420,12 +420,12 @@ describe('spec — instructionNode data', () => {
         expect(getUnion('resolverDependency')).toBeUndefined();
         expect(getUnion('instructionByteDeltaValue')!.members.map(m => m.name)).toEqual([
             'accountLinkNode',
-            'argumentValueNode',
+            'dataValueNode',
             'numberValueNode',
         ]);
         expect(getUnion('conditionalValueCondition')!.members.map(m => m.name)).toEqual([
             'accountValueNode',
-            'argumentValueNode',
+            'dataValueNode',
         ]);
     });
 
@@ -440,8 +440,8 @@ describe('spec — instructionNode data', () => {
 });
 
 describe('spec — path expressions', () => {
-    it('argumentValueNode and fieldDiscriminatorNode reference nested data via path attributes', () => {
-        for (const kind of ['argumentValueNode', 'fieldDiscriminatorNode']) {
+    it('dataValueNode and fieldDiscriminatorNode reference nested data via path attributes', () => {
+        for (const kind of ['dataValueNode', 'fieldDiscriminatorNode']) {
             const n = getNode(kind)!;
             const path = n.attributes.find(a => a.name === 'path');
             expect(path, `node "${kind}" should declare a path attribute`).toBeDefined();
@@ -577,9 +577,9 @@ describe('spec — injectable value unions', () => {
     });
 });
 
-describe('spec — accountFieldValueNode shape', () => {
+describe('spec — accountDataValueNode shape', () => {
     it('matches the encoded shape exactly', () => {
-        const n = getNode('accountFieldValueNode')!;
+        const n = getNode('accountDataValueNode')!;
         expect(n.attributes.map(a => a.name)).toEqual(['account', 'path']);
         const account = n.attributes.find(a => a.name === 'account')!;
         expect(account.type).toEqual({ constraint: 'identifier', kind: 'string' });
@@ -591,7 +591,7 @@ describe('spec — accountFieldValueNode shape', () => {
 
     it('is a member of standaloneContextualValueNode', () => {
         const u = getUnion('standaloneContextualValueNode')!;
-        expect(u.members).toContainEqual({ kind: 'node', name: 'accountFieldValueNode' });
+        expect(u.members).toContainEqual({ kind: 'node', name: 'accountDataValueNode' });
     });
 });
 

@@ -1063,7 +1063,8 @@
                             },
                             "optional": true,
                             "docs": [
-                                "How a configured default value is exposed in generated APIs. Required when `defaultValue` is set."
+                                "How a configured default value is exposed in generated APIs.",
+                                "Only relevant when `defaultValue` is set — a strategy without a default value is meaningless. When absent, `optional` is assumed."
                             ]
                         },
                         {
@@ -3629,7 +3630,7 @@
                             ]
                         },
                         {
-                            "title": "An instruction distinguished by an 8-byte argument at offset 0",
+                            "title": "An instruction distinguished by an 8-byte data field at offset 0",
                             "code": [
                                 {
                                     "language": "typescript",
@@ -4360,7 +4361,7 @@
         {
             "name": "contextualValue",
             "docs": [
-                "Contextual-value nodes — references resolved at instruction-build time (account values, argument values, …)."
+                "Contextual-value nodes — references resolved at instruction-build time (account values, data values, …)."
             ],
             "nodes": [
                 {
@@ -4393,7 +4394,7 @@
                             ]
                         },
                         {
-                            "title": "An instruction argument defaulting to the bump derivation of an instruction account",
+                            "title": "A data field defaulting to the bump derivation of an instruction account",
                             "code": [
                                 {
                                     "language": "typescript",
@@ -4425,9 +4426,9 @@
                     ]
                 },
                 {
-                    "kind": "accountFieldValueNode",
+                    "kind": "accountDataValueNode",
                     "docs": [
-                        "Refers to a field of a named account's decoded data.",
+                        "Refers to a value within a named account's decoded data.",
                         "The referenced account must carry an `accountLink` so the account's layout is known.",
                         "Resolving the value requires reading the account state at presentation time."
                     ],
@@ -4463,13 +4464,13 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "const node = accountFieldValueNode('mint', 'decimals');"
+                                        "const node = accountDataValueNode('mint', 'decimals');"
                                     ]
                                 }
                             ]
                         },
                         {
-                            "title": "An argument defaulting to a field of an instruction account",
+                            "title": "A data field defaulting to a value within an instruction account",
                             "code": [
                                 {
                                     "language": "typescript",
@@ -4493,7 +4494,7 @@
                                         "        }),",
                                         "        // ...",
                                         "    ]),",
-                                        "    provides: [providedNode('decimals', accountFieldValueNode('mint', 'decimals'))],",
+                                        "    provides: [providedNode('decimals', accountDataValueNode('mint', 'decimals'))],",
                                         "});"
                                     ]
                                 }
@@ -4560,7 +4561,7 @@
                     ]
                 },
                 {
-                    "kind": "argumentValueNode",
+                    "kind": "dataValueNode",
                     "docs": [
                         "Refers to a value within the data of the surrounding instruction."
                     ],
@@ -4579,12 +4580,12 @@
                     ],
                     "examples": [
                         {
-                            "title": "Create an argument value node from a path",
+                            "title": "Create a data value node from a path",
                             "code": [
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "const node = argumentValueNode('amount');"
+                                        "const node = dataValueNode('amount');"
                                     ]
                                 }
                             ]
@@ -4595,7 +4596,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "argumentValueNode('config.fees[0]');"
+                                        "dataValueNode('config.fees[0]');"
                                     ]
                                 }
                             ]
@@ -4620,7 +4621,7 @@
                                         "        }),",
                                         "        // ...",
                                         "    ]),",
-                                        "    provides: [providedNode('amountToDelegate', argumentValueNode('amount'))],",
+                                        "    provides: [providedNode('amountToDelegate', dataValueNode('amount'))],",
                                         "});"
                                     ]
                                 }
@@ -4654,7 +4655,7 @@
                             "optional": true,
                             "docs": [
                                 "When present, the condition result is compared for equality against this value.",
-                                "When omitted, the condition passes if the referenced account or argument exists in the current context, regardless of its value."
+                                "When omitted, the condition passes if the referenced account or data value exists in the current context, regardless of its value."
                             ]
                         },
                         {
@@ -4688,7 +4689,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "const node = conditionalValueNode({",
-                                        "    condition: argumentValueNode('amount'),",
+                                        "    condition: dataValueNode('amount'),",
                                         "    value: numberValueNode(0),",
                                         "    ifTrue: accountValueNode('mint'),",
                                         "    ifFalse: programIdValueNode(),",
@@ -4717,7 +4718,7 @@
                                         "            isWritable: true,",
                                         "            isOptional: true,",
                                         "            defaultValue: conditionalValueNode({",
-                                        "                condition: argumentValueNode('amount'),",
+                                        "                condition: dataValueNode('amount'),",
                                         "                value: numberValueNode(0),",
                                         "                ifTrue: accountValueNode('source'),",
                                         "            }),",
@@ -4992,7 +4993,7 @@
                         },
                         {
                             "kind": "node",
-                            "name": "accountFieldValueNode"
+                            "name": "accountDataValueNode"
                         },
                         {
                             "kind": "node",
@@ -5000,11 +5001,11 @@
                         },
                         {
                             "kind": "node",
-                            "name": "argumentValueNode"
+                            "name": "conditionalValueNode"
                         },
                         {
                             "kind": "node",
-                            "name": "conditionalValueNode"
+                            "name": "dataValueNode"
                         },
                         {
                             "kind": "node",
@@ -5085,7 +5086,7 @@
                         },
                         {
                             "kind": "node",
-                            "name": "argumentValueNode"
+                            "name": "dataValueNode"
                         }
                     ],
                     "docs": [
@@ -5101,7 +5102,7 @@
                         },
                         {
                             "kind": "node",
-                            "name": "argumentValueNode"
+                            "name": "dataValueNode"
                         },
                         {
                             "kind": "union",
@@ -5137,7 +5138,7 @@
                         },
                         {
                             "kind": "node",
-                            "name": "argumentValueNode"
+                            "name": "dataValueNode"
                         }
                     ],
                     "docs": [
@@ -5510,7 +5511,7 @@
                             },
                             "docs": [
                                 "The type describing the account data — any type node, including a `definedTypeLinkNode` to share or reuse a defined type.",
-                                "Nodes that reference account fields by name — e.g. `accountFieldValueNode` or `fieldDiscriminatorNode` — are only valid when this type resolves to a struct (following links)."
+                                "Nodes that reference account fields by name — e.g. `accountDataValueNode` or `fieldDiscriminatorNode` — are only valid when this type resolves to a struct (following links)."
                             ]
                         },
                         {
@@ -6001,7 +6002,7 @@
                             },
                             "optional": true,
                             "docs": [
-                                "A reference to the account's data layout. Required for consumers (e.g. `accountFieldValueNode`) to read fields from the account.",
+                                "A reference to the account's data layout. Required for consumers (e.g. `accountDataValueNode`) to read fields from the account.",
                                 "The link's optional `program` allows cross-program references via the root's `additionalPrograms`."
                             ]
                         },
@@ -6114,12 +6115,12 @@
                             ]
                         },
                         {
-                            "title": "A byte delta that uses an argument value to increase the space of an account",
+                            "title": "A byte delta that uses a data value to increase the space of an account",
                             "code": [
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "instructionByteDeltaNode(argumentValueNode('additionalSpace'), { withHeader: false });"
+                                        "instructionByteDeltaNode(dataValueNode('additionalSpace'), { withHeader: false });"
                                     ]
                                 }
                             ]
@@ -7181,7 +7182,7 @@
                         },
                         {
                             "kind": "node",
-                            "name": "argumentValueNode"
+                            "name": "dataValueNode"
                         },
                         {
                             "kind": "node",
@@ -7190,7 +7191,7 @@
                     ],
                     "docs": [
                         "The value forms accepted by an `instructionByteDeltaNode`.",
-                        "An `accountLinkNode` uses the size of the linked account; an `argumentValueNode` uses a value within the instruction data; and a `numberValueNode` uses that explicit number."
+                        "An `accountLinkNode` uses the size of the linked account; an `dataValueNode` uses a value within the instruction data; and a `numberValueNode` uses that explicit number."
                     ]
                 }
             ],

@@ -44,7 +44,7 @@ accountNode({
 });
 ```
 
-### An instruction distinguished by an 8-byte argument at offset 0
+### An instruction distinguished by an 8-byte data field at offset 0
 
 ```typescript
 instructionNode({

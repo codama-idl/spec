@@ -13,7 +13,7 @@ export const conditionalValueNode = defineNode('conditionalValueNode', {
         optionalAttribute('value', union('valueNode'), {
             docs: [
                 'When present, the condition result is compared for equality against this value.',
-                'When omitted, the condition passes if the referenced account or argument exists in the current context, regardless of its value.',
+                'When omitted, the condition passes if the referenced account or data value exists in the current context, regardless of its value.',
             ],
         }),
         optionalAttribute('ifTrue', union('instructionInputValueNode'), {

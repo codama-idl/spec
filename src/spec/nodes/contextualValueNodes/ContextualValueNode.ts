@@ -10,10 +10,10 @@ import { defineUnion, union } from '../../../api';
 
 const STANDALONE_CONTEXTUAL_VALUE_NODE_KINDS = [
     'accountBumpValueNode',
-    'accountFieldValueNode',
+    'accountDataValueNode',
     'accountValueNode',
-    'argumentValueNode',
     'conditionalValueNode',
+    'dataValueNode',
     'identityValueNode',
     'payerValueNode',
     'pdaValueNode',
@@ -47,12 +47,12 @@ export const instructionInputValueNodeUnion = defineUnion('instructionInputValue
 
 export const conditionalValueConditionUnion = defineUnion('conditionalValueCondition', {
     docs: ['The condition forms accepted by a `conditionalValueNode`.'],
-    members: ['accountValueNode', 'argumentValueNode'],
+    members: ['accountValueNode', 'dataValueNode'],
 });
 
 export const pdaSeedValueValueUnion = defineUnion('pdaSeedValueValue', {
     docs: ['The value forms accepted by a `pdaSeedValueNode`.'],
-    members: ['accountValueNode', 'argumentValueNode', union('valueNode')],
+    members: ['accountValueNode', 'dataValueNode', union('valueNode')],
 });
 
 export const pdaValuePdaUnion = defineUnion('pdaValuePda', {
@@ -62,5 +62,5 @@ export const pdaValuePdaUnion = defineUnion('pdaValuePda', {
 
 export const pdaValueProgramIdUnion = defineUnion('pdaValueProgramId', {
     docs: ['The program-id forms accepted by a `pdaValueNode`.'],
-    members: ['accountValueNode', 'argumentValueNode'],
+    members: ['accountValueNode', 'dataValueNode'],
 });

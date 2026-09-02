@@ -109,9 +109,7 @@ const DISPLAY_CATEGORY = defineCategory('display', {
 });
 
 const CONTEXTUAL_VALUE_CATEGORY = defineCategory('contextualValue', {
-    docs: [
-        'Contextual-value nodes — references resolved at instruction-build time (account values, argument values, …).',
-    ],
+    docs: ['Contextual-value nodes — references resolved at instruction-build time (account values, data values, …).'],
     nodes: [...ALL_CONTEXTUAL_VALUE_NODES],
     unions: [...ALL_CONTEXTUAL_VALUE_NODE_UNIONS],
 });

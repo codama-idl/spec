@@ -26,7 +26,7 @@ Attribute tables reference these constrained string types:
 
 ## Categories
 
-- [ContextualValue](./contextualValueNodes/README.md) - Contextual-value nodes — references resolved at instruction-build time (account values, argument values, …).
+- [ContextualValue](./contextualValueNodes/README.md) - Contextual-value nodes — references resolved at instruction-build time (account values, data values, …).
 - [Count](./countNodes/README.md) - Count nodes — strategies for sizing a homogeneous collection in serialized form.
 - [Discriminator](./discriminatorNodes/README.md) - Discriminator nodes — strategies for distinguishing one account or instruction from another.
 - [Display](./displayNodes/README.md) - Display nodes — presentation metadata attached to instructions, accounts, fields, and enum variants.

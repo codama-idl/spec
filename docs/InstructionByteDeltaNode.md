@@ -34,8 +34,8 @@ instructionByteDeltaNode(accountLinkNode('token'));
 instructionByteDeltaNode(accountLinkNode('token'), { subtract: true });
 ```
 
-### A byte delta that uses an argument value to increase the space of an account
+### A byte delta that uses a data value to increase the space of an account
 
 ```typescript
-instructionByteDeltaNode(argumentValueNode('additionalSpace'), { withHeader: false });
+instructionByteDeltaNode(dataValueNode('additionalSpace'), { withHeader: false });
 ```

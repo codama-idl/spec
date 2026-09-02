@@ -5,5 +5,5 @@ The value forms accepted by a `pdaSeedValueNode`.
 One of the following:
 
 - [`AccountValueNode`](./AccountValueNode.md)
-- [`ArgumentValueNode`](./ArgumentValueNode.md)
+- [`DataValueNode`](./DataValueNode.md)
 - [`ValueNode`](../valueNodes/ValueNode.md)

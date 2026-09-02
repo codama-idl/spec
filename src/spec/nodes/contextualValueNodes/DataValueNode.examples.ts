@@ -2,11 +2,11 @@ import { code, example, type DocExamples } from '../../../api';
 
 export const examples: DocExamples = [
     example(
-        'Create an argument value node from a path',
+        'Create a data value node from a path',
         code(
             'typescript',
             `
-const node = argumentValueNode('amount');
+const node = dataValueNode('amount');
 `,
         ),
     ),
@@ -15,7 +15,7 @@ const node = argumentValueNode('amount');
         code(
             'typescript',
             `
-argumentValueNode('config.fees[0]');
+dataValueNode('config.fees[0]');
 `,
         ),
     ),
@@ -38,7 +38,7 @@ instructionNode({
         }),
         // ...
     ]),
-    provides: [providedNode('amountToDelegate', argumentValueNode('amount'))],
+    provides: [providedNode('amountToDelegate', dataValueNode('amount'))],
 });
 `,
         ),
