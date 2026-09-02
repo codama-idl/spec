@@ -328,7 +328,7 @@ describe('spec — display node shapes', () => {
         const n = getNode('amountNumberDisplayNode')!;
         expect(n.attributes.map(a => a.name)).toEqual(['decimals', 'unit']);
         const decimals = n.attributes.find(a => a.name === 'decimals')!;
-        expect(decimals.optional).toBe(true);
+        expect(decimals.optional).toBeUndefined();
         expect(decimals.type).toEqual({ kind: 'union', name: 'injectableIntegerValueNode' });
         expect(isChildAttribute(decimals.type)).toBe(true);
         const unit = n.attributes.find(a => a.name === 'unit')!;
@@ -519,6 +519,10 @@ describe('spec — display attribute on host nodes', () => {
         ['structFieldTypeNode', 'structFieldDisplayNode'],
         ['stringTypeNode', 'stringDisplayNode'],
         ['enumVariantTypeNode', 'enumVariantDisplayNode'],
+        // floats and fixed-points host the unit form directly: scaling display cannot apply
+        // to numbers whose scale is already fixed
+        ['floatTypeNode', 'unitNumberDisplayNode'],
+        ['fixedPointTypeNode', 'unitNumberDisplayNode'],
     ];
 
     for (const [host, expected] of nodeHosts) {
@@ -532,11 +536,7 @@ describe('spec — display attribute on host nodes', () => {
         });
     }
 
-    const unionHosts: ReadonlyArray<readonly [string, string]> = [
-        ['integerTypeNode', 'numberDisplayNode'],
-        ['floatTypeNode', 'numberDisplayNode'],
-        ['fixedPointTypeNode', 'numberDisplayNode'],
-    ];
+    const unionHosts: ReadonlyArray<readonly [string, string]> = [['integerTypeNode', 'numberDisplayNode']];
 
     for (const [host, expected] of unionHosts) {
         it(`${host} carries an optional display attribute referencing the ${expected} union`, () => {
@@ -560,6 +560,7 @@ describe('spec — registeredDisplayNode union', () => {
             'instructionDisplayNode',
             'stringDisplayNode',
             'structFieldDisplayNode',
+            'unitNumberDisplayNode',
         ]) {
             expect(u.members).toContainEqual({ kind: 'node', name: kind });
         }
@@ -572,9 +573,12 @@ describe('spec — registeredDisplayNode union', () => {
 });
 
 describe('spec — numberDisplayNode union', () => {
-    it('carries the single contextual presentation form, kept as the growth slot', () => {
+    it('pairs the scaling and unit-only contextual presentation forms', () => {
         const u = getUnion('numberDisplayNode')!;
-        expect(u.members).toEqual([{ kind: 'node', name: 'amountNumberDisplayNode' }]);
+        expect(u.members).toEqual([
+            { kind: 'node', name: 'amountNumberDisplayNode' },
+            { kind: 'node', name: 'unitNumberDisplayNode' },
+        ]);
     });
 });
 

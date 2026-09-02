@@ -7,11 +7,12 @@
  * for discovery and for visitor/codegen targets that iterate the
  * category as a whole.
  *
- * The `numberDisplayNode` union groups the presentation forms a number
+ * The `numberDisplayNode` union groups the presentation forms an integer
  * may take; raw rendering is expressed by the absence of a display
- * attribute. It has a single member today — time semantics moved to the
- * type layer (`dateTimeTypeNode`, `durationTypeNode`) — and exists as the
- * growth slot for future presentation forms.
+ * attribute. Floats and fixed-points host `unitNumberDisplayNode`
+ * directly — scaling forms cannot apply to numbers whose scale is
+ * already fixed. Time semantics live on the type layer
+ * (`dateTimeTypeNode`, `durationTypeNode`).
  */
 
 import { defineUnion, union } from '../../../api';
@@ -20,7 +21,7 @@ export const numberDisplayNodeUnion = defineUnion('numberDisplayNode', {
     docs: [
         'The presentation forms a number may take. Raw rendering is expressed by the absence of a display attribute.',
     ],
-    members: ['amountNumberDisplayNode'],
+    members: ['amountNumberDisplayNode', 'unitNumberDisplayNode'],
 });
 
 export const registeredDisplayNodeUnion = defineUnion('registeredDisplayNode', {
@@ -32,6 +33,7 @@ export const registeredDisplayNodeUnion = defineUnion('registeredDisplayNode', {
         'instructionDisplayNode',
         'stringDisplayNode',
         'structFieldDisplayNode',
+        'unitNumberDisplayNode',
     ],
 });
 

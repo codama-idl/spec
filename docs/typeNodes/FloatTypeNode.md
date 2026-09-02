@@ -14,13 +14,13 @@ Floating-point numbers are notoriously unsafe for financial values — prefer `f
 
 ### Children
 
-| Attribute    | Type                                                                     | Description                                                                                                                                                                               |
-| ------------ | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `format`     | [`FloatFormat`](../sharedNodes/FloatFormat.md)                           | The wire format used to serialise the float.                                                                                                                                              |
-| `endian`     | [`Endianness`](../sharedNodes/Endianness.md) _(optional)_                | The byte order used to serialise the float. Defaults to `le`.                                                                                                                             |
-| `display`    | [`NumberDisplayNode`](../displayNodes/NumberDisplayNode.md) _(optional)_ | Display metadata describing how the float is presented. Typically only `unit` is meaningful for floats — a float already carries its own scale, so `decimals` is not a supported pattern. |
-| `transforms` | [`TransformNode`](../transformNodes/TransformNode.md)[] _(optional)_     | Transforms applied to the serialisation of this type, in order — the first is the innermost.                                                                                              |
-| `plugins`    | [`PluginNode`](../PluginNode.md)[] _(optional)_                          | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata.                                                     |
+| Attribute    | Type                                                                             | Description                                                                                                                           |
+| ------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `format`     | [`FloatFormat`](../sharedNodes/FloatFormat.md)                                   | The wire format used to serialise the float.                                                                                          |
+| `endian`     | [`Endianness`](../sharedNodes/Endianness.md) _(optional)_                        | The byte order used to serialise the float. Defaults to `le`.                                                                         |
+| `display`    | [`UnitNumberDisplayNode`](../displayNodes/UnitNumberDisplayNode.md) _(optional)_ | Display metadata describing how the float is presented. Only a contextual unit applies: a float already carries its own scale.        |
+| `transforms` | [`TransformNode`](../transformNodes/TransformNode.md)[] _(optional)_             | Transforms applied to the serialisation of this type, in order — the first is the innermost.                                          |
+| `plugins`    | [`PluginNode`](../PluginNode.md)[] _(optional)_                                  | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

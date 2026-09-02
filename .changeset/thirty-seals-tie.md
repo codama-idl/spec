@@ -33,7 +33,7 @@ Rework the numeric system so every numeric fact lives in exactly one layer. Type
 + integerTypeNode('u64', { unit: 'slots' })
 ```
 
-**`dateTimeNumberDisplayNode` and `durationNumberDisplayNode` move to the type layer.** Their `ticksPerSecond` changes the moment or duration a value denotes — value semantics, not presentation. `dateTimeTypeNode` gains `ticksPerSecond` (default `1`) and a new `durationTypeNode` joins it; both wrap an `integerTypeNode` encoding slot. `amountNumberDisplayNode` remains as the contextual channel — for quantities whose scale or unit resolve at presentation time via injection (e.g. per-mint decimals) — and its docs now state that static facts belong on the type.
+**`dateTimeNumberDisplayNode` and `durationNumberDisplayNode` move to the type layer.** Their `ticksPerSecond` changes the moment or duration a value denotes — value semantics, not presentation. `dateTimeTypeNode` gains `ticksPerSecond` (default `1`) and a new `durationTypeNode` joins it; both wrap an `integerTypeNode` encoding slot. The contextual channel splits by capability: `amountNumberDisplayNode` (its `decimals` now required) scales integers whose decimals resolve at presentation time via injection (e.g. per-mint decimals), while the new `unitNumberDisplayNode` labels a number with a contextually resolved unit and no scaling — the only display form floats and fixed-points host, since a scaling display cannot apply to numbers whose scale is already fixed. When a resolved display value and a static type fact coexist, the resolved value wins for presentation and the type is the fallback.
 
 ```diff
 - numberTypeNode('i64', { display: dateTimeNumberDisplayNode(1000) })

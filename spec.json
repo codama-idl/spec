@@ -586,12 +586,12 @@
                         {
                             "name": "display",
                             "type": {
-                                "kind": "union",
-                                "name": "numberDisplayNode"
+                                "kind": "node",
+                                "name": "unitNumberDisplayNode"
                             },
                             "optional": true,
                             "docs": [
-                                "Display metadata describing how the quantity is presented — e.g. a contextual unit resolved via injection on top of the static scale."
+                                "Display metadata describing how the quantity is presented — a contextual unit resolved via injection on top of the static scale."
                             ]
                         },
                         {
@@ -693,13 +693,13 @@
                         {
                             "name": "display",
                             "type": {
-                                "kind": "union",
-                                "name": "numberDisplayNode"
+                                "kind": "node",
+                                "name": "unitNumberDisplayNode"
                             },
                             "optional": true,
                             "docs": [
                                 "Display metadata describing how the float is presented.",
-                                "Typically only `unit` is meaningful for floats — a float already carries its own scale, so `decimals` is not a supported pattern."
+                                "Only a contextual unit applies: a float already carries its own scale."
                             ]
                         },
                         {
@@ -4018,10 +4018,10 @@
                 {
                     "kind": "amountNumberDisplayNode",
                     "docs": [
-                        "Display metadata that presents a number as a scaled amount with an optional unit, for quantities whose scale or unit are contextual rather than static — e.g. a raw token amount whose decimals live in the mint account.",
+                        "Display metadata that presents an integer as a scaled amount with an optional unit, for quantities whose scale is contextual rather than static — e.g. a raw token amount whose decimals live in the mint account.",
                         "The value is divided by `10 ^ decimals` and rendered alongside `unit` (e.g. `\"USDC\"`, `\"%\"`, `\"bps\"`).",
-                        "When the type itself carries static semantics (`fixedPointTypeNode`, a unit-ed `integerTypeNode`), renderers should use those; restating static facts here is discouraged — this node exists for values resolved at presentation time via injection.",
-                        "When both are present, a resolved display value wins for presentation; the type's static `unit` and scale are the fallback whenever injection cannot resolve."
+                        "Statically scaled quantities belong on the type instead (`fixedPointTypeNode`); for a contextual unit without scaling, use `unitNumberDisplayNode`.",
+                        "When both are present, a resolved display value wins for presentation; the type's static `unit` is the fallback whenever injection cannot resolve."
                     ],
                     "attributes": [
                         {
@@ -4030,7 +4030,6 @@
                                 "kind": "union",
                                 "name": "injectableIntegerValueNode"
                             },
-                            "optional": true,
                             "docs": [
                                 "How many decimal places scale the underlying integer. Resolved as an integer value: either a literal `integerValueNode` or a key resolved from a surrounding provider.",
                                 "A value of `1000000` with `decimals` resolving to `6` renders as `1`.",
@@ -4442,6 +4441,57 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "kind": "unitNumberDisplayNode",
+                    "docs": [
+                        "Display metadata that labels a number with a contextually resolved unit, without any scaling.",
+                        "The one presentation form valid on numbers whose scale is already fixed — floats (which self-scale) and `fixedPointTypeNode`s (whose `scale` is static) — and equally usable on plain integers.",
+                        "When the type also carries a static `unit`, a resolved display unit wins for presentation; the type's unit is the fallback whenever injection cannot resolve."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "unit",
+                            "type": {
+                                "kind": "union",
+                                "name": "injectableStringValueNode"
+                            },
+                            "docs": [
+                                "A label appended after the value (e.g. `\"SOL\"`, `\"USDC\"`, `\"%\"`). Resolved as a string value: either a literal `stringValueNode` or a key resolved from a surrounding provider.",
+                                "When this input cannot resolve, renderers should present the value without a unit."
+                            ]
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "title": "A fixed-point amount with a per-mint symbol",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "fixedPointTypeNode(integerTypeNode('u64'), 9, {",
+                                        "    display: unitNumberDisplayNode(injectedValueNode({ key: 'symbol' })),",
+                                        "});",
+                                        "",
+                                        "// 1_100_000_000 with the injected symbol \"SOL\" => \"1.1 SOL\""
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A float labelled with a contextual unit",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "floatTypeNode('f64', {",
+                                        "    display: unitNumberDisplayNode(injectedValueNode({ key: 'currency' })),",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ],
             "unions": [
@@ -4451,6 +4501,10 @@
                         {
                             "kind": "node",
                             "name": "amountNumberDisplayNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "unitNumberDisplayNode"
                         }
                     ],
                     "docs": [
@@ -4483,6 +4537,10 @@
                         {
                             "kind": "node",
                             "name": "structFieldDisplayNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "unitNumberDisplayNode"
                         }
                     ],
                     "docs": [

@@ -10,3 +10,4 @@ One of the following:
 - [`InstructionDisplayNode`](./InstructionDisplayNode.md)
 - [`StringDisplayNode`](./StringDisplayNode.md)
 - [`StructFieldDisplayNode`](./StructFieldDisplayNode.md)
+- [`UnitNumberDisplayNode`](./UnitNumberDisplayNode.md)

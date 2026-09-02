@@ -1,4 +1,4 @@
-import { attribute, defineNode, enumeration, optionalAttribute, string, union } from '../../../api';
+import { attribute, defineNode, enumeration, node, optionalAttribute, string } from '../../../api';
 import { transformsAttribute } from '../transformNodes';
 import { examples } from './FloatTypeNode.examples';
 
@@ -20,10 +20,10 @@ export const floatTypeNode = defineNode('floatTypeNode', {
                 'Part of the value semantics: without it, consumers cannot know what quantity the number represents.',
             ],
         }),
-        optionalAttribute('display', union('numberDisplayNode'), {
+        optionalAttribute('display', node('unitNumberDisplayNode'), {
             docs: [
                 'Display metadata describing how the float is presented.',
-                'Typically only `unit` is meaningful for floats — a float already carries its own scale, so `decimals` is not a supported pattern.',
+                'Only a contextual unit applies: a float already carries its own scale.',
             ],
         }),
         transformsAttribute(),

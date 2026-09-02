@@ -1,4 +1,4 @@
-import { attribute, defineNode, literalUnion, node, optionalAttribute, string, u32, union } from '../../../api';
+import { attribute, defineNode, literalUnion, node, optionalAttribute, string, u32 } from '../../../api';
 import { transformsAttribute } from '../transformNodes';
 import { examples } from './FixedPointTypeNode.examples';
 
@@ -27,9 +27,9 @@ export const fixedPointTypeNode = defineNode('fixedPointTypeNode', {
                 'It must not carry a `unit` or `display` of its own.',
             ],
         }),
-        optionalAttribute('display', union('numberDisplayNode'), {
+        optionalAttribute('display', node('unitNumberDisplayNode'), {
             docs: [
-                'Display metadata describing how the quantity is presented — e.g. a contextual unit resolved via injection on top of the static scale.',
+                'Display metadata describing how the quantity is presented — a contextual unit resolved via injection on top of the static scale.',
             ],
         }),
         transformsAttribute(),

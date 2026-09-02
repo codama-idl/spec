@@ -5,6 +5,7 @@ import { instructionAccountDisplayNode } from './InstructionAccountDisplayNode';
 import { instructionDisplayNode } from './InstructionDisplayNode';
 import { stringDisplayNode } from './StringDisplayNode';
 import { structFieldDisplayNode } from './StructFieldDisplayNode';
+import { unitNumberDisplayNode } from './UnitNumberDisplayNode';
 
 export const ALL_DISPLAY_NODES = [
     amountNumberDisplayNode,
@@ -13,6 +14,7 @@ export const ALL_DISPLAY_NODES = [
     instructionDisplayNode,
     stringDisplayNode,
     structFieldDisplayNode,
+    unitNumberDisplayNode,
 ] as const;
 
 export const ALL_DISPLAY_NODE_UNIONS = [numberDisplayNodeUnion, registeredDisplayNodeUnion, displayNodeUnion] as const;

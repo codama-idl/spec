@@ -5,3 +5,4 @@ The presentation forms a number may take. Raw rendering is expressed by the abse
 One of the following:
 
 - [`AmountNumberDisplayNode`](./AmountNumberDisplayNode.md)
+- [`UnitNumberDisplayNode`](./UnitNumberDisplayNode.md)
