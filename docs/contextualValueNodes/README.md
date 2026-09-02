@@ -14,16 +14,14 @@ Contextual-value nodes — references resolved at instruction-build time (accoun
 - [`PdaSeedValueNode`](./PdaSeedValueNode.md) - Pairs a PDA seed name with the value to substitute when deriving the PDA.
 - [`PdaValueNode`](./PdaValueNode.md) - Resolves to a PDA derived from a list of seed values.
 - [`ProgramIdValueNode`](./ProgramIdValueNode.md) - Refers to the program ID of the surrounding instruction — that is, the address of the `programNode` this node descends from.
-- [`ResolverValueNode`](./ResolverValueNode.md) - A custom resolver: a named function provided by the consumer that produces a value.
 
 ## Unions
 
 - [`ConditionalValueCondition`](./ConditionalValueCondition.md) - The condition forms accepted by a `conditionalValueNode`.
 - [`ContextualValueNode`](./ContextualValueNode.md) - The composable form: any standalone contextual-value node.
-- [`InstructionInputValueNode`](./InstructionInputValueNode.md) - Anything that can be used as the input value for an instruction account or argument default.
+- [`InstructionInputValueNode`](./InstructionInputValueNode.md) - Anything that can be used as the input value for an instruction account default or a conditional branch.
 - [`PdaSeedValueValue`](./PdaSeedValueValue.md) - The value forms accepted by a `pdaSeedValueNode`.
 - [`PdaValuePda`](./PdaValuePda.md) - A `pdaValueNode` may reference a PDA either by link or inline.
 - [`PdaValueProgramId`](./PdaValueProgramId.md) - The program-id forms accepted by a `pdaValueNode`.
 - [`RegisteredContextualValueNode`](./RegisteredContextualValueNode.md) - Every node tagged as a contextual-value node, including helper variants.
-- [`ResolverDependency`](./ResolverDependency.md) - The dependency forms accepted by a `resolverValueNode`.
 - [`StandaloneContextualValueNode`](./StandaloneContextualValueNode.md) - Every contextual-value node usable as a top-level value.

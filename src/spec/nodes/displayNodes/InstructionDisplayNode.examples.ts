@@ -12,7 +12,7 @@ instructionNode({
         intent: 'Transfer',
         interpolatedIntent: 'Transfer \${data.amount} to \${accounts.destination}',
     }),
-    // ...accounts and arguments
+    // ...accounts and data
 });
 
 // intent      => "Transfer"
@@ -28,7 +28,7 @@ instructionNode({
 instructionNode({
     identifier: 'closeAccount',
     display: instructionDisplayNode({ intent: 'Close Account' }),
-    // ...accounts and arguments
+    // ...accounts and data
 });
 `,
         ),

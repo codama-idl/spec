@@ -18,14 +18,14 @@ providedNode('decimals', numberValueNode(9));
 instructionNode({
     identifier: 'transferChecked',
     provides: [providedNode('decimals', numberValueNode(9))],
-    arguments: [
-        instructionArgumentNode({
+    data: structTypeNode([
+        structFieldTypeNode({
             identifier: 'decimals',
             type: numberTypeNode('u8'),
             defaultValue: injectedValueNode({ key: 'decimals' }),
         }),
         // ...
-    ],
+    ]),
 });
 `,
         ),

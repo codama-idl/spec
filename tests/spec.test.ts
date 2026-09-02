@@ -396,6 +396,49 @@ describe('spec — identifier convention', () => {
     });
 });
 
+describe('spec — instructionNode data', () => {
+    it('carries optional data as any type node', () => {
+        const n = getNode('instructionNode')!;
+        const data = n.attributes.find(a => a.name === 'data')!;
+        expect(data).toBeDefined();
+        expect(data.optional).toBe(true);
+        expect(data.type).toEqual({ kind: 'union', name: 'typeNode' });
+        expect(isChildAttribute(data.type)).toBe(true);
+        for (const gone of ['arguments', 'extraArguments']) {
+            expect(
+                n.attributes.find(a => a.name === gone),
+                `${gone} should be removed`,
+            ).toBeUndefined();
+        }
+    });
+
+    it('removes the argument and resolver machinery', () => {
+        for (const gone of ['instructionArgumentNode', 'resolverValueNode', 'instructionArgumentLinkNode']) {
+            expect(getNode(gone), `${gone} should no longer exist`).toBeUndefined();
+        }
+        expect(getUnion('instructionRemainingAccountsValue')).toBeUndefined();
+        expect(getUnion('resolverDependency')).toBeUndefined();
+        expect(getUnion('instructionByteDeltaValue')!.members.map(m => m.name)).toEqual([
+            'accountLinkNode',
+            'argumentValueNode',
+            'numberValueNode',
+        ]);
+        expect(getUnion('conditionalValueCondition')!.members.map(m => m.name)).toEqual([
+            'accountValueNode',
+            'argumentValueNode',
+        ]);
+    });
+
+    it('remaining accounts declare a named client input', () => {
+        const n = getNode('instructionRemainingAccountsNode')!;
+        const identifier = n.attributes.find(a => a.name === 'identifier');
+        expect(identifier, 'remaining accounts should declare an identifier').toBeDefined();
+        expect(n.attributes[0].name).toBe('identifier');
+        expect(identifier!.type).toEqual({ constraint: 'identifier', kind: 'string' });
+        expect(n.attributes.find(a => a.name === 'value')).toBeUndefined();
+    });
+});
+
 describe('spec — path expressions', () => {
     it('argumentValueNode and fieldDiscriminatorNode reference nested data via path attributes', () => {
         for (const kind of ['argumentValueNode', 'fieldDiscriminatorNode']) {
@@ -425,7 +468,6 @@ describe('spec — display attribute on host nodes', () => {
     const nodeHosts: ReadonlyArray<readonly [string, string]> = [
         ['instructionNode', 'instructionDisplayNode'],
         ['instructionAccountNode', 'instructionAccountDisplayNode'],
-        ['instructionArgumentNode', 'structFieldDisplayNode'],
         ['instructionRemainingAccountsNode', 'instructionAccountDisplayNode'],
         ['structFieldTypeNode', 'structFieldDisplayNode'],
         ['stringTypeNode', 'stringDisplayNode'],

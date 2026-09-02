@@ -2,11 +2,11 @@ import { code, example, type DocExamples } from '../../../api';
 
 export const examples: DocExamples = [
     example(
-        'Relabelling an instruction argument',
+        'Relabelling an instruction data field',
         code(
             'typescript',
             `
-instructionArgumentNode({
+structFieldTypeNode({
     identifier: 'amount',
     type: numberTypeNode('u64'),
     display: structFieldDisplayNode({ label: 'Amount' }),
@@ -15,11 +15,11 @@ instructionArgumentNode({
         ),
     ),
     example(
-        'Hiding a discriminator argument from the fallback list',
+        'Hiding a discriminator field from the fallback list',
         code(
             'typescript',
             `
-instructionArgumentNode({
+structFieldTypeNode({
     identifier: 'discriminator',
     type: numberTypeNode('u8'),
     display: structFieldDisplayNode({ skip: 'always' }),

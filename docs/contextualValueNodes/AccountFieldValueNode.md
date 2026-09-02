@@ -42,13 +42,14 @@ instructionNode({
         }),
         // ...
     ],
-    arguments: [
-        instructionArgumentNode({
+    data: structTypeNode([
+        structFieldTypeNode({
             identifier: 'decimals',
             type: numberTypeNode('u8'),
-            defaultValue: accountFieldValueNode('mint', 'decimals'),
+            defaultValue: injectedValueNode({ key: 'decimals' }),
         }),
         // ...
-    ],
+    ]),
+    provides: [providedNode('decimals', accountFieldValueNode('mint', 'decimals'))],
 });
 ```

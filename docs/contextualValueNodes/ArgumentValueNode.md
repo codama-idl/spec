@@ -31,22 +31,23 @@ const node = argumentValueNode('amount');
 argumentValueNode('config.fees[0]');
 ```
 
-### An instruction argument defaulting to another argument
+### An instruction data field defaulting to another field
 
 ```typescript
 instructionNode({
     identifier: 'mint',
-    arguments: [
-        instructionArgumentNode({
+    data: structTypeNode([
+        structFieldTypeNode({
             identifier: 'amount',
             type: numberTypeNode('u64'),
         }),
-        instructionArgumentNode({
+        structFieldTypeNode({
             identifier: 'amountToDelegate',
             type: numberTypeNode('u64'),
-            defaultValue: argumentValueNode('amount'),
+            defaultValue: injectedValueNode({ key: 'amountToDelegate' }),
         }),
         // ...
-    ],
+    ]),
+    provides: [providedNode('amountToDelegate', argumentValueNode('amount'))],
 });
 ```

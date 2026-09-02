@@ -2232,7 +2232,8 @@
                     "docs": [
                         "A value resolved by key from a surrounding provider.",
                         "A `providedNode` higher in the resolution tree supplies the actual value; the consumer references only the `key`, so the same type stays portable across instructions that wire the key differently.",
-                        "Resolution is a per-context property: a value with the same key may resolve in one instruction and not another."
+                        "Resolution is lexical: a key resolves against the nearest enclosing `provides` list, innermost wins (shadowing allowed), and outer scopes remain visible — e.g. a sub-instruction may shadow a key provided by its parent.",
+                        "IDLs must be self-contained: within its final context, every key must resolve to a provided entry or carry a `fallback`, so whether a value is resolvable is statically checkable."
                     ],
                     "attributes": [
                         {
@@ -2979,59 +2980,6 @@
                     ]
                 },
                 {
-                    "kind": "instructionArgumentLinkNode",
-                    "docs": [
-                        "A reference to an argument of another instruction."
-                    ],
-                    "attributes": [
-                        {
-                            "name": "instruction",
-                            "type": {
-                                "kind": "node",
-                                "name": "instructionLinkNode"
-                            },
-                            "optional": true,
-                            "docs": [
-                                "The instruction the referenced argument belongs to. When omitted, the surrounding instruction is assumed.",
-                                "The instruction link may itself point to a different program if needed."
-                            ]
-                        },
-                        {
-                            "name": "identifier",
-                            "type": {
-                                "kind": "string",
-                                "constraint": "identifier"
-                            },
-                            "docs": [
-                                "The identifier of the referenced instruction argument."
-                            ]
-                        }
-                    ],
-                    "examples": [
-                        {
-                            "title": "Create an instruction argument link node from an argument name",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "// Links to an argument in the current instruction.",
-                                        "const node = instructionArgumentLinkNode('myArgument');",
-                                        "",
-                                        "// Links to an argument in another instruction but within the same program.",
-                                        "const nodeFromAnotherInstruction = instructionArgumentLinkNode('myArgument', 'myOtherInstruction');",
-                                        "",
-                                        "// Links to an argument in another instruction from another program.",
-                                        "const nodeFromAnotherProgram = instructionArgumentLinkNode(",
-                                        "    'myArgument',",
-                                        "    instructionLinkNode('myOtherInstruction', 'myOtherProgram'),",
-                                        ");"
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
                     "kind": "instructionLinkNode",
                     "docs": [
                         "A reference to an instruction defined elsewhere — possibly in a different program."
@@ -3164,10 +3112,6 @@
                         {
                             "kind": "node",
                             "name": "instructionAccountLinkNode"
-                        },
-                        {
-                            "kind": "node",
-                            "name": "instructionArgumentLinkNode"
                         },
                         {
                             "kind": "node",
@@ -3691,15 +3635,15 @@
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
-                                        "    arguments: [",
-                                        "        instructionArgumentNode({",
+                                        "    data: structTypeNode([",
+                                        "        structFieldTypeNode({",
                                         "            identifier: 'discriminator',",
                                         "            type: bytesTypeNode({ transforms: [fixedSizeTransformNode(8)] }),",
                                         "            defaultValue: bytesValueNode('base16', '0011223344556677'),",
                                         "            defaultValueStrategy: 'omitted',",
                                         "        }),",
                                         "        // ...",
-                                        "    ],",
+                                        "    ]),",
                                         "    discriminators: [fieldDiscriminatorNode('discriminator')],",
                                         "    // ...",
                                         "});"
@@ -4147,7 +4091,7 @@
                                         "        intent: 'Transfer',",
                                         "        interpolatedIntent: 'Transfer ${data.amount} to ${accounts.destination}',",
                                         "    }),",
-                                        "    // ...accounts and arguments",
+                                        "    // ...accounts and data",
                                         "});",
                                         "",
                                         "// intent      => \"Transfer\"",
@@ -4165,7 +4109,7 @@
                                         "instructionNode({",
                                         "    identifier: 'closeAccount',",
                                         "    display: instructionDisplayNode({ intent: 'Close Account' }),",
-                                        "    // ...accounts and arguments",
+                                        "    // ...accounts and data",
                                         "});"
                                     ]
                                 }
@@ -4289,12 +4233,12 @@
                     ],
                     "examples": [
                         {
-                            "title": "Relabelling an instruction argument",
+                            "title": "Relabelling an instruction data field",
                             "code": [
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "instructionArgumentNode({",
+                                        "structFieldTypeNode({",
                                         "    identifier: 'amount',",
                                         "    type: numberTypeNode('u64'),",
                                         "    display: structFieldDisplayNode({ label: 'Amount' }),",
@@ -4304,12 +4248,12 @@
                             ]
                         },
                         {
-                            "title": "Hiding a discriminator argument from the fallback list",
+                            "title": "Hiding a discriminator field from the fallback list",
                             "code": [
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "instructionArgumentNode({",
+                                        "structFieldTypeNode({",
                                         "    identifier: 'discriminator',",
                                         "    type: numberTypeNode('u8'),",
                                         "    display: structFieldDisplayNode({ skip: 'always' }),",
@@ -4464,14 +4408,15 @@
                                         "        }),",
                                         "        // ...",
                                         "    ],",
-                                        "    arguments: [",
-                                        "        instructionArgumentNode({",
+                                        "    data: structTypeNode([",
+                                        "        structFieldTypeNode({",
                                         "            identifier: 'bump',",
                                         "            type: numberTypeNode('u8'),",
-                                        "            defaultValue: accountBumpValueNode('associatedTokenAccount'),",
+                                        "            defaultValue: injectedValueNode({ key: 'bump' }),",
                                         "        }),",
                                         "        // ...",
-                                        "    ],",
+                                        "    ]),",
+                                        "    provides: [providedNode('bump', accountBumpValueNode('associatedTokenAccount'))],",
                                         "});"
                                     ]
                                 }
@@ -4540,14 +4485,15 @@
                                         "        }),",
                                         "        // ...",
                                         "    ],",
-                                        "    arguments: [",
-                                        "        instructionArgumentNode({",
+                                        "    data: structTypeNode([",
+                                        "        structFieldTypeNode({",
                                         "            identifier: 'decimals',",
                                         "            type: numberTypeNode('u8'),",
-                                        "            defaultValue: accountFieldValueNode('mint', 'decimals'),",
+                                        "            defaultValue: injectedValueNode({ key: 'decimals' }),",
                                         "        }),",
                                         "        // ...",
-                                        "    ],",
+                                        "    ]),",
+                                        "    provides: [providedNode('decimals', accountFieldValueNode('mint', 'decimals'))],",
                                         "});"
                                     ]
                                 }
@@ -4655,25 +4601,26 @@
                             ]
                         },
                         {
-                            "title": "An instruction argument defaulting to another argument",
+                            "title": "An instruction data field defaulting to another field",
                             "code": [
                                 {
                                     "language": "typescript",
                                     "content": [
                                         "instructionNode({",
                                         "    identifier: 'mint',",
-                                        "    arguments: [",
-                                        "        instructionArgumentNode({",
+                                        "    data: structTypeNode([",
+                                        "        structFieldTypeNode({",
                                         "            identifier: 'amount',",
                                         "            type: numberTypeNode('u64'),",
                                         "        }),",
-                                        "        instructionArgumentNode({",
+                                        "        structFieldTypeNode({",
                                         "            identifier: 'amountToDelegate',",
                                         "            type: numberTypeNode('u64'),",
-                                        "            defaultValue: argumentValueNode('amount'),",
+                                        "            defaultValue: injectedValueNode({ key: 'amountToDelegate' }),",
                                         "        }),",
                                         "        // ...",
-                                        "    ],",
+                                        "    ]),",
+                                        "    provides: [providedNode('amountToDelegate', argumentValueNode('amount'))],",
                                         "});"
                                     ]
                                 }
@@ -4777,12 +4724,12 @@
                                         "        }),",
                                         "        // ...",
                                         "    ],",
-                                        "    arguments: [",
-                                        "        instructionArgumentNode({",
+                                        "    data: structTypeNode([",
+                                        "        structFieldTypeNode({",
                                         "            identifier: 'amount',",
                                         "            type: numberTypeNode('u64'),",
                                         "        }),",
-                                        "    ],",
+                                        "    ]),",
                                         "});"
                                     ]
                                 }
@@ -5033,71 +4980,6 @@
                             ]
                         }
                     ]
-                },
-                {
-                    "kind": "resolverValueNode",
-                    "docs": [
-                        "A custom resolver: a named function provided by the consumer that produces a value.",
-                        "May optionally depend on other accounts and arguments resolved at instruction-build time.",
-                        "This node acts as a fallback for any value or logic that cannot easily be described by the other nodes — renderers treat resolvers as functions that can be injected into the generated code."
-                    ],
-                    "attributes": [
-                        {
-                            "name": "identifier",
-                            "type": {
-                                "kind": "string",
-                                "constraint": "identifier"
-                            },
-                            "docs": [
-                                "A unique identifier for the resolver.",
-                                "This is typically the name of the function that renderers will invoke."
-                            ]
-                        },
-                        {
-                            "name": "docs",
-                            "type": {
-                                "kind": "docs"
-                            },
-                            "optional": true,
-                            "docs": [
-                                "Markdown documentation for the resolver."
-                            ]
-                        },
-                        {
-                            "name": "dependsOn",
-                            "type": {
-                                "kind": "array",
-                                "of": {
-                                    "kind": "union",
-                                    "name": "resolverDependency"
-                                }
-                            },
-                            "optional": true,
-                            "docs": [
-                                "The accounts and arguments the resolver depends on. Used by clients to ensure the dependencies are resolved first."
-                            ]
-                        }
-                    ],
-                    "examples": [
-                        {
-                            "title": "Create a resolver value node from a name and options",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "const node = resolverValueNode('resolveCustomTokenProgram', {",
-                                        "    docs: [",
-                                        "        'If the mint account has more than 0 decimals and the ',",
-                                        "        'delegated amount is greater than zero, then we use our ',",
-                                        "        'own custom token program. Otherwise, we use Token 2022.',",
-                                        "    ],",
-                                        "    dependsOn: [accountValueNode('mint'), argumentValueNode('delegatedAmount')],",
-                                        "});"
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
                 }
             ],
             "unions": [
@@ -5139,10 +5021,6 @@
                         {
                             "kind": "node",
                             "name": "programIdValueNode"
-                        },
-                        {
-                            "kind": "node",
-                            "name": "resolverValueNode"
                         }
                     ],
                     "docs": [
@@ -5194,7 +5072,7 @@
                         }
                     ],
                     "docs": [
-                        "Anything that can be used as the input value for an instruction account or argument default.",
+                        "Anything that can be used as the input value for an instruction account default or a conditional branch.",
                         "Covers concrete values, contextual references, and program links."
                     ]
                 },
@@ -5208,30 +5086,10 @@
                         {
                             "kind": "node",
                             "name": "argumentValueNode"
-                        },
-                        {
-                            "kind": "node",
-                            "name": "resolverValueNode"
                         }
                     ],
                     "docs": [
                         "The condition forms accepted by a `conditionalValueNode`."
-                    ]
-                },
-                {
-                    "name": "resolverDependency",
-                    "members": [
-                        {
-                            "kind": "node",
-                            "name": "accountValueNode"
-                        },
-                        {
-                            "kind": "node",
-                            "name": "argumentValueNode"
-                        }
-                    ],
-                    "docs": [
-                        "The dependency forms accepted by a `resolverValueNode`."
                     ]
                 },
                 {
@@ -6196,114 +6054,6 @@
                     ]
                 },
                 {
-                    "kind": "instructionArgumentNode",
-                    "docs": [
-                        "A named argument of an instruction, with its type and an optional default value.",
-                        "Serialised next to each other, the arguments of an instruction form its data.",
-                        "",
-                        "![Diagram](https://github.com/codama-idl/codama/assets/3642397/7e2def82-949a-4663-bdc3-ac599d39d2d2)"
-                    ],
-                    "attributes": [
-                        {
-                            "name": "identifier",
-                            "type": {
-                                "kind": "string",
-                                "constraint": "identifier"
-                            },
-                            "docs": [
-                                "The identifier of the argument."
-                            ]
-                        },
-                        {
-                            "name": "defaultValueStrategy",
-                            "type": {
-                                "kind": "enumeration",
-                                "name": "defaultValueStrategy"
-                            },
-                            "optional": true,
-                            "docs": [
-                                "How a configured default value is exposed in generated APIs.",
-                                "Only relevant when `defaultValue` is set; when absent, `optional` is assumed."
-                            ]
-                        },
-                        {
-                            "name": "docs",
-                            "type": {
-                                "kind": "docs"
-                            },
-                            "optional": true,
-                            "docs": [
-                                "Markdown documentation for the argument."
-                            ]
-                        },
-                        {
-                            "name": "type",
-                            "type": {
-                                "kind": "union",
-                                "name": "typeNode"
-                            },
-                            "docs": [
-                                "The type of the argument."
-                            ]
-                        },
-                        {
-                            "name": "defaultValue",
-                            "type": {
-                                "kind": "union",
-                                "name": "instructionInputValueNode"
-                            },
-                            "optional": true,
-                            "docs": [
-                                "A default value used when the argument is omitted by callers."
-                            ]
-                        },
-                        {
-                            "name": "display",
-                            "type": {
-                                "kind": "node",
-                                "name": "structFieldDisplayNode"
-                            },
-                            "optional": true,
-                            "docs": [
-                                "Display metadata describing how the argument is presented."
-                            ]
-                        }
-                    ],
-                    "examples": [
-                        {
-                            "title": "An argument with a default value",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "instructionArgumentNode({",
-                                        "    identifier: 'amount',",
-                                        "    type: numberTypeNode('u64'),",
-                                        "    defaultValue: numberValueNode(0),",
-                                        "});"
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "title": "An argument with an omitted default value",
-                            "code": [
-                                {
-                                    "language": "typescript",
-                                    "content": [
-                                        "instructionArgumentNode({",
-                                        "    identifier: 'instructionDiscriminator',",
-                                        "    type: numberTypeNode('u8'),",
-                                        "    defaultValue: numberValueNode(42),",
-                                        "    defaultValueStrategy: 'omitted',",
-                                        "});"
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
                     "kind": "instructionByteDeltaNode",
                     "docs": [
                         "A byte-size delta applied when computing rent or buffer size — typically used by instructions that resize accounts.",
@@ -6316,8 +6066,7 @@
                                 "kind": "boolean"
                             },
                             "docs": [
-                                "Whether the delta includes the account header overhead — i.e. 128 bytes.",
-                                "Defaults to `false` when the value is a `resolverValueNode` and `true` otherwise."
+                                "Whether the delta includes the account header overhead — i.e. 128 bytes."
                             ]
                         },
                         {
@@ -6337,7 +6086,7 @@
                                 "name": "instructionByteDeltaValue"
                             },
                             "docs": [
-                                "The source of the delta value — a literal number, a referenced account or argument, or a resolver."
+                                "The source of the delta value — a literal number, the size of a linked account, or a value within the instruction data."
                             ]
                         }
                     ],
@@ -6380,7 +6129,7 @@
                 {
                     "kind": "instructionNode",
                     "docs": [
-                        "A program instruction: its accounts, arguments, byte-delta hints, discriminators, optional status, and optional sub-instructions.",
+                        "A program instruction: its accounts, data, byte-delta hints, discriminators, optional status, and optional sub-instructions.",
                         "",
                         "![Diagram](https://github.com/codama-idl/codama/assets/3642397/0d8edced-cfa4-4500-b80c-ebc56181a338)"
                     ],
@@ -6431,31 +6180,16 @@
                             ]
                         },
                         {
-                            "name": "arguments",
+                            "name": "data",
                             "type": {
-                                "kind": "array",
-                                "of": {
-                                    "kind": "node",
-                                    "name": "instructionArgumentNode"
-                                }
-                            },
-                            "docs": [
-                                "The serialised arguments of the instruction, in order."
-                            ]
-                        },
-                        {
-                            "name": "extraArguments",
-                            "type": {
-                                "kind": "array",
-                                "of": {
-                                    "kind": "node",
-                                    "name": "instructionArgumentNode"
-                                }
+                                "kind": "union",
+                                "name": "typeNode"
                             },
                             "optional": true,
                             "docs": [
-                                "Additional arguments exposed in the generated client API but not serialised on the wire.",
-                                "Typically useful for feeding the default values of other arguments or accounts."
+                                "The type describing the serialised instruction data — any type node, including a `definedTypeLinkNode`. Typically a struct whose fields are the instruction arguments.",
+                                "When absent, the instruction serialises no data.",
+                                "Contextual defaults use the inject/provide pattern: a field default may be an `injectedValueNode` whose key is fulfilled by the `provides` list of the instruction."
                             ]
                         },
                         {
@@ -6539,7 +6273,8 @@
                             "optional": true,
                             "docs": [
                                 "Named nodes exposed to consumers in the surrounding scope.",
-                                "Each entry pairs with an `injectedValueNode` that references it by key, so reusable types can pull contextual values without naming siblings directly."
+                                "Each entry pairs with an `injectedValueNode` that references it by key, so reusable types can pull contextual values without naming siblings directly.",
+                                "IDLs must be self-contained: every injection key in scope must resolve to a provided entry or carry a fallback."
                             ]
                         },
                         {
@@ -6567,14 +6302,39 @@
                                         "        instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: true }),",
                                         "        instructionAccountNode({ identifier: 'authority', isWritable: false, isSigner: false }),",
                                         "    ],",
-                                        "    arguments: [",
-                                        "        instructionArgumentNode({",
+                                        "    data: structTypeNode([",
+                                        "        structFieldTypeNode({",
                                         "            identifier: 'discriminator',",
                                         "            type: numberTypeNode('u8'),",
                                         "            defaultValue: numberValueNode(42),",
                                         "            defaultValueStrategy: 'omitted',",
                                         "        }),",
+                                        "    ]),",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An instruction providing a contextual default",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    identifier: 'createAccount',",
+                                        "    accounts: [",
+                                        "        instructionAccountNode({ identifier: 'payer', isWritable: true, isSigner: true }),",
+                                        "        instructionAccountNode({ identifier: 'newAccount', isWritable: true, isSigner: true }),",
                                         "    ],",
+                                        "    data: structTypeNode([",
+                                        "        structFieldTypeNode({",
+                                        "            identifier: 'bump',",
+                                        "            type: numberTypeNode('u8'),",
+                                        "            defaultValue: injectedValueNode({ key: 'bump' }),",
+                                        "        }),",
+                                        "    ]),",
+                                        "    provides: [providedNode('bump', accountBumpValueNode('newAccount'))],",
                                         "});"
                                     ]
                                 }
@@ -6626,7 +6386,7 @@
                                         "instructionNode({",
                                         "    identifier: 'multisigIncrement',",
                                         "    accounts: [instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: false })],",
-                                        "    remainingAccounts: [instructionRemainingAccountsNode(argumentValueNode('authorities'), { isSigner: true })],",
+                                        "    remainingAccounts: [instructionRemainingAccountsNode('authorities', { isSigner: true })],",
                                         "});"
                                     ]
                                 }
@@ -6644,23 +6404,23 @@
                                         "        instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: 'either' }),",
                                         "        instructionAccountNode({ identifier: 'authority', isWritable: false, isSigner: true }),",
                                         "    ],",
-                                        "    arguments: [",
-                                        "        instructionArgumentNode({ identifier: 'version', type: numberTypeNode('u8') }),",
-                                        "        instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u8') }),",
-                                        "    ],",
+                                        "    data: structTypeNode([",
+                                        "        structFieldTypeNode({ identifier: 'version', type: numberTypeNode('u8') }),",
+                                        "        structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u8') }),",
+                                        "    ]),",
                                         "    subInstructions: [",
                                         "        instructionNode({",
                                         "            identifier: 'incrementV1',",
                                         "            accounts: [instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: true })],",
-                                        "            arguments: [",
-                                        "                instructionArgumentNode({",
+                                        "            data: structTypeNode([",
+                                        "                structFieldTypeNode({",
                                         "                    identifier: 'version',",
                                         "                    type: numberTypeNode('u8'),",
                                         "                    defaultValue: numberValueNode(0),",
                                         "                    defaultValueStrategy: 'omitted',",
                                         "                }),",
-                                        "                instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u8') }),",
-                                        "            ],",
+                                        "                structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u8') }),",
+                                        "            ]),",
                                         "        }),",
                                         "        instructionNode({",
                                         "            identifier: 'incrementV2',",
@@ -6668,15 +6428,15 @@
                                         "                instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: false }),",
                                         "                instructionAccountNode({ identifier: 'authority', isWritable: false, isSigner: true }),",
                                         "            ],",
-                                        "            arguments: [",
-                                        "                instructionArgumentNode({",
+                                        "            data: structTypeNode([",
+                                        "                structFieldTypeNode({",
                                         "                    identifier: 'version',",
                                         "                    type: numberTypeNode('u8'),",
                                         "                    defaultValue: numberValueNode(1),",
                                         "                    defaultValueStrategy: 'omitted',",
                                         "                }),",
-                                        "                instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u8') }),",
-                                        "            ],",
+                                        "                structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u8') }),",
+                                        "            ]),",
                                         "        }),",
                                         "    ],",
                                         "});"
@@ -6697,7 +6457,7 @@
                                         "        'Use the `increment` instruction instead. This will be removed in v3.0.0.',",
                                         "    ),",
                                         "    accounts: [instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: false })],",
-                                        "    arguments: [instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u8') })],",
+                                        "    data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u8') })]),",
                                         "});"
                                     ]
                                 }
@@ -6719,7 +6479,7 @@
                                         "        instructionAccountNode({ identifier: 'source', isWritable: true, isSigner: true }),",
                                         "        instructionAccountNode({ identifier: 'destination', isWritable: true, isSigner: false }),",
                                         "    ],",
-                                        "    arguments: [instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u64') })],",
+                                        "    data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') })]),",
                                         "});"
                                     ]
                                 }
@@ -6735,7 +6495,6 @@
                                         "    identifier: 'experimentalFeature',",
                                         "    status: instructionStatusNode('draft', 'This instruction is under development and may change.'),",
                                         "    accounts: [instructionAccountNode({ identifier: 'config', isWritable: true, isSigner: true })],",
-                                        "    arguments: [],",
                                         "});"
                                     ]
                                 }
@@ -6746,9 +6505,20 @@
                 {
                     "kind": "instructionRemainingAccountsNode",
                     "docs": [
-                        "A \"remaining accounts\" slot in an instruction — a variable-length tail of accounts derived from a value."
+                        "A \"remaining accounts\" slot in an instruction — a variable-length tail of accounts appended after the named account slots.",
+                        "Like `instructionAccountNode`, it declares a client input: the identifier names the account-list input exposed to callers. Renderers with matching plugins may fill it automatically."
                     ],
                     "attributes": [
+                        {
+                            "name": "identifier",
+                            "type": {
+                                "kind": "string",
+                                "constraint": "identifier"
+                            },
+                            "docs": [
+                                "The identifier of the account-list input exposed to callers."
+                            ]
+                        },
                         {
                             "name": "isOptional",
                             "type": {
@@ -6796,16 +6566,6 @@
                             ]
                         },
                         {
-                            "name": "value",
-                            "type": {
-                                "kind": "union",
-                                "name": "instructionRemainingAccountsValue"
-                            },
-                            "docs": [
-                                "The source of the remaining-accounts list — a referenced argument or a resolver."
-                            ]
-                        },
-                        {
                             "name": "display",
                             "type": {
                                 "kind": "node",
@@ -6824,7 +6584,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "instructionRemainingAccountsNode(argumentValueNode('authorities'), {",
+                                        "instructionRemainingAccountsNode('authorities', {",
                                         "    isSigner: true,",
                                         "    isOptional: true,",
                                         "});"
@@ -6838,7 +6598,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "instructionRemainingAccountsNode(argumentValueNode('authorities'), {",
+                                        "instructionRemainingAccountsNode('authorities', {",
                                         "    isSigner: 'either',",
                                         "});"
                                     ]
@@ -6846,17 +6606,22 @@
                             ]
                         },
                         {
-                            "title": "Remaining accounts using a resolver",
+                            "title": "Remaining accounts auto-filled by a renderer plugin",
                             "code": [
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "instructionRemainingAccountsNode(",
-                                        "    resolverValueNode('resolveTransferRemainingAccounts', {",
-                                        "        docs: ['Provide authorities as remaining accounts if and only if the asset has a multisig set up.'],",
-                                        "        dependsOn: [argumentValueNode('hasMultisig'), argumentValueNode('authorities')],",
-                                        "    }),",
-                                        ");"
+                                        "// The identifier honestly declares a client input; renderers with a matching",
+                                        "// plugin may fill it automatically, others expose it as a plain input.",
+                                        "instructionRemainingAccountsNode('authorities', {",
+                                        "    isSigner: true,",
+                                        "    docs: ['Provide authorities as remaining accounts if and only if the asset has a multisig set up.'],",
+                                        "    plugins: [",
+                                        "        pluginNode('codama.jsResolver', {",
+                                        "            payload: { function: 'resolveTransferRemainingAccounts', dependsOn: ['data.hasMultisig'] },",
+                                        "        }),",
+                                        "    ],",
+                                        "});"
                                     ]
                                 }
                             ]
@@ -7256,8 +7021,9 @@
                 {
                     "kind": "providedNode",
                     "docs": [
-                        "Exposes a node under a name so consumers in the surrounding scope can resolve it by that key.",
-                        "Sits inside a host's `provides` list and pairs with `injectedValueNode` on the consumer side: an injection with the matching key resolves to this entry's `node`."
+                        "Exposes a node under a key so consumers in the surrounding scope can resolve it.",
+                        "Sits inside a host's `provides` list and pairs with `injectedValueNode` on the consumer side: an injection with the matching key resolves to this entry's `node`.",
+                        "Scoping is lexical: the nearest enclosing `provides` entry for a key wins, shadowing entries from outer scopes."
                     ],
                     "attributes": [
                         {
@@ -7301,14 +7067,14 @@
                                         "instructionNode({",
                                         "    identifier: 'transferChecked',",
                                         "    provides: [providedNode('decimals', numberValueNode(9))],",
-                                        "    arguments: [",
-                                        "        instructionArgumentNode({",
+                                        "    data: structTypeNode([",
+                                        "        structFieldTypeNode({",
                                         "            identifier: 'decimals',",
                                         "            type: numberTypeNode('u8'),",
                                         "            defaultValue: injectedValueNode({ key: 'decimals' }),",
                                         "        }),",
                                         "        // ...",
-                                        "    ],",
+                                        "    ]),",
                                         "});"
                                     ]
                                 }
@@ -7420,32 +7186,11 @@
                         {
                             "kind": "node",
                             "name": "numberValueNode"
-                        },
-                        {
-                            "kind": "node",
-                            "name": "resolverValueNode"
                         }
                     ],
                     "docs": [
                         "The value forms accepted by an `instructionByteDeltaNode`.",
-                        "An `accountLinkNode` uses the size of the linked account; an `argumentValueNode` uses the value of the referenced instruction argument; a `numberValueNode` uses that explicit number; and a `resolverValueNode` acts as a fallback for more complex values."
-                    ]
-                },
-                {
-                    "name": "instructionRemainingAccountsValue",
-                    "members": [
-                        {
-                            "kind": "node",
-                            "name": "argumentValueNode"
-                        },
-                        {
-                            "kind": "node",
-                            "name": "resolverValueNode"
-                        }
-                    ],
-                    "docs": [
-                        "The value forms accepted by an `instructionRemainingAccountsNode`.",
-                        "An `argumentValueNode` represents the array of accounts as a new argument of the provided name; a `resolverValueNode` acts as a fallback for more complex scenarios."
+                        "An `accountLinkNode` uses the size of the linked account; an `argumentValueNode` uses a value within the instruction data; and a `numberValueNode` uses that explicit number."
                     ]
                 }
             ],

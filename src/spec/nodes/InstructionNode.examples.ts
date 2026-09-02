@@ -12,14 +12,37 @@ instructionNode({
         instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: true }),
         instructionAccountNode({ identifier: 'authority', isWritable: false, isSigner: false }),
     ],
-    arguments: [
-        instructionArgumentNode({
+    data: structTypeNode([
+        structFieldTypeNode({
             identifier: 'discriminator',
             type: numberTypeNode('u8'),
             defaultValue: numberValueNode(42),
             defaultValueStrategy: 'omitted',
         }),
+    ]),
+});
+`,
+        ),
+    ),
+    example(
+        'An instruction providing a contextual default',
+        code(
+            'typescript',
+            `
+instructionNode({
+    identifier: 'createAccount',
+    accounts: [
+        instructionAccountNode({ identifier: 'payer', isWritable: true, isSigner: true }),
+        instructionAccountNode({ identifier: 'newAccount', isWritable: true, isSigner: true }),
     ],
+    data: structTypeNode([
+        structFieldTypeNode({
+            identifier: 'bump',
+            type: numberTypeNode('u8'),
+            defaultValue: injectedValueNode({ key: 'bump' }),
+        }),
+    ]),
+    provides: [providedNode('bump', accountBumpValueNode('newAccount'))],
 });
 `,
         ),
@@ -65,7 +88,7 @@ instructionNode({
 instructionNode({
     identifier: 'multisigIncrement',
     accounts: [instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: false })],
-    remainingAccounts: [instructionRemainingAccountsNode(argumentValueNode('authorities'), { isSigner: true })],
+    remainingAccounts: [instructionRemainingAccountsNode('authorities', { isSigner: true })],
 });
 `,
         ),
@@ -81,23 +104,23 @@ instructionNode({
         instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: 'either' }),
         instructionAccountNode({ identifier: 'authority', isWritable: false, isSigner: true }),
     ],
-    arguments: [
-        instructionArgumentNode({ identifier: 'version', type: numberTypeNode('u8') }),
-        instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u8') }),
-    ],
+    data: structTypeNode([
+        structFieldTypeNode({ identifier: 'version', type: numberTypeNode('u8') }),
+        structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u8') }),
+    ]),
     subInstructions: [
         instructionNode({
             identifier: 'incrementV1',
             accounts: [instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: true })],
-            arguments: [
-                instructionArgumentNode({
+            data: structTypeNode([
+                structFieldTypeNode({
                     identifier: 'version',
                     type: numberTypeNode('u8'),
                     defaultValue: numberValueNode(0),
                     defaultValueStrategy: 'omitted',
                 }),
-                instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u8') }),
-            ],
+                structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u8') }),
+            ]),
         }),
         instructionNode({
             identifier: 'incrementV2',
@@ -105,15 +128,15 @@ instructionNode({
                 instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: false }),
                 instructionAccountNode({ identifier: 'authority', isWritable: false, isSigner: true }),
             ],
-            arguments: [
-                instructionArgumentNode({
+            data: structTypeNode([
+                structFieldTypeNode({
                     identifier: 'version',
                     type: numberTypeNode('u8'),
                     defaultValue: numberValueNode(1),
                     defaultValueStrategy: 'omitted',
                 }),
-                instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u8') }),
-            ],
+                structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u8') }),
+            ]),
         }),
     ],
 });
@@ -132,7 +155,7 @@ instructionNode({
         'Use the \`increment\` instruction instead. This will be removed in v3.0.0.',
     ),
     accounts: [instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: false })],
-    arguments: [instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u8') })],
+    data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u8') })]),
 });
 `,
         ),
@@ -152,7 +175,7 @@ instructionNode({
         instructionAccountNode({ identifier: 'source', isWritable: true, isSigner: true }),
         instructionAccountNode({ identifier: 'destination', isWritable: true, isSigner: false }),
     ],
-    arguments: [instructionArgumentNode({ identifier: 'amount', type: numberTypeNode('u64') })],
+    data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') })]),
 });
 `,
         ),
@@ -166,7 +189,6 @@ instructionNode({
     identifier: 'experimentalFeature',
     status: instructionStatusNode('draft', 'This instruction is under development and may change.'),
     accounts: [instructionAccountNode({ identifier: 'config', isWritable: true, isSigner: true })],
-    arguments: [],
 });
 `,
         ),

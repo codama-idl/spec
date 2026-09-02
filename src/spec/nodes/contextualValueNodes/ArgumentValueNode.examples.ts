@@ -20,24 +20,25 @@ argumentValueNode('config.fees[0]');
         ),
     ),
     example(
-        'An instruction argument defaulting to another argument',
+        'An instruction data field defaulting to another field',
         code(
             'typescript',
             `
 instructionNode({
     identifier: 'mint',
-    arguments: [
-        instructionArgumentNode({
+    data: structTypeNode([
+        structFieldTypeNode({
             identifier: 'amount',
             type: numberTypeNode('u64'),
         }),
-        instructionArgumentNode({
+        structFieldTypeNode({
             identifier: 'amountToDelegate',
             type: numberTypeNode('u64'),
-            defaultValue: argumentValueNode('amount'),
+            defaultValue: injectedValueNode({ key: 'amountToDelegate' }),
         }),
         // ...
-    ],
+    ]),
+    provides: [providedNode('amountToDelegate', argumentValueNode('amount'))],
 });
 `,
         ),

@@ -13,7 +13,7 @@ import { examples } from './InstructionNode.examples';
 
 export const instructionNode = defineNode('instructionNode', {
     docs: [
-        'A program instruction: its accounts, arguments, byte-delta hints, discriminators, optional status, and optional sub-instructions.',
+        'A program instruction: its accounts, data, byte-delta hints, discriminators, optional status, and optional sub-instructions.',
         '',
         '![Diagram](https://github.com/codama-idl/codama/assets/3642397/0d8edced-cfa4-4500-b80c-ebc56181a338)',
     ],
@@ -33,13 +33,11 @@ export const instructionNode = defineNode('instructionNode', {
         attribute('accounts', array(node('instructionAccountNode')), {
             docs: ['The accounts the instruction operates on, in order.'],
         }),
-        attribute('arguments', array(node('instructionArgumentNode')), {
-            docs: ['The serialised arguments of the instruction, in order.'],
-        }),
-        optionalAttribute('extraArguments', array(node('instructionArgumentNode')), {
+        optionalAttribute('data', union('typeNode'), {
             docs: [
-                'Additional arguments exposed in the generated client API but not serialised on the wire.',
-                'Typically useful for feeding the default values of other arguments or accounts.',
+                'The type describing the serialised instruction data — any type node, including a `definedTypeLinkNode`. Typically a struct whose fields are the instruction arguments.',
+                'When absent, the instruction serialises no data.',
+                'Contextual defaults use the inject/provide pattern: a field default may be an `injectedValueNode` whose key is fulfilled by the `provides` list of the instruction.',
             ],
         }),
         optionalAttribute('remainingAccounts', array(node('instructionRemainingAccountsNode')), {
@@ -69,6 +67,7 @@ export const instructionNode = defineNode('instructionNode', {
             docs: [
                 'Named nodes exposed to consumers in the surrounding scope.',
                 'Each entry pairs with an `injectedValueNode` that references it by key, so reusable types can pull contextual values without naming siblings directly.',
+                'IDLs must be self-contained: every injection key in scope must resolve to a provided entry or carry a fallback.',
             ],
         }),
         optionalAttribute('display', node('instructionDisplayNode'), {

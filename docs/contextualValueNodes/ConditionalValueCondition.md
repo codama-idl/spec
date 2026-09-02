@@ -6,4 +6,3 @@ One of the following:
 
 - [`AccountValueNode`](./AccountValueNode.md)
 - [`ArgumentValueNode`](./ArgumentValueNode.md)
-- [`ResolverValueNode`](./ResolverValueNode.md)

@@ -41,12 +41,12 @@ instructionNode({
         }),
         // ...
     ],
-    arguments: [
-        instructionArgumentNode({
+    data: structTypeNode([
+        structFieldTypeNode({
             identifier: 'amount',
             type: numberTypeNode('u64'),
         }),
-    ],
+    ]),
 });
 `,
         ),

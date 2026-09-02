@@ -13,4 +13,3 @@ One of the following:
 - [`PayerValueNode`](./PayerValueNode.md)
 - [`PdaValueNode`](./PdaValueNode.md)
 - [`ProgramIdValueNode`](./ProgramIdValueNode.md)
-- [`ResolverValueNode`](./ResolverValueNode.md)

@@ -11,7 +11,6 @@ import {
     pdaValuePdaUnion,
     pdaValueProgramIdUnion,
     registeredContextualValueNodeUnion,
-    resolverDependencyUnion,
     standaloneContextualValueNodeUnion,
 } from './ContextualValueNode';
 import { identityValueNode } from './IdentityValueNode';
@@ -19,7 +18,6 @@ import { payerValueNode } from './PayerValueNode';
 import { pdaSeedValueNode } from './PdaSeedValueNode';
 import { pdaValueNode } from './PdaValueNode';
 import { programIdValueNode } from './ProgramIdValueNode';
-import { resolverValueNode } from './ResolverValueNode';
 
 export const ALL_CONTEXTUAL_VALUE_NODES = [
     accountBumpValueNode,
@@ -32,7 +30,6 @@ export const ALL_CONTEXTUAL_VALUE_NODES = [
     pdaSeedValueNode,
     pdaValueNode,
     programIdValueNode,
-    resolverValueNode,
 ] as const;
 
 export const ALL_CONTEXTUAL_VALUE_NODE_UNIONS = [
@@ -41,7 +38,6 @@ export const ALL_CONTEXTUAL_VALUE_NODE_UNIONS = [
     registeredContextualValueNodeUnion,
     instructionInputValueNodeUnion,
     conditionalValueConditionUnion,
-    resolverDependencyUnion,
     pdaSeedValueValueUnion,
     pdaValuePdaUnion,
     pdaValueProgramIdUnion,

@@ -8,17 +8,14 @@ export const instructionByteDeltaNode = defineNode('instructionByteDeltaNode', {
     ],
     attributes: [
         attribute('withHeader', boolean(), {
-            docs: [
-                'Whether the delta includes the account header overhead — i.e. 128 bytes.',
-                'Defaults to `false` when the value is a `resolverValueNode` and `true` otherwise.',
-            ],
+            docs: ['Whether the delta includes the account header overhead — i.e. 128 bytes.'],
         }),
         optionalAttribute('subtract', boolean(), {
             docs: ['When `true`, the delta is subtracted from the running size instead of added. Defaults to `false`.'],
         }),
         attribute('value', union('instructionByteDeltaValue'), {
             docs: [
-                'The source of the delta value — a literal number, a referenced account or argument, or a resolver.',
+                'The source of the delta value — a literal number, the size of a linked account, or a value within the instruction data.',
             ],
         }),
     ],

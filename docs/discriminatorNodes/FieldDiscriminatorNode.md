@@ -48,15 +48,15 @@ accountNode({
 
 ```typescript
 instructionNode({
-    arguments: [
-        instructionArgumentNode({
+    data: structTypeNode([
+        structFieldTypeNode({
             identifier: 'discriminator',
             type: bytesTypeNode({ transforms: [fixedSizeTransformNode(8)] }),
             defaultValue: bytesValueNode('base16', '0011223344556677'),
             defaultValueStrategy: 'omitted',
         }),
         // ...
-    ],
+    ]),
     discriminators: [fieldDiscriminatorNode('discriminator')],
     // ...
 });

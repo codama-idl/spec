@@ -25,14 +25,15 @@ instructionNode({
         }),
         // ...
     ],
-    arguments: [
-        instructionArgumentNode({
+    data: structTypeNode([
+        structFieldTypeNode({
             identifier: 'bump',
             type: numberTypeNode('u8'),
-            defaultValue: accountBumpValueNode('associatedTokenAccount'),
+            defaultValue: injectedValueNode({ key: 'bump' }),
         }),
         // ...
-    ],
+    ]),
+    provides: [providedNode('bump', accountBumpValueNode('associatedTokenAccount'))],
 });
 `,
         ),
