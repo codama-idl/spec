@@ -15,7 +15,6 @@ describe('ref helpers', () => {
     it.each<{ ref: DocRef; expected: DocRefKey }>([
         { ref: { kind: 'node', name: 'typeNode' }, expected: 'node:typeNode' },
         { ref: { kind: 'union', name: 'typeNode' }, expected: 'union:typeNode' },
-        { ref: { kind: 'nestedUnion', name: 'typeNode' }, expected: 'nestedUnion:typeNode' },
         { ref: { kind: 'enumeration', name: 'typeNode' }, expected: 'enumeration:typeNode' },
         { ref: { kind: 'categoryIndex', category: 'typeNode' }, expected: 'categoryIndex:typeNode' },
         { ref: { kind: 'rootIndex' }, expected: 'rootIndex:root' },

@@ -13,8 +13,6 @@ import type { DocExamples } from './example';
 
 export type IntegerWidth = 'i8' | 'i16' | 'i32' | 'i64' | 'i128' | 'u8' | 'u16' | 'u32' | 'u64' | 'u128';
 
-export type FloatWidth = 'f32' | 'f64';
-
 /**
  * Constraints a `string` type expression may carry:
  *
@@ -80,10 +78,10 @@ export type LiteralValue = boolean | number | string;
  * Constituents are listed alphabetically by `kind` to satisfy the lint
  * rule; logical grouping lives in the doc comments below.
  *
- * Leaf primitives:    address, boolean, docs, float, integer, json, literal, literalUnion, string.
- * Named references:   codamaVersion, enumeration, nestedUnion, node, union.
+ * Leaf primitives:    address, boolean, docs, integer, json, literal, literalUnion, string.
+ * Named references:   codamaVersion, enumeration, node, union.
  * Anonymous nodes:    anyNode (any node kind defined by the spec).
- * Compounds:          array, tuple.
+ * Compounds:          array.
  */
 export type TypeExpr =
     /**
@@ -117,7 +115,6 @@ export type TypeExpr =
      */
     | { readonly kind: 'docs' }
     | { readonly kind: 'enumeration'; readonly name: string }
-    | { readonly kind: 'float'; readonly width: FloatWidth }
     | { readonly kind: 'integer'; readonly width: IntegerWidth }
     | { readonly kind: 'json' }
     | { readonly kind: 'literal'; readonly value: LiteralValue }
@@ -127,15 +124,8 @@ export type TypeExpr =
      * enumeration. The values list must be unique.
      */
     | { readonly kind: 'literalUnion'; readonly values: readonly LiteralValue[] }
-    /**
-     * A reference to a node, wrapped by a named `NestedUnion` recursive
-     * alias. `alias` is the alias name (e.g. `'nestedTypeNode'`) declared
-     * via `defineNestedUnion`; `name` is the inner node kind being wrapped.
-     */
-    | { readonly kind: 'nestedUnion'; readonly alias: string; readonly name: string }
     | { readonly kind: 'node'; readonly name: string }
     | { readonly kind: 'string'; readonly constraint?: StringConstraint }
-    | { readonly kind: 'tuple'; readonly items: readonly TypeExpr[] }
     | { readonly kind: 'union'; readonly name: string };
 
 /**
@@ -198,33 +188,6 @@ export interface EnumerationSpec {
 }
 
 /**
- * A recursive type alias, e.g. `nestedTypeNode<T>`. Codegen renders one
- * alternative per wrapper kind, plus the base case:
- *
- * ```ts
- * type Alias<T extends Base> = Wrapper1<Alias<T>> | Wrapper2<Alias<T>> | … | T;
- * ```
- *
- * Use the `nestedUnion(alias, innerKind)` `TypeExpr` helper to reference
- * an instance of this alias from an attribute.
- */
-export interface NestedUnionSpec {
-    /** The alias name emitted by codegen (e.g. `'nestedTypeNode'`). */
-    readonly name: string;
-    readonly docs?: Docs;
-    /**
-     * The base type the recursion bottoms out in. Codegen renders this as
-     * the alias's type-parameter constraint and as the final union arm.
-     */
-    readonly base: TypeExpr;
-    /**
-     * Node kinds that act as wrappers in the recursion. Each must be a
-     * node whose attribute structure can wrap another `NestedUnion<T>`.
-     */
-    readonly wrappers: readonly string[];
-}
-
-/**
  * Attributes shared by every node of a spec — its "base node" shape.
  *
  * Codegen targets append these after each node's declared attributes (and
@@ -256,7 +219,6 @@ export interface CategorySpec {
     readonly nodes: readonly NodeSpec[];
     readonly unions: readonly UnionSpec[];
     readonly enumerations: readonly EnumerationSpec[];
-    readonly nestedUnions: readonly NestedUnionSpec[];
 }
 
 /** The full Codama spec for a single Codama major version. */

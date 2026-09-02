@@ -214,7 +214,6 @@ describe('spec — typeNode union composition', () => {
         ]) {
             expect(getNode(wrapper), `wrapper "${wrapper}" should no longer exist`).toBeUndefined();
         }
-        expect(getSpec().categories.every(c => c.nestedUnions.length === 0)).toBe(true);
     });
 });
 

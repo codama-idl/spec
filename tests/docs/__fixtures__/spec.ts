@@ -4,7 +4,6 @@ import {
     code,
     defineCategory,
     defineEnumeration,
-    defineNestedUnion,
     defineNode,
     defineUnion,
     example,
@@ -31,7 +30,6 @@ const numberTypeNode = defineNode('numberTypeNode', {
     ],
 });
 const typeNode = defineUnion('typeNode', { members: [node('numberTypeNode')] });
-const nestedTypeNode = defineNestedUnion('nestedTypeNode', { base: union('typeNode'), wrappers: ['numberTypeNode'] });
 // A node with both a union child (typeNode) and a node child (constantPdaSeedValue) plus plain data.
 // Its docs follow the line convention: one entry per line, blank entries separating paragraphs,
 // with a fenced snippet and a callout to exercise multi-line markdown constructs.
@@ -68,7 +66,6 @@ const helperUnion = defineUnion('helperUnion', { members: [node('pdaNode')] });
 export const typeCategory = defineCategory('type', {
     nodes: [numberTypeNode],
     unions: [typeNode],
-    nestedUnions: [nestedTypeNode],
 });
 export const pdaSeedCategory = defineCategory('pdaSeed', {
     nodes: [constantPdaSeedNode, constantPdaSeedValue],

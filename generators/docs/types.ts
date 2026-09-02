@@ -1,12 +1,11 @@
 /**
  * A name-only reference to a doc page - the identity used for links and navigation.
- * Entity kinds (node, union, nestedUnion, enumeration) map 1:1 onto TypeExpr ref arms.
+ * Entity kinds (node, union, enumeration) map 1:1 onto TypeExpr ref arms.
  * `categoryIndex` and `rootIndex` are structural, doc-only pages.
  */
 export type DocRef =
     | { readonly kind: 'node'; readonly name: string }
     | { readonly kind: 'union'; readonly name: string }
-    | { readonly kind: 'nestedUnion'; readonly name: string }
     | { readonly kind: 'enumeration'; readonly name: string }
     | { readonly kind: 'categoryIndex'; readonly category: string }
     | { readonly kind: 'rootIndex' };
@@ -33,7 +32,7 @@ export interface DocPage {
  * };
  */
 export interface CategoryGroup {
-    readonly kind: 'node' | 'union' | 'nestedUnion' | 'enumeration';
+    readonly kind: 'node' | 'union' | 'enumeration';
     readonly items: readonly CategoryGroupItem[];
 }
 

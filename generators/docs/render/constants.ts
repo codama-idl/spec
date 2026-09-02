@@ -77,7 +77,6 @@ export const PREVIOUS_MAJOR_DOCS: readonly { label: string; url: string }[] = [
 export const GROUP_TITLES: Record<CategoryGroup['kind'], string> = {
     node: 'Nodes',
     union: 'Unions',
-    nestedUnion: 'Nested unions',
     enumeration: 'Enumerations',
 };
 

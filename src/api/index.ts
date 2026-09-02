@@ -10,7 +10,6 @@ export * from './compounds';
 export * from './defineBase';
 export * from './defineCategory';
 export * from './defineEnumeration';
-export * from './defineNestedUnion';
 export * from './defineNode';
 export * from './defineUnion';
 export * from './example';

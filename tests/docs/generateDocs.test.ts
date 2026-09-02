@@ -83,12 +83,6 @@ describe('generateDocs - non-node page types', () => {
         expect(content).toContain('One of the following:');
         expect(content).toContain('- [`NumberTypeNode`](./NumberTypeNode.md)');
     });
-    it('nestedUnion page: Base + Wrappers', () => {
-        const content = pageOfKind(model, 'nestedUnion', 'nestedTypeNode').content;
-        expect(content.startsWith('# NestedTypeNode (recursive)')).toBe(true);
-        expect(content).toContain('Base: [`TypeNode`]');
-        expect(content).toContain('## Wrappers');
-    });
     it('enumeration page: Variants list', () => {
         const content = pageOfKind(model, 'enumeration', 'numberFormat').content;
         expect(content.startsWith('# NumberFormat')).toBe(true);

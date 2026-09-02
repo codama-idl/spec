@@ -6,7 +6,6 @@ import type {
     DocExample,
     DocExamples,
     EnumerationSpec,
-    NestedUnionSpec,
     NodeSpec,
     Spec,
     UnionSpec,
@@ -135,31 +134,6 @@ export function renderUnionPage(union: UnionSpec, ctx: RenderCtx): DocPage {
     };
 }
 
-export function renderNestedUnionPage(nestedUnion: NestedUnionSpec, ctx: RenderCtx): DocPage {
-    const { markup } = ctx;
-    const ref: DocRef = { kind: 'nestedUnion', name: nestedUnion.name };
-    const linkTo = linkFrom(ctx, ref);
-    const wrappers = markup.list(
-        'bulleted',
-        nestedUnion.wrappers.map(wrapper => linkedEntity({ kind: 'node', name: wrapper }, markup, linkTo)),
-    );
-    const parts: (string | undefined)[] = [
-        // header
-        markup.heading(1, `${pascalCase(nestedUnion.name)} (recursive)`),
-        // description
-        renderSpecDocs(nestedUnion.docs, markup),
-        // body: base type
-        markup.paragraph(`Base: ${renderType(nestedUnion.base, markup, linkTo)}`),
-        // body: wrappers section
-        `${markup.heading(2, 'Wrappers')}${BLOCK_SEPARATOR}${wrappers}`,
-    ];
-    return {
-        ref,
-        pathSegments: ctx.registry.lookup(ref).pathSegments,
-        content: parts.filter(Boolean).join(BLOCK_SEPARATOR),
-    };
-}
-
 export function renderEnumPage(enumeration: EnumerationSpec, ctx: RenderCtx): DocPage {
     const { markup } = ctx;
     const ref: DocRef = { kind: 'enumeration', name: enumeration.name };
@@ -249,15 +223,10 @@ export function renderRootIndexPage(spec: Spec, ctx: RenderCtx): DocPage {
         markup.paragraph(ROOT_DESCRIPTION),
         // version, with a switcher to the docs of previous majors (hosted on their maintenance branches)
         markup.paragraph(specVersionLine(spec.version, markup)),
-        // legend for the (abstract)/(recursive) heading suffixes; the recursive sentence only
-        // renders when the spec actually declares nested unions
+        // legend for the (abstract) heading suffix
         markup.paragraph(
             `Pages marked ${markup.italic('(abstract)')} document unions: sets of nodes that can be used ` +
-                `interchangeably.` +
-                (spec.categories.some(category => category.nestedUnions.length > 0)
-                    ? ` Pages marked ${markup.italic('(recursive)')} document nested unions: wrapper ` +
-                      `nodes that may nest before reaching a base type.`
-                    : ''),
+                `interchangeably.`,
         ),
         // base attributes shared by every node (omitted when the spec declares none)
         renderBaseSection(spec, ctx, linkTo),

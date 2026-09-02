@@ -6,8 +6,6 @@ import {
     boolean,
     codamaVersion,
     enumeration,
-    f32,
-    f64,
     i8,
     i16,
     i32,
@@ -16,7 +14,6 @@ import {
     json,
     literal,
     literalUnion,
-    nestedUnion,
     node,
     string,
     stringIdentifier,
@@ -89,13 +86,6 @@ describe('integer primitives', () => {
     });
 });
 
-describe('float primitives', () => {
-    it('produces both supported widths', () => {
-        expect(f32()).toEqual({ kind: 'float', width: 'f32' });
-        expect(f64()).toEqual({ kind: 'float', width: 'f64' });
-    });
-});
-
 describe('boolean primitive', () => {
     it('returns the boolean kind', () => {
         expect(boolean()).toEqual({ kind: 'boolean' });
@@ -143,15 +133,10 @@ describe('literalUnion', () => {
 });
 
 describe('named references', () => {
-    it('builds enumeration / node / union / nestedUnion references', () => {
+    it('builds enumeration / node / union references', () => {
         expect(enumeration('endianness')).toEqual({ kind: 'enumeration', name: 'endianness' });
         expect(node('accountNode')).toEqual({ kind: 'node', name: 'accountNode' });
         expect(union('typeNode')).toEqual({ kind: 'union', name: 'typeNode' });
-        expect(nestedUnion('nestedTypeNode', 'structTypeNode')).toEqual({
-            kind: 'nestedUnion',
-            alias: 'nestedTypeNode',
-            name: 'structTypeNode',
-        });
     });
 });
 
