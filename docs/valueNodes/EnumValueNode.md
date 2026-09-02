@@ -32,7 +32,7 @@ const nodeWithData = enumValueNode(
     'myVariantWithData',
     structValueNode([
         structFieldValueNode('name', stringValueNode('Alice')),
-        structFieldValueNode('age', numberValueNode(42)),
+        structFieldValueNode('age', integerValueNode('42')),
     ]),
 );
 ```

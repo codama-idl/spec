@@ -23,7 +23,7 @@ A PDA seed with a constant value (e.g. a UTF-8 string or a fixed byte sequence).
 ### Create a constant PDA seed node from a type and a value
 
 ```typescript
-const node = constantPdaSeedNode(numberTypeNode('u32'), numberValueNode(42));
+const node = constantPdaSeedNode(integerTypeNode('u32'), integerValueNode('42'));
 ```
 
 ### A PDA node with a UTF-8 constant seed

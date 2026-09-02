@@ -23,7 +23,7 @@ A typed constant: a type node paired with a concrete value node.
 ### Create a constant value node from a type and a value node
 
 ```typescript
-const node = constantValueNode(numberTypeNode('u32'), numberValueNode(42));
+const node = constantValueNode(integerTypeNode('u32'), integerValueNode('42'));
 ```
 
 ### A UTF-8 string constant

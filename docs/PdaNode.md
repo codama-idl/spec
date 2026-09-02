@@ -33,7 +33,7 @@ pdaNode({
         constantPdaSeedNodeFromString('utf8', 'raffles'),
         variablePdaSeedNode('raffle', publicKeyTypeNode()),
         constantPdaSeedNodeFromString('utf8', 'tickets'),
-        variablePdaSeedNode('ticketNumber', numberTypeNode('u32')),
+        variablePdaSeedNode('ticketNumber', integerTypeNode('u32')),
     ],
 });
 ```

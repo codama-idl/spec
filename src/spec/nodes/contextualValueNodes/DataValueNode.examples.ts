@@ -29,11 +29,11 @@ instructionNode({
     data: structTypeNode([
         structFieldTypeNode({
             identifier: 'amount',
-            type: numberTypeNode('u64'),
+            type: integerTypeNode('u64'),
         }),
         structFieldTypeNode({
             identifier: 'amountToDelegate',
-            type: numberTypeNode('u64'),
+            type: integerTypeNode('u64'),
             defaultValue: injectedValueNode({ key: 'amountToDelegate' }),
         }),
         // ...

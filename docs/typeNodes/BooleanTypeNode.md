@@ -1,6 +1,6 @@
 # BooleanTypeNode
 
-A boolean serialised as a numeric value. The inner number type determines the byte width.
+A boolean serialised as an integer. The inner integer type determines the byte width.
 A decoded number of `1` yields `true`; any other value yields `false`.
 
 ## Attributes
@@ -15,7 +15,7 @@ A decoded number of `1` yields `true`; any other value yields `false`.
 
 | Attribute    | Type                                                                 | Description                                                                                                                           |
 | ------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `size`       | [`NumberTypeNode`](./NumberTypeNode.md)                              | The numeric type used to serialise the boolean.                                                                                       |
+| `size`       | [`IntegerTypeNode`](./IntegerTypeNode.md)                            | The integer type used to serialise the boolean.                                                                                       |
 | `transforms` | [`TransformNode`](../transformNodes/TransformNode.md)[] _(optional)_ | Transforms applied to the serialisation of this type, in order — the first is the innermost.                                          |
 | `plugins`    | [`PluginNode`](../PluginNode.md)[] _(optional)_                      | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
@@ -33,7 +33,7 @@ booleanTypeNode();
 ### u32 booleans
 
 ```typescript
-booleanTypeNode(numberTypeNode('u32'));
+booleanTypeNode(integerTypeNode('u32'));
 
 // true  => 0x01000000
 // false => 0x00000000

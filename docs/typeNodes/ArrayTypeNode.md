@@ -24,7 +24,7 @@ A homogeneous list of items. The item type is defined by `item`; the length is d
 ### Create an array type node from a type node and a count node
 
 ```typescript
-const node = arrayTypeNode(publicKeyTypeNode(), prefixedCountNode(numberTypeNode('u32')));
+const node = arrayTypeNode(publicKeyTypeNode(), prefixedCountNode(integerTypeNode('u32')));
 ```
 
 ### u32 prefixed array of u8 numbers
@@ -32,7 +32,7 @@ const node = arrayTypeNode(publicKeyTypeNode(), prefixedCountNode(numberTypeNode
 ![Diagram](https://github.com/codama-idl/codama/assets/3642397/1bbd3ecb-e06a-42fa-94a7-74c9302286e6)
 
 ```typescript
-arrayTypeNode(numberTypeNode('u8'), prefixedCountNode(numberTypeNode('u32')));
+arrayTypeNode(integerTypeNode('u8'), prefixedCountNode(integerTypeNode('u32')));
 
 // [1, 2, 3] => 0x03000000010203
 ```

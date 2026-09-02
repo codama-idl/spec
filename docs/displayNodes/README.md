@@ -4,9 +4,7 @@ Display nodes — presentation metadata attached to instructions, accounts, fiel
 
 ## Nodes
 
-- [`AmountNumberDisplayNode`](./AmountNumberDisplayNode.md) - Display metadata that presents a number as a scaled amount with an optional unit.
-- [`DateTimeNumberDisplayNode`](./DateTimeNumberDisplayNode.md) - Display metadata that presents a number as a point in time.
-- [`DurationNumberDisplayNode`](./DurationNumberDisplayNode.md) - Display metadata that presents a number as an elapsed duration.
+- [`AmountNumberDisplayNode`](./AmountNumberDisplayNode.md) - Display metadata that presents a number as a scaled amount with an optional unit, for quantities whose scale or unit are contextual rather than static — e.g. a raw token amount whose decimals live in the mint account.
 - [`EnumVariantDisplayNode`](./EnumVariantDisplayNode.md) - Display metadata for an enum variant: its label and whether to hide its inner payload.
 - [`InstructionAccountDisplayNode`](./InstructionAccountDisplayNode.md) - Display metadata for an instruction account: its label in the fallback list and whether it is shown.
 - [`InstructionDisplayNode`](./InstructionDisplayNode.md) - Display metadata for an instruction: a short intent label and an interpolated sentence template.

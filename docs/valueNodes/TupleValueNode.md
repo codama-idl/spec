@@ -22,5 +22,5 @@ A concrete tuple value: a fixed-length sequence of positional value nodes.
 ### Create a tuple value node from value nodes
 
 ```typescript
-const node = tupleValueNode([stringValueNode('Alice'), numberValueNode(42)]);
+const node = tupleValueNode([stringValueNode('Alice'), integerValueNode('42')]);
 ```

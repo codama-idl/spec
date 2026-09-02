@@ -10,7 +10,7 @@ eventNode({
     identifier: 'transferEvent',
     data: structTypeNode([
         structFieldTypeNode({ identifier: 'authority', type: publicKeyTypeNode() }),
-        structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') }),
+        structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u64') }),
     ]),
 });
 `,
@@ -23,7 +23,7 @@ eventNode({
             `
 eventNode({
     identifier: 'transferEvent',
-    data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') })], {
+    data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u64') })], {
         transforms: [
             hiddenPrefixTransformNode([
                 constantValueNode(bytesTypeNode({ transforms: [fixedSizeTransformNode(8)] }), bytesValueNode('base16', '0102030405060708')),

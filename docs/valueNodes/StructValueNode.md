@@ -24,6 +24,6 @@ A concrete struct value: a list of named field values.
 ```typescript
 const node = structValueNode([
     structFieldValueNode('name', stringValueNode('Alice')),
-    structFieldValueNode('age', numberValueNode(42)),
+    structFieldValueNode('age', integerValueNode('42')),
 ]);
 ```

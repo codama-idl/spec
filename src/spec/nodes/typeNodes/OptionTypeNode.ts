@@ -14,9 +14,9 @@ export const optionTypeNode = defineNode('optionTypeNode', {
         attribute('item', union('typeNode'), {
             docs: ['The type carried by the option when present.'],
         }),
-        attribute('prefix', node('numberTypeNode'), {
+        attribute('prefix', node('integerTypeNode'), {
             docs: [
-                'The numeric type used as the presence flag.',
+                'The integer type used as the presence flag.',
                 'A prefix value of `1` means the item is present and follows the prefix; a value of `0` means the item is absent and nothing further is serialised.',
             ],
         }),

@@ -8,7 +8,7 @@
  *                                    `mapEntryValueNode` and `structFieldValueNode`.
  *  - `enumValuePayload`              the inline `structValueNode | tupleValueNode` union used
  *                                    for `enumValueNode.value`.
- *  - `injectableNumberValueNode`     a concrete number value or a key resolved via injection.
+ *  - `injectableIntegerValueNode`    a concrete integer value or a key resolved via injection.
  *  - `injectableStringValueNode`     a concrete string value or a key resolved via injection.
  */
 
@@ -20,10 +20,11 @@ const STANDALONE_VALUE_NODE_KINDS = [
     'bytesValueNode',
     'constantValueNode',
     'enumValueNode',
+    'floatValueNode',
     'injectedValueNode',
+    'integerValueNode',
     'mapValueNode',
     'noneValueNode',
-    'numberValueNode',
     'publicKeyValueNode',
     'setValueNode',
     'someValueNode',
@@ -52,9 +53,9 @@ export const enumValuePayloadUnion = defineUnion('enumValuePayload', {
     members: ['structValueNode', 'tupleValueNode'],
 });
 
-export const injectableNumberValueNodeUnion = defineUnion('injectableNumberValueNode', {
+export const injectableIntegerValueNodeUnion = defineUnion('injectableIntegerValueNode', {
     docs: ['A concrete number value, or a key resolved at presentation time from a surrounding provider.'],
-    members: ['numberValueNode', 'injectedValueNode'],
+    members: ['integerValueNode', 'injectedValueNode'],
 });
 
 export const injectableStringValueNodeUnion = defineUnion('injectableStringValueNode', {

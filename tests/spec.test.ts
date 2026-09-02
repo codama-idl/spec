@@ -29,14 +29,18 @@ describe('spec — coverage smoke checks', () => {
     it('declares every node category', () => {
         for (const kind of [
             // type nodes
-            'numberTypeNode',
+            'integerTypeNode',
+            'floatTypeNode',
+            'fixedPointTypeNode',
+            'durationTypeNode',
             'structTypeNode',
             'enumTypeNode',
             'arrayTypeNode',
             'optionTypeNode',
             // value nodes
             'injectedValueNode',
-            'numberValueNode',
+            'integerValueNode',
+            'floatValueNode',
             'structValueNode',
             'someValueNode',
             'noneValueNode',
@@ -56,8 +60,7 @@ describe('spec — coverage smoke checks', () => {
             'sizeDiscriminatorNode',
             // display nodes
             'amountNumberDisplayNode',
-            'dateTimeNumberDisplayNode',
-            'durationNumberDisplayNode',
+            'amountNumberDisplayNode',
             'enumVariantDisplayNode',
             'instructionAccountDisplayNode',
             'instructionDisplayNode',
@@ -96,7 +99,7 @@ describe('spec — coverage smoke checks', () => {
             'displayNode',
             'numberDisplayNode',
             'registeredDisplayNode',
-            'injectableNumberValueNode',
+            'injectableIntegerValueNode',
             'injectableStringValueNode',
             'contextualValueNode',
             'instructionInputValueNode',
@@ -106,7 +109,14 @@ describe('spec — coverage smoke checks', () => {
     });
 
     it('declares the principal enumerations', () => {
-        for (const name of ['endianness', 'numberFormat', 'bytesEncoding', 'instructionLifecycle', 'displaySkip']) {
+        for (const name of [
+            'endianness',
+            'integerFormat',
+            'floatFormat',
+            'bytesEncoding',
+            'instructionLifecycle',
+            'displaySkip',
+        ]) {
             expect(getEnumeration(name), `expected enumeration "${name}" to be defined`).toBeDefined();
         }
     });
@@ -320,7 +330,7 @@ describe('spec — display node shapes', () => {
         expect(n.attributes.map(a => a.name)).toEqual(['decimals', 'unit']);
         const decimals = n.attributes.find(a => a.name === 'decimals')!;
         expect(decimals.optional).toBe(true);
-        expect(decimals.type).toEqual({ kind: 'union', name: 'injectableNumberValueNode' });
+        expect(decimals.type).toEqual({ kind: 'union', name: 'injectableIntegerValueNode' });
         expect(isChildAttribute(decimals.type)).toBe(true);
         const unit = n.attributes.find(a => a.name === 'unit')!;
         expect(unit.optional).toBe(true);
@@ -328,20 +338,17 @@ describe('spec — display node shapes', () => {
         expect(isChildAttribute(unit.type)).toBe(true);
     });
 
-    it('dateTimeNumberDisplayNode shape', () => {
-        const n = getNode('dateTimeNumberDisplayNode')!;
-        expect(n.attributes.map(a => a.name)).toEqual(['ticksPerSecond']);
-        const ticks = n.attributes.find(a => a.name === 'ticksPerSecond')!;
-        expect(ticks.optional).toBe(true);
-        expect(ticks.type).toEqual({ kind: 'integer', width: 'u64' });
-    });
-
-    it('durationNumberDisplayNode shape', () => {
-        const n = getNode('durationNumberDisplayNode')!;
-        expect(n.attributes.map(a => a.name)).toEqual(['ticksPerSecond']);
-        const ticks = n.attributes.find(a => a.name === 'ticksPerSecond')!;
-        expect(ticks.optional).toBe(true);
-        expect(ticks.type).toEqual({ kind: 'integer', width: 'u64' });
+    it('the time display nodes moved to the type layer', () => {
+        for (const gone of ['dateTimeNumberDisplayNode', 'durationNumberDisplayNode']) {
+            expect(getNode(gone), `${gone} should no longer exist`).toBeUndefined();
+        }
+        for (const kind of ['dateTimeTypeNode', 'durationTypeNode']) {
+            const n = getNode(kind)!;
+            const ticks = n.attributes.find(a => a.name === 'ticksPerSecond')!;
+            expect(ticks, `${kind} should carry ticksPerSecond`).toBeDefined();
+            expect(ticks.optional).toBe(true);
+            expect(ticks.type).toEqual({ kind: 'integer', width: 'u64' });
+        }
     });
 
     it('stringDisplayNode shape', () => {
@@ -421,7 +428,7 @@ describe('spec — instructionNode data', () => {
         expect(getUnion('instructionByteDeltaValue')!.members.map(m => m.name)).toEqual([
             'accountLinkNode',
             'dataValueNode',
-            'numberValueNode',
+            'integerValueNode',
         ]);
         expect(getUnion('conditionalValueCondition')!.members.map(m => m.name)).toEqual([
             'accountValueNode',
@@ -436,6 +443,47 @@ describe('spec — instructionNode data', () => {
         expect(n.attributes[0].name).toBe('identifier');
         expect(identifier!.type).toEqual({ constraint: 'identifier', kind: 'string' });
         expect(n.attributes.find(a => a.name === 'value')).toBeUndefined();
+    });
+});
+
+describe('spec — numeric family', () => {
+    it('integer and float types carry format, optional endian, optional unit, and the display slot', () => {
+        for (const [kind, format] of [
+            ['integerTypeNode', 'integerFormat'],
+            ['floatTypeNode', 'floatFormat'],
+        ] as const) {
+            const n = getNode(kind)!;
+            expect(n.attributes.map(a => a.name)).toEqual(['format', 'endian', 'unit', 'display', 'transforms']);
+            expect(n.attributes[0].type).toEqual({ kind: 'enumeration', name: format });
+            expect(n.attributes.find(a => a.name === 'endian')!.optional).toBe(true);
+            expect(n.attributes.find(a => a.name === 'unit')!.optional).toBe(true);
+        }
+    });
+
+    it('fixedPointTypeNode wraps an integer encoding slot with scale, base and unit', () => {
+        const n = getNode('fixedPointTypeNode')!;
+        expect(n.attributes.map(a => a.name)).toEqual(['scale', 'base', 'unit', 'number', 'transforms']);
+        expect(n.attributes.find(a => a.name === 'scale')!.type).toEqual({ kind: 'integer', width: 'u32' });
+        expect(n.attributes.find(a => a.name === 'base')!.type).toEqual({ kind: 'literalUnion', values: [2, 10] });
+        expect(n.attributes.find(a => a.name === 'number')!.type).toEqual({ kind: 'node', name: 'integerTypeNode' });
+    });
+
+    it('integer and float values are string-encoded', () => {
+        const integer = getNode('integerValueNode')!;
+        expect(integer.attributes.map(a => a.name)).toEqual(['value']);
+        expect(integer.attributes[0].type).toEqual({ constraint: 'integer', kind: 'string' });
+
+        const float = getNode('floatValueNode')!;
+        expect(float.attributes.map(a => a.name)).toEqual(['value']);
+        expect(float.attributes[0].type).toEqual({ constraint: 'decimal', kind: 'string' });
+    });
+
+    it('the v1 numeric nodes no longer exist', () => {
+        for (const gone of ['numberTypeNode', 'numberValueNode', 'amountTypeNode', 'solAmountTypeNode']) {
+            expect(getNode(gone), `${gone} should no longer exist`).toBeUndefined();
+        }
+        expect(getEnumeration('numberFormat')).toBeUndefined();
+        expect(getUnion('injectableNumberValueNode')).toBeUndefined();
     });
 });
 
@@ -485,7 +533,10 @@ describe('spec — display attribute on host nodes', () => {
         });
     }
 
-    const unionHosts: ReadonlyArray<readonly [string, string]> = [['numberTypeNode', 'numberDisplayNode']];
+    const unionHosts: ReadonlyArray<readonly [string, string]> = [
+        ['integerTypeNode', 'numberDisplayNode'],
+        ['floatTypeNode', 'numberDisplayNode'],
+    ];
 
     for (const [host, expected] of unionHosts) {
         it(`${host} carries an optional display attribute referencing the ${expected} union`, () => {
@@ -504,8 +555,7 @@ describe('spec — registeredDisplayNode union', () => {
         const u = getUnion('registeredDisplayNode')!;
         for (const kind of [
             'amountNumberDisplayNode',
-            'dateTimeNumberDisplayNode',
-            'durationNumberDisplayNode',
+            'amountNumberDisplayNode',
             'enumVariantDisplayNode',
             'instructionAccountDisplayNode',
             'instructionDisplayNode',
@@ -523,13 +573,9 @@ describe('spec — registeredDisplayNode union', () => {
 });
 
 describe('spec — numberDisplayNode union', () => {
-    it('lists the three number presentation forms', () => {
+    it('carries the single contextual presentation form, kept as the growth slot', () => {
         const u = getUnion('numberDisplayNode')!;
-        expect(u.members).toEqual([
-            { kind: 'node', name: 'amountNumberDisplayNode' },
-            { kind: 'node', name: 'dateTimeNumberDisplayNode' },
-            { kind: 'node', name: 'durationNumberDisplayNode' },
-        ]);
+        expect(u.members).toEqual([{ kind: 'node', name: 'amountNumberDisplayNode' }]);
     });
 });
 
@@ -548,10 +594,10 @@ describe('spec — injectedValueNode shape', () => {
 });
 
 describe('spec — injectable value unions', () => {
-    it('injectableNumberValueNode pairs numberValueNode with injectedValueNode', () => {
-        const u = getUnion('injectableNumberValueNode')!;
+    it('injectableIntegerValueNode pairs integerValueNode with injectedValueNode', () => {
+        const u = getUnion('injectableIntegerValueNode')!;
         expect(u.members).toEqual([
-            { kind: 'node', name: 'numberValueNode' },
+            { kind: 'node', name: 'integerValueNode' },
             { kind: 'node', name: 'injectedValueNode' },
         ]);
     });

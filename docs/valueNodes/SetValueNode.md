@@ -22,5 +22,5 @@ A concrete set value: a list of unique value nodes.
 ### Create a set value node from value nodes
 
 ```typescript
-const node = setValueNode([numberValueNode(1), numberValueNode(2), numberValueNode(3)]);
+const node = setValueNode([integerValueNode('1'), integerValueNode('2'), integerValueNode('3')]);
 ```

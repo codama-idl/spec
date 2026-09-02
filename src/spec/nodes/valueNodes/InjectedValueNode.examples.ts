@@ -15,7 +15,7 @@ injectedValueNode({ key: 'decimals' });
         code(
             'typescript',
             `
-injectedValueNode({ key: 'decimals', fallback: numberValueNode(0) });
+injectedValueNode({ key: 'decimals', fallback: integerValueNode('0') });
 `,
         ),
     ),

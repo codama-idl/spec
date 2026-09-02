@@ -13,21 +13,21 @@ This enables nodes such as `arrayTypeNode` to represent collections whose length
 
 ### Children
 
-| Attribute | Type                                               | Description                                                                                                                           |
-| --------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `prefix`  | [`NumberTypeNode`](../typeNodes/NumberTypeNode.md) | The numeric type used as the count prefix.                                                                                            |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_    | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                                 | Description                                                                                                                           |
+| --------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `prefix`  | [`IntegerTypeNode`](../typeNodes/IntegerTypeNode.md) | The integer type used as the count prefix.                                                                                            |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_      | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 
 ### Create a prefixed count node from a number node
 
 ```typescript
-const node = prefixedCountNode(numberTypeNode('u32'));
+const node = prefixedCountNode(integerTypeNode('u32'));
 ```
 
 ### A variable array of public keys prefixed with a u32
 
 ```typescript
-arrayTypeNode(publicKeyTypeNode(), prefixedCountNode(numberTypeNode('u32')));
+arrayTypeNode(publicKeyTypeNode(), prefixedCountNode(integerTypeNode('u32')));
 ```

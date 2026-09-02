@@ -23,8 +23,8 @@ A concrete map value: a list of (key, value) entries.
 
 ```typescript
 const node = mapValueNode([
-    mapEntryValueNode(stringValueNode('apples'), numberValueNode(12)),
-    mapEntryValueNode(stringValueNode('bananas'), numberValueNode(34)),
-    mapEntryValueNode(stringValueNode('carrots'), numberValueNode(56)),
+    mapEntryValueNode(stringValueNode('apples'), integerValueNode('12')),
+    mapEntryValueNode(stringValueNode('bananas'), integerValueNode('34')),
+    mapEntryValueNode(stringValueNode('carrots'), integerValueNode('56')),
 ]);
 ```

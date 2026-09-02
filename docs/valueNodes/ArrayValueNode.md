@@ -22,5 +22,5 @@ A concrete array value: a list of value nodes.
 ### Create an array value node from value nodes
 
 ```typescript
-const node = arrayValueNode([numberValueNode(1), numberValueNode(2), numberValueNode(3)]);
+const node = arrayValueNode([integerValueNode('1'), integerValueNode('2'), integerValueNode('3')]);
 ```

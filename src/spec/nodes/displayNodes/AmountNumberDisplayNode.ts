@@ -3,13 +3,14 @@ import { examples } from './AmountNumberDisplayNode.examples';
 
 export const amountNumberDisplayNode = defineNode('amountNumberDisplayNode', {
     docs: [
-        'Display metadata that presents a number as a scaled amount with an optional unit.',
+        'Display metadata that presents a number as a scaled amount with an optional unit, for quantities whose scale or unit are contextual rather than static — e.g. a raw token amount whose decimals live in the mint account.',
         'The value is divided by `10 ^ decimals` and rendered alongside `unit` (e.g. `"USDC"`, `"%"`, `"bps"`).',
+        'When the type itself carries static semantics (`fixedPointTypeNode`, a unit-ed `integerTypeNode`), renderers should use those; restating static facts here is discouraged — this node exists for values resolved at presentation time via injection.',
     ],
     attributes: [
-        optionalAttribute('decimals', union('injectableNumberValueNode'), {
+        optionalAttribute('decimals', union('injectableIntegerValueNode'), {
             docs: [
-                'How many decimal places scale the underlying integer. Resolved as a number value: either a literal `numberValueNode` or a key resolved from a surrounding provider.',
+                'How many decimal places scale the underlying integer. Resolved as an integer value: either a literal `integerValueNode` or a key resolved from a surrounding provider.',
                 'A value of `1000000` with `decimals` resolving to `6` renders as `1`.',
                 'When this input cannot resolve, renderers should fall back to presenting the raw value rather than guess the scale.',
             ],

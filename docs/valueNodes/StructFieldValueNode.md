@@ -23,5 +23,5 @@ A named field of a `structValueNode`.
 ### Create a struct field value node from a name and a value
 
 ```typescript
-const node = structFieldValueNode('age', numberValueNode(42));
+const node = structFieldValueNode('age', integerValueNode('42'));
 ```

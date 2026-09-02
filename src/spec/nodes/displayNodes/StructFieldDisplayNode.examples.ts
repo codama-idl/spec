@@ -8,7 +8,7 @@ export const examples: DocExamples = [
             `
 structFieldTypeNode({
     identifier: 'amount',
-    type: numberTypeNode('u64'),
+    type: integerTypeNode('u64'),
     display: structFieldDisplayNode({ label: 'Amount' }),
 });
 `,
@@ -21,7 +21,7 @@ structFieldTypeNode({
             `
 structFieldTypeNode({
     identifier: 'discriminator',
-    type: numberTypeNode('u8'),
+    type: integerTypeNode('u8'),
     display: structFieldDisplayNode({ skip: 'always' }),
 });
 `,

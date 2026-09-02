@@ -6,7 +6,7 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-const node = constantNode('maxSize', numberTypeNode('u32'), numberValueNode(100));
+const node = constantNode('maxSize', integerTypeNode('u32'), integerValueNode('100'));
 `,
         ),
     ),
@@ -24,7 +24,7 @@ const node = constantNode('seedPrefix', bytesTypeNode(), bytesValueNode('base16'
         code(
             'typescript',
             `
-const node = constantNode('maxItems', numberTypeNode('u64'), numberValueNode(1000), [
+const node = constantNode('maxItems', integerTypeNode('u64'), integerValueNode('1000'), [
     'The maximum number of items allowed.',
 ]);
 `,

@@ -6,7 +6,7 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-const node = tupleValueNode([stringValueNode('Alice'), numberValueNode(42)]);
+const node = tupleValueNode([stringValueNode('Alice'), integerValueNode('42')]);
 `,
         ),
     ),

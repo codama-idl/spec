@@ -19,8 +19,8 @@ accountNode({
     data: structTypeNode([
         structFieldTypeNode({
             identifier: 'discriminator',
-            type: numberTypeNode('u32'),
-            defaultValue: numberValueNode(42),
+            type: integerTypeNode('u32'),
+            defaultValue: integerValueNode('42'),
             defaultValueStrategy: 'omitted',
         }),
         // ...

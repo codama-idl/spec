@@ -9,19 +9,20 @@
 import { defineUnion, union } from '../../../api';
 
 const STANDALONE_TYPE_NODE_KINDS = [
-    'amountTypeNode',
     'arrayTypeNode',
     'booleanTypeNode',
     'bytesTypeNode',
     'dateTimeTypeNode',
+    'durationTypeNode',
     'enumTypeNode',
+    'fixedPointTypeNode',
+    'floatTypeNode',
+    'integerTypeNode',
     'mapTypeNode',
-    'numberTypeNode',
     'optionTypeNode',
     'publicKeyTypeNode',
     'remainderOptionTypeNode',
     'setTypeNode',
-    'solAmountTypeNode',
     'stringTypeNode',
     'structTypeNode',
     'tupleTypeNode',

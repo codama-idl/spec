@@ -6,7 +6,7 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-providedNode('decimals', numberValueNode(9));
+providedNode('decimals', integerValueNode('9'));
 `,
         ),
     ),
@@ -17,11 +17,11 @@ providedNode('decimals', numberValueNode(9));
             `
 instructionNode({
     identifier: 'transferChecked',
-    provides: [providedNode('decimals', numberValueNode(9))],
+    provides: [providedNode('decimals', integerValueNode('9'))],
     data: structTypeNode([
         structFieldTypeNode({
             identifier: 'decimals',
-            type: numberTypeNode('u8'),
+            type: integerTypeNode('u8'),
             defaultValue: injectedValueNode({ key: 'decimals' }),
         }),
         // ...

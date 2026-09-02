@@ -88,19 +88,19 @@ offset = -2
 ### A relative post-offset (the default strategy)
 
 ```typescript
-numberTypeNode('u32', { transforms: [postOffsetTransformNode(2)] });
+integerTypeNode('u32', { transforms: [postOffsetTransformNode(2)] });
 ```
 
 ### An absolute post-offset from the end of the buffer
 
 ```typescript
-numberTypeNode('u32', { transforms: [postOffsetTransformNode(-2, 'absolute')] });
+integerTypeNode('u32', { transforms: [postOffsetTransformNode(-2, 'absolute')] });
 ```
 
 ### A right-padded u32 number
 
 ```typescript
-numberTypeNode('u32', { transforms: [postOffsetTransformNode(4, 'padded')] });
+integerTypeNode('u32', { transforms: [postOffsetTransformNode(4, 'padded')] });
 
 // 42 => 0x2A00000000000000
 ```
@@ -108,7 +108,7 @@ numberTypeNode('u32', { transforms: [postOffsetTransformNode(4, 'padded')] });
 ### A u32 number overwritten by a u16 number
 
 ```typescript
-tupleTypeNode([numberTypeNode('u32', { transforms: [postOffsetTransformNode(-2)] }), numberTypeNode('u16')]);
+tupleTypeNode([integerTypeNode('u32', { transforms: [postOffsetTransformNode(-2)] }), integerTypeNode('u16')]);
 
 // [1, 2]           => 0x01000200
 // [0xFFFFFFFF, 42] => 0xFFFF2A00

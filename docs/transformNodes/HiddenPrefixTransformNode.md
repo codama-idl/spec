@@ -23,7 +23,7 @@ When decoding, the prefixed constants are consumed and checked against their exp
 ### A number prefixed with 0xFFFF
 
 ```typescript
-numberTypeNode('u32', {
+integerTypeNode('u32', {
     transforms: [hiddenPrefixTransformNode([constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffff'))])],
 });
 

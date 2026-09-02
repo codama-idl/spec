@@ -8,7 +8,7 @@ export const examples: DocExamples = [
             `
 const node = structValueNode([
     structFieldValueNode('name', stringValueNode('Alice')),
-    structFieldValueNode('age', numberValueNode(42)),
+    structFieldValueNode('age', integerValueNode('42')),
 ]);
 `,
         ),

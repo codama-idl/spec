@@ -38,7 +38,7 @@ const node = rootNode(
                 identifier: 'counter',
                 data: structTypeNode([
                     structFieldTypeNode({ identifier: 'authority', type: publicKeyTypeNode() }),
-                    structFieldTypeNode({ identifier: 'value', type: numberTypeNode('u32') }),
+                    structFieldTypeNode({ identifier: 'value', type: integerTypeNode('u32') }),
                 ]),
             }),
         ],

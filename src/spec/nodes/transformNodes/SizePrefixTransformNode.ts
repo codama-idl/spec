@@ -7,8 +7,8 @@ export const sizePrefixTransformNode = defineNode('sizePrefixTransformNode', {
         'When decoding, the size is read first and determines how many bytes the transformed type may consume.',
     ],
     attributes: [
-        attribute('prefix', node('numberTypeNode'), {
-            docs: ['The numeric type used as the size prefix.'],
+        attribute('prefix', node('integerTypeNode'), {
+            docs: ['The integer type used as the size prefix.'],
         }),
     ],
     examples,

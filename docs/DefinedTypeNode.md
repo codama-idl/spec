@@ -31,7 +31,7 @@ const node = definedTypeNode({
     docs: ['This type describes a Person.'],
     type: structTypeNode([
         structFieldTypeNode({ identifier: 'name', type: stringTypeNode('utf8') }),
-        structFieldTypeNode({ identifier: 'age', type: numberTypeNode('u8') }),
+        structFieldTypeNode({ identifier: 'age', type: integerTypeNode('u8') }),
     ]),
 });
 ```

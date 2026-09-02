@@ -8,9 +8,9 @@ export const enumTypeNode = defineNode('enumTypeNode', {
         attribute('variants', array(node('enumVariantTypeNode')), {
             docs: ['The variants of the enum, in declaration order.'],
         }),
-        attribute('size', node('numberTypeNode'), {
+        attribute('size', node('integerTypeNode'), {
             docs: [
-                'The numeric type used to serialise the discriminator.',
+                'The integer type used to serialise the discriminator.',
                 'The discriminator prepends the serialised variant payload to identify which variant was selected. By default it is the index of the variant (starting at 0), unless the variant provides its own custom discriminator value.',
             ],
         }),

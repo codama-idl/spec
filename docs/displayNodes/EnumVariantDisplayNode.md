@@ -25,7 +25,7 @@ Display metadata for an enum variant: its label and whether to hide its inner pa
 ```typescript
 enumVariantTypeNode(
     'buy',
-    structTypeNode([structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') })]),
+    structTypeNode([structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u64') })]),
     { display: enumVariantDisplayNode({ label: 'Buy' }) },
 );
 ```
@@ -33,7 +33,7 @@ enumVariantTypeNode(
 ### Hiding a tuple payload so only the label is shown
 
 ```typescript
-enumVariantTypeNode('increment', tupleTypeNode([numberTypeNode('u64')]), {
+enumVariantTypeNode('increment', tupleTypeNode([integerTypeNode('u64')]), {
     display: enumVariantDisplayNode({ label: 'Increment', skipInnerData: true }),
 });
 ```

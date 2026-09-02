@@ -3,11 +3,12 @@ import { booleanValueNode } from './BooleanValueNode';
 import { bytesValueNode } from './BytesValueNode';
 import { constantValueNode } from './ConstantValueNode';
 import { enumValueNode } from './EnumValueNode';
+import { floatValueNode } from './FloatValueNode';
 import { injectedValueNode } from './InjectedValueNode';
+import { integerValueNode } from './IntegerValueNode';
 import { mapEntryValueNode } from './MapEntryValueNode';
 import { mapValueNode } from './MapValueNode';
 import { noneValueNode } from './NoneValueNode';
-import { numberValueNode } from './NumberValueNode';
 import { publicKeyValueNode } from './PublicKeyValueNode';
 import { setValueNode } from './SetValueNode';
 import { someValueNode } from './SomeValueNode';
@@ -17,7 +18,7 @@ import { structValueNode } from './StructValueNode';
 import { tupleValueNode } from './TupleValueNode';
 import {
     enumValuePayloadUnion,
-    injectableNumberValueNodeUnion,
+    injectableIntegerValueNodeUnion,
     injectableStringValueNodeUnion,
     registeredValueNodeUnion,
     standaloneValueNodeUnion,
@@ -30,11 +31,12 @@ export const ALL_VALUE_NODES = [
     bytesValueNode,
     constantValueNode,
     enumValueNode,
+    floatValueNode,
     injectedValueNode,
+    integerValueNode,
     mapEntryValueNode,
     mapValueNode,
     noneValueNode,
-    numberValueNode,
     publicKeyValueNode,
     setValueNode,
     someValueNode,
@@ -49,6 +51,6 @@ export const ALL_VALUE_NODE_UNIONS = [
     valueNodeUnion,
     registeredValueNodeUnion,
     enumValuePayloadUnion,
-    injectableNumberValueNodeUnion,
+    injectableIntegerValueNodeUnion,
     injectableStringValueNodeUnion,
 ] as const;

@@ -6,7 +6,7 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-tupleTypeNode([stringTypeNode('utf8', { transforms: [fixedSizeTransformNode(10)] }), numberTypeNode('u8')]);
+tupleTypeNode([stringTypeNode('utf8', { transforms: [fixedSizeTransformNode(10)] }), integerTypeNode('u8')]);
 
 // (Alice, 42) => 0x416C69636500000000002A
 `,

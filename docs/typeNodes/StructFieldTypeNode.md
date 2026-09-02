@@ -29,8 +29,8 @@ A named field within a struct type.
 ```typescript
 structFieldTypeNode({
     identifier: 'age',
-    type: numberTypeNode('u8'),
-    defaultValue: numberValueNode(42),
+    type: integerTypeNode('u8'),
+    defaultValue: integerValueNode('42'),
 });
 
 // {}          => 0x2A

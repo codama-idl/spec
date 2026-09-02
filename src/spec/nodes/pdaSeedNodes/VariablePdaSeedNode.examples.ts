@@ -6,7 +6,7 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-const node = variablePdaSeedNode('amount', numberTypeNode('u32'));
+const node = variablePdaSeedNode('amount', integerTypeNode('u32'));
 `,
         ),
     ),

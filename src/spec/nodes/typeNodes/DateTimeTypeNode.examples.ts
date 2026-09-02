@@ -2,22 +2,22 @@ import { code, example, type DocExamples } from '../../../api';
 
 export const examples: DocExamples = [
     example(
-        'Create a date time type node from a number type node',
+        'A u64 unix timestamp in seconds',
         code(
             'typescript',
             `
-const node = dateTimeTypeNode(numberTypeNode('u64'));
+const node = dateTimeTypeNode(integerTypeNode('u64'));
+
+// 2024-06-27T14:57:56Z => 0xF47D7D6600000000
 `,
         ),
     ),
     example(
-        'u64 unix datetime',
+        'An i64 unix timestamp in milliseconds',
         code(
             'typescript',
             `
-dateTimeTypeNode(numberTypeNode('u64'));
-
-// 2024-06-27T14:57:56Z => 0xF47D7D6600000000
+dateTimeTypeNode(integerTypeNode('i64'), { ticksPerSecond: 1000 });
 `,
         ),
     ),

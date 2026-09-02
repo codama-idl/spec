@@ -1,7 +1,5 @@
 import { amountNumberDisplayNode } from './AmountNumberDisplayNode';
-import { dateTimeNumberDisplayNode } from './DateTimeNumberDisplayNode';
 import { displayNodeUnion, numberDisplayNodeUnion, registeredDisplayNodeUnion } from './DisplayNode';
-import { durationNumberDisplayNode } from './DurationNumberDisplayNode';
 import { enumVariantDisplayNode } from './EnumVariantDisplayNode';
 import { instructionAccountDisplayNode } from './InstructionAccountDisplayNode';
 import { instructionDisplayNode } from './InstructionDisplayNode';
@@ -10,8 +8,6 @@ import { structFieldDisplayNode } from './StructFieldDisplayNode';
 
 export const ALL_DISPLAY_NODES = [
     amountNumberDisplayNode,
-    dateTimeNumberDisplayNode,
-    durationNumberDisplayNode,
     enumVariantDisplayNode,
     instructionAccountDisplayNode,
     instructionDisplayNode,

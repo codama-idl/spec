@@ -44,8 +44,8 @@ instructionNode({
     data: structTypeNode([
         structFieldTypeNode({
             identifier: 'discriminator',
-            type: numberTypeNode('u8'),
-            defaultValue: numberValueNode(42),
+            type: integerTypeNode('u8'),
+            defaultValue: integerValueNode('42'),
             defaultValueStrategy: 'omitted',
         }),
     ]),
@@ -64,7 +64,7 @@ instructionNode({
     data: structTypeNode([
         structFieldTypeNode({
             identifier: 'bump',
-            type: numberTypeNode('u8'),
+            type: integerTypeNode('u8'),
             defaultValue: injectedValueNode({ key: 'bump' }),
         }),
     ]),
@@ -119,8 +119,8 @@ instructionNode({
         instructionAccountNode({ identifier: 'authority', isWritable: false, isSigner: true }),
     ],
     data: structTypeNode([
-        structFieldTypeNode({ identifier: 'version', type: numberTypeNode('u8') }),
-        structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u8') }),
+        structFieldTypeNode({ identifier: 'version', type: integerTypeNode('u8') }),
+        structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u8') }),
     ]),
     subInstructions: [
         instructionNode({
@@ -129,11 +129,11 @@ instructionNode({
             data: structTypeNode([
                 structFieldTypeNode({
                     identifier: 'version',
-                    type: numberTypeNode('u8'),
-                    defaultValue: numberValueNode(0),
+                    type: integerTypeNode('u8'),
+                    defaultValue: integerValueNode('0'),
                     defaultValueStrategy: 'omitted',
                 }),
-                structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u8') }),
+                structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u8') }),
             ]),
         }),
         instructionNode({
@@ -145,11 +145,11 @@ instructionNode({
             data: structTypeNode([
                 structFieldTypeNode({
                     identifier: 'version',
-                    type: numberTypeNode('u8'),
-                    defaultValue: numberValueNode(1),
+                    type: integerTypeNode('u8'),
+                    defaultValue: integerValueNode('1'),
                     defaultValueStrategy: 'omitted',
                 }),
-                structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u8') }),
+                structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u8') }),
             ]),
         }),
     ],
@@ -166,7 +166,7 @@ instructionNode({
         'Use the `increment` instruction instead. This will be removed in v3.0.0.',
     ),
     accounts: [instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: false })],
-    data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u8') })]),
+    data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u8') })]),
 });
 ```
 
@@ -183,7 +183,7 @@ instructionNode({
         instructionAccountNode({ identifier: 'source', isWritable: true, isSigner: true }),
         instructionAccountNode({ identifier: 'destination', isWritable: true, isSigner: false }),
     ],
-    data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: numberTypeNode('u64') })]),
+    data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u64') })]),
 });
 ```
 

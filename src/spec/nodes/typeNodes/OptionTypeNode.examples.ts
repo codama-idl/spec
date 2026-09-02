@@ -6,7 +6,7 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-optionTypeNode(stringTypeNode('utf8'), { prefix: numberTypeNode('u16') });
+optionTypeNode(stringTypeNode('utf8'), { prefix: integerTypeNode('u16') });
 
 // None          => 0x0000
 // Some("Hello") => 0x010048656C6C6F
@@ -18,7 +18,7 @@ optionTypeNode(stringTypeNode('utf8'), { prefix: numberTypeNode('u16') });
         code(
             'typescript',
             `
-optionTypeNode(numberTypeNode('u32'), { fixed: true });
+optionTypeNode(integerTypeNode('u32'), { fixed: true });
 
 // None     => 0x0000000000
 // Some(42) => 0x012A000000

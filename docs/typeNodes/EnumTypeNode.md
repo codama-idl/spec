@@ -15,7 +15,7 @@ A tagged union: a numeric discriminator followed by one of several variant paylo
 | Attribute    | Type                                                                 | Description                                                                                                                                                                                                                                                                        |
 | ------------ | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `variants`   | [`EnumVariantTypeNode`](./EnumVariantTypeNode.md)[]                  | The variants of the enum, in declaration order.                                                                                                                                                                                                                                    |
-| `size`       | [`NumberTypeNode`](./NumberTypeNode.md)                              | The numeric type used to serialise the discriminator. The discriminator prepends the serialised variant payload to identify which variant was selected. By default it is the index of the variant (starting at 0), unless the variant provides its own custom discriminator value. |
+| `size`       | [`IntegerTypeNode`](./IntegerTypeNode.md)                            | The integer type used to serialise the discriminator. The discriminator prepends the serialised variant payload to identify which variant was selected. By default it is the index of the variant (starting at 0), unless the variant provides its own custom discriminator value. |
 | `transforms` | [`TransformNode`](../transformNodes/TransformNode.md)[] _(optional)_ | Transforms applied to the serialisation of this type, in order — the first is the innermost.                                                                                                                                                                                       |
 | `plugins`    | [`PluginNode`](../PluginNode.md)[] _(optional)_                      | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata.                                                                                                                                              |
 
@@ -26,12 +26,12 @@ A tagged union: a numeric discriminator followed by one of several variant paylo
 ```typescript
 enumTypeNode([
     enumVariantTypeNode('flip'),
-    enumVariantTypeNode('rotate', numberTypeNode('u32')),
+    enumVariantTypeNode('rotate', integerTypeNode('u32')),
     enumVariantTypeNode(
         'move',
         structTypeNode([
-            structFieldTypeNode({ identifier: 'x', type: numberTypeNode('u16') }),
-            structFieldTypeNode({ identifier: 'y', type: numberTypeNode('u16') }),
+            structFieldTypeNode({ identifier: 'x', type: integerTypeNode('u16') }),
+            structFieldTypeNode({ identifier: 'y', type: integerTypeNode('u16') }),
         ]),
     ),
 ]);

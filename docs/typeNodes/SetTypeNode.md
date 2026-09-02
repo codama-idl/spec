@@ -24,7 +24,7 @@ A unique-valued collection. The item type is defined by `item`; the size is dete
 ### u32 prefixed set of u8 numbers
 
 ```typescript
-setTypeNode(numberTypeNode('u8'), prefixedCountNode(numberTypeNode('u32')));
+setTypeNode(integerTypeNode('u8'), prefixedCountNode(integerTypeNode('u32')));
 
 // Set (1, 2, 3) => 0x03000000010203
 ```

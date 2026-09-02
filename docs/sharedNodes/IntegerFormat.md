@@ -1,11 +1,9 @@
-# NumberFormat
+# IntegerFormat
 
-The wire format of a numeric serialization.
+The wire format of an integer serialization.
 
 ## Variants
 
-- `f32` - IEEE-754 32-bit floating point.
-- `f64` - IEEE-754 64-bit floating point.
 - `i8` - Signed 8-bit integer.
 - `i16` - Signed 16-bit integer.
 - `i32` - Signed 32-bit integer.
