@@ -283,7 +283,7 @@ describe('spec — display node shapes', () => {
         expect(n.attributes.map(a => a.name)).toEqual(['intent', 'interpolatedIntent']);
         for (const a of n.attributes) {
             expect(a.optional).toBe(true);
-            expect(a.type).toEqual({ kind: 'string' });
+            expect(a.type).toEqual({ kind: 'text' });
         }
     });
 
@@ -292,7 +292,7 @@ describe('spec — display node shapes', () => {
         expect(n.attributes.map(a => a.name)).toEqual(['label', 'skip']);
         const label = n.attributes.find(a => a.name === 'label')!;
         expect(label.optional).toBe(true);
-        expect(label.type).toEqual({ kind: 'string' });
+        expect(label.type).toEqual({ kind: 'text' });
         const skip = n.attributes.find(a => a.name === 'skip')!;
         expect(skip.optional).toBe(true);
         expect(skip.type).toEqual({ kind: 'enumeration', name: 'displaySkip' });
@@ -303,7 +303,7 @@ describe('spec — display node shapes', () => {
         expect(n.attributes.map(a => a.name)).toEqual(['label', 'skip', 'flatten', 'flattenPrefix']);
         const label = n.attributes.find(a => a.name === 'label')!;
         expect(label.optional).toBe(true);
-        expect(label.type).toEqual({ kind: 'string' });
+        expect(label.type).toEqual({ kind: 'text' });
         const skip = n.attributes.find(a => a.name === 'skip')!;
         expect(skip.optional).toBe(true);
         expect(skip.type).toEqual({ kind: 'enumeration', name: 'displaySkip' });
@@ -312,7 +312,7 @@ describe('spec — display node shapes', () => {
         expect(flatten.type).toEqual({ kind: 'boolean' });
         const flattenPrefix = n.attributes.find(a => a.name === 'flattenPrefix')!;
         expect(flattenPrefix.optional).toBe(true);
-        expect(flattenPrefix.type).toEqual({ kind: 'string' });
+        expect(flattenPrefix.type).toEqual({ kind: 'text' });
     });
 
     it('enumVariantDisplayNode shape', () => {
@@ -482,6 +482,42 @@ describe('spec — numeric family', () => {
         }
         expect(getEnumeration('numberFormat')).toBeUndefined();
         expect(getUnion('injectableNumberValueNode')).toBeUndefined();
+    });
+});
+
+describe('spec — textNode and text attributes', () => {
+    it('textNode carries a single content string, extensible via base plugins', () => {
+        const n = getNode('textNode')!;
+        expect(n).toBeDefined();
+        expect(n.attributes.map(a => a.name)).toEqual(['content']);
+        expect(n.attributes[0].type).toEqual({ kind: 'string' });
+        expect(n.attributes[0].optional).toBeUndefined();
+    });
+
+    it('every prose attribute is text-typed', () => {
+        const proseAttributes: ReadonlyArray<readonly [string, string]> = [
+            ['errorNode', 'message'],
+            ['instructionStatusNode', 'message'],
+            ['instructionDisplayNode', 'intent'],
+            ['instructionDisplayNode', 'interpolatedIntent'],
+            ['enumVariantDisplayNode', 'label'],
+            ['structFieldDisplayNode', 'label'],
+            ['structFieldDisplayNode', 'flattenPrefix'],
+            ['instructionAccountDisplayNode', 'label'],
+        ];
+        for (const [kind, name] of proseAttributes) {
+            const attr = getNode(kind)!.attributes.find(a => a.name === name)!;
+            expect(attr.type, `${kind}.${name}`).toEqual({ kind: 'text' });
+            // text values may be textNodes, which may carry plugin nodes
+            expect(isChildAttribute(attr.type), `${kind}.${name} should classify as a child`).toBe(true);
+        }
+    });
+
+    it('docs attributes keep the documentation-intent kind, now text-shaped', () => {
+        const account = getNode('accountNode')!;
+        const accountDocs = account.attributes.find(a => a.name === 'docs')!;
+        expect(accountDocs.type).toEqual({ kind: 'docs' });
+        expect(isChildAttribute(accountDocs.type)).toBe(true);
     });
 });
 

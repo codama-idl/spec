@@ -8,16 +8,16 @@ A program instruction: its accounts, data, byte-delta hints, discriminators, opt
 
 ### Data
 
-| Attribute    | Type                    | Description                                 |
-| ------------ | ----------------------- | ------------------------------------------- |
-| `kind`       | `"instructionNode"`     | The node discriminator.                     |
-| `identifier` | `IdentifierString`      | The identifier of the instruction.          |
-| `docs`       | `string[]` _(optional)_ | Markdown documentation for the instruction. |
+| Attribute    | Type                | Description                        |
+| ------------ | ------------------- | ---------------------------------- |
+| `kind`       | `"instructionNode"` | The node discriminator.            |
+| `identifier` | `IdentifierString`  | The identifier of the instruction. |
 
 ### Children
 
 | Attribute                 | Type                                                                                       | Description                                                                                                                                                                                                                                                                                                                                                                                 |
 | ------------------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `docs`                    | `string` \| [`TextNode`](./TextNode.md) _(optional)_                                       | Markdown documentation for the instruction.                                                                                                                                                                                                                                                                                                                                                 |
 | `optionalAccountStrategy` | [`OptionalAccountStrategy`](./sharedNodes/OptionalAccountStrategy.md) _(optional)_         | How absent optional accounts are represented when serialising the instruction. When absent, `programId` is assumed.                                                                                                                                                                                                                                                                         |
 | `accounts`                | [`InstructionAccountNode`](./InstructionAccountNode.md)[]                                  | The accounts the instruction operates on, in order.                                                                                                                                                                                                                                                                                                                                         |
 | `data`                    | [`TypeNode`](./typeNodes/TypeNode.md) _(optional)_                                         | The type describing the serialised instruction data — any type node, including a `definedTypeLinkNode`. Typically a struct whose fields are the instruction arguments. When absent, the instruction serialises no data. Contextual defaults use the inject/provide pattern: a field default may be an `injectedValueNode` whose key is fulfilled by the `provides` list of the instruction. |

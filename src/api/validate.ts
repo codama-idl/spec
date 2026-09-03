@@ -186,13 +186,16 @@ function checkRef(
  *
  * A "child" attribute is one whose value contains another node. Specifically,
  * any attribute whose type tree includes a `node` or `union` is treated
- * as a child. Optionality (the `optional` flag on the
- * attribute itself) is orthogonal to this classification.
+ * as a child — including `text` and `docs`, whose values may be
+ * `textNode`s carrying plugin nodes. Optionality (the `optional`
+ * flag on the attribute itself) is orthogonal to this classification.
  */
 export function isChildAttribute(type: TypeExpr): boolean {
     switch (type.kind) {
         case 'anyNode':
+        case 'docs':
         case 'node':
+        case 'text':
         case 'union':
             return true;
         case 'array':

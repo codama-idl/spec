@@ -1,4 +1,4 @@
-import { attribute, defineNode, enumeration, optionalAttribute, string } from '../../api';
+import { attribute, defineNode, enumeration, optionalAttribute, text } from '../../api';
 import { examples } from './InstructionStatusNode.examples';
 
 export const instructionStatusNode = defineNode('instructionStatusNode', {
@@ -10,7 +10,7 @@ export const instructionStatusNode = defineNode('instructionStatusNode', {
         attribute('lifecycle', enumeration('instructionLifecycle'), {
             docs: ['The lifecycle stage.'],
         }),
-        optionalAttribute('message', string(), {
+        optionalAttribute('message', text(), {
             docs: ['Free-form prose accompanying the status — e.g. a deprecation notice with migration guidance.'],
         }),
     ],

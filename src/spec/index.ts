@@ -34,6 +34,7 @@ import { pluginNode } from './nodes/PluginNode';
 import { programNode } from './nodes/ProgramNode';
 import { providedNode } from './nodes/ProvidedNode';
 import { rootNode } from './nodes/RootNode';
+import { textNode } from './nodes/TextNode';
 import { ALL_TRANSFORM_NODE_UNIONS, ALL_TRANSFORM_NODES } from './nodes/transformNodes';
 import { ALL_TYPE_NODE_UNIONS, ALL_TYPE_NODES } from './nodes/typeNodes';
 import { ALL_VALUE_NODE_UNIONS, ALL_VALUE_NODES } from './nodes/valueNodes';
@@ -137,6 +138,7 @@ const TOP_LEVEL_CATEGORY = defineCategory('topLevel', {
         programNode,
         providedNode,
         rootNode,
+        textNode,
     ],
     unions: [instructionByteDeltaValueUnion],
 });

@@ -49,7 +49,7 @@
 import type { Docs } from './types';
 
 /** Languages the spec ships example snippets for. */
-export type CodeLanguage = 'typescript' | 'rust';
+export type CodeLanguage = 'typescript' | 'rust' | 'jsonc';
 
 /** A single code snippet for one language. */
 export interface CodeBlock {

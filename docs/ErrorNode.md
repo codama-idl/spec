@@ -8,19 +8,19 @@ A program error — a numeric code paired with a name and human-readable message
 
 ### Data
 
-| Attribute    | Type                    | Description                                     |
-| ------------ | ----------------------- | ----------------------------------------------- |
-| `kind`       | `"errorNode"`           | The node discriminator.                         |
-| `identifier` | `IdentifierString`      | The identifier of the error.                    |
-| `code`       | `u32`                   | The numeric error code returned by the program. |
-| `message`    | `string`                | A human-readable description of the error.      |
-| `docs`       | `string[]` _(optional)_ | Markdown documentation for the error.           |
+| Attribute    | Type               | Description                                     |
+| ------------ | ------------------ | ----------------------------------------------- |
+| `kind`       | `"errorNode"`      | The node discriminator.                         |
+| `identifier` | `IdentifierString` | The identifier of the error.                    |
+| `code`       | `u32`              | The numeric error code returned by the program. |
 
 ### Children
 
-| Attribute | Type                                           | Description                                                                                                                           |
-| --------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                                 | Description                                                                                                                           |
+| --------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `message` | `string` \| [`TextNode`](./TextNode.md)              | A human-readable description of the error.                                                                                            |
+| `docs`    | `string` \| [`TextNode`](./TextNode.md) _(optional)_ | Markdown documentation for the error.                                                                                                 |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_       | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

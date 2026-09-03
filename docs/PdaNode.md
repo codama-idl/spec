@@ -8,19 +8,19 @@ A program-derived address: its identifier, optional program ID override, and the
 
 ### Data
 
-| Attribute    | Type                    | Description                                                                                             |
-| ------------ | ----------------------- | ------------------------------------------------------------------------------------------------------- |
-| `kind`       | `"pdaNode"`             | The node discriminator.                                                                                 |
-| `identifier` | `IdentifierString`      | The identifier of the PDA.                                                                              |
-| `docs`       | `string[]` _(optional)_ | Markdown documentation for the PDA.                                                                     |
-| `programId`  | `Address` _(optional)_  | The base58-encoded program ID used to derive the PDA. When omitted, the surrounding program is assumed. |
+| Attribute    | Type                   | Description                                                                                             |
+| ------------ | ---------------------- | ------------------------------------------------------------------------------------------------------- |
+| `kind`       | `"pdaNode"`            | The node discriminator.                                                                                 |
+| `identifier` | `IdentifierString`     | The identifier of the PDA.                                                                              |
+| `programId`  | `Address` _(optional)_ | The base58-encoded program ID used to derive the PDA. When omitted, the surrounding program is assumed. |
 
 ### Children
 
-| Attribute | Type                                             | Description                                                                                                                           |
-| --------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `seeds`   | [`PdaSeedNode`](./pdaSeedNodes/PdaSeedNode.md)[] | The seeds used to derive the PDA, in order.                                                                                           |
-| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_   | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                                 | Description                                                                                                                           |
+| --------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `docs`    | `string` \| [`TextNode`](./TextNode.md) _(optional)_ | Markdown documentation for the PDA.                                                                                                   |
+| `seeds`   | [`PdaSeedNode`](./pdaSeedNodes/PdaSeedNode.md)[]     | The seeds used to derive the PDA, in order.                                                                                           |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_       | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

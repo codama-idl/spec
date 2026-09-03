@@ -1,4 +1,4 @@
-import { boolean, defineNode, enumeration, optionalAttribute, string } from '../../../api';
+import { boolean, defineNode, enumeration, optionalAttribute, text } from '../../../api';
 import { examples } from './StructFieldDisplayNode.examples';
 
 export const structFieldDisplayNode = defineNode('structFieldDisplayNode', {
@@ -7,7 +7,7 @@ export const structFieldDisplayNode = defineNode('structFieldDisplayNode', {
         "Value presentation is carried by the member's type; this node only addresses naming and composition.",
     ],
     attributes: [
-        optionalAttribute('label', string(), {
+        optionalAttribute('label', text(), {
             docs: [
                 'An override label shown for the member (e.g. `"Amount"`).',
                 'When absent, renderers derive a label from the member `name`.',
@@ -23,7 +23,7 @@ export const structFieldDisplayNode = defineNode('structFieldDisplayNode', {
                 "Meaningful only when the member's type is structurally a struct; renderers ignore it otherwise.",
             ],
         }),
-        optionalAttribute('flattenPrefix', string(), {
+        optionalAttribute('flattenPrefix', text(), {
             docs: [
                 'A literal prefix prepended to each flattened member\'s label (e.g. `"args."`).',
                 'Meaningful only when `flatten` is `true`. Useful to disambiguate when two flattened children might collide.',

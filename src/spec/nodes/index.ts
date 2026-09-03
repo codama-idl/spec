@@ -20,6 +20,7 @@ import { pluginNode } from './PluginNode';
 import { programNode } from './ProgramNode';
 import { providedNode } from './ProvidedNode';
 import { rootNode } from './RootNode';
+import { textNode } from './TextNode';
 import { ALL_TYPE_NODE_UNIONS, ALL_TYPE_NODES } from './typeNodes';
 import { ALL_VALUE_NODE_UNIONS, ALL_VALUE_NODES } from './valueNodes';
 
@@ -49,6 +50,7 @@ export const ALL_NODES = [
     programNode,
     providedNode,
     rootNode,
+    textNode,
 ] as const;
 
 export const ALL_UNIONS = [

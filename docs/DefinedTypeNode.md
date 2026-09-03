@@ -8,18 +8,18 @@ A reusable named type that can be referenced by `definedTypeLinkNode` from elsew
 
 ### Data
 
-| Attribute    | Type                    | Description                          |
-| ------------ | ----------------------- | ------------------------------------ |
-| `kind`       | `"definedTypeNode"`     | The node discriminator.              |
-| `identifier` | `IdentifierString`      | The identifier of the defined type.  |
-| `docs`       | `string[]` _(optional)_ | Markdown documentation for the type. |
+| Attribute    | Type                | Description                         |
+| ------------ | ------------------- | ----------------------------------- |
+| `kind`       | `"definedTypeNode"` | The node discriminator.             |
+| `identifier` | `IdentifierString`  | The identifier of the defined type. |
 
 ### Children
 
-| Attribute | Type                                           | Description                                                                                                                           |
-| --------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `type`    | [`TypeNode`](./typeNodes/TypeNode.md)          | The type definition.                                                                                                                  |
-| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                                 | Description                                                                                                                           |
+| --------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `docs`    | `string` \| [`TextNode`](./TextNode.md) _(optional)_ | Markdown documentation for the type.                                                                                                  |
+| `type`    | [`TypeNode`](./typeNodes/TypeNode.md)                | The type definition.                                                                                                                  |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_       | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 
