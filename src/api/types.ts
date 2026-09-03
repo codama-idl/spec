@@ -62,7 +62,10 @@ export type IntegerWidth = 'i8' | 'i16' | 'i32' | 'i64' | 'i128' | 'u8' | 'u16' 
  *   `integer`, `"-0"` (and `"-0.5"`) are valid: IEEE floats have signed
  *   zero, a genuinely distinct value. String storage makes float
  *   round-trips deterministic across serialisers, and the single
- *   spelling keeps structural comparison and deduplication exact.
+ *   spelling keeps structural comparison and deduplication exact. The
+ *   grammar canonicalises the decimal string's spelling, not the binary
+ *   float it rounds to — `"0.1"` and a 30-digit decimal that rounds to
+ *   the same f64 are distinct, individually canonical values.
  * - `version` — a semver version string (e.g. `"1.6.0"`).
  */
 export type StringConstraint = 'decimal' | 'identifier' | 'integer' | 'namespace' | 'path' | 'version';

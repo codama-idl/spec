@@ -11,7 +11,7 @@ export const pluginNode = defineNode('pluginNode', {
         attribute('namespace', stringNamespace(), {
             docs: [
                 'The unique, dot-separated namespace identifying the plugin this data belongs to (e.g. `i18n.es`).',
-                'There is no central registry; to keep namespaces unambiguous, prefix them with a name you control — a package, crate or organisation name. Avoid the `codama.*` prefix, which may conflict with experimental Codama features in the future.',
+                'There is no central registry. Some namespaces are agreed ecosystem-wide conventions — such as `i18n.*` for translations — and may be used as such; otherwise, to keep namespaces unambiguous, prefix them with a name you control — a package, crate or organisation name. Avoid the `codama.*` prefix, which may conflict with experimental Codama features in the future.',
             ],
         }),
         optionalAttribute('payload', json(), {
