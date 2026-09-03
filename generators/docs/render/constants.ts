@@ -53,10 +53,11 @@ export const CONSTRAINED_STRINGS: readonly { name: string; definition: string }[
     {
         name: 'DecimalString',
         definition:
-            'a decimal number string matching `-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?` — the JSON number ' +
-            'grammar, e.g. `"1.5"`, `"-0.25"`, `"6.02e23"` — or one of the exact-case specials `"NaN"`, `"Infinity"`, ' +
-            '`"-Infinity"`. Signed zero is valid (floats distinguish it); `"+1.5"`, `".5"` and `"inf"` are not. ' +
-            'String storage makes float round-trips deterministic across serialisers.',
+            'a canonical decimal number string matching `-?(0|[1-9][0-9]*)("." [0-9]*[1-9])?` — plain decimal ' +
+            'notation with no exponent form, leading zeros or trailing fraction zeros, e.g. `"1.5"`, `"-0.25"`, ' +
+            '`"602000000"`; never `"1.50"`, `".5"`, `"+1.5"` or `"6.02e8"` — or one of the exact-case specials ' +
+            '`"NaN"`, `"Infinity"`, `"-Infinity"`. Signed zero is valid (floats distinguish it), so every value has ' +
+            'exactly one spelling. String storage makes float round-trips deterministic across serialisers.',
     },
     {
         name: 'SemverString',

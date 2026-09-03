@@ -69,10 +69,12 @@ export function stringInteger(): TypeExpr {
 }
 
 /**
- * A string that must be a decimal number matching
- * `-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?` — the JSON number
- * grammar — or one of the exact-case specials `NaN`, `Infinity`,
- * `-Infinity`. Makes float round-trips deterministic across serialisers.
+ * A string that must be a canonical decimal number matching
+ * `-?(0|[1-9][0-9]*)("." [0-9]*[1-9])?` — plain decimal notation with no
+ * exponent form, leading zeros or trailing fraction zeros — or one of
+ * the exact-case specials `NaN`, `Infinity`, `-Infinity`. Every value
+ * has exactly one spelling; `-0` is valid, as IEEE floats have signed
+ * zero. Makes float round-trips deterministic across serialisers.
  */
 export function stringDecimal(): TypeExpr {
     return Object.freeze({ kind: 'string' as const, constraint: 'decimal' as const });

@@ -2433,7 +2433,8 @@
                                 "constraint": "decimal"
                             },
                             "docs": [
-                                "The decimal value — e.g. `\"1.5\"`, `\"-0.25\"` or `\"6.02e23\"`. The specials `\"NaN\"`, `\"Infinity\"` and `\"-Infinity\"` are permitted."
+                                "The canonical decimal value — e.g. `\"1.5\"`, `\"-0.25\"` or `\"602000000\"`; never `\"1.50\"`, `\".5\"` or `\"6.02e8\"`. The specials `\"NaN\"`, `\"Infinity\"` and `\"-Infinity\"` are permitted, and `\"-0\"` is valid since floats have signed zero.",
+                                "The single spelling guarantees that two equal values can never have distinct node representations, so structural comparison, hashing and deduplication never diverge on formatting. It canonicalises the decimal string’s spelling, not the binary float it rounds to — `\"0.1\"` and a 30-digit decimal that rounds to the same f64 are distinct, individually canonical values."
                             ]
                         }
                     ],
@@ -2458,7 +2459,7 @@
                                         "structFieldTypeNode({",
                                         "    identifier: 'exchangeRate',",
                                         "    type: floatTypeNode('f64'),",
-                                        "    defaultValue: floatValueNode('1.0'),",
+                                        "    defaultValue: floatValueNode('1'),",
                                         "});"
                                     ]
                                 }
@@ -7004,7 +7005,8 @@
                                 "constraint": "namespace"
                             },
                             "docs": [
-                                "The unique, dot-separated namespace identifying the plugin this data belongs to (e.g. `i18n.es`)."
+                                "The unique, dot-separated namespace identifying the plugin this data belongs to (e.g. `i18n.es`).",
+                                "There is no central registry. Some namespaces are agreed ecosystem-wide conventions — such as `i18n.*` for translations — and may be used as such; otherwise, to keep namespaces unambiguous, prefix them with a name you control — a package, crate or organisation name. Avoid the `codama.*` prefix, which may conflict with experimental Codama features in the future."
                             ]
                         },
                         {
@@ -7014,7 +7016,9 @@
                             },
                             "optional": true,
                             "docs": [
-                                "Arbitrary, plugin-specific data. Its shape is defined by the plugin, not by Codama, and is carried through the graph verbatim."
+                                "Arbitrary, plugin-specific data. Its shape is defined by the plugin, not by Codama, and is carried through the graph verbatim.",
+                                "Payloads are inert data: they are never traversed by visitors and never validated, and identifier references inside them are not maintained by tree transformations — a payload that mimics node shapes gets none of a node’s guarantees.",
+                                "Plugins never change the meaning of the node they decorate — its byte layout, resolution semantics or any other behaviour; they only annotate it. Consumers that do not recognise a namespace can therefore safely ignore the plugin."
                             ]
                         }
                     ],
