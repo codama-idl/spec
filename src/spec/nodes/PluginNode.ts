@@ -9,11 +9,16 @@ export const pluginNode = defineNode('pluginNode', {
     ],
     attributes: [
         attribute('namespace', stringNamespace(), {
-            docs: ['The unique, dot-separated namespace identifying the plugin this data belongs to (e.g. `i18n.es`).'],
+            docs: [
+                'The unique, dot-separated namespace identifying the plugin this data belongs to (e.g. `i18n.es`).',
+                'There is no central registry; to keep namespaces unambiguous, prefix them with a name you control — a package, crate or organisation name. Avoid the `codama.*` prefix, which may conflict with experimental Codama features in the future.',
+            ],
         }),
         optionalAttribute('payload', json(), {
             docs: [
                 'Arbitrary, plugin-specific data. Its shape is defined by the plugin, not by Codama, and is carried through the graph verbatim.',
+                'Payloads are inert data: they are never traversed by visitors and never validated, and identifier references inside them are not maintained by tree transformations — a payload that mimics node shapes gets none of a node\u2019s guarantees.',
+                'Plugins never change the meaning of the node they decorate — its byte layout, resolution semantics or any other behaviour; they only annotate it. Consumers that do not recognise a namespace can therefore safely ignore the plugin.',
             ],
         }),
     ],

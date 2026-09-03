@@ -7,10 +7,10 @@ The surrounding type context narrows it to a specific width.
 
 ### Data
 
-| Attribute | Type               | Description                                                                                                                     |
-| --------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| `kind`    | `"floatValueNode"` | The node discriminator.                                                                                                         |
-| `value`   | `DecimalString`    | The decimal value — e.g. `"1.5"`, `"-0.25"` or `"6.02e23"`. The specials `"NaN"`, `"Infinity"` and `"-Infinity"` are permitted. |
+| Attribute | Type               | Description                                                                                                                                                                                                                                                                                                                                                                                                              |
+| --------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `kind`    | `"floatValueNode"` | The node discriminator.                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `value`   | `DecimalString`    | The canonical decimal value — e.g. `"1.5"`, `"-0.25"` or `"602000000"`; never `"1.50"`, `".5"` or `"6.02e8"`. The specials `"NaN"`, `"Infinity"` and `"-Infinity"` are permitted, and `"-0"` is valid since floats have signed zero. The single spelling guarantees that two equal values can never have distinct node representations, so structural comparison, hashing and deduplication never diverge on formatting. |
 
 ### Children
 
@@ -32,6 +32,6 @@ const node = floatValueNode('1.5');
 structFieldTypeNode({
     identifier: 'exchangeRate',
     type: floatTypeNode('f64'),
-    defaultValue: floatValueNode('1.0'),
+    defaultValue: floatValueNode('1'),
 });
 ```

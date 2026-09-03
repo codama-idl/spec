@@ -53,13 +53,16 @@ export type IntegerWidth = 'i8' | 'i16' | 'i32' | 'i64' | 'i128' | 'u8' | 'u16' 
  *   String storage keeps the full 64- and 128-bit ranges lossless through
  *   JSON transport, where a bare number would be corrupted to the nearest
  *   64-bit float.
- * - `decimal` — a decimal number string matching
- *   `-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?`, or one of the
- *   exact-case specials `"NaN"`, `"Infinity"`, `"-Infinity"` — the JSON
- *   number grammar plus the IEEE specials (`"-0"` and `"-0.5"` are valid:
- *   floats have signed zero; `"+1.5"`, `".5"` and `"inf"` are not).
- *   String storage makes float round-trips deterministic across
- *   serialisers.
+ * - `decimal` — a canonical decimal number string matching
+ *   `-?(0|[1-9][0-9]*)("." [0-9]*[1-9])?`, or one of the exact-case
+ *   specials `"NaN"`, `"Infinity"`, `"-Infinity"`. Plain decimal notation
+ *   only — no exponent form, no leading zeros, no trailing fraction
+ *   zeros, no bare `.5`/`5.`, no `+` sign — so every value has exactly
+ *   one spelling (`"0.051"`, never `"5.1e-2"` or `"0.0510"`). Unlike
+ *   `integer`, `"-0"` (and `"-0.5"`) are valid: IEEE floats have signed
+ *   zero, a genuinely distinct value. String storage makes float
+ *   round-trips deterministic across serialisers, and the single
+ *   spelling keeps structural comparison and deduplication exact.
  * - `version` — a semver version string (e.g. `"1.6.0"`).
  */
 export type StringConstraint = 'decimal' | 'identifier' | 'integer' | 'namespace' | 'path' | 'version';

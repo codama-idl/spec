@@ -18,7 +18,7 @@ const node = floatValueNode('1.5');
 structFieldTypeNode({
     identifier: 'exchangeRate',
     type: floatTypeNode('f64'),
-    defaultValue: floatValueNode('1.0'),
+    defaultValue: floatValueNode('1'),
 });
 `,
         ),
