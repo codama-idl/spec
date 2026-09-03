@@ -29,7 +29,8 @@ describe('renderType', () => {
         expect(renderType({ kind: 'string', constraint: 'path' }, markdown, linkTo)).toBe('`PathString`');
         expect(renderType({ kind: 'string', constraint: 'version' }, markdown, linkTo)).toBe('`SemverString`');
         expect(renderType({ kind: 'string' }, markdown, linkTo)).toBe('`string`');
-        expect(renderType({ kind: 'docs' }, markdown, linkTo)).toBe('`string[]`');
+        expect(renderType({ kind: 'docs' }, markdown, linkTo)).toBe('`string` | [`TextNode`](#node:textNode)');
+        expect(renderType({ kind: 'text' }, markdown, linkTo)).toBe('`string` | [`TextNode`](#node:textNode)');
         expect(renderType({ kind: 'json' }, markdown, linkTo)).toBe('`Json`');
         expect(renderType({ kind: 'codamaVersion' }, markdown, linkTo)).toBe('`SemverString`');
     });

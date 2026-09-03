@@ -48,7 +48,9 @@ export function renderType(t: TypeExpr, markup: MarkupRenderer, linkTo: (r: DocR
             return markup.code('string');
         }
         case 'docs':
-            return markup.code('string[]');
+        case 'text':
+            // human text is the union of a plain string and a plugin-carrying textNode
+            return `${markup.code('string')} | ${linkedEntity({ kind: 'node', name: 'textNode' }, markup, linkTo)}`;
         case 'json':
             return markup.code('Json');
         case 'codamaVersion':

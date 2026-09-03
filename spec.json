@@ -4089,7 +4089,7 @@
                         {
                             "name": "label",
                             "type": {
-                                "kind": "string"
+                                "kind": "text"
                             },
                             "optional": true,
                             "docs": [
@@ -4149,7 +4149,7 @@
                         {
                             "name": "label",
                             "type": {
-                                "kind": "string"
+                                "kind": "text"
                             },
                             "optional": true,
                             "docs": [
@@ -4214,7 +4214,7 @@
                         {
                             "name": "intent",
                             "type": {
-                                "kind": "string"
+                                "kind": "text"
                             },
                             "optional": true,
                             "docs": [
@@ -4224,7 +4224,7 @@
                         {
                             "name": "interpolatedIntent",
                             "type": {
-                                "kind": "string"
+                                "kind": "text"
                             },
                             "optional": true,
                             "docs": [
@@ -4344,7 +4344,7 @@
                         {
                             "name": "label",
                             "type": {
-                                "kind": "string"
+                                "kind": "text"
                             },
                             "optional": true,
                             "docs": [
@@ -4378,7 +4378,7 @@
                         {
                             "name": "flattenPrefix",
                             "type": {
-                                "kind": "string"
+                                "kind": "text"
                             },
                             "optional": true,
                             "docs": [
@@ -5993,7 +5993,7 @@
                         {
                             "name": "message",
                             "type": {
-                                "kind": "string"
+                                "kind": "text"
                             },
                             "docs": [
                                 "A human-readable description of the error."
@@ -6853,11 +6853,11 @@
                         {
                             "name": "message",
                             "type": {
-                                "kind": "string"
+                                "kind": "text"
                             },
                             "optional": true,
                             "docs": [
-                                "Free-form prose accompanying the status — e.g. a deprecation notice with migration guidance."
+                                "Free-form prose accompanying the status — e.g. a deprecation notice with migration guidance. May span multiple lines."
                             ]
                         }
                     ],
@@ -7369,6 +7369,72 @@
                                         "        ],",
                                         "    }),",
                                         ");"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "kind": "textNode",
+                    "docs": [
+                        "A piece of human-facing text carrying structured metadata — the rich arm of the `string | textNode` union used by `docs`, display intents, labels and messages.",
+                        "Being a node, it takes `plugins` like any other, which is how text metadata attaches without further spec changes — e.g. translations under the `i18n.*` namespace convention, where each payload is the translated content.",
+                        "The canonical form of plugin-free text is the plain string: a `textNode` without plugins is valid but non-canonical, which validators flag as a lint. The tree always holds exactly what the JSON says.",
+                        "Multi-line text uses `\\n` within `content`. Text attributes are single-line by convention unless their own docs say otherwise; `docs` and `instructionStatusNode.message` may span multiple lines."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "content",
+                            "type": {
+                                "kind": "string"
+                            },
+                            "docs": [
+                                "The text itself, in the default language of the IDL."
+                            ]
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "title": "Plain text — the canonical spelling when no metadata is attached",
+                            "code": [
+                                {
+                                    "language": "jsonc",
+                                    "content": [
+                                        "\"docs\": \"Transfers tokens.\\nFails when the account is frozen.\""
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Translated text",
+                            "code": [
+                                {
+                                    "language": "jsonc",
+                                    "content": [
+                                        "\"intent\": {",
+                                        "    \"kind\": \"textNode\",",
+                                        "    \"content\": \"Transfer\",",
+                                        "    \"plugins\": [",
+                                        "        { \"kind\": \"pluginNode\", \"namespace\": \"i18n.es\", \"payload\": \"Transferir\" },",
+                                        "        { \"kind\": \"pluginNode\", \"namespace\": \"i18n.fr\", \"payload\": \"Transférer\" }",
+                                        "    ]",
+                                        "}"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A translated display intent, via the node factories",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionDisplayNode({",
+                                        "    intent: textNode('Transfer', {",
+                                        "        plugins: [pluginNode('i18n.es', { payload: 'Transferir' })],",
+                                        "    }),",
+                                        "});"
                                     ]
                                 }
                             ]

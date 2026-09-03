@@ -58,4 +58,5 @@ Top-level nodes and helper unions — the entry points of any Codama IDL.
 - [`ProgramNode`](./ProgramNode.md) - A Solana program: its identity, version, accounts, instructions, defined types, PDAs, events, errors, and constants.
 - [`ProvidedNode`](./ProvidedNode.md) - Exposes a node under a key so consumers in the surrounding scope can resolve it.
 - [`RootNode`](./RootNode.md) - The root of a Codama IDL.
+- [`TextNode`](./TextNode.md) - A piece of human-facing text carrying structured metadata — the rich arm of the `string | textNode` union used by `docs`, display intents, labels and messages.
 - [`InstructionByteDeltaValue`](./InstructionByteDeltaValue.md) - The value forms accepted by an `instructionByteDeltaNode`.

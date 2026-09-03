@@ -6,18 +6,18 @@ A PDA seed whose value is provided at derivation time, identified by name.
 
 ### Data
 
-| Attribute    | Type                    | Description                                   |
-| ------------ | ----------------------- | --------------------------------------------- |
-| `kind`       | `"variablePdaSeedNode"` | The node discriminator.                       |
-| `identifier` | `IdentifierString`      | The identifier of the seed variable.          |
-| `docs`       | `string[]` _(optional)_ | Markdown documentation for the seed variable. |
+| Attribute    | Type                    | Description                          |
+| ------------ | ----------------------- | ------------------------------------ |
+| `kind`       | `"variablePdaSeedNode"` | The node discriminator.              |
+| `identifier` | `IdentifierString`      | The identifier of the seed variable. |
 
 ### Children
 
-| Attribute | Type                                            | Description                                                                                                                           |
-| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `type`    | [`TypeNode`](../typeNodes/TypeNode.md)          | The expected type of the seed value.                                                                                                  |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                                  | Description                                                                                                                           |
+| --------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `docs`    | `string` \| [`TextNode`](../TextNode.md) _(optional)_ | Markdown documentation for the seed variable.                                                                                         |
+| `type`    | [`TypeNode`](../typeNodes/TypeNode.md)                | The expected type of the seed value.                                                                                                  |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_       | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples
 

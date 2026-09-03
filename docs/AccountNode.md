@@ -8,17 +8,17 @@ An on-chain account: its identifier, data type, optional fixed size, optional PD
 
 ### Data
 
-| Attribute    | Type                    | Description                                                      |
-| ------------ | ----------------------- | ---------------------------------------------------------------- |
-| `kind`       | `"accountNode"`         | The node discriminator.                                          |
-| `identifier` | `IdentifierString`      | The identifier of the account.                                   |
-| `size`       | `u64` _(optional)_      | The size of the account in bytes, when the data length is fixed. |
-| `docs`       | `string[]` _(optional)_ | Markdown documentation for the account.                          |
+| Attribute    | Type               | Description                                                      |
+| ------------ | ------------------ | ---------------------------------------------------------------- |
+| `kind`       | `"accountNode"`    | The node discriminator.                                          |
+| `identifier` | `IdentifierString` | The identifier of the account.                                   |
+| `size`       | `u64` _(optional)_ | The size of the account in bytes, when the data length is fixed. |
 
 ### Children
 
 | Attribute        | Type                                                                            | Description                                                                                                                                                                                                                                                                                             |
 | ---------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `docs`           | `string` \| [`TextNode`](./TextNode.md) _(optional)_                            | Markdown documentation for the account.                                                                                                                                                                                                                                                                 |
 | `data`           | [`TypeNode`](./typeNodes/TypeNode.md)                                           | The type describing the account data — any type node, including a `definedTypeLinkNode` to share or reuse a defined type. Nodes that reference account fields by name — e.g. `accountDataValueNode` or `fieldDiscriminatorNode` — are only valid when this type resolves to a struct (following links). |
 | `pda`            | [`PdaLinkNode`](./linkNodes/PdaLinkNode.md) _(optional)_                        | A link to the PDA the account is derived from, if applicable.                                                                                                                                                                                                                                           |
 | `discriminators` | [`DiscriminatorNode`](./discriminatorNodes/DiscriminatorNode.md)[] _(optional)_ | Discriminators that distinguish this account from others in the program. When multiple are listed, they are combined with a logical AND.                                                                                                                                                                |

@@ -83,6 +83,13 @@ The spec may declare **base attributes** (`Spec.base`): attributes shared by eve
 - Base attribute names never collide with declared attributes — `validate` rejects such specs.
 - The array conventions above apply unchanged: an absent `plugins` array means "no plugins".
 
+### Human text is `string | textNode`
+
+Human-facing attributes (`docs`, display intents and labels, messages) are **text-shaped**: their type is the union of a plain string and a `textNode`. The `textNode` arm carries the same content plus `plugins` — like any node — so structured text metadata such as translations attaches without further spec changes (`i18n.*` namespace convention). The tree always holds exactly what the JSON says; there is no normalisation between the two arms.
+
+- The **canonical form** of plugin-free text is the plain string: a `textNode` without plugins is valid but non-canonical, which validators flag as a lint.
+- Multi-line text uses `\n` (for `docs`, this replaces v1's array-of-lines encoding). Text attributes are single-line by convention unless their own docs say otherwise — `docs` and `instructionStatusNode.message` may span multiple lines — with validators warning rather than structure forbidding.
+
 ## Repository layout
 
 ```

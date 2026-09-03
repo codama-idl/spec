@@ -107,11 +107,12 @@ export type TypeExpr =
      */
     | { readonly kind: 'codamaVersion' }
     /**
-     * Documentation for a node — semantically a list of paragraph strings,
-     * but rendered per language at codegen time (e.g. `Array<string>` in
-     * TypeScript, `Vec<String>` in Rust). Carrying the intent as its own
-     * kind preserves "this is documentation" through the encoded spec
-     * rather than collapsing to `array(string())`.
+     * Documentation for a node — human text with documentation intent.
+     * Same shape and conventions as `text` (the union `string |
+     * textNode`, multi-line via `\n`); carrying the intent as its own
+     * kind preserves "this is documentation" through the encoded spec,
+     * so codegen targets can emit doc-comments without dispatching on
+     * attribute names.
      */
     | { readonly kind: 'docs' }
     | { readonly kind: 'enumeration'; readonly name: string }
@@ -126,11 +127,25 @@ export type TypeExpr =
     | { readonly kind: 'literalUnion'; readonly values: readonly LiteralValue[] }
     | { readonly kind: 'node'; readonly name: string }
     | { readonly kind: 'string'; readonly constraint?: StringConstraint }
+    /**
+     * Human-facing text: the union `string | textNode`. A plain string is
+     * the common spelling; a `textNode` carries the same content plus
+     * plugins (e.g. translations under the `i18n.*` namespace). The tree
+     * holds exactly what the JSON says — there is no normalisation. The
+     * canonical form of plugin-free text is the plain string; a
+     * `textNode` without plugins is valid but non-canonical, which
+     * validators flag as a lint. Multi-line text uses `\n`; text
+     * attributes are single-line by convention unless their own docs say
+     * otherwise, with validators warning rather than structure
+     * forbidding.
+     */
+    | { readonly kind: 'text' }
     | { readonly kind: 'union'; readonly name: string };
 
 /**
- * Documentation for a spec entity, as lines of markdown.
- * Works like the `Docs` type on IDL nodes (generated from the `docs` `TypeExpr`).
+ * Documentation for a spec entity, as lines of markdown — the
+ * meta-model's own documentation shape, distinct from the IDL-level
+ * `docs` `TypeExpr` (which is text-shaped: `string | textNode`).
  *
  * Each entry is one line; renderers join them with a newline. This keeps
  * multi-line docs readable line-by-line in the serialised `spec.json`,

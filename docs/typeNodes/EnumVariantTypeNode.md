@@ -12,12 +12,12 @@ Absent `data` is a unit variant; a struct payload gives named fields, a tuple pa
 | `kind`          | `"enumVariantTypeNode"` | The node discriminator.                                                                                               |
 | `identifier`    | `IdentifierString`      | The identifier of the variant.                                                                                        |
 | `discriminator` | `u32` _(optional)_      | Explicit discriminator value. When omitted, the discriminator is the index of the variant in the enum, starting at 0. |
-| `docs`          | `string[]` _(optional)_ | Markdown documentation for the variant.                                                                               |
 
 ### Children
 
 | Attribute | Type                                                                               | Description                                                                                                                           |
 | --------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `docs`    | `string` \| [`TextNode`](../TextNode.md) _(optional)_                              | Markdown documentation for the variant.                                                                                               |
 | `data`    | [`TypeNode`](./TypeNode.md) _(optional)_                                           | The payload carried by the variant. When omitted, the variant is a unit variant.                                                      |
 | `display` | [`EnumVariantDisplayNode`](../displayNodes/EnumVariantDisplayNode.md) _(optional)_ | Display metadata describing how the variant is presented.                                                                             |
 | `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_                                    | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |

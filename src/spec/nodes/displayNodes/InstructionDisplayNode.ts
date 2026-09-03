@@ -1,4 +1,4 @@
-import { defineNode, optionalAttribute, string } from '../../../api';
+import { defineNode, optionalAttribute, text } from '../../../api';
 import { examples } from './InstructionDisplayNode.examples';
 
 export const instructionDisplayNode = defineNode('instructionDisplayNode', {
@@ -7,10 +7,10 @@ export const instructionDisplayNode = defineNode('instructionDisplayNode', {
         'Either form may be absent; presentation strategy is left to the renderer.',
     ],
     attributes: [
-        optionalAttribute('intent', string(), {
+        optionalAttribute('intent', text(), {
             docs: ['A short imperative label describing what the instruction does (e.g. `"Transfer"`).'],
         }),
-        optionalAttribute('interpolatedIntent', string(), {
+        optionalAttribute('interpolatedIntent', text(), {
             docs: [
                 'A sentence template that composes the instruction into prose with `${root…}` placeholders.',
                 'Roots are `data` (the instruction data) and `accounts` (the instruction accounts). After the `data` root, placeholders embed the shared path-expression grammar (e.g. `${data.amount}`, `${data.config.fees[0]}`, `${data[0]}`); after the `accounts` root, exactly one account identifier follows (e.g. `${accounts.destination}`) — accounts resolve to addresses, so nothing nests.',

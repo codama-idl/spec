@@ -1,10 +1,10 @@
-import { defineNode, enumeration, optionalAttribute, string } from '../../../api';
+import { defineNode, enumeration, optionalAttribute, text } from '../../../api';
 import { examples } from './InstructionAccountDisplayNode.examples';
 
 export const instructionAccountDisplayNode = defineNode('instructionAccountDisplayNode', {
     docs: ['Display metadata for an instruction account: its label in the fallback list and whether it is shown.'],
     attributes: [
-        optionalAttribute('label', string(), {
+        optionalAttribute('label', text(), {
             docs: [
                 'An override label shown in the fallback list (e.g. `"To"`).',
                 'When absent, renderers derive a label from the account `name`.',

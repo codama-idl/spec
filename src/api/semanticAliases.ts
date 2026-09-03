@@ -27,10 +27,18 @@ export function byteOffset(): TypeExpr {
 }
 
 /**
- * Documentation for a node — semantically a list of paragraph strings,
- * but rendered per language at codegen time (e.g. `Array<string>` in
- * TypeScript, `Vec<String>` in Rust). Returns its own `'docs'` kind so
- * the intent isn't lost in the encoded spec.
+ * Human-facing text — the union `string | textNode` (see the `text`
+ * `TypeExpr` docs for the canonical-form and multi-line conventions).
+ */
+export function text(): TypeExpr {
+    return Object.freeze({ kind: 'text' as const });
+}
+
+/**
+ * Documentation for a node — human text with documentation intent.
+ * Same shape as `text()` (the union `string | textNode`, multi-line via
+ * `\n`); returns its own `'docs'` kind so the intent isn't lost in the
+ * encoded spec.
  */
 export function docs(): TypeExpr {
     return Object.freeze({ kind: 'docs' as const });
