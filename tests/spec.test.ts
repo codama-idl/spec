@@ -513,11 +513,15 @@ describe('spec — textNode and text attributes', () => {
         }
     });
 
-    it('docs attributes keep the documentation-intent kind, now text-shaped', () => {
-        const account = getNode('accountNode')!;
-        const accountDocs = account.attributes.find(a => a.name === 'docs')!;
-        expect(accountDocs.type).toEqual({ kind: 'docs' });
-        expect(isChildAttribute(accountDocs.type)).toBe(true);
+    it('every docs attribute keeps the documentation-intent kind, now text-shaped', () => {
+        const allNodes = getSpec().categories.flatMap(c => c.nodes);
+        const documented = allNodes.filter(n => n.attributes.some(a => a.name === 'docs'));
+        expect(documented.length).toBeGreaterThan(0);
+        for (const n of documented) {
+            const docs = n.attributes.find(a => a.name === 'docs')!;
+            expect(docs.type, `${n.kind}.docs`).toEqual({ kind: 'docs' });
+            expect(isChildAttribute(docs.type), `${n.kind}.docs should classify as a child`).toBe(true);
+        }
     });
 });
 

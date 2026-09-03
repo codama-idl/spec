@@ -16,7 +16,7 @@ An instruction without a status is considered live — a status node is typicall
 | Attribute   | Type                                                            | Description                                                                                                                           |
 | ----------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `lifecycle` | [`InstructionLifecycle`](./sharedNodes/InstructionLifecycle.md) | The lifecycle stage.                                                                                                                  |
-| `message`   | `string` \| [`TextNode`](./TextNode.md) _(optional)_            | Free-form prose accompanying the status — e.g. a deprecation notice with migration guidance.                                          |
+| `message`   | `string` \| [`TextNode`](./TextNode.md) _(optional)_            | Free-form prose accompanying the status — e.g. a deprecation notice with migration guidance. May span multiple lines.                 |
 | `plugins`   | [`PluginNode`](./PluginNode.md)[] _(optional)_                  | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
 
 ## Examples

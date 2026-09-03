@@ -18,6 +18,7 @@ import {
     type Spec,
     string,
     stringIdentifier,
+    text,
     u64,
     union,
     validate,
@@ -61,6 +62,15 @@ describe('validate — references', () => {
             }),
         );
         expect(errors.some(e => e.includes('noSuchEnum'))).toBe(true);
+    });
+
+    it('reports text-shaped attributes when textNode is not defined', () => {
+        const errors = validate(
+            baseSpec({
+                nodes: [defineNode('aNode', { attributes: [attribute('message', text())] })],
+            }),
+        );
+        expect(errors.some(e => e.includes('"aNode"') && e.includes('"textNode"'))).toBe(true);
     });
 
     it('walks into compound types when checking refs', () => {

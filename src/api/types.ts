@@ -134,9 +134,10 @@ export type TypeExpr =
      * holds exactly what the JSON says — there is no normalisation. The
      * canonical form of plugin-free text is the plain string; a
      * `textNode` without plugins is valid but non-canonical, which
-     * validators flag as a lint. Multi-line text uses `\n`; whether an
-     * attribute may be multi-line is a per-attribute convention
-     * documented where it applies.
+     * validators flag as a lint. Multi-line text uses `\n`; text
+     * attributes are single-line by convention unless their own docs say
+     * otherwise, with validators warning rather than structure
+     * forbidding.
      */
     | { readonly kind: 'text' }
     | { readonly kind: 'union'; readonly name: string };

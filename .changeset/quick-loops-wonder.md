@@ -27,6 +27,6 @@ Introduce `textNode` and make every human-facing attribute text-shaped: the unio
 + "docs": "Transfers tokens.\nFails when the account is frozen."
 ```
 
-**Text attributes classify as children.** Their values may be `textNode`s carrying plugin nodes, so visitors traverse them like any other child.
+**Text attributes classify as children.** Their values may be `textNode`s carrying plugin nodes, so visitors traverse them like any other child — but they are the only children whose value may also be a primitive string, so traversal code must guard that arm.
 
 Multi-line text is a per-attribute convention (`docs` may be multi-line; intents, labels and messages are single-line), enforced as validator warnings. Identifiers are not text — they remain machine keys with their own rules, and `unit` stays a plain string: a quantity identifier, not prose.

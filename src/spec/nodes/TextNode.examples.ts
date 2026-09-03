@@ -20,7 +20,7 @@ export const examples: DocExamples = [
     "content": "Transfer",
     "plugins": [
         { "kind": "pluginNode", "namespace": "i18n.es", "payload": "Transferir" },
-        { "kind": "pluginNode", "namespace": "i18n.fr", "payload": "Transf\\u00e9rer" }
+        { "kind": "pluginNode", "namespace": "i18n.fr", "payload": "Transférer" }
     ]
 }
 `,

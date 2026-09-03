@@ -11,7 +11,9 @@ export const instructionStatusNode = defineNode('instructionStatusNode', {
             docs: ['The lifecycle stage.'],
         }),
         optionalAttribute('message', text(), {
-            docs: ['Free-form prose accompanying the status — e.g. a deprecation notice with migration guidance.'],
+            docs: [
+                'Free-form prose accompanying the status — e.g. a deprecation notice with migration guidance. May span multiple lines.',
+            ],
         }),
     ],
     examples,

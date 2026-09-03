@@ -176,6 +176,13 @@ function checkRef(
                 errors.push(`${where} references undefined enumeration "${expr.name}".`);
             }
             break;
+        case 'docs':
+        case 'text':
+            // text-shaped attributes implicitly reference textNode via their rich arm
+            if (!nodeKinds.has('textNode')) {
+                errors.push(`${where} is text-shaped but node "textNode" is not defined.`);
+            }
+            break;
         default:
             break;
     }
@@ -187,8 +194,11 @@ function checkRef(
  * A "child" attribute is one whose value contains another node. Specifically,
  * any attribute whose type tree includes a `node` or `union` is treated
  * as a child — including `text` and `docs`, whose values may be
- * `textNode`s carrying plugin nodes. Optionality (the `optional`
- * flag on the attribute itself) is orthogonal to this classification.
+ * `textNode`s carrying plugin nodes. Note that `text` and `docs` are the
+ * only child kinds whose value may also be a primitive string; consumers
+ * driving traversal from this discriminator must guard that arm.
+ * Optionality (the `optional` flag on the attribute itself) is
+ * orthogonal to this classification.
  */
 export function isChildAttribute(type: TypeExpr): boolean {
     switch (type.kind) {
