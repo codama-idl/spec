@@ -49,9 +49,12 @@ jobs:
       - name: Verify generated artifacts are up to date
         run: |
           pnpm generate
-          if ! git diff --quiet -- v1; then
+          # `git status` rather than `git diff` so that new, untracked pages (e.g. the docs of a
+          # newly added node) are caught as well as modifications.
+          if [ -n "$(git status --porcelain -- spec.json schema.json docs)" ]; then
             echo '::error::Generated artifacts are stale. Re-run `pnpm generate` and commit the result.'
-            git --no-pager diff -- v1
+            git --no-pager status --porcelain -- spec.json schema.json docs
+            git --no-pager diff -- spec.json schema.json docs
             exit 1
           fi
 

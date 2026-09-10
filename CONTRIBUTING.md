@@ -71,8 +71,8 @@ Run `pnpm test` to execute the type checks and unit tests. Spec fixtures live in
 Spec-touching PRs should:
 
 1. Include the spec change in `src/`.
-2. Run `pnpm generate` to refresh the `v<n>/` artifacts and commit the result.
-   CI verifies the artifacts stay in lockstep with the TypeScript source.
+2. Run `pnpm generate` to refresh the generated artifacts (`spec.json`, `schema.json`, `docs/`)
+   and commit the result. CI verifies the artifacts stay in lockstep with the TypeScript source.
 3. Add or update fixtures in `tests/` covering the new shape.
 
 ### Optional value serialisation
