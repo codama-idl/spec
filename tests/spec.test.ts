@@ -54,6 +54,7 @@ describe('spec — coverage smoke checks', () => {
             'fixedCountNode',
             'prefixedCountNode',
             'remainderCountNode',
+            'sentinelCountNode',
             // discriminator nodes
             'constantDiscriminatorNode',
             'fieldDiscriminatorNode',
@@ -115,6 +116,7 @@ describe('spec — coverage smoke checks', () => {
             'bytesEncoding',
             'instructionLifecycle',
             'displaySkip',
+            'sentinelCountStrategy',
         ]) {
             expect(getEnumeration(name), `expected enumeration "${name}" to be defined`).toBeDefined();
         }
@@ -272,6 +274,41 @@ describe('spec — displaySkip enumeration', () => {
         expect(e.variants.map(v => v.name)).toEqual(['always', 'never', 'whenInjected']);
         for (const v of e.variants) {
             expect(v.docs, `variant "${v.name}" should have docs`).toBeTruthy();
+            expect((v.docs ?? []).length, `variant "${v.name}" docs should be non-empty`).toBeGreaterThan(0);
+        }
+    });
+});
+
+describe('spec — sentinelCountNode', () => {
+    it('is a registered count strategy', () => {
+        const u = getUnion('registeredCountNode')!;
+        expect(u.members.map(m => m.name)).toEqual([
+            'fixedCountNode',
+            'prefixedCountNode',
+            'remainderCountNode',
+            'sentinelCountNode',
+        ]);
+    });
+
+    it('declares the scalar strategy before the sentinel child, per the attribute order convention', () => {
+        const n = getNode('sentinelCountNode')!;
+        expect(n.attributes.map(a => a.name)).toEqual(['strategy', 'sentinel']);
+    });
+
+    it('takes a constant sentinel and an optional strategy defaulting to required', () => {
+        const n = getNode('sentinelCountNode')!;
+        const [strategy, sentinel] = n.attributes;
+        expect(sentinel.optional).toBeFalsy();
+        expect(sentinel.type).toEqual({ kind: 'node', name: 'constantValueNode' });
+        expect(strategy.optional).toBe(true);
+        expect(strategy.type).toEqual({ kind: 'enumeration', name: 'sentinelCountStrategy' });
+        expect(strategy.docs?.join(' ')).toContain('`required` is assumed');
+    });
+
+    it('declares the three sentinel strategies with docs', () => {
+        const e = getEnumeration('sentinelCountStrategy')!;
+        expect(e.variants.map(v => v.name)).toEqual(['omitted', 'optional', 'required']);
+        for (const v of e.variants) {
             expect((v.docs ?? []).length, `variant "${v.name}" docs should be non-empty`).toBeGreaterThan(0);
         }
     });

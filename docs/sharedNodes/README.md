@@ -14,3 +14,4 @@ Shared enumerations referenced from multiple node categories.
 - [`OptionalAccountStrategy`](./OptionalAccountStrategy.md) - How an absent optional account is represented when serialising an instruction.
 - [`PostOffsetStrategy`](./PostOffsetStrategy.md) - How a post-offset transform interprets its offset value after serialising the transformed type.
 - [`PreOffsetStrategy`](./PreOffsetStrategy.md) - How a pre-offset transform interprets its offset value before serialising the transformed type.
+- [`SentinelCountStrategy`](./SentinelCountStrategy.md) - Whether the sentinel of a `sentinelCountNode` is written when encoding and required when decoding.
