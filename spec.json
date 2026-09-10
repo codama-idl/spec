@@ -3704,6 +3704,140 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "kind": "sentinelCountNode",
+                    "docs": [
+                        "A count strategy where items are read until the bytes at the next item position match a constant sentinel.",
+                        "Unlike `sentinelTransformNode`, the sentinel is only compared at item boundaries and never searched for within the encoded bytes, so it may legitimately occur inside an item.",
+                        "",
+                        "At each item boundary, decoding proceeds in order:",
+                        "",
+                        "1. If fewer bytes than the sentinel remain, decoding fails under the `required` strategy and stops otherwise.",
+                        "2. If the next bytes match the sentinel, they are consumed and decoding stops.",
+                        "3. Otherwise, one item is decoded and the process repeats.",
+                        "",
+                        "The `strategy` attribute controls whether the sentinel is written when encoding and required when decoding. `required` writes it and demands it. `optional` writes it but tolerates buffers that end without it, such as tightly sized or legacy data. `omitted` never writes it and is therefore only meaningful when the collection is followed by unused space or the end of the buffer, since nothing else marks where it ends.",
+                        "",
+                        "In every strategy, a sentinel that is present is consumed. Should a following attribute need to read those bytes as well, wrap it in a `preOffsetTransformNode` that steps back by the size of the sentinel.",
+                        "",
+                        "> [!IMPORTANT]",
+                        "> No item may begin with the sentinel's bytes, or decoding would stop at that item. With the `optional` and `omitted` strategies, the sentinel must also be no wider than the smallest possible item, so that a tail shorter than the sentinel can never hold a valid item."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "strategy",
+                            "type": {
+                                "kind": "enumeration",
+                                "name": "sentinelCountStrategy"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Whether the sentinel is written when encoding and required when decoding.",
+                                "When absent, `required` is assumed."
+                            ]
+                        },
+                        {
+                            "name": "sentinel",
+                            "type": {
+                                "kind": "node",
+                                "name": "constantValueNode"
+                            },
+                            "docs": [
+                                "The fixed-size constant compared against the bytes at each item position."
+                            ]
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "title": "Create a sentinel count node",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "const node = sentinelCountNode(constantValueNode(integerTypeNode('u8'), integerValueNode('0')));"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A list of public keys terminated by the default public key",
+                            "docs": [
+                                "The sentinel is as wide as an item, so the only key that can never appear in the list is the all-zero key itself, which programs conventionally use as a null marker. This is also the System Program ID, so the pattern does not suit a list that could legitimately contain it.",
+                                "A narrower sentinel, such as a single `0xFF` byte, would be ambiguous: about one key in 256 starts with that byte.",
+                                "The sentinel is required by default, so decoding `A B` without the trailing zero key fails."
+                            ],
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "arrayTypeNode(",
+                                        "    publicKeyTypeNode(),",
+                                        "    sentinelCountNode(constantValueNode(publicKeyTypeNode(), publicKeyValueNode('11111111111111111111111111111111'))),",
+                                        ");",
+                                        "",
+                                        "// [A, B] => A B 00…00 (32 zero bytes)"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "TLV extensions terminated by an uninitialised type, followed by unused space",
+                            "docs": [
+                                "Each extension starts with a `u16` type, and a type of `0` marks the end of the initialised region. Anything after it is unused space of any length that the program never writes a terminator for, which is why the sentinel is `omitted`."
+                            ],
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "arrayTypeNode(",
+                                        "    definedTypeLinkNode('extension'),",
+                                        "    sentinelCountNode(constantValueNode(integerTypeNode('u16'), integerValueNode('0')), 'omitted'),",
+                                        ");",
+                                        "",
+                                        "// 0700 0000 | 0200 0800 0000000000000000 | 0000 | 0000000000",
+                                        "// ImmutableOwner | TransferFeeAmount     | stop | ignored"
+                                    ]
+                                },
+                                {
+                                    "language": "jsonc",
+                                    "content": [
+                                        "{",
+                                        "    \"kind\": \"arrayTypeNode\",",
+                                        "    \"item\": { \"kind\": \"definedTypeLinkNode\", \"identifier\": \"extension\" },",
+                                        "    \"count\": {",
+                                        "        \"kind\": \"sentinelCountNode\",",
+                                        "        \"strategy\": \"omitted\",",
+                                        "        \"sentinel\": {",
+                                        "            \"kind\": \"constantValueNode\",",
+                                        "            \"type\": { \"kind\": \"integerTypeNode\", \"format\": \"u16\" },",
+                                        "            \"value\": { \"kind\": \"integerValueNode\", \"value\": \"0\" }",
+                                        "        }",
+                                        "    }",
+                                        "}"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Discriminated seeds inside a zero-padded fixed-size slot",
+                            "docs": [
+                                "Seeds start with a `u8` discriminator and `0` marks the end of the list. The slot is zero-padded to 32 bytes, so a full slot has no room for a terminator: the sentinel is omitted when encoding and tolerated when decoding."
+                            ],
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "arrayTypeNode(",
+                                        "    definedTypeLinkNode('seed'),",
+                                        "    sentinelCountNode(constantValueNode(integerTypeNode('u8'), integerValueNode('0')), 'omitted'),",
+                                        "    { transforms: [fixedSizeTransformNode(32)] },",
+                                        ");"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ],
             "unions": [
@@ -3721,6 +3855,10 @@
                         {
                             "kind": "node",
                             "name": "remainderCountNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "sentinelCountNode"
                         }
                     ],
                     "docs": [
@@ -5659,6 +5797,33 @@
                     "docs": [
                         "How a pre-offset transform interprets its offset value before serialising the transformed type.",
                         "See `preOffsetTransformNode` for an illustrated walkthrough of each strategy."
+                    ]
+                },
+                {
+                    "name": "sentinelCountStrategy",
+                    "variants": [
+                        {
+                            "name": "omitted",
+                            "docs": [
+                                "The sentinel is never written; when decoding, it is consumed if present and the collection also ends at the end of the buffer. Only meaningful when the collection is followed by unused space or the end of the buffer, since nothing else marks where it ends."
+                            ]
+                        },
+                        {
+                            "name": "optional",
+                            "docs": [
+                                "The sentinel is written after the last item; when decoding, it is consumed if present and the collection also ends at the end of the buffer. Use this to tolerate tightly sized or legacy data that lacks the sentinel."
+                            ]
+                        },
+                        {
+                            "name": "required",
+                            "docs": [
+                                "The sentinel is written after the last item and must be present when decoding; reaching the end of the buffer without it is an error."
+                            ]
+                        }
+                    ],
+                    "docs": [
+                        "Whether the sentinel of a `sentinelCountNode` is written when encoding and required when decoding.",
+                        "See `sentinelCountNode` for the decoding algorithm each strategy follows."
                     ]
                 }
             ]

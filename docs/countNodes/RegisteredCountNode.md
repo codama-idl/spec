@@ -7,3 +7,4 @@ One of the following:
 - [`FixedCountNode`](./FixedCountNode.md)
 - [`PrefixedCountNode`](./PrefixedCountNode.md)
 - [`RemainderCountNode`](./RemainderCountNode.md)
+- [`SentinelCountNode`](./SentinelCountNode.md)

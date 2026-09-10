@@ -7,6 +7,7 @@ Count nodes — strategies for sizing a homogeneous collection in serialized for
 - [`FixedCountNode`](./FixedCountNode.md) - A count strategy that fixes the number of items at a constant value.
 - [`PrefixedCountNode`](./PrefixedCountNode.md) - A count strategy where the number of items is read from a numeric prefix.
 - [`RemainderCountNode`](./RemainderCountNode.md) - A count strategy where items are read until the buffer is exhausted.
+- [`SentinelCountNode`](./SentinelCountNode.md) - A count strategy where items are read until the bytes at the next item position match a constant sentinel.
 
 ## Unions
 

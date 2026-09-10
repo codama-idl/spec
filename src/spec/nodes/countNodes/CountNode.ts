@@ -2,7 +2,7 @@ import { defineUnion, union } from '../../../api';
 
 export const registeredCountNodeUnion = defineUnion('registeredCountNode', {
     docs: ['Every node tagged as a count strategy.'],
-    members: ['fixedCountNode', 'prefixedCountNode', 'remainderCountNode'],
+    members: ['fixedCountNode', 'prefixedCountNode', 'remainderCountNode', 'sentinelCountNode'],
 });
 
 export const countNodeUnion = defineUnion('countNode', {
