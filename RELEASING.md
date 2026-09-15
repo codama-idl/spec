@@ -58,6 +58,28 @@ Release workflows trigger on `push: branches: [main, '[0-9]+.x']`. The maintenan
 
 Git tags are `vX.Y.Z` in single-package repos and `<package>@X.Y.Z` in the `codama` monorepo (both are changesets defaults; no manual tagging). Release-candidate versions are automatically marked as pre-releases on GitHub, so they never take the repository's "Latest release" badge.
 
+## Publishing authentication
+
+Every repository publishes to npm through **[Trusted Publishing](https://docs.npmjs.com/trusted-publishers) (OIDC)**. There is **no npm token anywhere in the organisation** — no `NPM_TOKEN` secret, no `NODE_AUTH_TOKEN` in any workflow. Each publish exchanges a short-lived, workflow-scoped OIDC token for a one-off publish credential, and npm records [provenance](https://docs.npmjs.com/generating-provenance-statements) attestations automatically.
+
+How it fits together:
+
+- The [shared release workflow](#automation) grants `id-token: write`, and so must the calling `main.yml` job (both caller and callee need it). It deliberately does **not** set `registry-url` on `setup-node`, since that would write a token placeholder to `.npmrc` and suppress the OIDC exchange.
+- npm validates the OIDC claims against the **calling** workflow's filename, so every package's trusted publisher points at its own repository's `main.yml`, even though the job body is shared. Each `package.json` `repository` field must point at that repository (npm checks it).
+- The trust relationship is configured per package with `release-tools trust-publishers`, run from a maintainer's own machine (npm ≥ 11.15, `npm login`, second factor — never a token, never in CI). It is idempotent: it audits every public package and only creates what is missing.
+
+Adopting a repository (once):
+
+```sh
+pnpm exec release-tools trust-publishers                    # configure every public package
+pnpm exec release-tools trust-publishers --restrict-tokens # then: "require 2FA and disallow tokens" on npm
+```
+
+> [!IMPORTANT]
+> Trusted publishing **cannot create a package**. A brand-new package (e.g. a new `@codama/*` in the monorepo) needs **one** manual `npm publish` from its directory first; after that, `trust-publishers` picks it up and every subsequent release is token-less. Merge the adoption change and run `trust-publishers` **before** merging that repository's next release PR: with no token there is no fallback, so an unconfigured package fails the publish (recoverably — re-run the job after configuring).
+
+The trusted publisher allows a direct `npm publish` rather than [stage-only publishing](https://docs.npmjs.com/staged-publishing), because `changeset publish` publishes directly and creating the git tags and GitHub releases assumes the version is live. The human approval step is the release PR merge itself (branch ruleset: PR, review, squash); OIDC removes the standing credential that staging would otherwise protect.
+
 ## The lifecycle of a new major
 
 The two events are fully automated by the [`cut` and `promote` workflows](#automation) of [`codama-idl/release-tools`](https://github.com/codama-idl/release-tools): each is a single `workflow_dispatch`, and every step below happens as direct, tool-generated commits (the release app bypasses branch protection for exactly this purpose). Repos that have not adopted release-tools run the same steps by hand. A [tracking issue](#the-tracking-issue) records overall progress.
@@ -160,6 +182,8 @@ Each major transition gets one tracking issue in the repo that drives it (the sp
 
 - **`cut`** and **`promote`** reusable workflows, called from thin `workflow_dispatch` wrappers in each repo. They perform every mechanical step — branch creation, the tool-generated commits on `main` and `N.x`, and the default-branch flips — using GitHub App tokens scoped down per step (the admin-capable token exists only for the flip step, and direct commits rely on the app's ruleset bypass).
 - A dependency-free **`postversion` guard** hooked into each repo's changesets `version-script`. After `changeset version`, it asserts that a **stable** major crossing happens only on `main` with the corresponding `N.x` maintenance branch already cut, that rc crossings happen only in pre-release mode, and — in monorepos — that all public package majors stay equal. Violations fail the release PR loudly.
+- The shared **`release`** reusable workflow: the release job every repository calls from its `main.yml`. It opens or refreshes the changesets release PR and publishes to npm via [Trusted Publishing](#publishing-authentication) when that PR merges.
+- The **`trust-publishers`** command, which configures each repository's npm trusted publishers from a maintainer's machine (see [publishing authentication](#publishing-authentication)).
 - The canonical repository policies — **`ruleset.json`** (branch protection) and **`repo-settings.json`** (merge methods, squash defaults, auto-merge) — and the **`sync-policies`** workflow that applies them to every repository in the organisation.
 
 Until a repo adopts release-tools, run the equivalent steps by hand, in the order listed in [the lifecycle](#the-lifecycle-of-a-new-major).
