@@ -26,11 +26,11 @@ In every strategy, a sentinel that is present is consumed. Should a following at
 
 ### Children
 
-| Attribute  | Type                                                                            | Description                                                                                                                           |
-| ---------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `strategy` | [`SentinelCountStrategy`](../sharedNodes/SentinelCountStrategy.md) _(optional)_ | Whether the sentinel is written when encoding and required when decoding. When absent, `required` is assumed.                         |
-| `sentinel` | [`ConstantValueNode`](../valueNodes/ConstantValueNode.md)                       | The fixed-size constant compared against the bytes at each item position.                                                             |
-| `plugins`  | [`PluginNode`](../PluginNode.md)[] _(optional)_                                 | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute  | Type                                                                            | Description                                                                                                   |
+| ---------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `strategy` | [`SentinelCountStrategy`](../sharedNodes/SentinelCountStrategy.md) _(optional)_ | Whether the sentinel is written when encoding and required when decoding. When absent, `required` is assumed. |
+| `sentinel` | [`ConstantValueNode`](../valueNodes/ConstantValueNode.md)                       | The fixed-size constant compared against the bytes at each item position.                                     |
+| `plugins`  | [`PluginNode`](../PluginNode.md)[] _(optional)_                                 | Namespaced plugins with custom structured data.                                                               |
 
 ## Examples
 

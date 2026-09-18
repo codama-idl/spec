@@ -78,10 +78,10 @@ offset = -2
 
 ### Children
 
-| Attribute  | Type                                                         | Description                                                                                                                           |
-| ---------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `strategy` | [`PostOffsetStrategy`](../sharedNodes/PostOffsetStrategy.md) | How the `offset` value is interpreted.                                                                                                |
-| `plugins`  | [`PluginNode`](../PluginNode.md)[] _(optional)_              | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute  | Type                                                         | Description                                     |
+| ---------- | ------------------------------------------------------------ | ----------------------------------------------- |
+| `strategy` | [`PostOffsetStrategy`](../sharedNodes/PostOffsetStrategy.md) | How the `offset` value is interpreted.          |
+| `plugins`  | [`PluginNode`](../PluginNode.md)[] _(optional)_              | Namespaced plugins with custom structured data. |
 
 ## Examples
 

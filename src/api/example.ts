@@ -14,7 +14,7 @@
  * Each file:
  *
  * - is named after the node file with an `.examples.ts` suffix
- *   (`AmountTypeNode.ts` -> `AmountTypeNode.examples.ts`)
+ *   (`IntegerTypeNode.ts` -> `IntegerTypeNode.examples.ts`)
  * - writes each snippet as a template literal passed straight to `code()`, so the
  *   snippet reads like real code and `dedent()` strips any source indentation
  * - exports a single `DocExamples` array named `examples`
@@ -22,23 +22,23 @@
  * The node file imports that array and hands it to `defineNode`:
  *
  * ```ts
- * // AmountTypeNode.examples.ts
+ * // IntegerTypeNode.examples.ts
  * import { code, example, type DocExamples } from '../../../api';
  *
  * export const examples: DocExamples = [
- *     example('2-decimals USD amount', code('typescript', `
- * amountTypeNode(numberTypeNode('u32'), 2, 'USD');
+ *     example('A little-endian u64', code('typescript', `
+ * integerTypeNode('u64');
  *
- * // 0.01 USD => 0x01000000
+ * // 42 => 0x2A00000000000000
  * `)),
  * ];
  * ```
  *
  * ```ts
- * // AmountTypeNode.ts
- * import { examples } from './AmountTypeNode.examples';
+ * // IntegerTypeNode.ts
+ * import { examples } from './IntegerTypeNode.examples';
  *
- * export const amountTypeNode = defineNode('amountTypeNode', {
+ * export const integerTypeNode = defineNode('integerTypeNode', {
  *     docs: ['...'],
  *     attributes: ['...'],
  *     examples,

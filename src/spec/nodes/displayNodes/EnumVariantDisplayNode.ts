@@ -7,7 +7,7 @@ export const enumVariantDisplayNode = defineNode('enumVariantDisplayNode', {
         optionalAttribute('label', text(), {
             docs: [
                 'An override label shown for the variant (e.g. `"Buy"`).',
-                'When absent, renderers derive a label from the variant `name`.',
+                'When absent, renderers derive a label from the variant `identifier`.',
             ],
         }),
         optionalAttribute('skipInnerData', boolean(), {

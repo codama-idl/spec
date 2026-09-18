@@ -13,12 +13,12 @@ A named constant exposed by the program: a typed value associated with a name.
 
 ### Children
 
-| Attribute | Type                                                 | Description                                                                                                                           |
-| --------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `docs`    | `string` \| [`TextNode`](./TextNode.md) _(optional)_ | Markdown documentation for the constant.                                                                                              |
-| `type`    | [`TypeNode`](./typeNodes/TypeNode.md)                | The type of the constant.                                                                                                             |
-| `value`   | [`ValueNode`](./valueNodes/ValueNode.md)             | The concrete value of the constant.                                                                                                   |
-| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_       | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                                 | Description                                     |
+| --------- | ---------------------------------------------------- | ----------------------------------------------- |
+| `docs`    | `string` \| [`TextNode`](./TextNode.md) _(optional)_ | Markdown documentation for the constant.        |
+| `type`    | [`TypeNode`](./typeNodes/TypeNode.md)                | The type of the constant.                       |
+| `value`   | [`ValueNode`](./valueNodes/ValueNode.md)             | The concrete value of the constant.             |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_       | Namespaced plugins with custom structured data. |
 
 ## Examples
 

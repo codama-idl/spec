@@ -17,10 +17,10 @@ When decoding, the transformed type is decoded until the sentinel value is encou
 
 ### Children
 
-| Attribute  | Type                                                      | Description                                                                                                                           |
-| ---------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `sentinel` | [`ConstantValueNode`](../valueNodes/ConstantValueNode.md) | The constant value written immediately after the transformed type to mark its end.                                                    |
-| `plugins`  | [`PluginNode`](../PluginNode.md)[] _(optional)_           | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute  | Type                                                      | Description                                                                        |
+| ---------- | --------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `sentinel` | [`ConstantValueNode`](../valueNodes/ConstantValueNode.md) | The constant value written immediately after the transformed type to mark its end. |
+| `plugins`  | [`PluginNode`](../PluginNode.md)[] _(optional)_           | Namespaced plugins with custom structured data.                                    |
 
 ## Examples
 

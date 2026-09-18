@@ -13,10 +13,10 @@ When decoding, the suffixed constants are consumed and checked against their exp
 
 ### Children
 
-| Attribute | Type                                                        | Description                                                                                                                           |
-| --------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `suffix`  | [`ConstantValueNode`](../valueNodes/ConstantValueNode.md)[] | The constant values written after the transformed type, in order.                                                                     |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_             | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                                        | Description                                                       |
+| --------- | ----------------------------------------------------------- | ----------------------------------------------------------------- |
+| `suffix`  | [`ConstantValueNode`](../valueNodes/ConstantValueNode.md)[] | The constant values written after the transformed type, in order. |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_             | Namespaced plugins with custom structured data.                   |
 
 ## Examples
 

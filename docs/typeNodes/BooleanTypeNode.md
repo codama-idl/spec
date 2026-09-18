@@ -13,11 +13,11 @@ A decoded number of `1` yields `true`; any other value yields `false`.
 
 ### Children
 
-| Attribute    | Type                                                                 | Description                                                                                                                           |
-| ------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `size`       | [`IntegerTypeNode`](./IntegerTypeNode.md)                            | The integer type used to serialise the boolean.                                                                                       |
-| `transforms` | [`TransformNode`](../transformNodes/TransformNode.md)[] _(optional)_ | Transforms applied to the serialisation of this type, in order — the first is the innermost.                                          |
-| `plugins`    | [`PluginNode`](../PluginNode.md)[] _(optional)_                      | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute    | Type                                                                 | Description                                                                                  |
+| ------------ | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `size`       | [`IntegerTypeNode`](./IntegerTypeNode.md)                            | The integer type used to serialise the boolean.                                              |
+| `transforms` | [`TransformNode`](../transformNodes/TransformNode.md)[] _(optional)_ | Transforms applied to the serialisation of this type, in order — the first is the innermost. |
+| `plugins`    | [`PluginNode`](../PluginNode.md)[] _(optional)_                      | Namespaced plugins with custom structured data.                                              |
 
 ## Examples
 

@@ -17,11 +17,11 @@ Like `instructionAccountNode`, it declares a client input: the identifier names 
 
 ### Children
 
-| Attribute | Type                                                                                            | Description                                                                                                                           |
-| --------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `docs`    | `string` \| [`TextNode`](./TextNode.md) _(optional)_                                            | Markdown documentation for the remaining-accounts slot.                                                                               |
-| `display` | [`InstructionAccountDisplayNode`](./displayNodes/InstructionAccountDisplayNode.md) _(optional)_ | Display metadata describing how the remaining-accounts group is presented as a whole.                                                 |
-| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_                                                  | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                                                                            | Description                                                                           |
+| --------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `docs`    | `string` \| [`TextNode`](./TextNode.md) _(optional)_                                            | Markdown documentation for the remaining-accounts slot.                               |
+| `display` | [`InstructionAccountDisplayNode`](./displayNodes/InstructionAccountDisplayNode.md) _(optional)_ | Display metadata describing how the remaining-accounts group is presented as a whole. |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_                                                  | Namespaced plugins with custom structured data.                                       |
 
 ## Examples
 

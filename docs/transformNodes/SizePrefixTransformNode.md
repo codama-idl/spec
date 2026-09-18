@@ -13,10 +13,10 @@ When decoding, the size is read first and determines how many bytes the transfor
 
 ### Children
 
-| Attribute | Type                                                 | Description                                                                                                                           |
-| --------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `prefix`  | [`IntegerTypeNode`](../typeNodes/IntegerTypeNode.md) | The integer type used as the size prefix.                                                                                             |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_      | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                                 | Description                                     |
+| --------- | ---------------------------------------------------- | ----------------------------------------------- |
+| `prefix`  | [`IntegerTypeNode`](../typeNodes/IntegerTypeNode.md) | The integer type used as the size prefix.       |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_      | Namespaced plugins with custom structured data. |
 
 ## Examples
 
