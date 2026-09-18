@@ -16,11 +16,11 @@ A program-derived address: its identifier, optional program ID override, and the
 
 ### Children
 
-| Attribute | Type                                                 | Description                                                                                                                           |
-| --------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `docs`    | `string` \| [`TextNode`](./TextNode.md) _(optional)_ | Markdown documentation for the PDA.                                                                                                   |
-| `seeds`   | [`PdaSeedNode`](./pdaSeedNodes/PdaSeedNode.md)[]     | The seeds used to derive the PDA, in order.                                                                                           |
-| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_       | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                                 | Description                                     |
+| --------- | ---------------------------------------------------- | ----------------------------------------------- |
+| `docs`    | `string` \| [`TextNode`](./TextNode.md) _(optional)_ | Markdown documentation for the PDA.             |
+| `seeds`   | [`PdaSeedNode`](./pdaSeedNodes/PdaSeedNode.md)[]     | The seeds used to derive the PDA, in order.     |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_       | Namespaced plugins with custom structured data. |
 
 ## Examples
 

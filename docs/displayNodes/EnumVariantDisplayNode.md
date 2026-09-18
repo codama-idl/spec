@@ -13,10 +13,10 @@ Display metadata for an enum variant: its label and whether to hide its inner pa
 
 ### Children
 
-| Attribute | Type                                                  | Description                                                                                                                           |
-| --------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `label`   | `string` \| [`TextNode`](../TextNode.md) _(optional)_ | An override label shown for the variant (e.g. `"Buy"`). When absent, renderers derive a label from the variant `name`.                |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_       | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                                  | Description                                                                                                                  |
+| --------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `label`   | `string` \| [`TextNode`](../TextNode.md) _(optional)_ | An override label shown for the variant (e.g. `"Buy"`). When absent, renderers derive a label from the variant `identifier`. |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_       | Namespaced plugins with custom structured data.                                                                              |
 
 ## Examples
 

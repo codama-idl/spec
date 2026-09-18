@@ -17,8 +17,7 @@
                 },
                 "optional": true,
                 "docs": [
-                    "Namespaced plugins with custom structured data.",
-                    "The universal extension point for renderer-specific or not-yet-standardised metadata."
+                    "Namespaced plugins with custom structured data."
                 ]
             }
         ]
@@ -4233,7 +4232,7 @@
                             "optional": true,
                             "docs": [
                                 "An override label shown for the variant (e.g. `\"Buy\"`).",
-                                "When absent, renderers derive a label from the variant `name`."
+                                "When absent, renderers derive a label from the variant `identifier`."
                             ]
                         },
                         {
@@ -4293,7 +4292,7 @@
                             "optional": true,
                             "docs": [
                                 "An override label shown in the fallback list (e.g. `\"To\"`).",
-                                "When absent, renderers derive a label from the account `name`."
+                                "When absent, renderers derive a label from the account `identifier`."
                             ]
                         },
                         {
@@ -4488,7 +4487,7 @@
                             "optional": true,
                             "docs": [
                                 "An override label shown for the member (e.g. `\"Amount\"`).",
-                                "When absent, renderers derive a label from the member `name`."
+                                "When absent, renderers derive a label from the member `identifier`."
                             ]
                         },
                         {
@@ -6131,7 +6130,7 @@
                 {
                     "kind": "errorNode",
                     "docs": [
-                        "A program error — a numeric code paired with a name and human-readable message.",
+                        "A program error — a numeric code paired with an identifier and human-readable message.",
                         "",
                         "![Diagram](https://github.com/codama-idl/codama/assets/3642397/0bde98ea-0327-404b-bf38-137d105826b0)"
                     ],

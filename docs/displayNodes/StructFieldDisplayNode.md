@@ -16,10 +16,10 @@ Value presentation is carried by the member's type; this node only addresses nam
 
 | Attribute       | Type                                                        | Description                                                                                                                                                                               |
 | --------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `label`         | `string` \| [`TextNode`](../TextNode.md) _(optional)_       | An override label shown for the member (e.g. `"Amount"`). When absent, renderers derive a label from the member `name`.                                                                   |
+| `label`         | `string` \| [`TextNode`](../TextNode.md) _(optional)_       | An override label shown for the member (e.g. `"Amount"`). When absent, renderers derive a label from the member `identifier`.                                                             |
 | `skip`          | [`DisplaySkip`](../sharedNodes/DisplaySkip.md) _(optional)_ | Whether the member is shown in the fallback list. Defaults to `"never"` (always shown).                                                                                                   |
 | `flattenPrefix` | `string` \| [`TextNode`](../TextNode.md) _(optional)_       | A literal prefix prepended to each flattened member's label (e.g. `"args."`). Meaningful only when `flatten` is `true`. Useful to disambiguate when two flattened children might collide. |
-| `plugins`       | [`PluginNode`](../PluginNode.md)[] _(optional)_             | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata.                                                     |
+| `plugins`       | [`PluginNode`](../PluginNode.md)[] _(optional)_             | Namespaced plugins with custom structured data.                                                                                                                                           |
 
 ## Examples
 

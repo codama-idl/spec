@@ -13,11 +13,11 @@ A point in time encoded as an integer count of ticks since the Unix epoch.
 
 ### Children
 
-| Attribute    | Type                                                                 | Description                                                                                                                           |
-| ------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `number`     | [`IntegerTypeNode`](./IntegerTypeNode.md)                            | The integer type used to serialise the tick count — a pure encoding slot. It must not carry a `unit` or `display` of its own.         |
-| `transforms` | [`TransformNode`](../transformNodes/TransformNode.md)[] _(optional)_ | Transforms applied to the serialisation of this type, in order — the first is the innermost.                                          |
-| `plugins`    | [`PluginNode`](../PluginNode.md)[] _(optional)_                      | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute    | Type                                                                 | Description                                                                                                                   |
+| ------------ | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `number`     | [`IntegerTypeNode`](./IntegerTypeNode.md)                            | The integer type used to serialise the tick count — a pure encoding slot. It must not carry a `unit` or `display` of its own. |
+| `transforms` | [`TransformNode`](../transformNodes/TransformNode.md)[] _(optional)_ | Transforms applied to the serialisation of this type, in order — the first is the innermost.                                  |
+| `plugins`    | [`PluginNode`](../PluginNode.md)[] _(optional)_                      | Namespaced plugins with custom structured data.                                                                               |
 
 ## Examples
 

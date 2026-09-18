@@ -12,9 +12,9 @@ Refers to the program ID of the surrounding instruction — that is, the address
 
 ### Children
 
-| Attribute | Type                                            | Description                                                                                                                           |
-| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                            | Description                                     |
+| --------- | ----------------------------------------------- | ----------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. |
 
 ## Examples
 
