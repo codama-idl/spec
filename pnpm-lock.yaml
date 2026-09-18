@@ -15,8 +15,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.3
       '@codama/fragments':
-        specifier: ^0.1.3
-        version: 0.1.5
+        specifier: ^1.0.0
+        version: 1.0.0
       '@codama/release-tools':
         specifier: github:codama-idl/release-tools#v1.3.1
         version: https://codeload.github.com/codama-idl/release-tools/tar.gz/9c5ebd576e0d7c96135baa701594980fb90b54a7
@@ -133,15 +133,15 @@ packages:
     resolution: {integrity: sha512-dlT1m5e/0yUL0kRNcQn7yGLVThkgbB0Ga/1AmfDDC/8ik6AIiSf2QLQO2zPYvefsHP0aFgxO93cVLCCfDp7kzQ==}
     engines: {node: '>= 20.12.0'}
 
-  '@codama/errors@1.10.2':
-    resolution: {integrity: sha512-relp9Inq9QkhZ0JUklKujSFWLkVfQSsn2/ms303vsGVWlFBXQmoEsmZCVKgJ7k5APNBbsD8Hc9GGU4J+P05SLA==}
+  '@codama/errors@1.11.0':
+    resolution: {integrity: sha512-JVEgRdHTuTER9eb0Y6uGhG2UHN9LRKA4gj9Wiijvsnj8mxhaweLbbqyJcBAWUvx95yo+CsvHJdItS/7TY0Loxg==}
     hasBin: true
 
-  '@codama/fragments@0.1.5':
-    resolution: {integrity: sha512-aisr+cdayABykLhysE1pcDWMJJZNAAWyi5NEzkMLpyTmQrhIK6Mca14gSJIw3a0uo3E5s5Zc4d6gsxRjfYpLuw==}
+  '@codama/fragments@1.0.0':
+    resolution: {integrity: sha512-hwiteKd/MC3JdU8YS6BwdsEqs7NLcNDd6zz433ac85VUMT17YaYVLlfSCqb1RZRRXzgBA2Kso8DtWFlvwd3UIw==}
 
-  '@codama/node-types@1.10.2':
-    resolution: {integrity: sha512-qFHqpuCmAoJy9ggkLadtug2Nlmnai6LrEmr+sfsK6dEJVOFGMNBR4dxwheziOu/Sn9oWGfnFfKbzQIdWE0qHHg==}
+  '@codama/node-types@1.11.0':
+    resolution: {integrity: sha512-QfTvw+q8TLHHHAKvmbhklYTcb5dnO8PO8I4HaON5j/nWSM999r46nTOSyOx8yQ5kPN/mBJy3lpU93cvVrDrmNg==}
 
   '@codama/release-tools@https://codeload.github.com/codama-idl/release-tools/tar.gz/9c5ebd576e0d7c96135baa701594980fb90b54a7':
     resolution: {tarball: https://codeload.github.com/codama-idl/release-tools/tar.gz/9c5ebd576e0d7c96135baa701594980fb90b54a7}
@@ -1889,17 +1889,17 @@ snapshots:
       fast-wrap-ansi: 0.2.2
       sisteransi: 1.0.5
 
-  '@codama/errors@1.10.2':
+  '@codama/errors@1.11.0':
     dependencies:
-      '@codama/node-types': 1.10.2
+      '@codama/node-types': 1.11.0
       commander: 15.0.0
       picocolors: 1.1.1
 
-  '@codama/fragments@0.1.5':
+  '@codama/fragments@1.0.0':
     dependencies:
-      '@codama/errors': 1.10.2
+      '@codama/errors': 1.11.0
 
-  '@codama/node-types@1.10.2': {}
+  '@codama/node-types@1.11.0': {}
 
   '@codama/release-tools@https://codeload.github.com/codama-idl/release-tools/tar.gz/9c5ebd576e0d7c96135baa701594980fb90b54a7': {}
 
