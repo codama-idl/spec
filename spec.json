@@ -6896,7 +6896,7 @@
                             },
                             "optional": true,
                             "docs": [
-                                "Whether the remaining-accounts tail may be empty. Defaults to `false`."
+                                "Whether the remaining accounts may be omitted. Required ones must be provided, possibly as an empty list. Defaults to `false`."
                             ]
                         },
                         {
