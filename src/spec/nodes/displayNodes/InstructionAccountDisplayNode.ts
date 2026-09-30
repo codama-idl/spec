@@ -7,7 +7,7 @@ export const instructionAccountDisplayNode = defineNode('instructionAccountDispl
         optionalAttribute('label', text(), {
             docs: [
                 'An override label shown in the fallback list (e.g. `"To"`).',
-                'When absent, renderers derive a label from the account `name`.',
+                'When absent, renderers derive a label from the account `identifier`.',
             ],
         }),
         optionalAttribute('skip', enumeration('displaySkip'), {

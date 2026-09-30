@@ -13,10 +13,10 @@ This enables nodes such as `arrayTypeNode` to represent collections whose length
 
 ### Children
 
-| Attribute | Type                                                 | Description                                                                                                                           |
-| --------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `prefix`  | [`IntegerTypeNode`](../typeNodes/IntegerTypeNode.md) | The integer type used as the count prefix.                                                                                            |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_      | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                                 | Description                                     |
+| --------- | ---------------------------------------------------- | ----------------------------------------------- |
+| `prefix`  | [`IntegerTypeNode`](../typeNodes/IntegerTypeNode.md) | The integer type used as the count prefix.      |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_      | Namespaced plugins with custom structured data. |
 
 ## Examples
 

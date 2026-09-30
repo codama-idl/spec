@@ -14,9 +14,9 @@ A concrete 32-byte public key, with an optional symbolic identifier for the addr
 
 ### Children
 
-| Attribute | Type                                            | Description                                                                                                                           |
-| --------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                            | Description                                     |
+| --------- | ----------------------------------------------- | ----------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. |
 
 ## Examples
 

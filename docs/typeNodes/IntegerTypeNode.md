@@ -13,13 +13,13 @@ An integer with a fixed wire format and byte order.
 
 ### Children
 
-| Attribute    | Type                                                                     | Description                                                                                                                           |
-| ------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `format`     | [`IntegerFormat`](../sharedNodes/IntegerFormat.md)                       | The wire format used to serialise the integer.                                                                                        |
-| `endian`     | [`Endianness`](../sharedNodes/Endianness.md) _(optional)_                | The byte order used to serialise the integer. Defaults to `le`; byte-oriented formats such as `shortU16` ignore it.                   |
-| `display`    | [`NumberDisplayNode`](../displayNodes/NumberDisplayNode.md) _(optional)_ | Display metadata describing how the integer is presented.                                                                             |
-| `transforms` | [`TransformNode`](../transformNodes/TransformNode.md)[] _(optional)_     | Transforms applied to the serialisation of this type, in order — the first is the innermost.                                          |
-| `plugins`    | [`PluginNode`](../PluginNode.md)[] _(optional)_                          | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute    | Type                                                                     | Description                                                                                                         |
+| ------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| `format`     | [`IntegerFormat`](../sharedNodes/IntegerFormat.md)                       | The wire format used to serialise the integer.                                                                      |
+| `endian`     | [`Endianness`](../sharedNodes/Endianness.md) _(optional)_                | The byte order used to serialise the integer. Defaults to `le`; byte-oriented formats such as `shortU16` ignore it. |
+| `display`    | [`NumberDisplayNode`](../displayNodes/NumberDisplayNode.md) _(optional)_ | Display metadata describing how the integer is presented.                                                           |
+| `transforms` | [`TransformNode`](../transformNodes/TransformNode.md)[] _(optional)_     | Transforms applied to the serialisation of this type, in order — the first is the innermost.                        |
+| `plugins`    | [`PluginNode`](../PluginNode.md)[] _(optional)_                          | Namespaced plugins with custom structured data.                                                                     |
 
 ## Examples
 

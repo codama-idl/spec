@@ -14,13 +14,13 @@ Entries are serialised one after the other, each key immediately followed by its
 
 ### Children
 
-| Attribute    | Type                                                                 | Description                                                                                                                           |
-| ------------ | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `key`        | [`TypeNode`](./TypeNode.md)                                          | The type of each entry key.                                                                                                           |
-| `value`      | [`TypeNode`](./TypeNode.md)                                          | The type of each entry value.                                                                                                         |
-| `count`      | [`CountNode`](../countNodes/CountNode.md)                            | The strategy used to determine the number of entries.                                                                                 |
-| `transforms` | [`TransformNode`](../transformNodes/TransformNode.md)[] _(optional)_ | Transforms applied to the serialisation of this type, in order — the first is the innermost.                                          |
-| `plugins`    | [`PluginNode`](../PluginNode.md)[] _(optional)_                      | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute    | Type                                                                 | Description                                                                                  |
+| ------------ | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `key`        | [`TypeNode`](./TypeNode.md)                                          | The type of each entry key.                                                                  |
+| `value`      | [`TypeNode`](./TypeNode.md)                                          | The type of each entry value.                                                                |
+| `count`      | [`CountNode`](../countNodes/CountNode.md)                            | The strategy used to determine the number of entries.                                        |
+| `transforms` | [`TransformNode`](../transformNodes/TransformNode.md)[] _(optional)_ | Transforms applied to the serialisation of this type, in order — the first is the innermost. |
+| `plugins`    | [`PluginNode`](../PluginNode.md)[] _(optional)_                      | Namespaced plugins with custom structured data.                                              |
 
 ## Examples
 

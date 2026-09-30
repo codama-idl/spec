@@ -15,11 +15,11 @@ A reusable named type that can be referenced by `definedTypeLinkNode` from elsew
 
 ### Children
 
-| Attribute | Type                                                 | Description                                                                                                                           |
-| --------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `docs`    | `string` \| [`TextNode`](./TextNode.md) _(optional)_ | Markdown documentation for the type.                                                                                                  |
-| `type`    | [`TypeNode`](./typeNodes/TypeNode.md)                | The type definition.                                                                                                                  |
-| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_       | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                                 | Description                                     |
+| --------- | ---------------------------------------------------- | ----------------------------------------------- |
+| `docs`    | `string` \| [`TextNode`](./TextNode.md) _(optional)_ | Markdown documentation for the type.            |
+| `type`    | [`TypeNode`](./typeNodes/TypeNode.md)                | The type definition.                            |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_       | Namespaced plugins with custom structured data. |
 
 ## Examples
 

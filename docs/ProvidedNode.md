@@ -18,7 +18,7 @@ Scoping is lexical: the nearest enclosing `provides` entry for a key wins, shado
 | Attribute | Type                                           | Description                                                                                                                                                              |
 | --------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `node`    | `anyNode`                                      | The exposed node. The provider is a transparent pipe — any node may be supplied; the family check happens at the injection point against the consumer's expected family. |
-| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata.                                    |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data.                                                                                                                          |
 
 ## Examples
 

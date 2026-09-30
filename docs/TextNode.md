@@ -16,9 +16,9 @@ Multi-line text uses `\n` within `content`. Text attributes are single-line by c
 
 ### Children
 
-| Attribute | Type                                           | Description                                                                                                                           |
-| --------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                           | Description                                     |
+| --------- | ---------------------------------------------- | ----------------------------------------------- |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. |
 
 ## Examples
 

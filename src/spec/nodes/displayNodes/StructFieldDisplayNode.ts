@@ -10,7 +10,7 @@ export const structFieldDisplayNode = defineNode('structFieldDisplayNode', {
         optionalAttribute('label', text(), {
             docs: [
                 'An override label shown for the member (e.g. `"Amount"`).',
-                'When absent, renderers derive a label from the member `name`.',
+                'When absent, renderers derive a label from the member `identifier`.',
             ],
         }),
         optionalAttribute('skip', enumeration('displaySkip'), {

@@ -20,7 +20,9 @@ export const instructionRemainingAccountsNode = defineNode('instructionRemaining
             docs: ['The identifier of the account-list input exposed to callers.'],
         }),
         optionalAttribute('isOptional', boolean(), {
-            docs: ['Whether the remaining-accounts tail may be empty. Defaults to `false`.'],
+            docs: [
+                'Whether the remaining accounts may be omitted. Required ones must be provided, possibly as an empty list. Defaults to `false`.',
+            ],
         }),
         optionalAttribute('isSigner', literalUnion(true, false, 'either'), {
             docs: [

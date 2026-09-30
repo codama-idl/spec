@@ -11,9 +11,9 @@ Pages marked _(abstract)_ document unions: sets of nodes that can be used interc
 Attributes shared by every node.
 Codegen targets append them after each node's declared attributes, so they always serialise last.
 
-| Attribute | Type                                           | Description                                                                                                                           |
-| --------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. The universal extension point for renderer-specific or not-yet-standardised metadata. |
+| Attribute | Type                                           | Description                                     |
+| --------- | ---------------------------------------------- | ----------------------------------------------- |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. |
 
 ## Constrained strings
 
@@ -46,7 +46,7 @@ Top-level nodes and helper unions — the entry points of any Codama IDL.
 - [`AccountNode`](./AccountNode.md) - An on-chain account: its identifier, data type, optional fixed size, optional PDA, and optional discriminators.
 - [`ConstantNode`](./ConstantNode.md) - A named constant exposed by the program: a typed value associated with a name.
 - [`DefinedTypeNode`](./DefinedTypeNode.md) - A reusable named type that can be referenced by `definedTypeLinkNode` from elsewhere in the IDL.
-- [`ErrorNode`](./ErrorNode.md) - A program error — a numeric code paired with a name and human-readable message.
+- [`ErrorNode`](./ErrorNode.md) - A program error — a numeric code paired with an identifier and human-readable message.
 - [`EventNode`](./EventNode.md) - A program event: its data shape and optional discriminators used to identify it on the wire.
 - [`InstructionAccountNode`](./InstructionAccountNode.md) - An account participating in an instruction, with its identifier, signing/writability flags, and an optional default value.
 - [`InstructionByteDeltaNode`](./InstructionByteDeltaNode.md) - A byte-size delta applied when computing rent or buffer size — typically used by instructions that resize accounts.
