@@ -19,20 +19,50 @@ export type IntegerWidth = 'i8' | 'i16' | 'i32' | 'i64' | 'i128' | 'u8' | 'u16' 
  * - `identifier` — a machine key: `[A-Za-z_][A-Za-z0-9_]*` (letters, digits,
  *   underscore; no leading digit). No casing is mandated — `transferTokens`,
  *   `transfer_tokens` and `TransferTokens` are all valid — but identifiers
- *   sharing a scope must remain unique after lowercasing and stripping
- *   underscores, so that renderers converting to their target casing
- *   conventions never collide. A scope is a sibling set of the same kind
- *   (the accounts of an instruction, the fields of a struct, the defined
- *   types of a program, …); the full resolution rules ship with path
- *   expressions. References match identifiers by exact string comparison —
- *   the folding rule governs uniqueness only, which is what makes exact
- *   matching unambiguous.
+ *   sharing a scope must not have the same camelCase form, so that
+ *   renderers converting to their target casing conventions never collide.
+ *   This is the casing-collision rule; it is the canonical definition,
+ *   which the other copies of the rule summarise.
+ *
+ *   An identifier's words are obtained by (1) splitting it at underscores,
+ *   discarding empty segments; (2) splitting each segment between a
+ *   lowercase letter or digit and an uppercase letter (`fooBar` →
+ *   `foo|Bar`, `foo1Bar` → `foo1|Bar`), and between an uppercase letter and
+ *   an uppercase letter followed by a lowercase letter (`HTTPServer` →
+ *   `HTTP|Server`); and (3) lowercasing each word. A digit never begins a
+ *   new word on its own (`foo1bar` is a single word). Its camelCase form
+ *   joins the words with each word after the first capitalised: `MAX_SUPPLY`
+ *   → `maxSupply`, `getURL` → `getUrl`, `_foo` → `foo`.
+ *
+ *   For instance, `foo_dart` and `food_art` may coexist (`fooDart`,
+ *   `foodArt`), and so may `group__sub_group__name` and
+ *   `group_subgroup_name`, whereas `fooBar` and `foo_bar`, `foo1` and
+ *   `foo_1`, `getURL` and `get_url`, or `_foo` and `foo` may not.
+ *
+ *   Renderers must derive every casing of an identifier from these words
+ *   (snake_case joins them with `_`, PascalCase capitalises each, …), which
+ *   keeps identifiers with distinct camelCase forms distinct in every
+ *   casing. Where letter case is not significant — e.g. file names on
+ *   case-insensitive file systems — renderers must use a casing that keeps
+ *   a word separator, such as snake_case or kebab-case, since `fooDart` and
+ *   `foodArt` only differ by case.
+ *
+ *   A scope is a sibling set of the same kind (the accounts of an
+ *   instruction, the fields of a struct, the defined types of a program,
+ *   …); the full resolution rules ship with path expressions. Identifiers
+ *   in different scopes may coincide — e.g. an account and a defined type,
+ *   or instructions of two programs — so a renderer emitting them into a
+ *   shared namespace must disambiguate them itself (e.g. by prefixing items
+ *   of additional programs with their program identifier). References match
+ *   identifiers by exact string comparison — the casing-collision rule
+ *   governs uniqueness only, which is what makes exact matching
+ *   unambiguous.
  * - `namespace` — a chain of identifiers separated by single dots, i.e.
  *   `identifier ("." identifier)*`: a single identifier is a valid
  *   namespace, segments follow the identifier charset, and empty segments
  *   or leading/trailing dots are not. Used for plugin names, which match
- *   by exact string comparison; the identifier folding-uniqueness rule
- *   does not apply to namespaces.
+ *   by exact string comparison; the identifier casing-collision rule does
+ *   not apply to namespaces.
  * - `path` — a path expression pointing into nested data:
  *   `first ( "." identifier | "[" integer "]" )*` where
  *   `first := identifier | "[" integer "]"`, with non-negative integer

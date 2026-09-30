@@ -29,9 +29,11 @@ export function string(): TypeExpr {
  * A string that must be a valid IDL identifier: `[A-Za-z_][A-Za-z0-9_]*`.
  * No casing is mandated; renderers convert to their own conventions at
  * output time. Identifiers sharing a scope (a sibling set of the same
- * kind) must stay unique after lowercasing and stripping underscores, so
- * those conversions never collide. References match identifiers by exact
- * string comparison; the folding rule governs uniqueness only.
+ * kind) must not have the same camelCase form, so those conversions never
+ * collide. See the `identifier` constraint in `types.ts` for the canonical
+ * casing-collision rule, including how words are split and what renderers
+ * must derive from them. References match identifiers by exact string
+ * comparison; the casing-collision rule governs uniqueness only.
  */
 export function stringIdentifier(): TypeExpr {
     return Object.freeze({ kind: 'string' as const, constraint: 'identifier' as const });

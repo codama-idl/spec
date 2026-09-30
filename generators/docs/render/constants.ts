@@ -20,16 +20,26 @@ export const CONSTRAINED_STRINGS: readonly { name: string; definition: string }[
         name: 'IdentifierString',
         definition:
             'a machine key: `[A-Za-z_][A-Za-z0-9_]*` (no leading digit). No casing is mandated, but identifiers ' +
-            'sharing a scope (a sibling set of the same kind) must stay unique after lowercasing and stripping ' +
-            'underscores, so renderer casing conversions never collide. References match identifiers by exact ' +
-            'string comparison; the folding rule governs uniqueness only.',
+            'sharing a scope (a sibling set of the same kind) must not have the same camelCase form — the ' +
+            'casing-collision rule. Words are obtained by splitting at underscores (discarding empty segments), ' +
+            'between a lowercase letter or digit and an uppercase letter, and between an uppercase letter and an ' +
+            'uppercase letter followed by a lowercase letter, then lowercasing each word; a digit never begins a ' +
+            'new word on its own. The camelCase form joins the words with each word after the first capitalised ' +
+            '(`MAX_SUPPLY` → `maxSupply`, `getURL` → `getUrl`). So `foo_dart` and `food_art`, or ' +
+            '`group__sub_group__name` and `group_subgroup_name`, may coexist, whereas `fooBar` and `foo_bar`, ' +
+            '`foo1` and `foo_1`, `getURL` and `get_url`, or `_foo` and `foo` may not. Renderers must derive every ' +
+            'casing from these words, and use a casing that keeps a word separator (e.g. snake_case or ' +
+            'kebab-case) wherever letter case is not significant, such as file names. Identifiers in different ' +
+            'scopes may coincide (e.g. an account and a defined type, or instructions of two programs); renderers ' +
+            'emitting them into a shared namespace must disambiguate them. References match identifiers by exact ' +
+            'string comparison; the casing-collision rule governs uniqueness only.',
     },
     {
         name: 'NamespaceString',
         definition:
             'a chain of identifiers separated by single dots: `identifier ("." identifier)*` — e.g. `i18n.es`. ' +
             'A single identifier is a valid namespace. Used for plugin namespaces, which match by exact string ' +
-            'comparison; the identifier folding rule does not apply.',
+            'comparison; the identifier casing-collision rule does not apply.',
     },
     {
         name: 'PathString',
