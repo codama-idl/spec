@@ -1,6 +1,6 @@
 # InstructionNode
 
-A program instruction: its accounts, data, byte-delta hints, discriminators, optional status, and optional sub-instructions.
+A program instruction: its accounts, data, return data, byte-delta hints, discriminators, optional status, and optional sub-instructions.
 
 ![Diagram](https://github.com/codama-idl/codama/assets/3642397/0d8edced-cfa4-4500-b80c-ebc56181a338)
 
@@ -21,6 +21,7 @@ A program instruction: its accounts, data, byte-delta hints, discriminators, opt
 | `optionalAccountStrategy` | [`OptionalAccountStrategy`](./sharedNodes/OptionalAccountStrategy.md) _(optional)_         | How absent optional accounts are represented when serialising the instruction. When absent, `programId` is assumed.                                                                                                                                                                                                                                                                         |
 | `accounts`                | [`InstructionAccountNode`](./InstructionAccountNode.md)[]                                  | The accounts the instruction operates on, in order.                                                                                                                                                                                                                                                                                                                                         |
 | `data`                    | [`TypeNode`](./typeNodes/TypeNode.md) _(optional)_                                         | The type describing the serialised instruction data — any type node, including a `definedTypeLinkNode`. Typically a struct whose fields are the instruction arguments. When absent, the instruction serialises no data. Contextual defaults use the inject/provide pattern: a field default may be an `injectedValueNode` whose key is fulfilled by the `provides` list of the instruction. |
+| `returnData`              | [`TypeNode`](./typeNodes/TypeNode.md) _(optional)_                                         | The type describing the data returned by the instruction to its caller via `set_return_data` — any type node, including a `definedTypeLinkNode`. When absent, the instruction returns no data.                                                                                                                                                                                              |
 | `remainingAccounts`       | [`InstructionRemainingAccountsNode`](./InstructionRemainingAccountsNode.md)[] _(optional)_ | Variable-length tails of accounts appended after the named account slots.                                                                                                                                                                                                                                                                                                                   |
 | `byteDeltas`              | [`InstructionByteDeltaNode`](./InstructionByteDeltaNode.md)[] _(optional)_                 | Byte-size adjustments applied when computing rent or buffer size — for instructions that resize accounts. All deltas are added together, unless their `subtract` attribute is set.                                                                                                                                                                                                          |
 | `discriminators`          | [`DiscriminatorNode`](./discriminatorNodes/DiscriminatorNode.md)[] _(optional)_            | Discriminators that distinguish this instruction from others. When multiple are listed, they are combined with a logical AND.                                                                                                                                                                                                                                                               |
@@ -194,5 +195,15 @@ instructionNode({
     identifier: 'experimentalFeature',
     status: instructionStatusNode('draft', 'This instruction is under development and may change.'),
     accounts: [instructionAccountNode({ identifier: 'config', isWritable: true, isSigner: true })],
+});
+```
+
+### An instruction returning data to its caller
+
+```typescript
+instructionNode({
+    identifier: 'getPrice',
+    accounts: [instructionAccountNode({ identifier: 'oracle', isWritable: false, isSigner: false })],
+    returnData: integerTypeNode('u64'),
 });
 ```

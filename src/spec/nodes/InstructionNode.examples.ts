@@ -193,4 +193,17 @@ instructionNode({
 `,
         ),
     ),
+    example(
+        'An instruction returning data to its caller',
+        code(
+            'typescript',
+            `
+instructionNode({
+    identifier: 'getPrice',
+    accounts: [instructionAccountNode({ identifier: 'oracle', isWritable: false, isSigner: false })],
+    returnData: integerTypeNode('u64'),
+});
+`,
+        ),
+    ),
 ];

@@ -13,7 +13,7 @@ import { examples } from './InstructionNode.examples';
 
 export const instructionNode = defineNode('instructionNode', {
     docs: [
-        'A program instruction: its accounts, data, byte-delta hints, discriminators, optional status, and optional sub-instructions.',
+        'A program instruction: its accounts, data, return data, byte-delta hints, discriminators, optional status, and optional sub-instructions.',
         '',
         '![Diagram](https://github.com/codama-idl/codama/assets/3642397/0d8edced-cfa4-4500-b80c-ebc56181a338)',
     ],
@@ -38,6 +38,12 @@ export const instructionNode = defineNode('instructionNode', {
                 'The type describing the serialised instruction data — any type node, including a `definedTypeLinkNode`. Typically a struct whose fields are the instruction arguments.',
                 'When absent, the instruction serialises no data.',
                 'Contextual defaults use the inject/provide pattern: a field default may be an `injectedValueNode` whose key is fulfilled by the `provides` list of the instruction.',
+            ],
+        }),
+        optionalAttribute('returnData', union('typeNode'), {
+            docs: [
+                'The type describing the data returned by the instruction to its caller via `set_return_data` — any type node, including a `definedTypeLinkNode`.',
+                'When absent, the instruction returns no data.',
             ],
         }),
         optionalAttribute('remainingAccounts', array(node('instructionRemainingAccountsNode')), {

@@ -50,7 +50,7 @@ Top-level nodes and helper unions — the entry points of any Codama IDL.
 - [`EventNode`](./EventNode.md) - A program event: its data shape and optional discriminators used to identify it on the wire.
 - [`InstructionAccountNode`](./InstructionAccountNode.md) - An account participating in an instruction, with its identifier, signing/writability flags, and an optional default value.
 - [`InstructionByteDeltaNode`](./InstructionByteDeltaNode.md) - A byte-size delta applied when computing rent or buffer size — typically used by instructions that resize accounts.
-- [`InstructionNode`](./InstructionNode.md) - A program instruction: its accounts, data, byte-delta hints, discriminators, optional status, and optional sub-instructions.
+- [`InstructionNode`](./InstructionNode.md) - A program instruction: its accounts, data, return data, byte-delta hints, discriminators, optional status, and optional sub-instructions.
 - [`InstructionRemainingAccountsNode`](./InstructionRemainingAccountsNode.md) - A "remaining accounts" slot in an instruction — a variable-length tail of accounts appended after the named account slots.
 - [`InstructionStatusNode`](./InstructionStatusNode.md) - The lifecycle stage of an instruction (draft, live, deprecated, archived) with an optional accompanying message.
 - [`PdaNode`](./PdaNode.md) - A program-derived address: its identifier, optional program ID override, and the seeds used to derive it.
