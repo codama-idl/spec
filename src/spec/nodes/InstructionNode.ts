@@ -40,6 +40,12 @@ export const instructionNode = defineNode('instructionNode', {
                 'Contextual defaults use the inject/provide pattern: a field default may be an `injectedValueNode` whose key is fulfilled by the `provides` list of the instruction.',
             ],
         }),
+        optionalAttribute('returnData', union('typeNode'), {
+            docs: [
+                'The type describing the data returned by the instruction to its caller via `set_return_data` — any type node, including a `definedTypeLinkNode`.',
+                'When absent, the instruction returns no data.',
+            ],
+        }),
         optionalAttribute('remainingAccounts', array(node('instructionRemainingAccountsNode')), {
             docs: ['Variable-length tails of accounts appended after the named account slots.'],
         }),

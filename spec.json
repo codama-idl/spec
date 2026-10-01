@@ -6563,6 +6563,18 @@
                             ]
                         },
                         {
+                            "name": "returnData",
+                            "type": {
+                                "kind": "union",
+                                "name": "typeNode"
+                            },
+                            "optional": true,
+                            "docs": [
+                                "The type describing the data returned by the instruction to its caller via `set_return_data` — any type node, including a `definedTypeLinkNode`.",
+                                "When absent, the instruction returns no data."
+                            ]
+                        },
+                        {
                             "name": "remainingAccounts",
                             "type": {
                                 "kind": "array",
@@ -6865,6 +6877,21 @@
                                         "    identifier: 'experimentalFeature',",
                                         "    status: instructionStatusNode('draft', 'This instruction is under development and may change.'),",
                                         "    accounts: [instructionAccountNode({ identifier: 'config', isWritable: true, isSigner: true })],",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "An instruction returning data to its caller",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "instructionNode({",
+                                        "    identifier: 'getPrice',",
+                                        "    accounts: [instructionAccountNode({ identifier: 'oracle', isWritable: false, isSigner: false })],",
+                                        "    returnData: integerTypeNode('u64'),",
                                         "});"
                                     ]
                                 }

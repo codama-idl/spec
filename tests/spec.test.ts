@@ -454,6 +454,16 @@ describe('spec — instructionNode data', () => {
         }
     });
 
+    it('carries optional return data as any type node', () => {
+        const n = getNode('instructionNode')!;
+        const names = n.attributes.map(a => a.name);
+        const returnData = n.attributes.find(a => a.name === 'returnData')!;
+        expect(returnData.optional).toBe(true);
+        expect(returnData.type).toEqual({ kind: 'union', name: 'typeNode' });
+        expect(isChildAttribute(returnData.type)).toBe(true);
+        expect(names.indexOf('returnData')).toBe(names.indexOf('data') + 1);
+    });
+
     it('removes the argument and resolver machinery', () => {
         for (const gone of ['instructionArgumentNode', 'resolverValueNode', 'instructionArgumentLinkNode']) {
             expect(getNode(gone), `${gone} should no longer exist`).toBeUndefined();
