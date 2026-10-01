@@ -17,6 +17,9 @@ const nodeWithData = enumValueNode(
         structFieldValueNode('age', integerValueNode('42')),
     ]),
 );
+
+// Variants whose data is not a struct take a value of their data type.
+const nodeWithAmount = enumValueNode('operation', 'amount', integerValueNode('42'));
 `,
         ),
     ),

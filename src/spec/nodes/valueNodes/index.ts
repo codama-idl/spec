@@ -17,7 +17,6 @@ import { structFieldValueNode } from './StructFieldValueNode';
 import { structValueNode } from './StructValueNode';
 import { tupleValueNode } from './TupleValueNode';
 import {
-    enumValuePayloadUnion,
     injectableIntegerValueNodeUnion,
     injectableStringValueNodeUnion,
     registeredValueNodeUnion,
@@ -50,7 +49,6 @@ export const ALL_VALUE_NODE_UNIONS = [
     standaloneValueNodeUnion,
     valueNodeUnion,
     registeredValueNodeUnion,
-    enumValuePayloadUnion,
     injectableIntegerValueNodeUnion,
     injectableStringValueNodeUnion,
 ] as const;
