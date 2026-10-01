@@ -35,8 +35,8 @@ instructionRemainingAccountsNode('authorities', {
     isSigner: true,
     docs: ['Provide authorities as remaining accounts if and only if the asset has a multisig set up.'],
     plugins: [
-        pluginNode('codama.jsResolver', {
-            payload: { function: 'resolveTransferRemainingAccounts', dependsOn: ['data.hasMultisig'] },
+        pluginNode('codama.resolver', {
+            payload: { name: 'resolveTransferRemainingAccounts', dependsOn: ['data.hasMultisig'] },
         }),
     ],
 });
