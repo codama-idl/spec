@@ -1,5 +1,42 @@
 # @codama/spec
 
+## 2.0.0-rc.1
+
+### Major Changes
+
+- [#184](https://github.com/codama-idl/spec/pull/184) [`03df7f5`](https://github.com/codama-idl/spec/commit/03df7f5e9afa832a59bd7d1a2c8da4e711677aa3) Thanks [@lorisleiva](https://github.com/lorisleiva)! - Allow any value node as the payload of `enumValueNode`. Enum variants may carry data of any type, e.g. `enumVariantTypeNode('amount', { data: integerTypeNode('u64') })`, but `enumValueNode.value` only accepted struct or tuple values, so such variants could not be expressed as values. `enumValueNode.value` now accepts any `valueNode`, which must match the variant's `data` type.
+  
+  ```ts
+  enumValueNode('operation', 'amount', integerValueNode('42'));
+  ```
+  
+  **BREAKING CHANGES**
+  
+  **`enumValuePayload` union removed.** It was only used by `enumValueNode.value`, which now references the `valueNode` union. Codegen targets and other spec consumers referencing `enumValuePayload` should use `valueNode` instead. Existing IDLs remain valid.
+
+### Minor Changes
+
+- [#175](https://github.com/codama-idl/spec/pull/175) [`3f49f9b`](https://github.com/codama-idl/spec/commit/3f49f9b9d6aa2e67cbc87b95210009144154e733) Thanks [@lorisleiva](https://github.com/lorisleiva)! - Relax identifier uniqueness: identifiers sharing a scope must no longer be unique after lowercasing and stripping underscores, but must not have the same camelCase form. Words are split at underscores, at lowercase-to-uppercase boundaries and before the last capital of an acronym run, so `foo_dart` and `food_art` or `group__sub_group__name` and `group_subgroup_name` may now coexist, whilst `fooBar` and `foo_bar`, `getURL` and `get_url`, or `_foo` and `foo` still may not. Every IDL valid under the previous rule remains valid. Renderers must derive every casing from these words, keep a word separator wherever letter case is not significant (e.g. file names), and disambiguate identifiers of different scopes emitted into a shared namespace.
+
+- [#185](https://github.com/codama-idl/spec/pull/185) [`99812c5`](https://github.com/codama-idl/spec/commit/99812c5b40b8bfda221164e4f8d6d6fd63020485) Thanks [@lorisleiva](https://github.com/lorisleiva)! - Add an optional `returnData` type node to `instructionNode`, describing the data an instruction returns to its caller via `set_return_data` — e.g. what Anchor IDLs expose as `returns`. Like `data`, it accepts any type node, including a `definedTypeLinkNode`. The on-chain limit on return data is left to validators.
+  
+  ```ts
+  instructionNode({ identifier: 'getPrice', returnData: integerTypeNode('u64') });
+  ```
+
+### Patch Changes
+
+- [#186](https://github.com/codama-idl/spec/pull/186) [`72f2fb9`](https://github.com/codama-idl/spec/commit/72f2fb92c646b087b842b46e462552966804b327) Thanks [@lorisleiva](https://github.com/lorisleiva)! - Reserve the `codama.*` plugin namespace for official plugins, and define the first two for information that is renderer-specific by nature. `codama.resolver` marks a node whose value renderers resolve with custom code, with a `{ name, dependsOn? }` payload where dependencies are `accounts.<identifier>` or `data.<path>` strings. `codama.extraArgument` declares, on an instruction node, a client input that is not serialised in the instruction data, with an `{ identifier, type, defaultValue?, docs? }` payload. The remaining accounts example now uses `codama.resolver` instead of the unofficial `codama.jsResolver`.
+  
+  ```ts
+  instructionAccountNode({
+      identifier: 'destination',
+      isWritable: true,
+      isSigner: false,
+      plugins: [pluginNode('codama.resolver', { payload: { name: 'resolveDestination', dependsOn: ['accounts.owner'] } })],
+  });
+  ```
+
 ## 2.0.0-rc.0
 
 ### Major Changes
