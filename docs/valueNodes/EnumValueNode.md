@@ -13,11 +13,11 @@ A concrete value of a defined enum: a variant identifier plus an optional payloa
 
 ### Children
 
-| Attribute | Type                                                         | Description                                                                                                              |
-| --------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| `enum`    | [`DefinedTypeLinkNode`](../linkNodes/DefinedTypeLinkNode.md) | A link to the defined enum type the value belongs to. The linked defined type must contain an `enumTypeNode`.            |
-| `value`   | [`EnumValuePayload`](./EnumValuePayload.md) _(optional)_     | The variant payload — a struct value for struct variants or a tuple value for tuple variants. Omitted for unit variants. |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_              | Namespaced plugins with custom structured data.                                                                          |
+| Attribute | Type                                                         | Description                                                                                                                                                                                   |
+| --------- | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `enum`    | [`DefinedTypeLinkNode`](../linkNodes/DefinedTypeLinkNode.md) | A link to the defined enum type the value belongs to. The linked defined type must contain an `enumTypeNode`.                                                                                 |
+| `value`   | [`ValueNode`](./ValueNode.md) _(optional)_                   | The value of the variant's `data` — any value node matching its type, e.g. a struct value for a struct payload or an integer value for an integer payload. Omitted for variants without data. |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_              | Namespaced plugins with custom structured data.                                                                                                                                               |
 
 ## Examples
 
@@ -35,4 +35,7 @@ const nodeWithData = enumValueNode(
         structFieldValueNode('age', integerValueNode('42')),
     ]),
 );
+
+// The payload is any value matching the variant's data type, here an integer.
+const nodeWithAmount = enumValueNode('operation', 'amount', integerValueNode('42'));
 ```

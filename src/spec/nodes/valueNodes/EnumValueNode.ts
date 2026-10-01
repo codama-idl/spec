@@ -13,10 +13,10 @@ export const enumValueNode = defineNode('enumValueNode', {
                 'The linked defined type must contain an `enumTypeNode`.',
             ],
         }),
-        optionalAttribute('value', union('enumValuePayload'), {
+        optionalAttribute('value', union('valueNode'), {
             docs: [
-                'The variant payload — a struct value for struct variants or a tuple value for tuple variants.',
-                'Omitted for unit variants.',
+                "The value of the variant's `data` — any value node matching its type, e.g. a struct value for a struct payload or an integer value for an integer payload.",
+                'Omitted for variants without data.',
             ],
         }),
     ],

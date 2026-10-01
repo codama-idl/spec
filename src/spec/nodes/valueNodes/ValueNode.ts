@@ -6,8 +6,6 @@
  *  - `valueNode`                     the composable form (alias for `standaloneValueNode`).
  *  - `registeredValueNode`           every value-shaped node, including container variants like
  *                                    `mapEntryValueNode` and `structFieldValueNode`.
- *  - `enumValuePayload`              the inline `structValueNode | tupleValueNode` union used
- *                                    for `enumValueNode.value`.
  *  - `injectableIntegerValueNode`    a concrete integer value or a key resolved via injection.
  *  - `injectableStringValueNode`     a concrete string value or a key resolved via injection.
  */
@@ -46,11 +44,6 @@ export const valueNodeUnion = defineUnion('valueNode', {
 export const registeredValueNodeUnion = defineUnion('registeredValueNode', {
     docs: ['Every node tagged as a value-shaped node, including container variants.'],
     members: [union('standaloneValueNode'), 'mapEntryValueNode', 'structFieldValueNode'],
-});
-
-export const enumValuePayloadUnion = defineUnion('enumValuePayload', {
-    docs: ['The payload kinds an `enumValueNode` may carry — struct fields or positional tuple slots.'],
-    members: ['structValueNode', 'tupleValueNode'],
 });
 
 export const injectableIntegerValueNodeUnion = defineUnion('injectableIntegerValueNode', {

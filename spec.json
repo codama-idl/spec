@@ -2385,12 +2385,12 @@
                             "name": "value",
                             "type": {
                                 "kind": "union",
-                                "name": "enumValuePayload"
+                                "name": "valueNode"
                             },
                             "optional": true,
                             "docs": [
-                                "The variant payload — a struct value for struct variants or a tuple value for tuple variants.",
-                                "Omitted for unit variants."
+                                "The value of the variant's `data` — any value node matching its type, e.g. a struct value for a struct payload or an integer value for an integer payload.",
+                                "Omitted for variants without data."
                             ]
                         }
                     ],
@@ -2411,7 +2411,10 @@
                                         "        structFieldValueNode('name', stringValueNode('Alice')),",
                                         "        structFieldValueNode('age', integerValueNode('42')),",
                                         "    ]),",
-                                        ");"
+                                        ");",
+                                        "",
+                                        "// The payload is any value matching the variant's data type, here an integer.",
+                                        "const nodeWithAmount = enumValueNode('operation', 'amount', integerValueNode('42'));"
                                     ]
                                 }
                             ]
@@ -3023,22 +3026,6 @@
                     ],
                     "docs": [
                         "Every node tagged as a value-shaped node, including container variants."
-                    ]
-                },
-                {
-                    "name": "enumValuePayload",
-                    "members": [
-                        {
-                            "kind": "node",
-                            "name": "structValueNode"
-                        },
-                        {
-                            "kind": "node",
-                            "name": "tupleValueNode"
-                        }
-                    ],
-                    "docs": [
-                        "The payload kinds an `enumValueNode` may carry — struct fields or positional tuple slots."
                     ]
                 },
                 {
