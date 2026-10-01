@@ -36,6 +36,6 @@ const nodeWithData = enumValueNode(
     ]),
 );
 
-// Variants whose data is not a struct take a value of their data type.
+// The payload is any value matching the variant's data type, here an integer.
 const nodeWithAmount = enumValueNode('operation', 'amount', integerValueNode('42'));
 ```
