@@ -458,6 +458,7 @@ describe('spec — instructionNode data', () => {
         const n = getNode('instructionNode')!;
         const names = n.attributes.map(a => a.name);
         const returnData = n.attributes.find(a => a.name === 'returnData')!;
+        expect(returnData).toBeDefined();
         expect(returnData.optional).toBe(true);
         expect(returnData.type).toEqual({ kind: 'union', name: 'typeNode' });
         expect(isChildAttribute(returnData.type)).toBe(true);

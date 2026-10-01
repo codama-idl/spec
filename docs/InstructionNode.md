@@ -1,6 +1,6 @@
 # InstructionNode
 
-A program instruction: its accounts, data, byte-delta hints, discriminators, optional status, and optional sub-instructions.
+A program instruction: its accounts, data, return data, byte-delta hints, discriminators, optional status, and optional sub-instructions.
 
 ![Diagram](https://github.com/codama-idl/codama/assets/3642397/0d8edced-cfa4-4500-b80c-ebc56181a338)
 
