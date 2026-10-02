@@ -148,7 +148,7 @@ A new **spec** major drives a coordinated wave through the ecosystem, in depende
 ```
 
 1. **spec** runs its cut first: the standard must stabilise before implementations chase it.
-2. **codama** freezes the outgoing major's node types (via its `@codama/spec-v1`-style aliased pin), adds the `upgradeVNToVN+1` step to the append-only chain in `@codama/upgrade`, and points its living pin at the spec rc. **codama-rs** mirrors this in Rust.
+2. **codama** freezes the outgoing major's node types (via a type-only, exactly pinned `@codama/node-types-vN` alias in `@codama/upgrade`), adds the `upgradeVNToVN+1` step to the append-only chain in `@codama/upgrade`, and points its living pin at the spec rc. **codama-rs** mirrors this in Rust.
 3. **Renderers and the CLI** run their own cuts (their own `N.x` maintenance branches, at their own major numbers) to consume the new codama major.
 4. The candidacy is shared: one declaration, one candidate matrix, one announcement — integrators validate one coherent set of release candidates.
 5. The promote is coordinated: spec first, the rest in the same window. One closing announcement covers the wave.
