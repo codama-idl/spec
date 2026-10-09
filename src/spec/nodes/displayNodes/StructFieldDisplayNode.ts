@@ -1,10 +1,10 @@
-import { boolean, defineNode, enumeration, optionalAttribute, text } from '../../../api';
+import { array, boolean, defineNode, enumeration, node, optionalAttribute, text } from '../../../api';
 import { examples } from './StructFieldDisplayNode.examples';
 
 export const structFieldDisplayNode = defineNode('structFieldDisplayNode', {
     docs: [
-        'Display metadata for a named member: its label, whether it is shown in the fallback list, and whether it is flattened into its parent.',
-        "Value presentation is carried by the member's type; this node only addresses naming and composition.",
+        'Display metadata for a named member: its label, whether it is shown in the fallback list, whether it is flattened into its parent, and labels for specific values.',
+        "Value presentation is otherwise carried by the member's type; this node addresses naming and composition, and value labels override the presentation of the values they match.",
     ],
     attributes: [
         optionalAttribute('label', text(), {
@@ -27,6 +27,12 @@ export const structFieldDisplayNode = defineNode('structFieldDisplayNode', {
             docs: [
                 'A literal prefix prepended to each flattened member\'s label (e.g. `"args."`).',
                 'Meaningful only when `flatten` is `true`. Useful to disambiguate when two flattened children might collide.',
+            ],
+        }),
+        optionalAttribute('valueLabels', array(node('valueLabelDisplayNode')), {
+            docs: [
+                'Labels presented instead of specific values of the member, e.g. `"All"` for `u64::MAX`. When the member\'s raw decoded value, before any display formatting, matches a label\'s `value` structurally, renderers present the label instead of the formatted value, including in interpolated intents.',
+                "When several labels match, the first one wins. A matching label is presented as the member's single value, even when `flatten` is `true`.",
             ],
         }),
     ],

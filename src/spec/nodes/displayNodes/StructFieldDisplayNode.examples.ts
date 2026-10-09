@@ -40,4 +40,19 @@ structFieldTypeNode({
 `,
         ),
     ),
+    example(
+        'Labelling a specific value',
+        code(
+            'typescript',
+            `
+structFieldTypeNode({
+    identifier: 'expiry',
+    type: zeroableOptionTypeNode(dateTimeTypeNode(integerTypeNode('i64'))),
+    display: structFieldDisplayNode({
+        valueLabels: [valueLabelDisplayNode({ value: noneValueNode(), label: 'Never expires' })],
+    }),
+});
+`,
+        ),
+    ),
 ];

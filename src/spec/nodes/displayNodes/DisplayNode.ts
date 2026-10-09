@@ -34,6 +34,7 @@ export const registeredDisplayNodeUnion = defineUnion('registeredDisplayNode', {
         'stringDisplayNode',
         'structFieldDisplayNode',
         'unitNumberDisplayNode',
+        'valueLabelDisplayNode',
     ],
 });
 

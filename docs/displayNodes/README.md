@@ -9,8 +9,9 @@ Display nodes — presentation metadata attached to instructions, accounts, fiel
 - [`InstructionAccountDisplayNode`](./InstructionAccountDisplayNode.md) - Display metadata for an instruction account: its label in the fallback list and whether it is shown.
 - [`InstructionDisplayNode`](./InstructionDisplayNode.md) - Display metadata for an instruction: a short intent label and an interpolated sentence template.
 - [`StringDisplayNode`](./StringDisplayNode.md) - Display metadata for a string value.
-- [`StructFieldDisplayNode`](./StructFieldDisplayNode.md) - Display metadata for a named member: its label, whether it is shown in the fallback list, and whether it is flattened into its parent.
+- [`StructFieldDisplayNode`](./StructFieldDisplayNode.md) - Display metadata for a named member: its label, whether it is shown in the fallback list, whether it is flattened into its parent, and labels for specific values.
 - [`UnitNumberDisplayNode`](./UnitNumberDisplayNode.md) - Display metadata that labels a number with a contextually resolved unit, without any scaling.
+- [`ValueLabelDisplayNode`](./ValueLabelDisplayNode.md) - A label presented instead of a specific value, e.g. `"All"` for an amount of `u64::MAX` or `"Never expires"` for an absent expiry.
 
 ## Unions
 

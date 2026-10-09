@@ -1,7 +1,7 @@
 # StructFieldDisplayNode
 
-Display metadata for a named member: its label, whether it is shown in the fallback list, and whether it is flattened into its parent.
-Value presentation is carried by the member's type; this node only addresses naming and composition.
+Display metadata for a named member: its label, whether it is shown in the fallback list, whether it is flattened into its parent, and labels for specific values.
+Value presentation is otherwise carried by the member's type; this node addresses naming and composition, and value labels override the presentation of the values they match.
 
 ## Attributes
 
@@ -14,12 +14,13 @@ Value presentation is carried by the member's type; this node only addresses nam
 
 ### Children
 
-| Attribute       | Type                                                        | Description                                                                                                                                                                               |
-| --------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `label`         | `string` \| [`TextNode`](../TextNode.md) _(optional)_       | An override label shown for the member (e.g. `"Amount"`). When absent, renderers derive a label from the member `identifier`.                                                             |
-| `skip`          | [`DisplaySkip`](../sharedNodes/DisplaySkip.md) _(optional)_ | Whether the member is shown in the fallback list. Defaults to `"never"` (always shown).                                                                                                   |
-| `flattenPrefix` | `string` \| [`TextNode`](../TextNode.md) _(optional)_       | A literal prefix prepended to each flattened member's label (e.g. `"args."`). Meaningful only when `flatten` is `true`. Useful to disambiguate when two flattened children might collide. |
-| `plugins`       | [`PluginNode`](../PluginNode.md)[] _(optional)_             | Namespaced plugins with custom structured data.                                                                                                                                           |
+| Attribute       | Type                                                                 | Description                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| --------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `label`         | `string` \| [`TextNode`](../TextNode.md) _(optional)_                | An override label shown for the member (e.g. `"Amount"`). When absent, renderers derive a label from the member `identifier`.                                                                                                                                                                                                                                                                                                                |
+| `skip`          | [`DisplaySkip`](../sharedNodes/DisplaySkip.md) _(optional)_          | Whether the member is shown in the fallback list. Defaults to `"never"` (always shown).                                                                                                                                                                                                                                                                                                                                                      |
+| `flattenPrefix` | `string` \| [`TextNode`](../TextNode.md) _(optional)_                | A literal prefix prepended to each flattened member's label (e.g. `"args."`). Meaningful only when `flatten` is `true`. Useful to disambiguate when two flattened children might collide.                                                                                                                                                                                                                                                    |
+| `valueLabels`   | [`ValueLabelDisplayNode`](./ValueLabelDisplayNode.md)[] _(optional)_ | Labels presented instead of specific values of the member, e.g. `"All"` for `u64::MAX`. When the member's raw decoded value, before any display formatting, matches a label's `value` structurally, renderers present the label instead of the formatted value, including in interpolated intents. When several labels match, the first one wins. A matching label is presented as the member's single value, even when `flatten` is `true`. |
+| `plugins`       | [`PluginNode`](../PluginNode.md)[] _(optional)_                      | Namespaced plugins with custom structured data.                                                                                                                                                                                                                                                                                                                                                                                              |
 
 ## Examples
 
@@ -50,5 +51,17 @@ structFieldTypeNode({
     identifier: 'config',
     type: definedTypeLinkNode('config'),
     display: structFieldDisplayNode({ flatten: true, flattenPrefix: 'config.' }),
+});
+```
+
+### Labelling a specific value
+
+```typescript
+structFieldTypeNode({
+    identifier: 'expiry',
+    type: zeroableOptionTypeNode(dateTimeTypeNode(integerTypeNode('i64'))),
+    display: structFieldDisplayNode({
+        valueLabels: [valueLabelDisplayNode({ value: noneValueNode(), label: 'Never expires' })],
+    }),
 });
 ```

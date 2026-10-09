@@ -11,3 +11,4 @@ One of the following:
 - [`StringDisplayNode`](./StringDisplayNode.md)
 - [`StructFieldDisplayNode`](./StructFieldDisplayNode.md)
 - [`UnitNumberDisplayNode`](./UnitNumberDisplayNode.md)
+- [`ValueLabelDisplayNode`](./ValueLabelDisplayNode.md)
