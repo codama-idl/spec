@@ -11,6 +11,7 @@ export const durationTypeNode = defineNode('durationTypeNode', {
         optionalAttribute('ticksPerSecond', u32(), {
             docs: [
                 'How many ticks make one second. Defaults to `1` (the value is already in seconds).',
+                'Must be non-zero.',
                 'Common choices are `1000` (milliseconds), `1000000` (microseconds), and `1000000000` (nanoseconds).',
             ],
         }),

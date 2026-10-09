@@ -6,8 +6,9 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-fixedPointTypeNode(integerTypeNode('u64'), 9, {
-    display: unitNumberDisplayNode(injectedValueNode({ key: 'symbol' })),
+fixedPointTypeNode(integerTypeNode('u64'), {
+    display: unitNumberDisplayNode({ unit: injectedValueNode({ key: 'symbol' }) }),
+    scale: 9,
 });
 
 // 1_100_000_000 with the injected symbol "SOL" => "1.1 SOL"
@@ -20,7 +21,7 @@ fixedPointTypeNode(integerTypeNode('u64'), 9, {
             'typescript',
             `
 floatTypeNode('f64', {
-    display: unitNumberDisplayNode(injectedValueNode({ key: 'currency' })),
+    display: unitNumberDisplayNode({ unit: injectedValueNode({ key: 'currency' }) }),
 });
 `,
         ),

@@ -213,6 +213,7 @@
                             "optional": true,
                             "docs": [
                                 "How many ticks make one second. Defaults to `1` (the value is in seconds since the epoch).",
+                                "Must be non-zero.",
                                 "Common choices are `1000` (milliseconds), `1000000` (microseconds), and `1000000000` (nanoseconds)."
                             ]
                         },
@@ -285,6 +286,7 @@
                             "optional": true,
                             "docs": [
                                 "How many ticks make one second. Defaults to `1` (the value is already in seconds).",
+                                "Must be non-zero.",
                                 "Common choices are `1000` (milliseconds), `1000000` (microseconds), and `1000000000` (nanoseconds)."
                             ]
                         },
@@ -615,7 +617,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "const node = fixedPointTypeNode(integerTypeNode('u64'), 6, { unit: 'USDC' });",
+                                        "const node = fixedPointTypeNode(integerTypeNode('u64'), { scale: 6, unit: 'USDC' });",
                                         "",
                                         "// 1500000 => 1.5 USDC"
                                     ]
@@ -628,7 +630,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "fixedPointTypeNode(integerTypeNode('u64'), 9, { unit: 'SOL' });",
+                                        "fixedPointTypeNode(integerTypeNode('u64'), { scale: 9, unit: 'SOL' });",
                                         "",
                                         "// 1000000000 => 1 SOL"
                                     ]
@@ -641,7 +643,7 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "fixedPointTypeNode(integerTypeNode('u128'), 64, { base: 2 });",
+                                        "fixedPointTypeNode(integerTypeNode('u128'), { base: 2, scale: 64 });",
                                         "",
                                         "// raw / 2^64"
                                     ]
@@ -4587,8 +4589,9 @@
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "fixedPointTypeNode(integerTypeNode('u64'), 9, {",
-                                        "    display: unitNumberDisplayNode(injectedValueNode({ key: 'symbol' })),",
+                                        "fixedPointTypeNode(integerTypeNode('u64'), {",
+                                        "    display: unitNumberDisplayNode({ unit: injectedValueNode({ key: 'symbol' }) }),",
+                                        "    scale: 9,",
                                         "});",
                                         "",
                                         "// 1_100_000_000 with the injected symbol \"SOL\" => \"1.1 SOL\""
@@ -4603,7 +4606,7 @@
                                     "language": "typescript",
                                     "content": [
                                         "floatTypeNode('f64', {",
-                                        "    display: unitNumberDisplayNode(injectedValueNode({ key: 'currency' })),",
+                                        "    display: unitNumberDisplayNode({ unit: injectedValueNode({ key: 'currency' }) }),",
                                         "});"
                                     ]
                                 }

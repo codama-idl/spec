@@ -28,7 +28,7 @@ Integers are the safe way to carry financial values; this node adds the scaling 
 ### A token amount with 6 decimal places
 
 ```typescript
-const node = fixedPointTypeNode(integerTypeNode('u64'), 6, { unit: 'USDC' });
+const node = fixedPointTypeNode(integerTypeNode('u64'), { scale: 6, unit: 'USDC' });
 
 // 1500000 => 1.5 USDC
 ```
@@ -36,7 +36,7 @@ const node = fixedPointTypeNode(integerTypeNode('u64'), 6, { unit: 'USDC' });
 ### A SOL amount expressed in lamports
 
 ```typescript
-fixedPointTypeNode(integerTypeNode('u64'), 9, { unit: 'SOL' });
+fixedPointTypeNode(integerTypeNode('u64'), { scale: 9, unit: 'SOL' });
 
 // 1000000000 => 1 SOL
 ```
@@ -44,7 +44,7 @@ fixedPointTypeNode(integerTypeNode('u64'), 9, { unit: 'SOL' });
 ### A binary Q64.64 fraction
 
 ```typescript
-fixedPointTypeNode(integerTypeNode('u128'), 64, { base: 2 });
+fixedPointTypeNode(integerTypeNode('u128'), { base: 2, scale: 64 });
 
 // raw / 2^64
 ```
