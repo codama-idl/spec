@@ -7,4 +7,4 @@
  */
 
 /** The version string of the spec - always equal to the package version. */
-export const SPEC_VERSION = '2.0.0-rc.1';
+export const SPEC_VERSION = '2.0.0-rc.2';

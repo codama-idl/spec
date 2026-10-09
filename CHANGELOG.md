@@ -1,5 +1,40 @@
 # @codama/spec
 
+## 2.0.0-rc.2
+
+### Minor Changes
+
+- [#197](https://github.com/codama-idl/spec/pull/197) [`6853f13`](https://github.com/codama-idl/spec/commit/6853f13deb20a83af107d1363a87f027e4f55f73) Thanks [@lorisleiva](https://github.com/lorisleiva)! - Let display metadata label specific values. `structFieldDisplayNode` gains an optional `valueLabels` list of the new `valueLabelDisplayNode`s, each pairing a value with the label renderers present instead of it, in the fallback list and in interpolated intents alike. Values match the field's decoded value structurally, and the first matching label wins.
+  
+  ```ts
+  structFieldDisplayNode({
+      label: 'Amount',
+      valueLabels: [valueLabelDisplayNode({ value: integerValueNode('18446744073709551615'), label: 'All' })],
+  });
+  ```
+
+### Patch Changes
+
+- [#192](https://github.com/codama-idl/spec/pull/192) [`f775857`](https://github.com/codama-idl/spec/commit/f7758571323ed370df30710592571df88aab74b4) Thanks [@lorisleiva](https://github.com/lorisleiva)! - Carry resolver docs and default value strategies in the official plugins. The `codama.resolver` payload gains an optional `docs` field describing the resolver, and the `codama.extraArgument` payload gains an optional `defaultValueStrategy`, as for struct fields. A struct field resolved by a `codama.resolver` plugin may now carry a `defaultValueStrategy`, which applies to the resolved value as it would to a `defaultValue`, e.g. `omitted` keeps the field out of generated inputs.
+  
+  ```ts
+  structFieldTypeNode({
+      identifier: 'tags',
+      type: integerTypeNode('u8'),
+      defaultValueStrategy: 'omitted',
+      plugins: [pluginNode('codama.resolver', { payload: { name: 'resolveTags', docs: 'Derives tags from the name.' } })],
+  });
+  ```
+
+- [#194](https://github.com/codama-idl/spec/pull/194) [`b342935`](https://github.com/codama-idl/spec/commit/b342935e865b2270a48a6276dc536a33d3189137) Thanks [@lorisleiva](https://github.com/lorisleiva)! - Document how to resolve the default of an extra argument with custom code. A `codama.resolver` plugin on a `codama.extraArgument` plugin node describes how renderers resolve that extra argument's default, as it would on a struct field.
+  
+  ```ts
+  pluginNode('codama.extraArgument', {
+      payload: { identifier: 'tokenStandard', type: definedTypeLinkNode('tokenStandard') },
+      plugins: [pluginNode('codama.resolver', { payload: { name: 'resolveTokenStandard', dependsOn: ['accounts.mint'] } })],
+  });
+  ```
+
 ## 2.0.0-rc.1
 
 ### Major Changes
