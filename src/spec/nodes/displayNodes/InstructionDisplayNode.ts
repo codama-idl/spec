@@ -14,7 +14,7 @@ export const instructionDisplayNode = defineNode('instructionDisplayNode', {
             docs: [
                 'A sentence template that composes the instruction into prose with `${root…}` placeholders.',
                 'Roots are `data` (the instruction data) and `accounts` (the instruction accounts). After the `data` root, placeholders embed the shared path-expression grammar (e.g. `${data.amount}`, `${data.config.fees[0]}`, `${data[0]}`); after the `accounts` root, exactly one account identifier follows (e.g. `${accounts.destination}`) — accounts resolve to addresses, so nothing nests.',
-                "A placeholder renders through its referent's own presentation; the `skip` rule governs the fallback list only and never the sentence.",
+                "A placeholder renders through its referent's own presentation, including the value labels of a struct field; the `skip` rule governs the fallback list only and never the sentence.",
             ],
         }),
     ],

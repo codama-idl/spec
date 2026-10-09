@@ -4357,7 +4357,7 @@
                             "docs": [
                                 "A sentence template that composes the instruction into prose with `${root…}` placeholders.",
                                 "Roots are `data` (the instruction data) and `accounts` (the instruction accounts). After the `data` root, placeholders embed the shared path-expression grammar (e.g. `${data.amount}`, `${data.config.fees[0]}`, `${data[0]}`); after the `accounts` root, exactly one account identifier follows (e.g. `${accounts.destination}`) — accounts resolve to addresses, so nothing nests.",
-                                "A placeholder renders through its referent's own presentation; the `skip` rule governs the fallback list only and never the sentence."
+                                "A placeholder renders through its referent's own presentation, including the value labels of a struct field; the `skip` rule governs the fallback list only and never the sentence."
                             ]
                         }
                     ],
@@ -4464,8 +4464,8 @@
                 {
                     "kind": "structFieldDisplayNode",
                     "docs": [
-                        "Display metadata for a named member: its label, whether it is shown in the fallback list, and whether it is flattened into its parent.",
-                        "Value presentation is carried by the member's type; this node only addresses naming and composition."
+                        "Display metadata for a named member: its label, whether it is shown in the fallback list, whether it is flattened into its parent, and labels for specific values.",
+                        "Value presentation is otherwise carried by the member's type; this node addresses naming and composition, and value labels override the presentation of the values they match."
                     ],
                     "attributes": [
                         {
@@ -4512,6 +4512,21 @@
                                 "A literal prefix prepended to each flattened member's label (e.g. `\"args.\"`).",
                                 "Meaningful only when `flatten` is `true`. Useful to disambiguate when two flattened children might collide."
                             ]
+                        },
+                        {
+                            "name": "valueLabels",
+                            "type": {
+                                "kind": "array",
+                                "of": {
+                                    "kind": "node",
+                                    "name": "valueLabelDisplayNode"
+                                }
+                            },
+                            "optional": true,
+                            "docs": [
+                                "Labels presented instead of specific values of the member, e.g. `\"All\"` for `u64::MAX`. When the member's raw decoded value, before any display formatting, matches a label's `value` structurally, renderers present the label instead of the formatted value, including in interpolated intents.",
+                                "When several labels match, the first one wins. A matching label is presented as the member's single value, even when `flatten` is `true`."
+                            ]
                         }
                     ],
                     "examples": [
@@ -4555,6 +4570,23 @@
                                         "    identifier: 'config',",
                                         "    type: definedTypeLinkNode('config'),",
                                         "    display: structFieldDisplayNode({ flatten: true, flattenPrefix: 'config.' }),",
+                                        "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Labelling a specific value",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "structFieldTypeNode({",
+                                        "    identifier: 'expiry',",
+                                        "    type: zeroableOptionTypeNode(dateTimeTypeNode(integerTypeNode('i64'))),",
+                                        "    display: structFieldDisplayNode({",
+                                        "        valueLabels: [valueLabelDisplayNode({ value: noneValueNode(), label: 'Never expires' })],",
+                                        "    }),",
                                         "});"
                                     ]
                                 }
@@ -4613,6 +4645,83 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "kind": "valueLabelDisplayNode",
+                    "docs": [
+                        "A label presented instead of a specific value, e.g. `\"All\"` for an amount of `u64::MAX` or `\"Never expires\"` for an absent expiry.",
+                        "Listed in a `structFieldDisplayNode`'s `valueLabels`; it is not part of any `display` slot on its own."
+                    ],
+                    "attributes": [
+                        {
+                            "name": "value",
+                            "type": {
+                                "kind": "union",
+                                "name": "valueNode"
+                            },
+                            "docs": [
+                                "The value to label, matched structurally against the field's raw decoded value, before any display formatting, e.g. `integerValueNode('18446744073709551615')` or `noneValueNode()`.",
+                                "It must be a concrete value of the field's type: injected values are not resolved here."
+                            ]
+                        },
+                        {
+                            "name": "label",
+                            "type": {
+                                "kind": "text"
+                            },
+                            "docs": [
+                                "The label presented instead of the value, both in the fallback list and in interpolated intents (e.g. `\"all SOL\"`).",
+                                "Since the same label serves both, prefer wording that reads well as a field value and mid-sentence."
+                            ]
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "title": "Labelling a sentinel amount",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "structFieldTypeNode({",
+                                        "    identifier: 'amount',",
+                                        "    type: integerTypeNode('u64', {",
+                                        "        display: amountNumberDisplayNode({ decimals: injectedValueNode({ key: 'decimals' }) }),",
+                                        "    }),",
+                                        "    display: structFieldDisplayNode({",
+                                        "        label: 'Amount',",
+                                        "        valueLabels: [valueLabelDisplayNode({ value: integerValueNode('18446744073709551615'), label: 'All' })],",
+                                        "    }),",
+                                        "});",
+                                        "",
+                                        "// u64::MAX => \"All\", any other amount => e.g. \"1.5\""
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Labelling an absent optional value",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "structFieldTypeNode({",
+                                        "    identifier: 'amount',",
+                                        "    type: optionTypeNode(",
+                                        "        integerTypeNode('u64', {",
+                                        "            display: amountNumberDisplayNode({ decimals: integerValueNode('9'), unit: stringValueNode('SOL') }),",
+                                        "        }),",
+                                        "    ),",
+                                        "    display: structFieldDisplayNode({",
+                                        "        valueLabels: [valueLabelDisplayNode({ value: noneValueNode(), label: 'all SOL' })],",
+                                        "    }),",
+                                        "});",
+                                        "",
+                                        "// None => \"Unwrap all SOL from …\", Some(1500000000) => \"Unwrap 1.5 SOL from …\""
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ],
             "unions": [
@@ -4662,6 +4771,10 @@
                         {
                             "kind": "node",
                             "name": "unitNumberDisplayNode"
+                        },
+                        {
+                            "kind": "node",
+                            "name": "valueLabelDisplayNode"
                         }
                     ],
                     "docs": [

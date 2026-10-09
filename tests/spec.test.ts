@@ -66,6 +66,7 @@ describe('spec — coverage smoke checks', () => {
             'instructionDisplayNode',
             'stringDisplayNode',
             'structFieldDisplayNode',
+            'valueLabelDisplayNode',
             // contextual value nodes
             'accountDataValueNode',
             'accountValueNode',
@@ -337,7 +338,7 @@ describe('spec — display node shapes', () => {
 
     it('structFieldDisplayNode shape', () => {
         const n = getNode('structFieldDisplayNode')!;
-        expect(n.attributes.map(a => a.name)).toEqual(['label', 'skip', 'flatten', 'flattenPrefix']);
+        expect(n.attributes.map(a => a.name)).toEqual(['label', 'skip', 'flatten', 'flattenPrefix', 'valueLabels']);
         const label = n.attributes.find(a => a.name === 'label')!;
         expect(label.optional).toBe(true);
         expect(label.type).toEqual({ kind: 'text' });
@@ -350,6 +351,20 @@ describe('spec — display node shapes', () => {
         const flattenPrefix = n.attributes.find(a => a.name === 'flattenPrefix')!;
         expect(flattenPrefix.optional).toBe(true);
         expect(flattenPrefix.type).toEqual({ kind: 'text' });
+        const valueLabels = n.attributes.find(a => a.name === 'valueLabels')!;
+        expect(valueLabels.optional).toBe(true);
+        expect(valueLabels.type).toEqual({ kind: 'array', of: { kind: 'node', name: 'valueLabelDisplayNode' } });
+    });
+
+    it('valueLabelDisplayNode shape', () => {
+        const n = getNode('valueLabelDisplayNode')!;
+        expect(n.attributes.map(a => a.name)).toEqual(['value', 'label']);
+        const value = n.attributes.find(a => a.name === 'value')!;
+        expect(value.optional).toBeUndefined();
+        expect(value.type).toEqual({ kind: 'union', name: 'valueNode' });
+        const label = n.attributes.find(a => a.name === 'label')!;
+        expect(label.optional).toBeUndefined();
+        expect(label.type).toEqual({ kind: 'text' });
     });
 
     it('enumVariantDisplayNode shape', () => {
@@ -552,6 +567,7 @@ describe('spec — textNode and text attributes', () => {
             ['structFieldDisplayNode', 'label'],
             ['structFieldDisplayNode', 'flattenPrefix'],
             ['instructionAccountDisplayNode', 'label'],
+            ['valueLabelDisplayNode', 'label'],
         ];
         for (const [kind, name] of proseAttributes) {
             const attr = getNode(kind)!.attributes.find(a => a.name === name)!;
@@ -648,6 +664,7 @@ describe('spec — registeredDisplayNode union', () => {
             'stringDisplayNode',
             'structFieldDisplayNode',
             'unitNumberDisplayNode',
+            'valueLabelDisplayNode',
         ]) {
             expect(u.members).toContainEqual({ kind: 'node', name: kind });
         }
