@@ -8,6 +8,7 @@ export const dateTimeTypeNode = defineNode('dateTimeTypeNode', {
         optionalAttribute('ticksPerSecond', u32(), {
             docs: [
                 'How many ticks make one second. Defaults to `1` (the value is in seconds since the epoch).',
+                'Must be non-zero.',
                 'Common choices are `1000` (milliseconds), `1000000` (microseconds), and `1000000000` (nanoseconds).',
             ],
         }),

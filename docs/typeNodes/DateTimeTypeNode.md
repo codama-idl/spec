@@ -6,10 +6,10 @@ A point in time encoded as an integer count of ticks since the Unix epoch.
 
 ### Data
 
-| Attribute        | Type                 | Description                                                                                                                                                                                    |
-| ---------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `kind`           | `"dateTimeTypeNode"` | The node discriminator.                                                                                                                                                                        |
-| `ticksPerSecond` | `u32` _(optional)_   | How many ticks make one second. Defaults to `1` (the value is in seconds since the epoch). Common choices are `1000` (milliseconds), `1000000` (microseconds), and `1000000000` (nanoseconds). |
+| Attribute        | Type                 | Description                                                                                                                                                                                                      |
+| ---------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `kind`           | `"dateTimeTypeNode"` | The node discriminator.                                                                                                                                                                                          |
+| `ticksPerSecond` | `u32` _(optional)_   | How many ticks make one second. Defaults to `1` (the value is in seconds since the epoch). Must be non-zero. Common choices are `1000` (milliseconds), `1000000` (microseconds), and `1000000000` (nanoseconds). |
 
 ### Children
 
