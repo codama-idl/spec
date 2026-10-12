@@ -2,7 +2,7 @@
 
 The canonical Codama node specification.
 
-Spec version: 2.0.0-rc.1 · Other majors: [v1](https://github.com/codama-idl/spec/blob/1.x/v1/docs/README.md)
+Spec version: 2.0.0-rc.2 · Other majors: [v1](https://github.com/codama-idl/spec/blob/1.x/v1/docs/README.md)
 
 Pages marked _(abstract)_ document unions: sets of nodes that can be used interchangeably.
 
