@@ -6,11 +6,11 @@ Identifies a node by the value of a field at a known byte offset.
 
 ### Data
 
-| Attribute | Type                       | Description                                                                                                                                                                                                          |
-| --------- | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `kind`    | `"fieldDiscriminatorNode"` | The node discriminator.                                                                                                                                                                                              |
-| `path`    | `PathString`               | The path to the discriminating field, relative to the account or instruction data — e.g. `discriminator` or `header.kind`. Field segments are only valid where the data type resolves to a struct (following links). |
-| `offset`  | `u64`                      | The byte offset of the field.                                                                                                                                                                                        |
+| Attribute | Type                       | Description                                                                                                                                                                                                                                                                                                                      |
+| --------- | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `kind`    | `"fieldDiscriminatorNode"` | The node discriminator.                                                                                                                                                                                                                                                                                                          |
+| `path`    | `PathString`               | The path to the discriminating field, relative to the account or instruction data — e.g. `discriminator` or `header.kind`. Field segments are only valid where the data type resolves to a struct (following links). The path must not cross a public key's `accountLink`: identification only reads the bytes being identified. |
+| `offset`  | `u64`                      | The byte offset of the field.                                                                                                                                                                                                                                                                                                    |
 
 ### Children
 
