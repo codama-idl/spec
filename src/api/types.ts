@@ -77,9 +77,10 @@ export type IntegerWidth = 'i8' | 'i16' | 'i32' | 'i64' | 'i128' | 'u8' | 'u16' 
  *   first segment is resolved against. Interpolated text templates embed
  *   the same expressions as `${root…}` placeholders, where the leading
  *   root (e.g. `data`, `accounts`) names the anchor explicitly —
- *   `${data.amount}`, `${data[0]}`. The grammar is deliberately minimal
- *   and unambiguous — identifiers exclude dots, so paths never need
- *   quoting or escaping; extensions may land in minor spec versions.
+ *   `${data.amount}`, `${data[0]}`, `${accounts.mint.data.decimals}`.
+ *   The grammar is deliberately minimal and unambiguous — identifiers
+ *   exclude dots, so paths never need quoting or escaping; extensions
+ *   may land in minor spec versions.
  * - `integer` — a base-10 integer string: `0|-?[1-9][0-9]*` (no leading
  *   zeros, no negative zero — every integer has exactly one spelling).
  *   String storage keeps the full 64- and 128-bit ranges lossless through
