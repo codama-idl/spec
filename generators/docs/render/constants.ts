@@ -52,7 +52,7 @@ export const CONSTRAINED_STRINGS: readonly { name: string; definition: string }[
             'decoded data, which requires reading account state at presentation time. Each attribute ' +
             'carrying a path documents its anchor — the data the first segment resolves against; interpolated text ' +
             'templates embed the same expressions as `${root…}` placeholders, where the leading root names the ' +
-            'anchor explicitly.',
+            'anchor explicitly — e.g. `${data.amount}` or `${accounts.mint.data.decimals}`.',
     },
     {
         name: 'IntegerString',

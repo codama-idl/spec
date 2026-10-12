@@ -33,4 +33,31 @@ instructionNode({
 `,
         ),
     ),
+    example(
+        'A sentence reading the data of an account',
+        code(
+            'typescript',
+            `
+instructionNode({
+    identifier: 'transfer',
+    accounts: [
+        instructionAccountNode({
+            identifier: 'destination',
+            isSigner: false,
+            isWritable: true,
+            accountLink: accountLinkNode('token'),
+        }),
+        // ...
+    ],
+    display: instructionDisplayNode({
+        intent: 'Transfer',
+        interpolatedIntent: 'Transfer \${data.amount} to \${accounts.destination.data.owner}',
+    }),
+    // ...data
+});
+
+// interpolated => "Transfer 1.5 USDC to 9BbW…ftkT", the owner of the destination token account
+`,
+        ),
+    ),
 ];
