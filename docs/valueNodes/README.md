@@ -26,7 +26,7 @@ Value nodes — concrete values whose shape is described by a type node.
 ## Unions
 
 - [`InjectableIntegerValueNode`](./InjectableIntegerValueNode.md) - A concrete integer value, or a key resolved at presentation time from a surrounding provider.
-- [`InjectableStringValueNode`](./InjectableStringValueNode.md) - A concrete string value, or a key resolved at presentation time from a surrounding provider.
+- [`InjectableUnitValueNode`](./InjectableUnitValueNode.md) - A unit of measure: a concrete string (e.g. `"USDC"`), a concrete address (e.g. a token mint), or a key resolved at presentation time from a surrounding provider to either — e.g. an instruction account's address provided as `providedNode('mint', accountValueNode('mint'))`, or any other contextual value resolving to an address.
 - [`RegisteredValueNode`](./RegisteredValueNode.md) - Every node tagged as a value-shaped node, including container variants.
 - [`StandaloneValueNode`](./StandaloneValueNode.md) - Every value node that can be used as a top-level value.
 - [`ValueNode`](./ValueNode.md) - The composable form: any standalone value node.

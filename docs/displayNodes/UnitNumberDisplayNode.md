@@ -14,22 +14,22 @@ When the type also carries a static `unit`, a resolved display unit wins for pre
 
 ### Children
 
-| Attribute | Type                                                                      | Description                                                                                                                                                                                                                                                        |
-| --------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `unit`    | [`InjectableStringValueNode`](../valueNodes/InjectableStringValueNode.md) | A label appended after the value (e.g. `"SOL"`, `"USDC"`, `"%"`). Resolved as a string value: either a literal `stringValueNode` or a key resolved from a surrounding provider. When this input cannot resolve, renderers should present the value without a unit. |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_                           | Namespaced plugins with custom structured data.                                                                                                                                                                                                                    |
+| Attribute | Type                                                                  | Description                                                                                                                                                                                                                              |
+| --------- | --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `unit`    | [`InjectableUnitValueNode`](../valueNodes/InjectableUnitValueNode.md) | A unit appended after the value (e.g. `"SOL"`, `"USDC"`, `"%"`, or the address of a token mint), presented as described by `InjectableUnitValueNode`. When this input cannot resolve, renderers should present the value without a unit. |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_                       | Namespaced plugins with custom structured data.                                                                                                                                                                                          |
 
 ## Examples
 
-### A fixed-point amount with a per-mint symbol
+### A fixed-point amount with its mint as unit
 
 ```typescript
 fixedPointTypeNode(integerTypeNode('u64'), {
-    display: unitNumberDisplayNode({ unit: injectedValueNode({ key: 'symbol' }) }),
+    display: unitNumberDisplayNode({ unit: injectedValueNode({ key: 'mint' }) }),
     scale: 9,
 });
 
-// 1_100_000_000 with the injected symbol "SOL" => "1.1 SOL"
+// 1_100_000_000 with the wrapped SOL mint injected => "1.1 SOL" when the renderer names the mint
 ```
 
 ### A float labelled with a contextual unit

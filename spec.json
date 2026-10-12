@@ -3047,7 +3047,7 @@
                     ]
                 },
                 {
-                    "name": "injectableStringValueNode",
+                    "name": "injectableUnitValueNode",
                     "members": [
                         {
                             "kind": "node",
@@ -3055,11 +3055,16 @@
                         },
                         {
                             "kind": "node",
+                            "name": "publicKeyValueNode"
+                        },
+                        {
+                            "kind": "node",
                             "name": "injectedValueNode"
                         }
                     ],
                     "docs": [
-                        "A concrete string value, or a key resolved at presentation time from a surrounding provider."
+                        "A unit of measure: a concrete string (e.g. `\"USDC\"`), a concrete address (e.g. a token mint), or a key resolved at presentation time from a surrounding provider to either — e.g. an instruction account's address provided as `providedNode('mint', accountValueNode('mint'))`, or any other contextual value resolving to an address.",
+                        "Address units are presented under whatever name renderers know for the address (e.g. a token symbol or an alias), and as the address itself otherwise. The `identifier` of a `publicKeyValueNode` is a code symbol, not a display name."
                     ]
                 }
             ],
@@ -4160,30 +4165,51 @@
                             "name": "unit",
                             "type": {
                                 "kind": "union",
-                                "name": "injectableStringValueNode"
+                                "name": "injectableUnitValueNode"
                             },
                             "optional": true,
                             "docs": [
-                                "A label appended after the scaled value (e.g. `\"USDC\"`, `\"%\"`, `\"bps\"`). Resolved as a string value: either a literal `stringValueNode` or a key resolved from a surrounding provider.",
+                                "A unit appended after the scaled value (e.g. `\"USDC\"`, `\"%\"`, `\"bps\"`, or the address of a token mint), presented as described by `InjectableUnitValueNode`.",
                                 "When this input cannot resolve, renderers should present the scaled value without a unit."
                             ]
                         }
                     ],
                     "examples": [
                         {
-                            "title": "Decimals and unit injected from surrounding account state",
+                            "title": "Decimals and unit provided by the mint account of an instruction",
                             "code": [
                                 {
                                     "language": "typescript",
                                     "content": [
-                                        "integerTypeNode('u64', {",
-                                        "    display: amountNumberDisplayNode({",
-                                        "        decimals: injectedValueNode({ key: 'decimals' }),",
-                                        "        unit: injectedValueNode({ key: 'symbol' }),",
-                                        "    }),",
+                                        "instructionNode({",
+                                        "    identifier: 'transfer',",
+                                        "    accounts: [",
+                                        "        instructionAccountNode({",
+                                        "            identifier: 'mint',",
+                                        "            isSigner: false,",
+                                        "            isWritable: false,",
+                                        "            accountLink: accountLinkNode('mint'),",
+                                        "        }),",
+                                        "    ],",
+                                        "    provides: [",
+                                        "        providedNode('decimals', accountDataValueNode('mint', 'decimals')),",
+                                        "        providedNode('mint', accountValueNode('mint')),",
+                                        "    ],",
+                                        "    data: structTypeNode([",
+                                        "        structFieldTypeNode({",
+                                        "            identifier: 'amount',",
+                                        "            type: integerTypeNode('u64', {",
+                                        "                display: amountNumberDisplayNode({",
+                                        "                    decimals: injectedValueNode({ key: 'decimals' }),",
+                                        "                    unit: injectedValueNode({ key: 'mint' }),",
+                                        "                }),",
+                                        "            }),",
+                                        "        }),",
+                                        "    ]),",
                                         "});",
                                         "",
-                                        "// 1_500_000 with injected decimals 6 and symbol \"USDC\" => \"1.5 USDC\""
+                                        "// 1_500_000 with the USDC mint => \"1.5 USDC\",",
+                                        "// or \"1.5 EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v\" when the renderer knows no name for the mint"
                                     ]
                                 }
                             ]
@@ -4201,6 +4227,24 @@
                                         "        unit: injectedValueNode({ key: 'symbol' }),",
                                         "    }),",
                                         "});"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "A literal address unit",
+                            "code": [
+                                {
+                                    "language": "typescript",
+                                    "content": [
+                                        "integerTypeNode('u64', {",
+                                        "    display: amountNumberDisplayNode({",
+                                        "        decimals: integerValueNode('6'),",
+                                        "        unit: publicKeyValueNode('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'),",
+                                        "    }),",
+                                        "});",
+                                        "",
+                                        "// 1_500_000 => \"1.5 USDC\" when the renderer names the USDC mint"
                                     ]
                                 }
                             ]
@@ -4606,27 +4650,27 @@
                             "name": "unit",
                             "type": {
                                 "kind": "union",
-                                "name": "injectableStringValueNode"
+                                "name": "injectableUnitValueNode"
                             },
                             "docs": [
-                                "A label appended after the value (e.g. `\"SOL\"`, `\"USDC\"`, `\"%\"`). Resolved as a string value: either a literal `stringValueNode` or a key resolved from a surrounding provider.",
+                                "A unit appended after the value (e.g. `\"SOL\"`, `\"USDC\"`, `\"%\"`, or the address of a token mint), presented as described by `InjectableUnitValueNode`.",
                                 "When this input cannot resolve, renderers should present the value without a unit."
                             ]
                         }
                     ],
                     "examples": [
                         {
-                            "title": "A fixed-point amount with a per-mint symbol",
+                            "title": "A fixed-point amount with its mint as unit",
                             "code": [
                                 {
                                     "language": "typescript",
                                     "content": [
                                         "fixedPointTypeNode(integerTypeNode('u64'), {",
-                                        "    display: unitNumberDisplayNode({ unit: injectedValueNode({ key: 'symbol' }) }),",
+                                        "    display: unitNumberDisplayNode({ unit: injectedValueNode({ key: 'mint' }) }),",
                                         "    scale: 9,",
                                         "});",
                                         "",
-                                        "// 1_100_000_000 with the injected symbol \"SOL\" => \"1.1 SOL\""
+                                        "// 1_100_000_000 with the wrapped SOL mint injected => \"1.1 SOL\" when the renderer names the mint"
                                     ]
                                 }
                             ]

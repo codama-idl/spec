@@ -18,7 +18,7 @@ import { structValueNode } from './StructValueNode';
 import { tupleValueNode } from './TupleValueNode';
 import {
     injectableIntegerValueNodeUnion,
-    injectableStringValueNodeUnion,
+    injectableUnitValueNodeUnion,
     registeredValueNodeUnion,
     standaloneValueNodeUnion,
     valueNodeUnion,
@@ -50,5 +50,5 @@ export const ALL_VALUE_NODE_UNIONS = [
     valueNodeUnion,
     registeredValueNodeUnion,
     injectableIntegerValueNodeUnion,
-    injectableStringValueNodeUnion,
+    injectableUnitValueNodeUnion,
 ] as const;
