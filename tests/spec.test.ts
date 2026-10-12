@@ -101,7 +101,7 @@ describe('spec — coverage smoke checks', () => {
             'numberDisplayNode',
             'registeredDisplayNode',
             'injectableIntegerValueNode',
-            'injectableStringValueNode',
+            'injectableUnitValueNode',
             'contextualValueNode',
             'instructionInputValueNode',
         ]) {
@@ -384,7 +384,7 @@ describe('spec — display node shapes', () => {
         expect(isChildAttribute(decimals.type)).toBe(true);
         const unit = n.attributes.find(a => a.name === 'unit')!;
         expect(unit.optional).toBe(true);
-        expect(unit.type).toEqual({ kind: 'union', name: 'injectableStringValueNode' });
+        expect(unit.type).toEqual({ kind: 'union', name: 'injectableUnitValueNode' });
         expect(isChildAttribute(unit.type)).toBe(true);
     });
 
@@ -709,10 +709,11 @@ describe('spec — injectable value unions', () => {
         ]);
     });
 
-    it('injectableStringValueNode pairs stringValueNode with injectedValueNode', () => {
-        const u = getUnion('injectableStringValueNode')!;
+    it('injectableUnitValueNode pairs string and address units with injectedValueNode', () => {
+        const u = getUnion('injectableUnitValueNode')!;
         expect(u.members).toEqual([
             { kind: 'node', name: 'stringValueNode' },
+            { kind: 'node', name: 'publicKeyValueNode' },
             { kind: 'node', name: 'injectedValueNode' },
         ]);
     });

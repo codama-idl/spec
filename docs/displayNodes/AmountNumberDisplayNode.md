@@ -15,25 +15,46 @@ When both are present, a resolved display value wins for presentation; the type'
 
 ### Children
 
-| Attribute  | Type                                                                                   | Description                                                                                                                                                                                                                                                                                                                                                      |
-| ---------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `decimals` | [`InjectableIntegerValueNode`](../valueNodes/InjectableIntegerValueNode.md)            | How many decimal places scale the underlying integer. Resolved as an integer value: either a literal `integerValueNode` or a key resolved from a surrounding provider. A value of `1000000` with `decimals` resolving to `6` renders as `1`. When this input cannot resolve, renderers should fall back to presenting the raw value rather than guess the scale. |
-| `unit`     | [`InjectableStringValueNode`](../valueNodes/InjectableStringValueNode.md) _(optional)_ | A label appended after the scaled value (e.g. `"USDC"`, `"%"`, `"bps"`). Resolved as a string value: either a literal `stringValueNode` or a key resolved from a surrounding provider. When this input cannot resolve, renderers should present the scaled value without a unit.                                                                                 |
-| `plugins`  | [`PluginNode`](../PluginNode.md)[] _(optional)_                                        | Namespaced plugins with custom structured data.                                                                                                                                                                                                                                                                                                                  |
+| Attribute  | Type                                                                               | Description                                                                                                                                                                                                                                                                                                                                                      |
+| ---------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `decimals` | [`InjectableIntegerValueNode`](../valueNodes/InjectableIntegerValueNode.md)        | How many decimal places scale the underlying integer. Resolved as an integer value: either a literal `integerValueNode` or a key resolved from a surrounding provider. A value of `1000000` with `decimals` resolving to `6` renders as `1`. When this input cannot resolve, renderers should fall back to presenting the raw value rather than guess the scale. |
+| `unit`     | [`InjectableUnitValueNode`](../valueNodes/InjectableUnitValueNode.md) _(optional)_ | A unit appended after the scaled value (e.g. `"USDC"`, `"%"`, `"bps"`, or the address of a token mint), presented as described by `InjectableUnitValueNode`. When this input cannot resolve, renderers should present the scaled value without a unit.                                                                                                           |
+| `plugins`  | [`PluginNode`](../PluginNode.md)[] _(optional)_                                    | Namespaced plugins with custom structured data.                                                                                                                                                                                                                                                                                                                  |
 
 ## Examples
 
-### Decimals and unit injected from surrounding account state
+### Decimals and unit provided by the mint account of an instruction
 
 ```typescript
-integerTypeNode('u64', {
-    display: amountNumberDisplayNode({
-        decimals: injectedValueNode({ key: 'decimals' }),
-        unit: injectedValueNode({ key: 'symbol' }),
-    }),
+instructionNode({
+    identifier: 'transfer',
+    accounts: [
+        instructionAccountNode({
+            identifier: 'mint',
+            isSigner: false,
+            isWritable: false,
+            accountLink: accountLinkNode('mint'),
+        }),
+    ],
+    provides: [
+        providedNode('decimals', accountDataValueNode('mint', 'decimals')),
+        providedNode('mint', accountValueNode('mint')),
+    ],
+    data: structTypeNode([
+        structFieldTypeNode({
+            identifier: 'amount',
+            type: integerTypeNode('u64', {
+                display: amountNumberDisplayNode({
+                    decimals: injectedValueNode({ key: 'decimals' }),
+                    unit: injectedValueNode({ key: 'mint' }),
+                }),
+            }),
+        }),
+    ]),
 });
 
-// 1_500_000 with injected decimals 6 and symbol "USDC" => "1.5 USDC"
+// 1_500_000 with the USDC mint => "1.5 USDC",
+// or "1.5 EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" when the renderer knows no name for the mint
 ```
 
 ### An injected scale with a static fallback
@@ -46,4 +67,17 @@ integerTypeNode('u64', {
         unit: injectedValueNode({ key: 'symbol' }),
     }),
 });
+```
+
+### A literal address unit
+
+```typescript
+integerTypeNode('u64', {
+    display: amountNumberDisplayNode({
+        decimals: integerValueNode('6'),
+        unit: publicKeyValueNode('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'),
+    }),
+});
+
+// 1_500_000 => "1.5 USDC" when the renderer names the USDC mint
 ```

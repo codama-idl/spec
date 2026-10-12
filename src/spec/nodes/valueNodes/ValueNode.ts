@@ -7,7 +7,7 @@
  *  - `registeredValueNode`           every value-shaped node, including container variants like
  *                                    `mapEntryValueNode` and `structFieldValueNode`.
  *  - `injectableIntegerValueNode`    a concrete integer value or a key resolved via injection.
- *  - `injectableStringValueNode`     a concrete string value or a key resolved via injection.
+ *  - `injectableUnitValueNode`       a concrete string or address unit, or a key resolved via injection.
  */
 
 import { defineUnion, union } from '../../../api';
@@ -51,7 +51,10 @@ export const injectableIntegerValueNodeUnion = defineUnion('injectableIntegerVal
     members: ['integerValueNode', 'injectedValueNode'],
 });
 
-export const injectableStringValueNodeUnion = defineUnion('injectableStringValueNode', {
-    docs: ['A concrete string value, or a key resolved at presentation time from a surrounding provider.'],
-    members: ['stringValueNode', 'injectedValueNode'],
+export const injectableUnitValueNodeUnion = defineUnion('injectableUnitValueNode', {
+    docs: [
+        "A unit of measure: a concrete string (e.g. `\"USDC\"`), a concrete address (e.g. a token mint), or a key resolved at presentation time from a surrounding provider to either — e.g. an instruction account's address provided as `providedNode('mint', accountValueNode('mint'))`, or any other contextual value resolving to an address.",
+        'Address units are presented under whatever name renderers know for the address (e.g. a token symbol or an alias), and as the address itself otherwise. The `identifier` of a `publicKeyValueNode` is a code symbol, not a display name.',
+    ],
+    members: ['stringValueNode', 'publicKeyValueNode', 'injectedValueNode'],
 });

@@ -16,9 +16,9 @@ export const amountNumberDisplayNode = defineNode('amountNumberDisplayNode', {
                 'When this input cannot resolve, renderers should fall back to presenting the raw value rather than guess the scale.',
             ],
         }),
-        optionalAttribute('unit', union('injectableStringValueNode'), {
+        optionalAttribute('unit', union('injectableUnitValueNode'), {
             docs: [
-                'A label appended after the scaled value (e.g. `"USDC"`, `"%"`, `"bps"`). Resolved as a string value: either a literal `stringValueNode` or a key resolved from a surrounding provider.',
+                'A unit appended after the scaled value (e.g. `"USDC"`, `"%"`, `"bps"`, or the address of a token mint), presented as described by `InjectableUnitValueNode`.',
                 'When this input cannot resolve, renderers should present the scaled value without a unit.',
             ],
         }),
