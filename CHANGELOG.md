@@ -1,5 +1,65 @@
 # @codama/spec
 
+## 2.0.0-rc.2
+
+### Minor Changes
+
+- [#200](https://github.com/codama-idl/spec/pull/200) [`6b1ca9c`](https://github.com/codama-idl/spec/commit/6b1ca9cadef40b6eb10de198985603c029000e0b) Thanks [@lorisleiva](https://github.com/lorisleiva)! - Let interpolated intents read account data. After the `accounts` root, an account identifier may be followed by `.data` and a path into the account's decoded data, resolved as `accountDataValueNode` does, e.g. `${accounts.destination.data.owner}`. Other segments after an account identifier are reserved for future attributes of the account, such as its lamports, and are invalid until then. The docs also note that `${data…}` paths may cross a public key's `accountLink`.
+  
+  ```ts
+  instructionDisplayNode({
+      intent: 'Transfer',
+      interpolatedIntent: 'Transfer ${data.amount} to ${accounts.destination.data.owner}',
+  });
+  ```
+
+- [#199](https://github.com/codama-idl/spec/pull/199) [`354c5fb`](https://github.com/codama-idl/spec/commit/354c5fb113cd8aecbcd2e93240dd401541c42748) Thanks [@lorisleiva](https://github.com/lorisleiva)! - Let public keys link to the account they point to. `publicKeyTypeNode` gains an optional `accountLink`, and path expressions crossing a linked public key continue into the linked account's decoded data, so values a few accounts away become reachable, e.g. the decimals of the mint of a token account. Such paths require reading account state at presentation time and fall back as usual when the account is missing or cannot be decoded. Field discriminators must not cross account links.
+  
+  ```ts
+  structFieldTypeNode({ identifier: 'mint', type: publicKeyTypeNode({ accountLink: accountLinkNode('mint') }) });
+  providedNode('decimals', accountDataValueNode('inputTokenAccount', 'mint.decimals'));
+  ```
+
+- [#198](https://github.com/codama-idl/spec/pull/198) [`0d81ec3`](https://github.com/codama-idl/spec/commit/0d81ec3724519898239f62484ff693068d9f6136) Thanks [@lorisleiva](https://github.com/lorisleiva)! - Let display units reference an address. The `unit` of `amountNumberDisplayNode` and `unitNumberDisplayNode` now accepts a literal `publicKeyValueNode` or an injection resolving to an address, on top of strings. Renderers present an address unit under whatever name they know for it, e.g. a token symbol for a mint, and as the address itself otherwise. The new `injectableUnitValueNode` union replaces `injectableStringValueNode`.
+  
+  ```ts
+  amountNumberDisplayNode({
+      decimals: injectedValueNode({ key: 'decimals' }),
+      unit: injectedValueNode({ key: 'mint' }), // => "1.5 USDC", or "1.5 EPjF…Dt1v" when unnamed
+  });
+  ```
+
+- [#197](https://github.com/codama-idl/spec/pull/197) [`6853f13`](https://github.com/codama-idl/spec/commit/6853f13deb20a83af107d1363a87f027e4f55f73) Thanks [@lorisleiva](https://github.com/lorisleiva)! - Let display metadata label specific values. `structFieldDisplayNode` gains an optional `valueLabels` list of the new `valueLabelDisplayNode`s, each pairing a value with the label renderers present instead of it, in the fallback list and in interpolated intents alike. Values match the field's decoded value structurally, and the first matching label wins.
+  
+  ```ts
+  structFieldDisplayNode({
+      label: 'Amount',
+      valueLabels: [valueLabelDisplayNode({ value: integerValueNode('18446744073709551615'), label: 'All' })],
+  });
+  ```
+
+### Patch Changes
+
+- [#192](https://github.com/codama-idl/spec/pull/192) [`f775857`](https://github.com/codama-idl/spec/commit/f7758571323ed370df30710592571df88aab74b4) Thanks [@lorisleiva](https://github.com/lorisleiva)! - Carry resolver docs and default value strategies in the official plugins. The `codama.resolver` payload gains an optional `docs` field describing the resolver, and the `codama.extraArgument` payload gains an optional `defaultValueStrategy`, as for struct fields. A struct field resolved by a `codama.resolver` plugin may now carry a `defaultValueStrategy`, which applies to the resolved value as it would to a `defaultValue`, e.g. `omitted` keeps the field out of generated inputs.
+  
+  ```ts
+  structFieldTypeNode({
+      identifier: 'tags',
+      type: integerTypeNode('u8'),
+      defaultValueStrategy: 'omitted',
+      plugins: [pluginNode('codama.resolver', { payload: { name: 'resolveTags', docs: 'Derives tags from the name.' } })],
+  });
+  ```
+
+- [#194](https://github.com/codama-idl/spec/pull/194) [`b342935`](https://github.com/codama-idl/spec/commit/b342935e865b2270a48a6276dc536a33d3189137) Thanks [@lorisleiva](https://github.com/lorisleiva)! - Document how to resolve the default of an extra argument with custom code. A `codama.resolver` plugin on a `codama.extraArgument` plugin node describes how renderers resolve that extra argument's default, as it would on a struct field.
+  
+  ```ts
+  pluginNode('codama.extraArgument', {
+      payload: { identifier: 'tokenStandard', type: definedTypeLinkNode('tokenStandard') },
+      plugins: [pluginNode('codama.resolver', { payload: { name: 'resolveTokenStandard', dependsOn: ['accounts.mint'] } })],
+  });
+  ```
+
 ## 2.0.0-rc.1
 
 ### Major Changes
