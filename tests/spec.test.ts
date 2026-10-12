@@ -816,6 +816,17 @@ describe('spec — base attributes', () => {
     });
 });
 
+describe('spec — publicKeyTypeNode.accountLink', () => {
+    it('declares an optional accountLinkNode reference', () => {
+        const n = getNode('publicKeyTypeNode')!;
+        expect(n.attributes.map(a => a.name)).toEqual(['accountLink', 'transforms']);
+        const link = n.attributes.find(a => a.name === 'accountLink')!;
+        expect(link.optional).toBe(true);
+        expect(link.type).toEqual({ kind: 'node', name: 'accountLinkNode' });
+        expect(isChildAttribute(link.type)).toBe(true);
+    });
+});
+
 describe('spec — instructionAccountNode.accountLink', () => {
     it('declares an optional accountLinkNode reference', () => {
         const n = getNode('instructionAccountNode')!;

@@ -68,7 +68,9 @@ export type IntegerWidth = 'i8' | 'i16' | 'i32' | 'i64' | 'i128' | 'u8' | 'u16' 
  *   `first := identifier | "[" integer "]"`, with non-negative integer
  *   indices. `.identifier` accesses a struct field by exact identifier
  *   match (following links); `[n]` accesses the n-th item of an array,
- *   tuple or set. The
+ *   tuple or set. A `.identifier` applied to a public key whose type
+ *   carries an `accountLink` continues into the linked account's decoded
+ *   data, which requires reading account state at presentation time. The
  *   first segment may be an index so that tuple- or array-rooted data is
  *   reachable — e.g. `[0].banana` against tuple-shaped instruction data.
  *   Each attribute carrying a path documents its anchor — the data the
