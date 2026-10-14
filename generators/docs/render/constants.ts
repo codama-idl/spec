@@ -46,10 +46,12 @@ export const CONSTRAINED_STRINGS: readonly { name: string; definition: string }[
         definition:
             'a path expression pointing into nested data: `first ( "." identifier | "[" integer "]" )*` where ' +
             '`first := identifier | "[" integer "]"` — e.g. `amount`, `fruits[0].banana`, or `[0].banana` against ' +
-            'tuple-rooted data. `.identifier` accesses a struct field by exact identifier match (following links); ' +
-            '`[n]` accesses the n-th item of an array, tuple or set, with non-negative indices. A `.identifier` ' +
+            'tuple-rooted data. `.identifier` accesses a struct field by exact identifier match (following type links); ' +
+            '`[n]` accesses the n-th item of an array, tuple or set, with non-negative indices. A `.data` segment ' +
             "applied to a public key whose type carries an `accountLink` continues into the linked account's " +
-            'decoded data, which requires reading account state at presentation time. Each attribute ' +
+            'decoded data, e.g. `mint.data.decimals`, which requires reading account state at presentation time; ' +
+            'other segments after such a public key are reserved for other attributes of the account, e.g. its ' +
+            'lamports. Each attribute ' +
             'carrying a path documents its anchor — the data the first segment resolves against; interpolated text ' +
             'templates embed the same expressions as `${root…}` placeholders, where the leading root names the ' +
             'anchor explicitly — e.g. `${data.amount}` or `${accounts.mint.data.decimals}`.',

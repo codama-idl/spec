@@ -1046,7 +1046,7 @@
                             "optional": true,
                             "docs": [
                                 "A reference to the data layout of the account this address points to.",
-                                "Path expressions crossing this public key continue into the linked account's decoded data — e.g. `mint.decimals` reads the `decimals` of the mint whose address is in the `mint` field. Resolving such paths requires reading the account state at presentation time; when the account is missing or its data cannot be decoded with the linked layout, the path is unresolved and its consumer falls back as usual.",
+                                "Path expressions cross this public key with a `.data` segment, which continues into the linked account's decoded data, as `.data` does after an account identifier in interpolated intents — e.g. `mint.data.decimals` reads the `decimals` of the mint whose address is in the `mint` field, and `mint.data` its whole data. Other segments after the public key are reserved for other attributes of the account, e.g. its lamports, and are invalid until then. Resolving such paths requires reading the account state at presentation time; when the account is missing or its data cannot be decoded with the linked layout, the path is unresolved and its consumer falls back as usual.",
                                 "The link's optional `program` allows cross-program references via the root's `additionalPrograms`."
                             ]
                         },
@@ -1103,8 +1103,8 @@
                                         "    accountLink: accountLinkNode('token'),",
                                         "});",
                                         "",
-                                        "// ...lets paths follow its mint address into the mint's data.",
-                                        "providedNode('decimals', accountDataValueNode('inputTokenAccount', 'mint.decimals'));"
+                                        "// ...lets paths follow its mint address into the mint's data, through a data segment.",
+                                        "providedNode('decimals', accountDataValueNode('inputTokenAccount', 'mint.data.decimals'));"
                                     ]
                                 }
                             ]
@@ -4446,7 +4446,7 @@
                             "optional": true,
                             "docs": [
                                 "A sentence template that composes the instruction into prose with `${root…}` placeholders.",
-                                "Roots are `data` (the instruction data) and `accounts` (the instruction accounts). After the `data` root, placeholders embed the shared path-expression grammar (e.g. `${data.amount}`, `${data.config.fees[0]}`, `${data[0]}`), which may cross a public key's `accountLink` into the linked account's data (e.g. `${data.mint.decimals}`).",
+                                "Roots are `data` (the instruction data) and `accounts` (the instruction accounts). After the `data` root, placeholders embed the shared path-expression grammar (e.g. `${data.amount}`, `${data.config.fees[0]}`, `${data[0]}`), which may cross a public key's `accountLink` into the linked account's data with a `.data` segment (e.g. `${data.mint.data.decimals}`), as after an account identifier.",
                                 "After the `accounts` root, an account identifier follows and renders as its address (e.g. `${accounts.destination}`), optionally followed by `.data` and a path into the account's decoded data (e.g. `${accounts.mint.data.decimals}`), resolved as `accountDataValueNode` does and requiring the account's `accountLink`. The `.data` segment is explicit because an account has attributes beyond its data: other segments after an account identifier are reserved for them, e.g. its lamports, and are invalid until then.",
                                 "A placeholder renders through its referent's own presentation, including the value labels of a struct field; the `skip` rule governs the fallback list only and never the sentence."
                             ]
@@ -5010,7 +5010,7 @@
                             "optional": true,
                             "docs": [
                                 "The path to the value within the account's decoded data — e.g. `authority` or `state.balances[0]`.",
-                                "Field segments are only valid where the data type resolves to a struct (following type and account links).",
+                                "Field segments are only valid where the data type resolves to a struct (following type links), and a `.data` segment crosses a public key's `accountLink` into the linked account's data, e.g. `mint.data.decimals`.",
                                 "When absent, the value is the whole decoded account data."
                             ]
                         }
@@ -5132,8 +5132,8 @@
                             },
                             "docs": [
                                 "The path to the referenced value, relative to the instruction's data — e.g. `amount` or `config.fees[0]`.",
-                                "Field segments are only valid where the data type resolves to a struct (following type and account links).",
-                                "A path crossing a public key's `accountLink` requires reading the linked account's state. When presenting, an unresolvable path falls back as usual. When building an instruction, e.g. for a PDA seed or a default value, there is nothing to fall back to: consumers that cannot or do not read the account must fail explicitly rather than guess."
+                                "Field segments are only valid where the data type resolves to a struct (following type links), and a `.data` segment crosses a public key's `accountLink` into the linked account's data, e.g. `mint.data.decimals`.",
+                                "A path crossing an `accountLink` requires reading the linked account's state. When presenting, an unresolvable path falls back as usual. When building an instruction, e.g. for a PDA seed or a default value, there is nothing to fall back to: consumers that cannot or do not read the account must fail explicitly rather than guess."
                             ]
                         }
                     ],
