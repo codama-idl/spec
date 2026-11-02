@@ -3128,6 +3128,16 @@
                     ],
                     "attributes": [
                         {
+                            "name": "identifier",
+                            "type": {
+                                "kind": "string",
+                                "constraint": "identifier"
+                            },
+                            "docs": [
+                                "The identifier of the referenced account."
+                            ]
+                        },
+                        {
                             "name": "program",
                             "type": {
                                 "kind": "node",
@@ -3136,16 +3146,6 @@
                             "optional": true,
                             "docs": [
                                 "The program the referenced account belongs to. When omitted, the surrounding program is assumed."
-                            ]
-                        },
-                        {
-                            "name": "identifier",
-                            "type": {
-                                "kind": "string",
-                                "constraint": "identifier"
-                            },
-                            "docs": [
-                                "The identifier of the referenced account."
                             ]
                         }
                     ],
@@ -3171,6 +3171,16 @@
                     ],
                     "attributes": [
                         {
+                            "name": "identifier",
+                            "type": {
+                                "kind": "string",
+                                "constraint": "identifier"
+                            },
+                            "docs": [
+                                "The identifier of the referenced defined type."
+                            ]
+                        },
+                        {
                             "name": "program",
                             "type": {
                                 "kind": "node",
@@ -3179,16 +3189,6 @@
                             "optional": true,
                             "docs": [
                                 "The program the referenced type is defined in. When omitted, the surrounding program is assumed."
-                            ]
-                        },
-                        {
-                            "name": "identifier",
-                            "type": {
-                                "kind": "string",
-                                "constraint": "identifier"
-                            },
-                            "docs": [
-                                "The identifier of the referenced defined type."
                             ]
                         },
                         {
@@ -3228,6 +3228,16 @@
                     ],
                     "attributes": [
                         {
+                            "name": "identifier",
+                            "type": {
+                                "kind": "string",
+                                "constraint": "identifier"
+                            },
+                            "docs": [
+                                "The identifier of the referenced instruction account."
+                            ]
+                        },
+                        {
                             "name": "instruction",
                             "type": {
                                 "kind": "node",
@@ -3237,16 +3247,6 @@
                             "docs": [
                                 "The instruction the referenced account belongs to. When omitted, the surrounding instruction is assumed.",
                                 "The instruction link may itself point to a different program if needed."
-                            ]
-                        },
-                        {
-                            "name": "identifier",
-                            "type": {
-                                "kind": "string",
-                                "constraint": "identifier"
-                            },
-                            "docs": [
-                                "The identifier of the referenced instruction account."
                             ]
                         }
                     ],
@@ -3281,6 +3281,16 @@
                     ],
                     "attributes": [
                         {
+                            "name": "identifier",
+                            "type": {
+                                "kind": "string",
+                                "constraint": "identifier"
+                            },
+                            "docs": [
+                                "The identifier of the referenced instruction."
+                            ]
+                        },
+                        {
                             "name": "program",
                             "type": {
                                 "kind": "node",
@@ -3289,16 +3299,6 @@
                             "optional": true,
                             "docs": [
                                 "The program the referenced instruction belongs to. When omitted, the surrounding program is assumed."
-                            ]
-                        },
-                        {
-                            "name": "identifier",
-                            "type": {
-                                "kind": "string",
-                                "constraint": "identifier"
-                            },
-                            "docs": [
-                                "The identifier of the referenced instruction."
                             ]
                         }
                     ],
@@ -3324,6 +3324,16 @@
                     ],
                     "attributes": [
                         {
+                            "name": "identifier",
+                            "type": {
+                                "kind": "string",
+                                "constraint": "identifier"
+                            },
+                            "docs": [
+                                "The identifier of the referenced PDA."
+                            ]
+                        },
+                        {
                             "name": "program",
                             "type": {
                                 "kind": "node",
@@ -3332,16 +3342,6 @@
                             "optional": true,
                             "docs": [
                                 "The program the referenced PDA belongs to. When omitted, the surrounding program is assumed."
-                            ]
-                        },
-                        {
-                            "name": "identifier",
-                            "type": {
-                                "kind": "string",
-                                "constraint": "identifier"
-                            },
-                            "docs": [
-                                "The identifier of the referenced PDA."
                             ]
                         }
                     ],
@@ -4774,6 +4774,16 @@
                     ],
                     "attributes": [
                         {
+                            "name": "label",
+                            "type": {
+                                "kind": "text"
+                            },
+                            "docs": [
+                                "The label presented instead of the value, both in the fallback list and in interpolated intents (e.g. `\"all SOL\"`).",
+                                "Since the same label serves both, prefer wording that reads well as a field value and mid-sentence."
+                            ]
+                        },
+                        {
                             "name": "value",
                             "type": {
                                 "kind": "union",
@@ -4782,16 +4792,6 @@
                             "docs": [
                                 "The value to label, matched structurally against the field's raw decoded value, before any display formatting, e.g. `integerValueNode('18446744073709551615')` or `noneValueNode()`.",
                                 "It must be a concrete value of the field's type: injected values are not resolved here."
-                            ]
-                        },
-                        {
-                            "name": "label",
-                            "type": {
-                                "kind": "text"
-                            },
-                            "docs": [
-                                "The label presented instead of the value, both in the fallback list and in interpolated intents (e.g. `\"all SOL\"`).",
-                                "Since the same label serves both, prefer wording that reads well as a field value and mid-sentence."
                             ]
                         }
                     ],

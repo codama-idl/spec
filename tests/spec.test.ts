@@ -241,6 +241,23 @@ describe('spec — programNode shape', () => {
     });
 });
 
+describe('spec — link node shapes', () => {
+    it('declares the identifier before the optional parent link, per the attribute order convention', () => {
+        expect(getNode('accountLinkNode')!.attributes.map(a => a.name)).toEqual(['identifier', 'program']);
+        expect(getNode('definedTypeLinkNode')!.attributes.map(a => a.name)).toEqual([
+            'identifier',
+            'program',
+            'transforms',
+        ]);
+        expect(getNode('instructionAccountLinkNode')!.attributes.map(a => a.name)).toEqual([
+            'identifier',
+            'instruction',
+        ]);
+        expect(getNode('instructionLinkNode')!.attributes.map(a => a.name)).toEqual(['identifier', 'program']);
+        expect(getNode('pdaLinkNode')!.attributes.map(a => a.name)).toEqual(['identifier', 'program']);
+    });
+});
+
 describe('spec — publicKeyValueNode shape', () => {
     it('exposes publicKey as an address type', () => {
         const node = getNode('publicKeyValueNode')!;
@@ -358,7 +375,7 @@ describe('spec — display node shapes', () => {
 
     it('valueLabelDisplayNode shape', () => {
         const n = getNode('valueLabelDisplayNode')!;
-        expect(n.attributes.map(a => a.name)).toEqual(['value', 'label']);
+        expect(n.attributes.map(a => a.name)).toEqual(['label', 'value']);
         const value = n.attributes.find(a => a.name === 'value')!;
         expect(value.optional).toBeUndefined();
         expect(value.type).toEqual({ kind: 'union', name: 'valueNode' });
