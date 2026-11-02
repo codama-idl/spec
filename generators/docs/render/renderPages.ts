@@ -52,7 +52,7 @@ export function renderNodePage(node: NodeSpec, ctx: RenderCtx): DocPage {
 
     // classify: synthesized `kind` row first, then each attribute into Data or Children (declaration order).
     // Base attributes go through the same classification but always trail their table. The tables group
-    // attributes for readability only: the wire order is the declaration order, followed by base attributes.
+    // attributes for readability: the wire order is the declaration order, followed by base attributes.
     const dataRows: string[][] = [[markup.code('kind'), markup.code(`"${node.kind}"`), 'The node discriminator.']];
     const childRows: string[][] = [];
     for (const attribute of [...node.attributes, ...ctx.base]) {

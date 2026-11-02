@@ -7,17 +7,17 @@ An instruction without a status is considered live — a status node is typicall
 
 ### Data
 
-| Attribute | Type                      | Description             |
-| --------- | ------------------------- | ----------------------- |
-| `kind`    | `"instructionStatusNode"` | The node discriminator. |
+| Attribute | Type                                                 | Description                                                                                                           |
+| --------- | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `kind`    | `"instructionStatusNode"`                            | The node discriminator.                                                                                               |
+| `message` | `string` \| [`TextNode`](./TextNode.md) _(optional)_ | Free-form prose accompanying the status — e.g. a deprecation notice with migration guidance. May span multiple lines. |
 
 ### Children
 
-| Attribute   | Type                                                            | Description                                                                                                           |
-| ----------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `lifecycle` | [`InstructionLifecycle`](./sharedNodes/InstructionLifecycle.md) | The lifecycle stage.                                                                                                  |
-| `message`   | `string` \| [`TextNode`](./TextNode.md) _(optional)_            | Free-form prose accompanying the status — e.g. a deprecation notice with migration guidance. May span multiple lines. |
-| `plugins`   | [`PluginNode`](./PluginNode.md)[] _(optional)_                  | Namespaced plugins with custom structured data.                                                                       |
+| Attribute   | Type                                                            | Description                                     |
+| ----------- | --------------------------------------------------------------- | ----------------------------------------------- |
+| `lifecycle` | [`InstructionLifecycle`](./sharedNodes/InstructionLifecycle.md) | The lifecycle stage.                            |
+| `plugins`   | [`PluginNode`](./PluginNode.md)[] _(optional)_                  | Namespaced plugins with custom structured data. |
 
 ## Examples
 

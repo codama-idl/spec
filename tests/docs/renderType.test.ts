@@ -62,6 +62,10 @@ describe('isDocChild', () => {
     it('counts anyNode as a child (via isChildAttribute)', () => {
         expect(isDocChild({ kind: 'anyNode' })).toBe(true);
     });
+    it('counts human text as data, unlike isChildAttribute', () => {
+        expect(isDocChild({ kind: 'docs' })).toBe(false);
+        expect(isDocChild({ kind: 'text' })).toBe(false);
+    });
     it('recurses into arrays', () => {
         // an array of enumerations is a child (referencesEnumeration recurses into `of`)
         expect(isDocChild({ kind: 'array', of: { kind: 'enumeration', name: 'numberFormat' } })).toBe(true);

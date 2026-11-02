@@ -79,9 +79,11 @@ function referencesEnumeration(t: TypeExpr): boolean {
 
 /**
  * Children are attributes referencing an entity (node, union, anyNode) or an enumeration.
- * References nested in arrays count too. Everything else is Data.
+ * References nested in arrays count too. Human text (`docs`, `text`) describes the node, so it
+ * is Data even though it may hold a `textNode`. Everything else is Data.
  */
 export function isDocChild(t: TypeExpr): boolean {
+    if (t.kind === 'docs' || t.kind === 'text') return false;
     return isChildAttribute(t) || referencesEnumeration(t);
 }
 
