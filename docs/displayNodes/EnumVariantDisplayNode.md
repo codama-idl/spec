@@ -6,17 +6,17 @@ Display metadata for an enum variant: its label and whether to hide its inner pa
 
 ### Data
 
-| Attribute       | Type                       | Description                                                                                                                                                                   |
-| --------------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `kind`          | `"enumVariantDisplayNode"` | The node discriminator.                                                                                                                                                       |
-| `skipInnerData` | `boolean` _(optional)_     | When `true`, the variant's payload is hidden — only the label is rendered. Useful for tuple payloads that have no per-field handle, or when the payload is purely structural. |
+| Attribute       | Type                                                  | Description                                                                                                                                                                   |
+| --------------- | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `kind`          | `"enumVariantDisplayNode"`                            | The node discriminator.                                                                                                                                                       |
+| `label`         | `string` \| [`TextNode`](../TextNode.md) _(optional)_ | An override label shown for the variant (e.g. `"Buy"`). When absent, renderers derive a label from the variant `identifier`.                                                  |
+| `skipInnerData` | `boolean` _(optional)_                                | When `true`, the variant's payload is hidden — only the label is rendered. Useful for tuple payloads that have no per-field handle, or when the payload is purely structural. |
 
 ### Children
 
-| Attribute | Type                                                  | Description                                                                                                                  |
-| --------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `label`   | `string` \| [`TextNode`](../TextNode.md) _(optional)_ | An override label shown for the variant (e.g. `"Buy"`). When absent, renderers derive a label from the variant `identifier`. |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_       | Namespaced plugins with custom structured data.                                                                              |
+| Attribute | Type                                            | Description                                     |
+| --------- | ----------------------------------------------- | ----------------------------------------------- |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. |
 
 ## Examples
 

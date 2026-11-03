@@ -7,16 +7,16 @@ export const valueLabelDisplayNode = defineNode('valueLabelDisplayNode', {
         "Listed in a `structFieldDisplayNode`'s `valueLabels`; it is not part of any `display` slot on its own.",
     ],
     attributes: [
-        attribute('value', union('valueNode'), {
-            docs: [
-                "The value to label, matched structurally against the field's raw decoded value, before any display formatting, e.g. `integerValueNode('18446744073709551615')` or `noneValueNode()`.",
-                "It must be a concrete value of the field's type: injected values are not resolved here.",
-            ],
-        }),
         attribute('label', text(), {
             docs: [
                 'The label presented instead of the value, both in the fallback list and in interpolated intents (e.g. `"all SOL"`).',
                 'Since the same label serves both, prefer wording that reads well as a field value and mid-sentence.',
+            ],
+        }),
+        attribute('value', union('valueNode'), {
+            docs: [
+                "The value to label, matched structurally against the field's raw decoded value, before any display formatting, e.g. `integerValueNode('18446744073709551615')` or `noneValueNode()`.",
+                "It must be a concrete value of the field's type: injected values are not resolved here.",
             ],
         }),
     ],

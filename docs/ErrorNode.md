@@ -8,19 +8,19 @@ A program error — a numeric code paired with an identifier and human-readable 
 
 ### Data
 
-| Attribute    | Type               | Description                                     |
-| ------------ | ------------------ | ----------------------------------------------- |
-| `kind`       | `"errorNode"`      | The node discriminator.                         |
-| `identifier` | `IdentifierString` | The identifier of the error.                    |
-| `code`       | `u32`              | The numeric error code returned by the program. |
+| Attribute    | Type                                                 | Description                                     |
+| ------------ | ---------------------------------------------------- | ----------------------------------------------- |
+| `kind`       | `"errorNode"`                                        | The node discriminator.                         |
+| `identifier` | `IdentifierString`                                   | The identifier of the error.                    |
+| `code`       | `u32`                                                | The numeric error code returned by the program. |
+| `message`    | `string` \| [`TextNode`](./TextNode.md)              | A human-readable description of the error.      |
+| `docs`       | `string` \| [`TextNode`](./TextNode.md) _(optional)_ | Markdown documentation for the error.           |
 
 ### Children
 
-| Attribute | Type                                                 | Description                                     |
-| --------- | ---------------------------------------------------- | ----------------------------------------------- |
-| `message` | `string` \| [`TextNode`](./TextNode.md)              | A human-readable description of the error.      |
-| `docs`    | `string` \| [`TextNode`](./TextNode.md) _(optional)_ | Markdown documentation for the error.           |
-| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_       | Namespaced plugins with custom structured data. |
+| Attribute | Type                                           | Description                                     |
+| --------- | ---------------------------------------------- | ----------------------------------------------- |
+| `plugins` | [`PluginNode`](./PluginNode.md)[] _(optional)_ | Namespaced plugins with custom structured data. |
 
 ## Examples
 

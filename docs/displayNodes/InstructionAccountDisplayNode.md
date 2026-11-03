@@ -6,17 +6,17 @@ Display metadata for an instruction account: its label in the fallback list and 
 
 ### Data
 
-| Attribute | Type                              | Description             |
-| --------- | --------------------------------- | ----------------------- |
-| `kind`    | `"instructionAccountDisplayNode"` | The node discriminator. |
+| Attribute | Type                                                  | Description                                                                                                                      |
+| --------- | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `kind`    | `"instructionAccountDisplayNode"`                     | The node discriminator.                                                                                                          |
+| `label`   | `string` \| [`TextNode`](../TextNode.md) _(optional)_ | An override label shown in the fallback list (e.g. `"To"`). When absent, renderers derive a label from the account `identifier`. |
 
 ### Children
 
-| Attribute | Type                                                        | Description                                                                                                                      |
-| --------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `label`   | `string` \| [`TextNode`](../TextNode.md) _(optional)_       | An override label shown in the fallback list (e.g. `"To"`). When absent, renderers derive a label from the account `identifier`. |
-| `skip`    | [`DisplaySkip`](../sharedNodes/DisplaySkip.md) _(optional)_ | Whether the account is shown in the fallback list. Defaults to `"never"` (always shown).                                         |
-| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_             | Namespaced plugins with custom structured data.                                                                                  |
+| Attribute | Type                                                        | Description                                                                              |
+| --------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `skip`    | [`DisplaySkip`](../sharedNodes/DisplaySkip.md) _(optional)_ | Whether the account is shown in the fallback list. Defaults to `"never"` (always shown). |
+| `plugins` | [`PluginNode`](../PluginNode.md)[] _(optional)_             | Namespaced plugins with custom structured data.                                          |
 
 ## Examples
 

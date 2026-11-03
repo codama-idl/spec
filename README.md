@@ -68,9 +68,9 @@ The `attribute` vs `optionalAttribute` distinction therefore has **no effect on 
 
 ### Attributes serialise in declaration order
 
-Each node declares its attributes as an ordered array in `defineNode(...)`, and that order is authored deliberately: **static data first, child nodes and arrays last**. For example, `kind`, `identifier`, `docs` and other scalars precede large child collections such as `accounts`, `instructions` or `fields`.
+Each node declares its attributes as an ordered array in `defineNode(...)`, and that order is authored deliberately. By convention, **the attributes that describe a node come first and its child nodes and arrays last**. Human text such as `docs` or a display `label` counts as describing the node, even though it may hold a `textNode`. For example, `identifier`, `docs` and other scalars precede large child collections such as `accounts`, `instructions` or `fields`. This is a convention for spec authors rather than a rule, so a node may declare a child earlier when it reads better.
 
-- **On write**, generators MUST emit a node's attributes in this declaration order (with the implicit `kind` discriminator first). They MUST NOT re-serialise through a key-sorting structure — notably `serde_json::Value`, whose object type is a `BTreeMap` and therefore sorts keys alphabetically, pushing scalars like `identifier` after the child arrays.
+- **On write**, generators MUST emit a node's attributes in this declaration order (with the implicit `kind` discriminator first), without regrouping them, e.g. into data and child attributes. They MUST NOT re-serialise through a key-sorting structure — notably `serde_json::Value`, whose object type is a `BTreeMap` and therefore sorts keys alphabetically, pushing scalars like `identifier` after the child arrays.
 - **On read**, attribute order carries no semantics; consumers MUST NOT depend on it.
 
 Preserving declaration order keeps encoded IDLs readable: the identifying scalars of a node (`kind`, `identifier`, …) appear before its potentially large children, so a node's identity is legible at a glance even in a deeply nested IDL.
