@@ -1,5 +1,19 @@
 # @codama/spec
 
+## 2.0.0-rc.4
+
+### Patch Changes
+
+- [#213](https://github.com/codama-idl/spec/pull/213) [`c20ef9b`](https://github.com/codama-idl/spec/commit/c20ef9beb446261085fd6a9ef4d923700b87ff6e) Thanks [@lorisleiva](https://github.com/lorisleiva)! - Declare the identifier of link nodes before their optional parent link, and the label of `valueLabelDisplayNode` before its value, so the attributes that describe a node come first. Clarify that this order is a convention for spec authors, whilst generators must emit attributes in declaration order, followed by base attributes, without regrouping them into data and child attributes.
+  
+  ```jsonc
+  // Before
+  { "kind": "accountLinkNode", "program": { "kind": "programLinkNode", "identifier": "token" }, "identifier": "mint" }
+  
+  // After
+  { "kind": "accountLinkNode", "identifier": "mint", "program": { "kind": "programLinkNode", "identifier": "token" } }
+  ```
+
 ## 2.0.0-rc.3
 
 ### Minor Changes
