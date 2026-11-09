@@ -6,7 +6,9 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-const node = constantDiscriminatorNode(constantValueNode(stringTypeNode('utf8'), stringValueNode('Hello')), 64);
+const node = constantDiscriminatorNode(constantValueNode(stringTypeNode('utf8'), stringValueNode('Hello')), {
+    offset: 64,
+});
 `,
         ),
     ),
