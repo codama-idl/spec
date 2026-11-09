@@ -36,7 +36,7 @@ instructionAccountNode({
 });
 
 // ...lets paths follow its mint address into the mint's data, through a data segment.
-providedNode('decimals', accountDataValueNode('inputTokenAccount', 'mint.data.decimals'));
+providedNode('decimals', accountDataValueNode('inputTokenAccount', { path: 'mint.data.decimals' }));
 `,
         ),
     ),

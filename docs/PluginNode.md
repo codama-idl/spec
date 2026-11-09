@@ -32,9 +32,7 @@ Like any payload, these are inert: renaming the nodes they reference does not up
 ### A plugin carrying custom structured data
 
 ```typescript
-pluginNode('explorerHints', {
-    payload: { icon: 'transfer-arrow', priority: 2 },
-});
+pluginNode('explorerHints', { icon: 'transfer-arrow', priority: 2 });
 ```
 
 ### A marker plugin without a payload
@@ -48,7 +46,7 @@ pluginNode('audited');
 ```typescript
 instructionNode({
     identifier: 'transfer',
-    plugins: [pluginNode('explorerHints', { payload: { icon: 'transfer-arrow' } })],
+    plugins: [pluginNode('explorerHints', { icon: 'transfer-arrow' })],
     // ...
 });
 ```
@@ -65,16 +63,15 @@ instructionNode({
             isSigner: false,
             plugins: [
                 pluginNode('codama.resolver', {
-                    payload: { name: 'resolveDestination', dependsOn: ['accounts.owner', 'data.useAta'] },
+                    name: 'resolveDestination',
+                    dependsOn: ['accounts.owner', 'data.useAta'],
                 }),
             ],
         }),
         // ...
     ],
     plugins: [
-        pluginNode('codama.extraArgument', {
-            payload: { identifier: 'useAta', type: booleanTypeNode() },
-        }),
+        pluginNode('codama.extraArgument', { identifier: 'useAta', type: booleanTypeNode() }),
     ],
 });
 ```

@@ -6,7 +6,7 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-const node = accountDataValueNode('mint', 'decimals');
+const node = accountDataValueNode('mint', { path: 'decimals' });
 `,
         ),
     ),
@@ -34,7 +34,7 @@ instructionNode({
         }),
         // ...
     ]),
-    provides: [providedNode('decimals', accountDataValueNode('mint', 'decimals'))],
+    provides: [providedNode('decimals', accountDataValueNode('mint', { path: 'decimals' }))],
 });
 `,
         ),

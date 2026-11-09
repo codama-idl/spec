@@ -6,7 +6,7 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-const node = fieldDiscriminatorNode('accountState', 64);
+const node = fieldDiscriminatorNode('accountState', { offset: 64 });
 `,
         ),
     ),

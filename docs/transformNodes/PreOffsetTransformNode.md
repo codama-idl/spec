@@ -79,13 +79,13 @@ integerTypeNode('u32', { transforms: [preOffsetTransformNode(2)] });
 ### An absolute pre-offset
 
 ```typescript
-integerTypeNode('u32', { transforms: [preOffsetTransformNode(-2, 'absolute')] });
+integerTypeNode('u32', { transforms: [preOffsetTransformNode(-2, { strategy: 'absolute' })] });
 ```
 
 ### A left-padded u32 number
 
 ```typescript
-integerTypeNode('u32', { transforms: [preOffsetTransformNode(4, 'padded')] });
+integerTypeNode('u32', { transforms: [preOffsetTransformNode(4, { strategy: 'padded' })] });
 
 // 42 => 0x000000002A000000
 ```

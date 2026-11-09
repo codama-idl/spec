@@ -18,7 +18,9 @@ zeroableOptionTypeNode(integerTypeNode('u32'));
         code(
             'typescript',
             `
-zeroableOptionTypeNode(integerTypeNode('u32'), constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffffffff')));
+zeroableOptionTypeNode(integerTypeNode('u32'), {
+    zeroValue: constantValueNode(bytesTypeNode(), bytesValueNode('base16', 'ffffffff')),
+});
 
 // None     => 0xFFFFFFFF
 // Some(42) => 0x2A000000

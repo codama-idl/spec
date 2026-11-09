@@ -7,7 +7,7 @@ export const examples: DocExamples = [
             'typescript',
             `
 const node = accountLinkNode('myAccount');
-const nodeFromAnotherProgram = accountLinkNode('myAccount', 'myOtherProgram');
+const nodeFromAnotherProgram = accountLinkNode('myAccount', { program: programLinkNode('myOtherProgram') });
 `,
         ),
     ),

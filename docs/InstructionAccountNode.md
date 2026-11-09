@@ -36,7 +36,7 @@ instructionAccountNode({
     isWritable: false,
     isSigner: false,
     isOptional: true,
-    docs: ['The freeze authority to set on the asset, if any.'],
+    docs: 'The freeze authority to set on the asset, if any.',
 });
 ```
 
@@ -47,6 +47,6 @@ instructionAccountNode({
     identifier: 'owner',
     isWritable: true,
     isSigner: 'either',
-    docs: ['The owner of the asset. The owner must only sign the transaction if the asset is being updated.'],
+    docs: 'The owner of the asset. The owner must only sign the transaction if the asset is being updated.',
 });
 ```

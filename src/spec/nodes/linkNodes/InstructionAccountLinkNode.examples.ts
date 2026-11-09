@@ -10,13 +10,14 @@ export const examples: DocExamples = [
 const node = instructionAccountLinkNode('myAccount');
 
 // Links to an account in another instruction but within the same program.
-const nodeFromAnotherInstruction = instructionAccountLinkNode('myAccount', 'myOtherInstruction');
+const nodeFromAnotherInstruction = instructionAccountLinkNode('myAccount', {
+    instruction: instructionLinkNode('myOtherInstruction'),
+});
 
 // Links to an account in another instruction from another program.
-const nodeFromAnotherProgram = instructionAccountLinkNode(
-    'myAccount',
-    instructionLinkNode('myOtherInstruction', 'myOtherProgram'),
-);
+const nodeFromAnotherProgram = instructionAccountLinkNode('myAccount', {
+    instruction: instructionLinkNode('myOtherInstruction', { program: programLinkNode('myOtherProgram') }),
+});
 `,
         ),
     ),

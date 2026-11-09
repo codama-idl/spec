@@ -6,9 +6,7 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-pluginNode('explorerHints', {
-    payload: { icon: 'transfer-arrow', priority: 2 },
-});
+pluginNode('explorerHints', { icon: 'transfer-arrow', priority: 2 });
 `,
         ),
     ),
@@ -28,7 +26,7 @@ pluginNode('audited');
             `
 instructionNode({
     identifier: 'transfer',
-    plugins: [pluginNode('explorerHints', { payload: { icon: 'transfer-arrow' } })],
+    plugins: [pluginNode('explorerHints', { icon: 'transfer-arrow' })],
     // ...
 });
 `,
@@ -48,16 +46,15 @@ instructionNode({
             isSigner: false,
             plugins: [
                 pluginNode('codama.resolver', {
-                    payload: { name: 'resolveDestination', dependsOn: ['accounts.owner', 'data.useAta'] },
+                    name: 'resolveDestination',
+                    dependsOn: ['accounts.owner', 'data.useAta'],
                 }),
             ],
         }),
         // ...
     ],
     plugins: [
-        pluginNode('codama.extraArgument', {
-            payload: { identifier: 'useAta', type: booleanTypeNode() },
-        }),
+        pluginNode('codama.extraArgument', { identifier: 'useAta', type: booleanTypeNode() }),
     ],
 });
 `,

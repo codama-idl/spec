@@ -39,7 +39,7 @@ arrayTypeNode(
                 `
 arrayTypeNode(
     definedTypeLinkNode('extension'),
-    sentinelCountNode(constantValueNode(integerTypeNode('u16'), integerValueNode('0')), 'omitted'),
+    sentinelCountNode(constantValueNode(integerTypeNode('u16'), integerValueNode('0')), { strategy: 'omitted' }),
 );
 
 // 0700 0000 | 0200 0800 0000000000000000 | 0000 | 0000000000
@@ -78,7 +78,7 @@ arrayTypeNode(
             `
 arrayTypeNode(
     definedTypeLinkNode('seed'),
-    sentinelCountNode(constantValueNode(integerTypeNode('u8'), integerValueNode('0')), 'omitted'),
+    sentinelCountNode(constantValueNode(integerTypeNode('u8'), integerValueNode('0')), { strategy: 'omitted' }),
     { transforms: [fixedSizeTransformNode(32)] },
 );
 `,

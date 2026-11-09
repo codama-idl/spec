@@ -62,7 +62,7 @@ Each extension starts with a `u16` type, and a type of `0` marks the end of the 
 ```typescript
 arrayTypeNode(
     definedTypeLinkNode('extension'),
-    sentinelCountNode(constantValueNode(integerTypeNode('u16'), integerValueNode('0')), 'omitted'),
+    sentinelCountNode(constantValueNode(integerTypeNode('u16'), integerValueNode('0')), { strategy: 'omitted' }),
 );
 
 // 0700 0000 | 0200 0800 0000000000000000 | 0000 | 0000000000
@@ -92,7 +92,7 @@ Seeds start with a `u8` discriminator and `0` marks the end of the list. The slo
 ```typescript
 arrayTypeNode(
     definedTypeLinkNode('seed'),
-    sentinelCountNode(constantValueNode(integerTypeNode('u8'), integerValueNode('0')), 'omitted'),
+    sentinelCountNode(constantValueNode(integerTypeNode('u8'), integerValueNode('0')), { strategy: 'omitted' }),
     { transforms: [fixedSizeTransformNode(32)] },
 );
 ```

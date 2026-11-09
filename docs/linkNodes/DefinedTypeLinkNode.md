@@ -25,5 +25,5 @@ A reference to a defined type — possibly in a different program.
 
 ```typescript
 const node = definedTypeLinkNode('myDefinedType');
-const nodeFromAnotherProgram = definedTypeLinkNode('myDefinedType', 'myOtherProgram');
+const nodeFromAnotherProgram = definedTypeLinkNode('myDefinedType', { program: programLinkNode('myOtherProgram') });
 ```

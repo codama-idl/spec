@@ -37,7 +37,7 @@ const node = constantNode('seedPrefix', bytesTypeNode(), bytesValueNode('base16'
 ### With Documentation
 
 ```typescript
-const node = constantNode('maxItems', integerTypeNode('u64'), integerValueNode('1000'), [
-    'The maximum number of items allowed.',
-]);
+const node = constantNode('maxItems', integerTypeNode('u64'), integerValueNode('1000'), {
+    docs: 'The maximum number of items allowed.',
+});
 ```

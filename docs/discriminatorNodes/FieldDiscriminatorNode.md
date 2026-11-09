@@ -23,7 +23,7 @@ Identifies a node by the value of a field at a known byte offset.
 ### Create a field discriminator node from a field name and an optional offset
 
 ```typescript
-const node = fieldDiscriminatorNode('accountState', 64);
+const node = fieldDiscriminatorNode('accountState', { offset: 64 });
 ```
 
 ### An account distinguished by a u32 field at offset 0

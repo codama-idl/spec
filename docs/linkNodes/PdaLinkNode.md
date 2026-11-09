@@ -24,5 +24,5 @@ A reference to a PDA defined elsewhere — possibly in a different program.
 
 ```typescript
 const node = pdaLinkNode('myPda');
-const nodeFromAnotherProgram = pdaLinkNode('myPda', 'myOtherProgram');
+const nodeFromAnotherProgram = pdaLinkNode('myPda', { program: programLinkNode('myOtherProgram') });
 ```

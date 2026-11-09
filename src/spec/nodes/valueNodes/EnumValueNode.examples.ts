@@ -9,17 +9,15 @@ export const examples: DocExamples = [
 const node = enumValueNode('myEnum', 'myVariant');
 const nodeWithExplicitEnum = enumValueNode(definedTypeLinkNode('myEnum'), 'myVariant');
 
-const nodeWithData = enumValueNode(
-    'myEnum',
-    'myVariantWithData',
-    structValueNode([
+const nodeWithData = enumValueNode('myEnum', 'myVariantWithData', {
+    value: structValueNode([
         structFieldValueNode('name', stringValueNode('Alice')),
         structFieldValueNode('age', integerValueNode('42')),
     ]),
-);
+});
 
 // The payload is any value matching the variant's data type, here an integer.
-const nodeWithAmount = enumValueNode('operation', 'amount', integerValueNode('42'));
+const nodeWithAmount = enumValueNode('operation', 'amount', { value: integerValueNode('42') });
 `,
         ),
     ),

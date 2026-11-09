@@ -28,7 +28,7 @@ A reusable named type that can be referenced by `definedTypeLinkNode` from elsew
 ```typescript
 const node = definedTypeNode({
     identifier: 'person',
-    docs: ['This type describes a Person.'],
+    docs: 'This type describes a Person.',
     type: structTypeNode([
         structFieldTypeNode({ identifier: 'name', type: stringTypeNode('utf8') }),
         structFieldTypeNode({ identifier: 'age', type: integerTypeNode('u8') }),

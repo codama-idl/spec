@@ -7,7 +7,7 @@ export const examples: DocExamples = [
             'typescript',
             `
 const node = pdaLinkNode('myPda');
-const nodeFromAnotherProgram = pdaLinkNode('myPda', 'myOtherProgram');
+const nodeFromAnotherProgram = pdaLinkNode('myPda', { program: programLinkNode('myOtherProgram') });
 `,
         ),
     ),

@@ -6,7 +6,9 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-instructionStatusNode('deprecated', 'Use the \`transfer\` instruction instead. This will be removed in v3.0.0.');
+instructionStatusNode('deprecated', {
+    message: 'Use the \`transfer\` instruction instead. This will be removed in v3.0.0.',
+});
 `,
         ),
     ),
@@ -26,7 +28,7 @@ instructionStatusNode('archived');
             `
 instructionNode({
     identifier: 'experimentalFeature',
-    status: instructionStatusNode('draft', 'This instruction is under development and may change.'),
+    status: instructionStatusNode('draft', { message: 'This instruction is under development and may change.' }),
     // ...
 });
 `,
