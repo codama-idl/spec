@@ -33,7 +33,7 @@ booleanTypeNode();
 ### u32 booleans
 
 ```typescript
-booleanTypeNode(integerTypeNode('u32'));
+booleanTypeNode({ size: integerTypeNode('u32') });
 
 // true  => 0x01000000
 // false => 0x00000000
