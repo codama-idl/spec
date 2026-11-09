@@ -45,8 +45,9 @@ Multi-line text uses `\n` within `content`. Text attributes are single-line by c
 
 ```typescript
 instructionDisplayNode({
-    intent: textNode('Transfer', {
-        plugins: [pluginNode('i18n.es', { payload: 'Transferir' })],
+    intent: textNode({
+        content: 'Transfer',
+        plugins: [pluginNode('i18n.es', 'Transferir')],
     }),
 });
 ```

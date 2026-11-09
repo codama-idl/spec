@@ -32,8 +32,9 @@ export const examples: DocExamples = [
             'typescript',
             `
 instructionDisplayNode({
-    intent: textNode('Transfer', {
-        plugins: [pluginNode('i18n.es', { payload: 'Transferir' })],
+    intent: textNode({
+        content: 'Transfer',
+        plugins: [pluginNode('i18n.es', 'Transferir')],
     }),
 });
 `,
