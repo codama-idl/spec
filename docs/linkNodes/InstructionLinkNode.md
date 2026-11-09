@@ -24,5 +24,5 @@ A reference to an instruction defined elsewhere — possibly in a different prog
 
 ```typescript
 const node = instructionLinkNode('myInstruction');
-const nodeFromAnotherProgram = instructionLinkNode('myInstruction', 'myOtherProgram');
+const nodeFromAnotherProgram = instructionLinkNode('myInstruction', { program: programLinkNode('myOtherProgram') });
 ```
