@@ -15,7 +15,7 @@ integerTypeNode('u32', { transforms: [postOffsetTransformNode(2)] });
         code(
             'typescript',
             `
-integerTypeNode('u32', { transforms: [postOffsetTransformNode(-2, 'absolute')] });
+integerTypeNode('u32', { transforms: [postOffsetTransformNode(-2, { strategy: 'absolute' })] });
 `,
         ),
     ),
@@ -24,7 +24,7 @@ integerTypeNode('u32', { transforms: [postOffsetTransformNode(-2, 'absolute')] }
         code(
             'typescript',
             `
-integerTypeNode('u32', { transforms: [postOffsetTransformNode(4, 'padded')] });
+integerTypeNode('u32', { transforms: [postOffsetTransformNode(4, { strategy: 'padded' })] });
 
 // 42 => 0x2A00000000000000
 `,
