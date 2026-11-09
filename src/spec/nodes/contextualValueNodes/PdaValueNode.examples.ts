@@ -6,10 +6,12 @@ export const examples: DocExamples = [
         code(
             'typescript',
             `
-const node = pdaValueNode('associatedToken', [
-    pdaSeedValueNode('mint', publicKeyValueNode('G345gmp34svbGxyXuCvKVVHDbqJQ66y65vVrx7m7FmBE')),
-    pdaSeedValueNode('owner', publicKeyValueNode('Nzgr9bYfMRq5768bHfXsXoPTnLWAXgQNosRBxK63jRH')),
-]);
+const node = pdaValueNode('associatedToken', {
+    seeds: [
+        pdaSeedValueNode('mint', publicKeyValueNode('G345gmp34svbGxyXuCvKVVHDbqJQ66y65vVrx7m7FmBE')),
+        pdaSeedValueNode('owner', publicKeyValueNode('Nzgr9bYfMRq5768bHfXsXoPTnLWAXgQNosRBxK63jRH')),
+    ],
+});
 `,
         ),
     ),
@@ -18,10 +20,12 @@ const node = pdaValueNode('associatedToken', [
         code(
             'typescript',
             `
-pdaValueNode('associatedToken', [
-    pdaSeedValueNode('mint', accountValueNode('mint')),
-    pdaSeedValueNode('owner', accountValueNode('authority')),
-]);
+pdaValueNode('associatedToken', {
+    seeds: [
+        pdaSeedValueNode('mint', accountValueNode('mint')),
+        pdaSeedValueNode('owner', accountValueNode('authority')),
+    ],
+});
 `,
         ),
     ),
@@ -39,10 +43,12 @@ const inlinedPdaNode = pdaNode({
     ],
 });
 
-pdaValueNode(inlinedPdaNode, [
-    pdaSeedValueNode('mint', accountValueNode('mint')),
-    pdaSeedValueNode('owner', accountValueNode('authority')),
-]);
+pdaValueNode(inlinedPdaNode, {
+    seeds: [
+        pdaSeedValueNode('mint', accountValueNode('mint')),
+        pdaSeedValueNode('owner', accountValueNode('authority')),
+    ],
+});
 `,
         ),
     ),
