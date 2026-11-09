@@ -15,13 +15,12 @@ const node = enumVariantTypeNode('uninitialized');
         code(
             'typescript',
             `
-enumVariantTypeNode(
-    'move',
-    structTypeNode([
+enumVariantTypeNode('move', {
+    data: structTypeNode([
         structFieldTypeNode({ identifier: 'x', type: integerTypeNode('u32') }),
         structFieldTypeNode({ identifier: 'y', type: integerTypeNode('u32') }),
     ]),
-);
+});
 `,
         ),
     ),
@@ -30,7 +29,7 @@ enumVariantTypeNode(
         code(
             'typescript',
             `
-enumVariantTypeNode('coordinates', tupleTypeNode([integerTypeNode('u32'), integerTypeNode('u32')]));
+enumVariantTypeNode('coordinates', { data: tupleTypeNode([integerTypeNode('u32'), integerTypeNode('u32')]) });
 `,
         ),
     ),
@@ -39,7 +38,7 @@ enumVariantTypeNode('coordinates', tupleTypeNode([integerTypeNode('u32'), intege
         code(
             'typescript',
             `
-enumVariantTypeNode('amount', integerTypeNode('u64'));
+enumVariantTypeNode('amount', { data: integerTypeNode('u64') });
 `,
         ),
     ),
