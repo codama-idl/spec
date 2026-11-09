@@ -17,7 +17,7 @@ instructionNode({
         }),
     ],
     provides: [
-        providedNode('decimals', accountDataValueNode('mint', 'decimals')),
+        providedNode('decimals', accountDataValueNode('mint', { path: 'decimals' })),
         providedNode('mint', accountValueNode('mint')),
     ],
     data: structTypeNode([

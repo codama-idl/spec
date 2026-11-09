@@ -25,7 +25,7 @@ Resolving the value requires reading the account state. When presenting, an unre
 ### Create an account data value node from an account name and a path
 
 ```typescript
-const node = accountDataValueNode('mint', 'decimals');
+const node = accountDataValueNode('mint', { path: 'decimals' });
 ```
 
 ### A data field defaulting to a value within an instruction account
@@ -50,6 +50,6 @@ instructionNode({
         }),
         // ...
     ]),
-    provides: [providedNode('decimals', accountDataValueNode('mint', 'decimals'))],
+    provides: [providedNode('decimals', accountDataValueNode('mint', { path: 'decimals' }))],
 });
 ```
