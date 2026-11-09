@@ -82,7 +82,7 @@
         "@codama/release-tools": "github:codama-idl/release-tools#v1.3.1",
         "@solana-config/oxc": "^0.1.1",
         "@types/node": "^26",
-        "markdown-table": "3.0.4",
+        "markdown-table": "3.1.0",
         "oxfmt": "^0.76.0",
         "oxlint": "^1.66.0",
         "oxlint-tsgolint": "^7.0.2001",
