@@ -24,7 +24,9 @@ An instruction without a status is considered live — a status node is typicall
 ### A deprecated status with migration guidance
 
 ```typescript
-instructionStatusNode('deprecated', 'Use the `transfer` instruction instead. This will be removed in v3.0.0.');
+instructionStatusNode('deprecated', {
+    message: 'Use the `transfer` instruction instead. This will be removed in v3.0.0.',
+});
 ```
 
 ### A status without a message
@@ -38,7 +40,7 @@ instructionStatusNode('archived');
 ```typescript
 instructionNode({
     identifier: 'experimentalFeature',
-    status: instructionStatusNode('draft', 'This instruction is under development and may change.'),
+    status: instructionStatusNode('draft', { message: 'This instruction is under development and may change.' }),
     // ...
 });
 ```

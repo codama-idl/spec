@@ -150,10 +150,9 @@ instructionNode({
             `
 instructionNode({
     identifier: 'oldIncrement',
-    status: instructionStatusNode(
-        'deprecated',
-        'Use the \`increment\` instruction instead. This will be removed in v3.0.0.',
-    ),
+    status: instructionStatusNode('deprecated', {
+        message: 'Use the \`increment\` instruction instead. This will be removed in v3.0.0.',
+    }),
     accounts: [instructionAccountNode({ identifier: 'counter', isWritable: true, isSigner: false })],
     data: structTypeNode([structFieldTypeNode({ identifier: 'amount', type: integerTypeNode('u8') })]),
 });
@@ -167,10 +166,9 @@ instructionNode({
             `
 instructionNode({
     identifier: 'legacyTransfer',
-    status: instructionStatusNode(
-        'archived',
-        'This instruction was removed in v2.0.0. It is kept here for historical parsing.',
-    ),
+    status: instructionStatusNode('archived', {
+        message: 'This instruction was removed in v2.0.0. It is kept here for historical parsing.',
+    }),
     accounts: [
         instructionAccountNode({ identifier: 'source', isWritable: true, isSigner: true }),
         instructionAccountNode({ identifier: 'destination', isWritable: true, isSigner: false }),
@@ -187,7 +185,7 @@ instructionNode({
             `
 instructionNode({
     identifier: 'experimentalFeature',
-    status: instructionStatusNode('draft', 'This instruction is under development and may change.'),
+    status: instructionStatusNode('draft', { message: 'This instruction is under development and may change.' }),
     accounts: [instructionAccountNode({ identifier: 'config', isWritable: true, isSigner: true })],
 });
 `,
